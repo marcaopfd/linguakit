@@ -47,13 +47,29 @@ const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 function buildPrompt(unit, modLabel) {
   return `You are a Brazilian Portuguese language teacher creating extra practice material for an English-speaking student.
 
-Here is the unit data:
-Title: ${unit.title}
-Level: ${modLabel}
-Grammar pattern: ${unit.grammar.structure}
-Grammar topic: ${unit.grammar.title}
+Unit: ${unit.title} (${modLabel})
+Grammar: ${unit.grammar.title}
+Pattern: ${unit.grammar.structure}
 
-Generate ONLY a JSON object (no markdown fences, no commentary) with exactly these keys:
+Generate ONLY a valid JSON object (no markdown, no extra text). Follow these rules strictly:
+
+FILL IN THE BLANK rules:
+- The ___ blank must be exactly what the answer provides
+- If answer is a VERB (e.g. "sou"), the sentence must already have the subject: "Eu ___ médico." ✓ — NOT "___ sou médico." ✗
+- If answer is a SUBJECT PRONOUN (e.g. "Eu"), the sentence must already have the verb: "___ sou médico." ✓
+- Never put "sou" in both the question AND the answer
+- Each item must have a clean, unambiguous correct answer
+
+MULTIPLE CHOICE rules:
+- The ___ blank in "q" must be filled by one of the opts (not by something already in the sentence)
+- All 4 options must be the same TYPE (all verbs, all nouns, all pronouns, etc.)
+- Exactly one option must be clearly correct; the other 3 must be plausible but wrong
+- Do NOT embed the answer inside the question text
+- "ans" is the 0-based index of the correct option
+
+TRANSLATION rules:
+- "q" is English, "ans" is the Brazilian Portuguese translation
+- Keep sentences at ${modLabel} level
 
 {
   "extraVocab": [
@@ -68,23 +84,23 @@ Generate ONLY a JSON object (no markdown fences, no commentary) with exactly the
   "extraExercises": [
     {
       "type": "Fill in the blank",
-      "instruction": "Complete with the correct word.",
+      "instruction": "Complete the sentence with the correct word.",
       "items": [
-        { "q": "sentence with ___ blank", "ans": "correct word" }
+        { "q": "Eu ___ professor.", "ans": "sou" }
       ]
     },
     {
       "type": "Multiple choice",
       "instruction": "Choose the correct option.",
       "items": [
-        { "q": "question text", "opts": ["Option A", "Option B", "Option C", "Option D"], "ans": 0 }
+        { "q": "Ela ___ brasileira.", "opts": ["sou", "é", "somos", "são"], "ans": 1 }
       ]
     },
     {
       "type": "Translation",
-      "instruction": "Translate the sentence into Portuguese.",
+      "instruction": "Translate into Brazilian Portuguese.",
       "items": [
-        { "q": "English sentence", "ans": "Portuguese translation" }
+        { "q": "I am a doctor.", "ans": "Eu sou médico." }
       ]
     }
   ],
@@ -127,7 +143,7 @@ async function main() {
 
       try {
         const msg = await client.messages.create({
-          model: 'claude-haiku-4-5-20251001',
+          model: 'claude-sonnet-4-6',
           max_tokens: 4096,
           messages: [{ role: 'user', content: buildPrompt(unit, mod.label) }],
         })
