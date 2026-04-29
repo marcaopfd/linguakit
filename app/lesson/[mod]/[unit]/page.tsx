@@ -82,7 +82,16 @@ export default function LessonPage() {
         <div style={{ fontSize: 12, color: 'var(--ink3)', textAlign: 'center' }}>
           {mod.label} · Unit {unitIndex + 1}/{mod.units.length}
         </div>
-        <div style={{ fontSize: 12, color: 'var(--ink3)' }}>{step + 1}/{steps.length}</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+          <a
+            href={`/api/pdf/${modId}/${unitIndex}`}
+            download
+            style={{ fontSize: 12, color: 'var(--ink3)', textDecoration: 'none', border: '1px solid var(--border)', borderRadius: 6, padding: '.2rem .55rem', background: 'var(--paper)' }}
+          >
+            ↓ PDF
+          </a>
+          <span style={{ fontSize: 12, color: 'var(--ink3)' }}>{step + 1}/{steps.length}</span>
+        </div>
       </div>
 
       <div style={{ maxWidth: 620, margin: '0 auto', padding: '1.5rem 1.5rem 5rem' }}>
