@@ -285,7 +285,7 @@ function ExercisesStep({
     <div>
       <SectionHeading icon="✏️" label="Exercises" />
 
-      {unit.exercises.map((ex, ei) => (
+      {[...unit.exercises, ...(unit.extraExercises ?? [])].map((ex, ei) => (
         <div key={ei} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem 1.1rem', marginBottom: '.6rem' }}>
           <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.35rem' }}>{ex.type}</div>
           <div style={{ fontSize: 13, color: 'var(--ink2)', marginBottom: '.75rem', lineHeight: 1.4 }}>{ex.instruction}</div>
