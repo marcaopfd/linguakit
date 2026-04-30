@@ -32,10 +32,10 @@ const S = StyleSheet.create({
   grammarExPt: { fontFamily: 'Helvetica-Bold', fontSize: 9, flex: 1 },
   grammarExEn: { fontSize: 9, color: '#8a8578', flex: 1 },
   // Mistakes
-  mistakeRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 6, marginBottom: 5, backgroundColor: '#fdecea', borderRadius: 5, padding: '5 8' },
-  mistakeWrong: { fontSize: 9, color: '#c0392b', fontFamily: 'Helvetica-Bold', textDecoration: 'line-through', flex: 1 },
-  mistakeCorrect: { fontSize: 9, color: '#2d6a4f', fontFamily: 'Helvetica-Bold', flex: 1 },
-  mistakeNote: { fontSize: 8, color: '#3d3a34', marginTop: 2 },
+  mistakeRow: { marginBottom: 5, backgroundColor: '#fdecea', borderRadius: 5, padding: '5 8' },
+  mistakeWrong: { fontSize: 9, color: '#c0392b', fontFamily: 'Helvetica-Bold', textDecoration: 'line-through', marginBottom: 2 },
+  mistakeCorrect: { fontSize: 9, color: '#2d6a4f', fontFamily: 'Helvetica-Bold', marginBottom: 2 },
+  mistakeNote: { fontSize: 8, color: '#3d3a34', marginTop: 1 },
   // Dialogue
   dialogueLine: { flexDirection: 'row', gap: 7, marginBottom: 6, alignItems: 'flex-start' },
   dialogueAvatar: { width: 18, height: 18, borderRadius: 9, backgroundColor: '#1a1814', flexShrink: 0 },
@@ -141,11 +141,9 @@ export function UnitPDF({ mod, unit, unitIndex }: Props) {
             <Text style={S.sectionLabel}>⚠️ Common Mistakes</Text>
             {unit.commonMistakes.map((m, i) => (
               <View key={i} style={S.mistakeRow}>
-                <View style={{ flex: 1 }}>
-                  <Text style={S.mistakeWrong}>✗  {m.wrong}</Text>
-                  <Text style={S.mistakeCorrect}>✓  {m.correct}</Text>
-                  {(m.note || m.en) && <Text style={S.mistakeNote}>{m.note ?? m.en}</Text>}
-                </View>
+                <Text style={S.mistakeWrong}>✗  {m.wrong}</Text>
+                <Text style={S.mistakeCorrect}>✓  {m.correct}</Text>
+                {(m.note || m.en) && <Text style={S.mistakeNote}>{m.note ?? m.en}</Text>}
               </View>
             ))}
           </>
