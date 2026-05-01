@@ -117,15 +117,28 @@ export default function StudentsPage() {
             <div style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.6 }}>Share the placement test link with your first student.<br />Results will appear here automatically.</div>
           </div>
         )}
-        {students.map(s => <StudentCard key={s.id} student={s} />)}
+        {students.map(s => <StudentCard key={s.id} student={s} onDelete={id => setStudents(prev => prev.filter(x => x.id !== id))} />)}
       </div>
     </div>
   )
 }
 
-function StudentCard({ student: s }: { student: Student }) {
+function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id: string) => void }) {
   const r = s.testResult
   const levelColor = r ? (LEVEL_COLORS[r.level] ?? 'var(--ink)') : 'var(--ink3)'
+  const [confirming, setConfirming] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+
+  async function handleDelete() {
+    setDeleting(true)
+    try {
+      const res = await fetch(`/api/students/${s.id}`, { method: 'DELETE' })
+      if (res.ok) onDelete(s.id)
+    } finally {
+      setDeleting(false)
+      setConfirming(false)
+    }
+  }
 
   return (
     <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 14, marginBottom: '.75rem', overflow: 'hidden' }}>
@@ -147,12 +160,28 @@ function StudentCard({ student: s }: { student: Student }) {
             {r ? `${r.level} · ${r.levelName}` : 'No test result yet'} · joined {new Date(s.createdAt).toLocaleDateString('en-IE', { day: 'numeric', month: 'short', year: 'numeric' })}
           </div>
         </div>
-        {r && (
-          <div style={{ textAlign: 'right' }}>
-            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, color: levelColor }}>{r.level}</div>
-            <div style={{ fontSize: 12, color: 'var(--ink3)' }}>{r.totalScore}/30 · {r.pct}%</div>
-          </div>
-        )}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '.35rem' }}>
+          {r && (
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, color: levelColor }}>{r.level}</div>
+              <div style={{ fontSize: 12, color: 'var(--ink3)' }}>{r.totalScore}/30 · {r.pct}%</div>
+            </div>
+          )}
+          {confirming ? (
+            <div style={{ display: 'flex', gap: '.3rem' }}>
+              <button onClick={() => setConfirming(false)} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: '1px solid var(--border)', background: 'var(--paper)', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink3)' }}>
+                Cancelar
+              </button>
+              <button onClick={handleDelete} disabled={deleting} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: 'none', background: 'var(--red)', color: '#fff', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600 }}>
+                {deleting ? '...' : 'Confirmar'}
+              </button>
+            </div>
+          ) : (
+            <button onClick={() => setConfirming(true)} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: '1px solid var(--border)', background: 'none', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink3)' }}>
+              🗑 Excluir
+            </button>
+          )}
+        </div>
       </div>
 
       {r && (
