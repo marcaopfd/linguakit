@@ -23,6 +23,7 @@ export async function GET() {
             weaknesses: JSON.parse(s.testResult.weaknesses),
             strengths: JSON.parse(s.testResult.strengths),
             recommendation: s.testResult.recommendation,
+            course: s.testResult.course,
             createdAt: s.testResult.createdAt,
           }
         : null,
@@ -37,7 +38,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { name, level, levelName, totalCorrect, pct, sectionScores, skillPcts, strengths, weaknesses } = body
+    const { name, level, levelName, totalCorrect, pct, sectionScores, skillPcts, strengths, weaknesses, course } = body
 
     const student = await prisma.student.create({
       data: {
@@ -56,6 +57,7 @@ export async function POST(req: NextRequest) {
             weaknesses: JSON.stringify(weaknesses),
             strengths: JSON.stringify(strengths),
             recommendation: body.recommendation ?? level,
+            course: course ?? 'pt',
           },
         },
       },

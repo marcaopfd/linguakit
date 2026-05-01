@@ -29,6 +29,7 @@ model TestResult {
   weaknesses     String
   strengths      String
   recommendation String
+  course         String   @default("pt")
   createdAt      DateTime @default(now())
 }
 

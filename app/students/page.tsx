@@ -19,6 +19,7 @@ type Student = {
     weaknesses: string[]
     strengths: string[]
     recommendation: string
+    course?: string
     createdAt: string
   }
 }
@@ -87,15 +88,22 @@ export default function StudentsPage() {
         </div>
       </div>
 
-      {/* Share test link */}
-      <div style={{ background: 'var(--gold-light)', borderBottom: '1px solid #e8d48a', padding: '.75rem 1.5rem', display: 'flex', alignItems: 'center', gap: '.75rem' }}>
-        <span style={{ fontSize: 13, color: '#7a5a0a', flex: 1 }}>Share the placement test with a new student:</span>
+      {/* Share test links */}
+      <div style={{ background: 'var(--gold-light)', borderBottom: '1px solid #e8d48a', padding: '.75rem 1.5rem', display: 'flex', alignItems: 'center', gap: '.75rem', flexWrap: 'wrap' }}>
+        <span style={{ fontSize: 13, color: '#7a5a0a', flex: 1 }}>Share the placement test:</span>
         <a
           href="/test"
           target="_blank"
           style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.35rem .75rem', background: '#fff', border: '1px solid #e8d48a', borderRadius: 8 }}
         >
-          /test →
+          🇧🇷 Português →
+        </a>
+        <a
+          href="/test?lang=en"
+          target="_blank"
+          style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.35rem .75rem', background: '#fff', border: '1px solid #e8d48a', borderRadius: 8 }}
+        >
+          🇺🇸 English →
         </a>
       </div>
 
@@ -127,7 +135,14 @@ function StudentCard({ student: s }: { student: Student }) {
           {s.name.charAt(0).toUpperCase()}
         </div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 15, fontWeight: 600 }}>{s.name}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+            <span style={{ fontSize: 15, fontWeight: 600 }}>{s.name}</span>
+            {r?.course && (
+              <span style={{ fontSize: 11, padding: '.15rem .45rem', borderRadius: 5, background: r.course === 'en' ? '#fff3e8' : '#e8f1fb', color: r.course === 'en' ? '#9a4f0a' : '#1a5c9e', fontWeight: 600 }}>
+                {r.course === 'en' ? '🇺🇸 EN' : '🇧🇷 PT'}
+              </span>
+            )}
+          </div>
           <div style={{ fontSize: 12, color: 'var(--ink3)' }}>
             {r ? `${r.level} · ${r.levelName}` : 'No test result yet'} · joined {new Date(s.createdAt).toLocaleDateString('en-IE', { day: 'numeric', month: 'short', year: 'numeric' })}
           </div>
