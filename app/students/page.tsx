@@ -37,12 +37,29 @@ export default function StudentsPage() {
   const [students, setStudents] = useState<Student[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  const [refreshing, setRefreshing] = useState(false)
+
+  async function fetchStudents(showSpinner = false) {
+    if (showSpinner) setRefreshing(true)
+    try {
+      const r = await fetch('/api/results')
+      const data = await r.json()
+      setStudents(data.students ?? [])
+      setLastUpdated(new Date())
+      setError('')
+    } catch {
+      setError('Could not load students.')
+    } finally {
+      setLoading(false)
+      setRefreshing(false)
+    }
+  }
 
   useEffect(() => {
-    fetch('/api/results')
-      .then(r => r.json())
-      .then(data => { setStudents(data.students ?? []); setLoading(false) })
-      .catch(() => { setError('Could not load students.'); setLoading(false) })
+    fetchStudents()
+    const interval = setInterval(() => fetchStudents(), 30_000)
+    return () => clearInterval(interval)
   }, [])
 
   return (
@@ -52,8 +69,22 @@ export default function StudentsPage() {
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none', marginBottom: '1rem', width: 'fit-content' }}>
           ← Home
         </Link>
-        <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 26, fontWeight: 600, marginBottom: '.3rem' }}>👥 Students</h1>
-        <p style={{ fontSize: 13, color: 'rgba(255,255,255,.5)' }}>{students.length} student{students.length !== 1 ? 's' : ''} · placement test results</p>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+          <div>
+            <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 26, fontWeight: 600, marginBottom: '.3rem' }}>👥 Students</h1>
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,.5)' }}>
+              {students.length} student{students.length !== 1 ? 's' : ''} · placement test results
+              {lastUpdated && <span> · updated {lastUpdated.toLocaleTimeString('en-IE', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>}
+            </p>
+          </div>
+          <button
+            onClick={() => fetchStudents(true)}
+            disabled={refreshing}
+            style={{ marginTop: '.25rem', padding: '.4rem .85rem', border: '1px solid rgba(255,255,255,.25)', borderRadius: 8, background: 'rgba(255,255,255,.1)', color: '#fff', fontSize: 13, cursor: refreshing ? 'default' : 'pointer', fontFamily: 'inherit', opacity: refreshing ? 0.6 : 1 }}
+          >
+            {refreshing ? '⏳' : '↺'} Refresh
+          </button>
+        </div>
       </div>
 
       {/* Share test link */}
