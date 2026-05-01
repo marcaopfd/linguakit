@@ -48,7 +48,7 @@ export default function DashboardPage() {
             flag="🇧🇷"
             title="Ensino de Português"
             subtitle="Para falantes de inglês · A1 → C2"
-            href="/"
+            href="/pt"
             moduleHref={(id) => `/module/${id}`}
             modules={MODULES}
             progress={ptProgress}

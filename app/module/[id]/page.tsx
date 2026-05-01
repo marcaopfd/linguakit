@@ -11,7 +11,7 @@ export default function ModulePage() {
       modId={id}
       modules={MODULES}
       lessonBase="/lesson"
-      backHref="/"
+      backHref="/pt"
       progressKey="lk_progress"
     />
   )
