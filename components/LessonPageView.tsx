@@ -15,9 +15,10 @@ interface Props {
   moduleBase: string   // e.g. '/module' or '/en/module'
   pdfBase: string      // e.g. '/api/pdf/pt' or '/api/pdf/en'
   progressKey: string  // localStorage key
+  studentId?: string   // if provided, also saves progress to DB
 }
 
-export function LessonPageView({ modules, moduleBase, pdfBase, progressKey }: Props) {
+export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, studentId }: Props) {
   const { mod: modId, unit: unitIndexStr } = useParams<{ mod: string; unit: string }>()
   const router = useRouter()
   const unitIndex = parseInt(unitIndexStr)
@@ -56,6 +57,13 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey }: Pr
       localStorage.setItem(progressKey, JSON.stringify(all))
       setIsDone(true)
     } catch {}
+    if (studentId) {
+      fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId, moduleId: modId, unitIndex }),
+      }).catch(() => {})
+    }
   }
 
   async function generateExtraExercises() {

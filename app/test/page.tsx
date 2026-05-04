@@ -168,6 +168,7 @@ function TestPageInner() {
   )
   const [result, setResult] = useState<null | ReturnType<typeof calculateResult>>(null)
   const [saveStatus, setSaveStatus] = useState<'saving' | 'ok' | 'fail'>('saving')
+  const [savedStudentId, setSavedStudentId] = useState<string | null>(null)
 
   function startTest() { setScreen('test'); setCurrentSection(0) }
 
@@ -207,7 +208,13 @@ function TestPageInner() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, ...r, course: lang }),
       })
-      setSaveStatus(res.ok ? 'ok' : 'fail')
+      if (res.ok) {
+        const data = await res.json()
+        setSavedStudentId(data.studentId ?? null)
+        setSaveStatus('ok')
+      } else {
+        setSaveStatus('fail')
+      }
     } catch {
       setSaveStatus('fail')
     }
@@ -418,9 +425,17 @@ function TestPageInner() {
                 <div style={{ textAlign: 'center', padding: '.5rem 0' }}>
                   <div style={{ fontSize: 36, marginBottom: '.5rem' }}>✅</div>
                   <div style={{ fontSize: 15, fontWeight: 600, marginBottom: '.3rem' }}>{isEN ? 'Resultado salvo!' : 'Result saved!'}</div>
-                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,.55)', lineHeight: 1.6 }}>
+                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,.55)', lineHeight: 1.6, marginBottom: savedStudentId ? '1rem' : 0 }}>
                     {isEN ? 'Seu professor já pode ver seu resultado. Ele entrará em contato para agendar sua primeira aula.' : 'Your teacher can already see your result. They\'ll be in touch to schedule your first lesson.'}
                   </div>
+                  {savedStudentId && (
+                    <a
+                      href={`/learn/${savedStudentId}`}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '.4rem', padding: '.65rem 1.25rem', background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 10, color: '#fff', textDecoration: 'none', fontSize: 14, fontWeight: 600 }}
+                    >
+                      {isEN ? '📚 Acessar meu curso →' : '📚 Access my course →'}
+                    </a>
+                  )}
                 </div>
               )}
               {saveStatus === 'fail' && (

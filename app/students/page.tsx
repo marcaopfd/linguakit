@@ -202,7 +202,7 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
           </div>
 
           {/* Weaknesses & recommendation */}
-          <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', marginBottom: '.65rem' }}>
             {r.weaknesses.slice(0, 3).map(w => (
               <span key={w} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, background: 'var(--red-light)', color: 'var(--red)', fontWeight: 500 }}>
                 ↓ {SKILL_LABELS[w] ?? w}
@@ -211,6 +211,15 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
             <span style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, background: 'var(--gold-light)', color: '#7a5a0a', fontWeight: 500 }}>
               🎯 {r.recommendation.replace('Module', 'Mod.')}
             </span>
+          </div>
+          {/* Actions */}
+          <div style={{ display: 'flex', gap: '.5rem' }}>
+            <Link href={`/students/${s.id}`} style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.3rem .7rem', border: '1px solid var(--border)', borderRadius: 7, background: '#fff', display: 'inline-flex', alignItems: 'center', gap: '.3rem' }}>
+              📊 Ver progresso
+            </Link>
+            <Link href={`/learn/${s.id}`} target="_blank" style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink3)', textDecoration: 'none', padding: '.3rem .7rem', border: '1px solid var(--border)', borderRadius: 7, background: '#fff', display: 'inline-flex', alignItems: 'center', gap: '.3rem' }}>
+              🔗 Link do curso
+            </Link>
           </div>
         </div>
       )}
