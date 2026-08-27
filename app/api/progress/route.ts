@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { prisma, withDb } from '@/lib/db'
 
 export async function POST(req: NextRequest) {
   try {
@@ -8,11 +8,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    await prisma.studentLesson.upsert({
+    await withDb(() => prisma.studentLesson.upsert({
       where: { studentId_moduleId_unitIndex: { studentId, moduleId, unitIndex } },
       update: { completedAt: new Date() },
       create: { studentId, moduleId, unitIndex },
-    })
+    }))
 
     return NextResponse.json({ ok: true })
   } catch (err) {
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
   if (!studentId) return NextResponse.json({ error: 'Missing studentId' }, { status: 400 })
 
   try {
-    const lessons = await prisma.studentLesson.findMany({ where: { studentId } })
+    const lessons = await withDb(() => prisma.studentLesson.findMany({ where: { studentId } }))
     return NextResponse.json({ lessons })
   } catch (err) {
     return NextResponse.json({ error: 'Database error', details: String(err) }, { status: 500 })

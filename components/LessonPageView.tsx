@@ -1,21 +1,17 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
-import { Module, Unit } from '@/lib/curriculum'
-
-type GeneratedExercise =
-  | { type: 'multiple_choice'; question: string; options: string[]; answer: number; explanation?: string }
-  | { type: 'fill_blank'; question: string; answer: string }
-  | { type: 'translation'; english: string; portuguese: string }
+import { Exercise, Module, Unit } from '@/lib/curriculum'
+import { useModuleProgress } from '@/lib/use-progress'
 
 interface Props {
   modules: Module[]
   moduleBase: string   // e.g. '/module' or '/en/module'
   pdfBase: string      // e.g. '/api/pdf/pt' or '/api/pdf/en'
-  progressKey: string  // localStorage key
-  studentId?: string   // if provided, also saves progress to DB
+  progressKey: string  // localStorage key (teacher mode only)
+  studentId?: string   // if provided, progress is read from and saved to the DB
 }
 
 export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, studentId }: Props) {
@@ -25,67 +21,16 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
   const mod = modules.find(m => m.id === modId)
   const unit = mod?.units[unitIndex]
 
-  const [isDone, setIsDone] = useState(false)
+  const { done: completed, markDone } = useModuleProgress(modId, progressKey, studentId)
   const [step, setStep] = useState(0)
   const [exerciseAnswers, setExerciseAnswers] = useState<Record<string, string | number>>({})
   const [revealed, setRevealed] = useState<Record<string, boolean>>({})
-  const [extraExercises, setExtraExercises] = useState<GeneratedExercise[] | null>(null)
-  const [generating, setGenerating] = useState(false)
-  const [genError, setGenError] = useState('')
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(progressKey)
-      if (saved) {
-        const all = JSON.parse(saved)
-        setIsDone((all[modId] ?? []).includes(unitIndex))
-      }
-    } catch {}
-  }, [modId, unitIndex, progressKey])
+  const isDone = completed.includes(unitIndex)
 
   if (!mod || !unit) return <div style={{ padding: '2rem', color: 'var(--ink3)' }}>Lesson not found.</div>
 
   const steps = ['Objectives', 'Vocabulary', 'Grammar', 'Dialogue', 'Exercises', 'Culture']
-
-  function markDone() {
-    try {
-      const saved = localStorage.getItem(progressKey)
-      const all = saved ? JSON.parse(saved) : {}
-      const modProgress: number[] = all[modId] ?? []
-      if (!modProgress.includes(unitIndex)) modProgress.push(unitIndex)
-      all[modId] = modProgress
-      localStorage.setItem(progressKey, JSON.stringify(all))
-      setIsDone(true)
-    } catch {}
-    if (studentId) {
-      fetch('/api/progress', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ studentId, moduleId: modId, unitIndex }),
-      }).catch(() => {})
-    }
-  }
-
-  async function generateExtraExercises() {
-    setGenerating(true)
-    setGenError('')
-    try {
-      const res = await fetch('/api/exercises', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ unit }),
-      })
-      const data = await res.json()
-      if (data.exercises) {
-        setExtraExercises(data.exercises)
-      } else {
-        setGenError(data.error || 'Failed to generate exercises.')
-      }
-    } catch {
-      setGenError('Network error. Check your API key in .env.')
-    }
-    setGenerating(false)
-  }
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
@@ -146,10 +91,6 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
             setAnswers={setExerciseAnswers}
             revealed={revealed}
             setRevealed={setRevealed}
-            extraExercises={extraExercises}
-            generating={generating}
-            genError={genError}
-            onGenerate={generateExtraExercises}
           />
         )}
         {step === 5 && <CultureStep unit={unit} />}
@@ -167,7 +108,7 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
             </button>
           ) : (
             <button
-              onClick={() => { markDone(); router.push(`${moduleBase}/${modId}`) }}
+              onClick={() => { markDone(unitIndex); router.push(`${moduleBase}/${modId}`) }}
               style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: 'var(--green)', color: '#fff' }}
             >
               {isDone ? '✓ Completed' : 'Mark as done ✓'}
@@ -299,135 +240,112 @@ function DialogueStep({ unit }: { unit: Unit }) {
 
 function ExercisesStep({
   unit, answers, setAnswers, revealed, setRevealed,
-  extraExercises, generating, genError, onGenerate
 }: {
   unit: Unit
   answers: Record<string, string | number>
   setAnswers: (v: Record<string, string | number>) => void
   revealed: Record<string, boolean>
   setRevealed: (v: Record<string, boolean>) => void
-  extraExercises: GeneratedExercise[] | null
-  generating: boolean
-  genError: string
-  onGenerate: () => void
 }) {
+  const [showExtra, setShowExtra] = useState(false)
+  const extra = unit.extraExercises ?? []
+  const extraCount = extra.reduce((n, ex) => n + ex.items.length, 0)
+
   return (
     <div>
       <SectionHeading icon="✏️" label="Exercises" />
-      {[...unit.exercises, ...(unit.extraExercises ?? [])].map((ex, ei) => (
-        <div key={ei} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem 1.1rem', marginBottom: '.6rem' }}>
-          <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.35rem' }}>{ex.type}</div>
-          <div style={{ fontSize: 13, color: 'var(--ink2)', marginBottom: '.75rem', lineHeight: 1.4 }}>{ex.instruction}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
-            {ex.items.map((item, ii) => {
-              const key = `${ei}-${ii}`
-              const userAns = answers[key]
-              const isRevealed = revealed[key]
-              const correct = typeof item.ans === 'number'
-                ? userAns === item.ans
-                : (userAns as string)?.toLowerCase().trim() === (item.ans as string).toLowerCase().trim()
-              return (
-                <div key={ii} style={{ fontSize: 14, color: 'var(--ink)' }}>
-                  <div style={{ fontWeight: 400, lineHeight: 1.5, marginBottom: '.3rem' }}>{item.q}</div>
-                  {item.opts ? (
-                    <div style={{ display: 'flex', gap: '.4rem', flexWrap: 'wrap' }}>
-                      {item.opts.map((opt, oi) => {
-                        let bg = '#fff', borderColor = 'var(--border)', color = 'var(--ink)'
-                        if (userAns === oi) {
-                          bg = isRevealed ? (oi === item.ans ? '#e8fdf0' : '#fdecea') : 'var(--ink)'
-                          borderColor = isRevealed ? (oi === item.ans ? 'var(--green)' : 'var(--red)') : 'var(--ink)'
-                          color = isRevealed ? (oi === item.ans ? 'var(--green)' : 'var(--red)') : '#fff'
-                        }
-                        return (
-                          <button key={oi} onClick={() => { setAnswers({ ...answers, [key]: oi }); setRevealed({ ...revealed, [key]: true }) }} style={{ padding: '.3rem .7rem', border: `1.5px solid ${borderColor}`, borderRadius: 6, fontSize: 14, background: bg, color, cursor: 'pointer', fontFamily: 'inherit' }}>
-                            {opt}
-                          </button>
-                        )
-                      })}
-                    </div>
-                  ) : (
-                    <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
-                      <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder="Type your answer..." style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? '#e8fdf0' : '#fdecea') : '#fff' }} />
-                      <button onClick={() => setRevealed({ ...revealed, [key]: true })} style={{ padding: '.4rem .8rem', border: '1.5px solid var(--border)', borderRadius: 6, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit', background: 'var(--paper)' }}>Check</button>
-                      {isRevealed && !correct && <span style={{ fontSize: 12, color: 'var(--green)' }}>→ {item.ans}</span>}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </div>
+      {unit.exercises.map((ex, ei) => (
+        <ExerciseCard
+          key={`c${ei}`} ex={ex} keyPrefix={`c${ei}`}
+          answers={answers} setAnswers={setAnswers}
+          revealed={revealed} setRevealed={setRevealed}
+        />
       ))}
 
-      {/* AI Extra Exercises */}
-      <div style={{ marginTop: '1rem', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
-        <div style={{ background: 'var(--gold-light)', borderBottom: '1px solid #e8d48a', padding: '.75rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div>
-            <div style={{ fontSize: 12, fontWeight: 600, color: '#7a5a0a' }}>✨ AI-Generated Exercises</div>
-            <div style={{ fontSize: 11, color: '#9a6b0a', marginTop: 1 }}>3 extra practice exercises from Claude</div>
-          </div>
-          <button onClick={onGenerate} disabled={generating} style={{ padding: '.45rem .9rem', background: generating ? 'var(--border)' : 'var(--ink)', color: '#fff', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: generating ? 'default' : 'pointer', fontFamily: 'inherit' }}>
-            {generating ? '⏳ Generating...' : extraExercises ? '↺ Regenerate' : 'Generate →'}
+      {/* Extra practice — static exercises from the curriculum, unlocked on demand */}
+      {extra.length > 0 && (
+        showExtra ? (
+          <>
+            <div style={{ margin: '1.25rem 0 .6rem', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
+              <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+              <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)' }}>
+                Extra practice
+              </div>
+              <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+            </div>
+            {extra.map((ex, ei) => (
+              <ExerciseCard
+                key={`x${ei}`} ex={ex} keyPrefix={`x${ei}`}
+                answers={answers} setAnswers={setAnswers}
+                revealed={revealed} setRevealed={setRevealed}
+              />
+            ))}
+          </>
+        ) : (
+          <button
+            onClick={() => setShowExtra(true)}
+            style={{ width: '100%', marginTop: '1rem', padding: '.85rem', border: '1.5px dashed var(--border)', borderRadius: 12, background: 'var(--paper)', color: 'var(--ink2)', fontSize: 14, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+          >
+            + More exercises ({extraCount})
           </button>
-        </div>
-        {genError && <div style={{ padding: '.75rem 1rem', fontSize: 13, color: 'var(--red)' }}>{genError}</div>}
-        {extraExercises && (
-          <div style={{ padding: '.75rem 1rem', display: 'flex', flexDirection: 'column', gap: '.75rem' }}>
-            {extraExercises.map((ex, i) => <ExtraExerciseItem key={i} ex={ex} index={i} />)}
-          </div>
-        )}
-      </div>
+        )
+      )}
     </div>
   )
 }
 
-function ExtraExerciseItem({ ex, index }: { ex: GeneratedExercise; index: number }) {
-  const [selected, setSelected] = useState<number | null>(null)
-  const [typed, setTyped] = useState('')
-  const [revealed, setReveal] = useState(false)
-
-  if (ex.type === 'multiple_choice') {
-    return (
-      <div>
-        <div style={{ fontSize: 13, fontWeight: 500, marginBottom: '.4rem' }}>{index + 1}. {ex.question}</div>
-        <div style={{ display: 'flex', gap: '.4rem', flexWrap: 'wrap' }}>
-          {ex.options.map((opt, oi) => {
-            let bg = '#fff', borderColor = 'var(--border)', color = 'var(--ink)'
-            if (selected === oi) {
-              bg = revealed ? (oi === ex.answer ? '#e8fdf0' : '#fdecea') : 'var(--ink)'
-              borderColor = revealed ? (oi === ex.answer ? 'var(--green)' : 'var(--red)') : 'var(--ink)'
-              color = revealed ? (oi === ex.answer ? 'var(--green)' : 'var(--red)') : '#fff'
-            }
-            return <button key={oi} onClick={() => { setSelected(oi); setReveal(true) }} style={{ padding: '.3rem .7rem', border: `1.5px solid ${borderColor}`, borderRadius: 6, fontSize: 13, background: bg, color, cursor: 'pointer', fontFamily: 'inherit' }}>{opt}</button>
-          })}
-        </div>
-        {revealed && ex.explanation && <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: '.35rem', fontStyle: 'italic' }}>{ex.explanation}</div>}
-      </div>
-    )
-  }
-
-  if (ex.type === 'fill_blank') {
-    const correct = typed.toLowerCase().trim() === ex.answer.toLowerCase().trim()
-    return (
-      <div>
-        <div style={{ fontSize: 13, fontWeight: 500, marginBottom: '.4rem' }}>{index + 1}. {ex.question}</div>
-        <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
-          <input type="text" value={typed} onChange={e => setTyped(e.target.value)} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${revealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 13, fontFamily: 'inherit' }} />
-          <button onClick={() => setReveal(true)} style={{ padding: '.4rem .8rem', border: '1.5px solid var(--border)', borderRadius: 6, fontSize: 12, cursor: 'pointer', fontFamily: 'inherit', background: 'var(--paper)' }}>Check</button>
-          {revealed && !correct && <span style={{ fontSize: 12, color: 'var(--green)' }}>→ {ex.answer}</span>}
-        </div>
-      </div>
-    )
-  }
-
+function ExerciseCard({
+  ex, keyPrefix, answers, setAnswers, revealed, setRevealed,
+}: {
+  ex: Exercise
+  keyPrefix: string
+  answers: Record<string, string | number>
+  setAnswers: (v: Record<string, string | number>) => void
+  revealed: Record<string, boolean>
+  setRevealed: (v: Record<string, boolean>) => void
+}) {
   return (
-    <div>
-      <div style={{ fontSize: 13, fontWeight: 500, marginBottom: '.4rem' }}>{index + 1}. Translate: &ldquo;{ex.english}&rdquo;</div>
-      <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
-        <input type="text" value={typed} onChange={e => setTyped(e.target.value)} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${revealed ? 'var(--green)' : 'var(--border)'}`, borderRadius: 6, fontSize: 13, fontFamily: 'inherit' }} />
-        <button onClick={() => setReveal(true)} style={{ padding: '.4rem .8rem', border: '1.5px solid var(--border)', borderRadius: 6, fontSize: 12, cursor: 'pointer', fontFamily: 'inherit', background: 'var(--paper)' }}>Reveal</button>
+    <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem 1.1rem', marginBottom: '.6rem' }}>
+      <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.35rem' }}>{ex.type}</div>
+      <div style={{ fontSize: 13, color: 'var(--ink2)', marginBottom: '.75rem', lineHeight: 1.4 }}>{ex.instruction}</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
+        {ex.items.map((item, ii) => {
+          const key = `${keyPrefix}-${ii}`
+          const userAns = answers[key]
+          const isRevealed = revealed[key]
+          const correct = typeof item.ans === 'number'
+            ? userAns === item.ans
+            : (userAns as string)?.toLowerCase().trim() === (item.ans as string).toLowerCase().trim()
+          return (
+            <div key={ii} style={{ fontSize: 14, color: 'var(--ink)' }}>
+              <div style={{ fontWeight: 400, lineHeight: 1.5, marginBottom: '.3rem' }}>{item.q}</div>
+              {item.opts ? (
+                <div style={{ display: 'flex', gap: '.4rem', flexWrap: 'wrap' }}>
+                  {item.opts.map((opt, oi) => {
+                    let bg = '#fff', borderColor = 'var(--border)', color = 'var(--ink)'
+                    if (userAns === oi) {
+                      bg = isRevealed ? (oi === item.ans ? '#e8fdf0' : '#fdecea') : 'var(--ink)'
+                      borderColor = isRevealed ? (oi === item.ans ? 'var(--green)' : 'var(--red)') : 'var(--ink)'
+                      color = isRevealed ? (oi === item.ans ? 'var(--green)' : 'var(--red)') : '#fff'
+                    }
+                    return (
+                      <button key={oi} onClick={() => { setAnswers({ ...answers, [key]: oi }); setRevealed({ ...revealed, [key]: true }) }} style={{ padding: '.3rem .7rem', border: `1.5px solid ${borderColor}`, borderRadius: 6, fontSize: 14, background: bg, color, cursor: 'pointer', fontFamily: 'inherit' }}>
+                        {opt}
+                      </button>
+                    )
+                  })}
+                </div>
+              ) : (
+                <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
+                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder="Type your answer..." style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? '#e8fdf0' : '#fdecea') : '#fff' }} />
+                  <button onClick={() => setRevealed({ ...revealed, [key]: true })} style={{ padding: '.4rem .8rem', border: '1.5px solid var(--border)', borderRadius: 6, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit', background: 'var(--paper)' }}>Check</button>
+                  {isRevealed && !correct && <span style={{ fontSize: 12, color: 'var(--green)' }}>&rarr; {item.ans}</span>}
+                </div>
+              )}
+            </div>
+          )
+        })}
       </div>
-      {revealed && <div style={{ fontSize: 12, color: 'var(--green)', marginTop: '.3rem' }}>✓ {ex.portuguese}</div>}
     </div>
   )
 }

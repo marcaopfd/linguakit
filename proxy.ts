@@ -1,6 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const PUBLIC_PATHS = ['/test', '/api/results', '/api/progress', '/api/students', '/learn', '/login', '/api/login']
+/**
+ * Paths reachable without a teacher session.
+ *
+ * These are an *edge-level* allowlist only. Where a path mixes public and
+ * private operations (e.g. GET /api/results lists every student, but POST
+ * /api/results receives a placement-test submission), the route handler does
+ * the real per-method check with `requireTeacher` from lib/auth.
+ */
+const PUBLIC_PATHS = [
+  '/test',           // placement test — shared publicly with students
+  '/login',
+  '/api/login',
+  '/learn',          // student portal, addressed by unguessable student id
+  '/api/progress',   // student portal marks units complete
+  '/api/pdf',        // student downloads the unit PDF from inside a lesson
+  '/api/results',    // POST is public (test submission); GET is teacher-only
+  '/api/students',   // GET is public (student portal); DELETE is teacher-only
+]
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
@@ -15,7 +32,7 @@ export function proxy(req: NextRequest) {
   }
 
   const session = req.cookies.get('lk_session')?.value
-  if (session === process.env.SESSION_SECRET) {
+  if (session && session === process.env.SESSION_SECRET) {
     return NextResponse.next()
   }
 

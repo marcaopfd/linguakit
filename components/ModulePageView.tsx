@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Module } from '@/lib/curriculum'
+import { useModuleProgress } from '@/lib/use-progress'
 
 interface Props {
   modId: string
@@ -10,21 +10,12 @@ interface Props {
   lessonBase: string  // e.g. '/lesson' or '/en/lesson'
   backHref: string
   progressKey: string
+  studentId?: string   // when set, progress comes from the DB instead of localStorage
 }
 
-export function ModulePageView({ modId, modules, lessonBase, backHref, progressKey }: Props) {
+export function ModulePageView({ modId, modules, lessonBase, backHref, progressKey, studentId }: Props) {
   const mod = modules.find(m => m.id === modId)
-  const [progress, setProgress] = useState<number[]>([])
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(progressKey)
-      if (saved) {
-        const all = JSON.parse(saved)
-        setProgress(all[modId] ?? [])
-      }
-    } catch {}
-  }, [modId, progressKey])
+  const { done: progress } = useModuleProgress(modId, progressKey, studentId)
 
   if (!mod) return <div style={{ padding: '2rem', color: 'var(--ink3)' }}>Module not found.</div>
 

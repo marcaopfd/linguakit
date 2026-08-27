@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
+import { prisma, withDb } from '@/lib/db'
+import { requireTeacher } from '@/lib/auth'
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const denied = requireTeacher(req)
+  if (denied) return denied
+
   try {
-    const students = await prisma.student.findMany({
+    const students = await withDb(() => prisma.student.findMany({
       include: { testResult: true },
       orderBy: { createdAt: 'desc' },
-    })
+    }))
 
     const formatted = students.map(s => ({
       id: s.id,
@@ -40,7 +44,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const { name, level, levelName, totalCorrect, pct, sectionScores, skillPcts, strengths, weaknesses, course } = body
 
-    const student = await prisma.student.create({
+    const student = await withDb(() => prisma.student.create({
       data: {
         name: name || 'Student',
         testResult: {
@@ -62,7 +66,7 @@ export async function POST(req: NextRequest) {
         },
       },
       include: { testResult: true },
-    })
+    }))
 
     return NextResponse.json({ ok: true, studentId: student.id })
   } catch (err) {

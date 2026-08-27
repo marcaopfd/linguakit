@@ -27,6 +27,7 @@ export default function LearnModulePage() {
       lessonBase={`/learn/${studentId}/lesson`}
       backHref={`/learn/${studentId}`}
       progressKey={isEN ? 'lk_progress_en' : 'lk_progress'}
+      studentId={studentId}
     />
   )
 }

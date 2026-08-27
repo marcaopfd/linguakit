@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LinguaKit
 
-## Getting Started
+Plataforma de ensino de idiomas com dois cursos espelhados:
 
-First, run the development server:
+- 🇧🇷 **Português para falantes de inglês** — `/pt`
+- 🇺🇸 **Inglês para falantes de português** — `/en`
+
+Cada curso tem 6 módulos (A1 → C2) e 50 units, com vocabulário, gramática,
+diálogo, exercícios e nota cultural. O currículo vive versionado em
+`lib/curriculum.ts` e `lib/curriculum-en.ts`.
+
+## As três superfícies
+
+| Superfície | Rotas | Acesso |
+| --- | --- | --- |
+| Painel do professor | `/`, `/pt`, `/en`, `/module/[id]`, `/lesson/[mod]/[unit]`, `/students` | senha (`TEACHER_PASSWORD`) |
+| Portal do aluno | `/learn/[studentId]/...` | link direto, sem senha |
+| Teste de nivelamento | `/test?lang=pt\|en` | público |
+
+O aluno recebe um link `/learn/<id>`. O id é um cuid não adivinhável e funciona
+como a credencial dele — trate o link como algo privado.
+
+## Rodando local
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Precisa de um `.env` na raiz:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+DATABASE_URL=      # Postgres (Neon), string com pooler
+DIRECT_URL=        # Postgres direto, usado pelas migrations
+TEACHER_PASSWORD=  # senha do painel do professor
+SESSION_SECRET=    # string aleatória longa; é o valor do cookie de sessão
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> O `DATABASE_URL` local aponta para o mesmo banco de produção. Escrever no app
+> rodando local altera dados reais de alunos.
 
-## Learn More
+## Autenticação
 
-To learn more about Next.js, take a look at the following resources:
+`proxy.ts` faz a checagem otimista na borda e redireciona para `/login`. Como o
+Next é explícito que proxy não é solução de autorização, cada rota sensível
+refaz a checagem com `requireTeacher` de `lib/auth.ts`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Rota | Método | Quem |
+| --- | --- | --- |
+| `/api/results` | `GET` | professor |
+| `/api/results` | `POST` | público (envio do teste) |
+| `/api/students/[id]` | `GET` | público (portal do aluno) |
+| `/api/students/[id]` | `DELETE` | professor |
+| `/api/progress` | `GET` / `POST` | público (portal do aluno) |
+| `/api/pdf/{pt,en}/[mod]/[unit]` | `GET` | público (aluno baixa a apostila) |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Progresso
 
-## Deploy on Vercel
+O professor navegando pelo curso guarda progresso em `localStorage` — é um
+rascunho pessoal. O portal do aluno lê e grava no banco (`StudentLesson`), então
+o progresso acompanha o aluno entre dispositivos e dois alunos no mesmo
+navegador não se misturam. A lógica está em `lib/use-progress.ts`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Banco
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Prisma + Postgres no Neon. O Neon suspende a compute depois de um tempo ocioso,
+então a primeira query após inatividade pode falhar enquanto ele acorda —
+`withDb()` em `lib/db.ts` faz retry com backoff só nesses erros de conexão.
+
+```bash
+npx prisma migrate dev     # cria/aplica migration
+npx prisma studio          # inspeciona os dados
+```
+
+## Scripts de currículo
+
+`scripts/expand-curriculum.mjs` e `scripts/generate-en-curriculum.mjs` geram
+conteúdo com a API da Anthropic e gravam o resultado direto nos arquivos de
+currículo. São ferramentas de autoria, rodadas à mão — o app em produção não
+chama nenhuma API de IA. Precisam de `ANTHROPIC_API_KEY` no `.env`.
+
+## Deploy
+
+Vercel, conectado ao branch `main`. Push em `main` publica em produção. As
+variáveis de ambiente são configuradas no dashboard da Vercel, não neste repo.
