@@ -34,10 +34,12 @@ DATABASE_URL=      # Postgres (Neon), string com pooler
 DIRECT_URL=        # Postgres direto, usado pelas migrations
 TEACHER_PASSWORD=  # senha do painel do professor
 SESSION_SECRET=    # string aleatória longa; é o valor do cookie de sessão
+ANTHROPIC_API_KEY= # só para os scripts de currículo; o app não usa
 ```
 
-> O `DATABASE_URL` local aponta para o mesmo banco de produção. Escrever no app
-> rodando local altera dados reais de alunos.
+O `.env` aponta para o branch **`dev`** do Neon — uma cópia isolada de produção.
+As URLs de produção ficam comentadas no mesmo arquivo; só descomente se
+precisar inspecionar dados reais, e volte depois.
 
 ## Autenticação
 
@@ -74,10 +76,27 @@ npx prisma studio          # inspeciona os dados
 
 ## Scripts de currículo
 
-`scripts/expand-curriculum.mjs` e `scripts/generate-en-curriculum.mjs` geram
-conteúdo com a API da Anthropic e gravam o resultado direto nos arquivos de
-currículo. São ferramentas de autoria, rodadas à mão — o app em produção não
-chama nenhuma API de IA. Precisam de `ANTHROPIC_API_KEY` no `.env`.
+Ferramentas de autoria, rodadas à mão. O app em produção não chama nenhuma API
+de IA — todo conteúdo é gerado aqui e commitado.
+
+| Script | O que faz |
+| --- | --- |
+| `generate-en-curriculum.mjs` | Gera o currículo base do curso de inglês |
+| `expand-curriculum.mjs` | Adiciona extras ao curso PT (`lib/curriculum.ts`) |
+| `expand-curriculum-en.mjs` | Adiciona extras ao curso EN (`lib/curriculum-en.ts`) |
+
+Os "extras" são `extraVocab`, `extendedExamples`, `commonMistakes`,
+`extraExercises` e `teacherTip`. Os `extraExercises` são o que o botão
+"More exercises" libera na tela da lição.
+
+Cada script salva o progresso num cache JSON depois de cada unit, então dá para
+interromper e retomar sem repagar o que já foi gerado. Escrevem um arquivo
+`*-expanded.ts` para você revisar antes de sobrescrever o currículo:
+
+```bash
+node scripts/expand-curriculum-en.mjs
+cp lib/curriculum-en-expanded.ts lib/curriculum-en.ts
+```
 
 ## Deploy
 
