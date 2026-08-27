@@ -13,6 +13,9 @@ const PUBLIC_PATHS = [
   '/login',
   '/api/login',
   '/learn',          // student portal, addressed by unguessable student id
+  '/cadastro',       // student self-signup
+  '/entrar',         // student login
+  '/api/student',    // student signup / login / logout / me
   '/api/progress',   // student portal marks units complete
   '/api/pdf',        // student downloads the unit PDF from inside a lesson
   '/api/results',    // POST is public (test submission); GET is teacher-only

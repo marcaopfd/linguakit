@@ -9,10 +9,21 @@ datasource db {
 }
 
 model Student {
-  id         String          @id @default(cuid())
-  name       String
-  email      String?
-  createdAt  DateTime        @default(now())
+  id        String   @id @default(cuid())
+  name      String
+  /// Null for students created by the placement test before self-signup existed.
+  email     String?  @unique
+  /// scrypt hash; null means this student has no account and reaches the course
+  /// only through their /learn/<id> link.
+  password  String?
+  /// Chosen at signup. Students created by the test carry it on testResult
+  /// instead, so read it with `student.course ?? student.testResult?.course`.
+  course    String?
+  /// Explicit newsletter consent, with the moment it was given.
+  newsletter   Boolean   @default(false)
+  newsletterAt DateTime?
+  createdAt DateTime @default(now())
+
   testResult TestResult?
   lessons    StudentLesson[]
 }

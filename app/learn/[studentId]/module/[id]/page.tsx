@@ -13,7 +13,7 @@ export default function LearnModulePage() {
   useEffect(() => {
     fetch(`/api/students/${studentId}`)
       .then(r => r.json())
-      .then(data => setCourse(data.student?.testResult?.course ?? 'pt'))
+      .then(data => setCourse(data.student?.course ?? data.student?.testResult?.course ?? 'pt'))
       .catch(() => setCourse('pt'))
   }, [studentId])
 

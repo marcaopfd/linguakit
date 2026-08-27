@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { MODULES } from '@/lib/curriculum'
 import { EN_MODULES } from '@/lib/curriculum-en'
 
 export default function DashboardPage() {
+  const router = useRouter()
   const [ptProgress, setPtProgress] = useState<Record<string, number[]>>({})
   const [enProgress, setEnProgress] = useState<Record<string, number[]>>({})
   const [activeTab, setActiveTab] = useState<'courses' | 'students'>('courses')
@@ -24,12 +26,26 @@ export default function DashboardPage() {
   const enDone = EN_MODULES.reduce((s, m) => s + (enProgress[m.id]?.length ?? 0), 0)
   const enTotal = EN_MODULES.reduce((s, m) => s + m.units.length, 0)
 
+  async function logout() {
+    await fetch('/api/logout', { method: 'POST' })
+    router.push('/login')
+    router.refresh()
+  }
+
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       {/* Hero */}
-      <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '3rem 2rem 2rem' }}>
-        <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 32, fontWeight: 600, letterSpacing: '-.5px', marginBottom: '.3rem' }}>LinguaKit</h1>
-        <p style={{ fontSize: 14, color: 'rgba(255,255,255,.5)' }}>Dashboard do Professor · by Marcos</p>
+      <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '3rem 2rem 2rem', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+        <div>
+          <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 32, fontWeight: 600, letterSpacing: '-.5px', marginBottom: '.3rem' }}>LinguaKit</h1>
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,.5)' }}>Dashboard do Professor · by Marcos</p>
+        </div>
+        <button
+          onClick={logout}
+          style={{ flexShrink: 0, padding: '.4rem .8rem', borderRadius: 8, border: '1px solid rgba(255,255,255,.25)', background: 'transparent', color: 'rgba(255,255,255,.7)', fontSize: 12.5, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+        >
+          Sair
+        </button>
       </div>
 
       {/* Tab bar */}

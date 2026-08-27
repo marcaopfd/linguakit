@@ -5,9 +5,16 @@ import { requireTeacher } from '@/lib/auth'
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   try {
+    // This route is public (the student portal calls it), so select fields
+    // explicitly — never spread the row, which would ship the password hash.
     const student = await withDb(() => prisma.student.findUnique({
       where: { id },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        course: true,
+        createdAt: true,
         testResult: true,
         lessons: { orderBy: { completedAt: 'asc' } },
       },

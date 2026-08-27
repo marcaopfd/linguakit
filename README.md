@@ -14,11 +14,30 @@ diálogo, exercícios e nota cultural. O currículo vive versionado em
 | Superfície | Rotas | Acesso |
 | --- | --- | --- |
 | Painel do professor | `/`, `/pt`, `/en`, `/module/[id]`, `/lesson/[mod]/[unit]`, `/students` | senha (`TEACHER_PASSWORD`) |
-| Portal do aluno | `/learn/[studentId]/...` | link direto, sem senha |
+| Portal do aluno | `/learn/[studentId]/...` | conta própria **ou** link direto |
+| Cadastro / entrada do aluno | `/cadastro`, `/entrar` | público |
 | Teste de nivelamento | `/test?lang=pt\|en` | público |
 
-O aluno recebe um link `/learn/<id>`. O id é um cuid não adivinhável e funciona
-como a credencial dele — trate o link como algo privado.
+Há dois caminhos para o aluno, e os dois continuam valendo:
+
+1. **Conta própria** — ele se cadastra em `/cadastro` (nome, e-mail, senha,
+   curso e opt-in de newsletter) e depois entra por `/entrar` de qualquer
+   aparelho. A senha é guardada como hash scrypt e a sessão é um cookie
+   `lk_student` assinado com HMAC, sem tabela de sessões.
+2. **Link direto** — o professor compartilha `/learn/<id>`. O id é um cuid não
+   adivinhável e funciona como a credencial; trate o link como privado. É como
+   funcionam os alunos criados pelo teste de nivelamento, que não têm senha.
+
+O curso do aluno vem de `Student.course` (escolhido no cadastro) e, para quem
+veio pelo teste, de `TestResult.course` — sempre leia com
+`student.course ?? student.testResult?.course`.
+
+### Newsletter
+
+`Student.newsletter` só fica `true` com o checkbox marcado no cadastro, e
+`newsletterAt` guarda o momento do consentimento. O painel de alunos mostra
+quantos aceitaram e tem um botão para copiar a lista de e-mails. Não existe
+envio automatizado — a lista é para colar na ferramenta de e-mail que você usar.
 
 ## Rodando local
 
@@ -53,6 +72,8 @@ refaz a checagem com `requireTeacher` de `lib/auth.ts`:
 | `/api/results` | `POST` | público (envio do teste) |
 | `/api/students/[id]` | `GET` | público (portal do aluno) |
 | `/api/students/[id]` | `DELETE` | professor |
+| `/api/student/signup`, `/login`, `/logout`, `/me` | `POST` / `GET` | público |
+| `/api/logout` | `POST` | professor |
 | `/api/progress` | `GET` / `POST` | público (portal do aluno) |
 | `/api/pdf/{pt,en}/[mod]/[unit]` | `GET` | público (aluno baixa a apostila) |
 
@@ -73,6 +94,11 @@ então a primeira query após inatividade pode falhar enquanto ele acorda —
 npx prisma migrate dev     # cria/aplica migration
 npx prisma studio          # inspeciona os dados
 ```
+
+O script de build roda `prisma migrate deploy` antes do `next build`, então
+migrations pendentes são aplicadas em produção no deploy da Vercel. Depois de
+mudar o schema, reinicie o `npm run dev` — o servidor mantém o Prisma Client
+antigo em memória e falha com "Unknown argument" até reiniciar.
 
 ## Scripts de currículo
 

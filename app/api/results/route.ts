@@ -7,8 +7,18 @@ export async function GET(req: NextRequest) {
   if (denied) return denied
 
   try {
+    // Explicit select: the password hash must never leave the server.
     const students = await withDb(() => prisma.student.findMany({
-      include: { testResult: true },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        course: true,
+        newsletter: true,
+        newsletterAt: true,
+        createdAt: true,
+        testResult: true,
+      },
       orderBy: { createdAt: 'desc' },
     }))
 
@@ -16,6 +26,10 @@ export async function GET(req: NextRequest) {
       id: s.id,
       name: s.name,
       email: s.email,
+      course: s.course ?? s.testResult?.course ?? null,
+      newsletter: s.newsletter,
+      newsletterAt: s.newsletterAt,
+      hasAccount: Boolean(s.email),
       createdAt: s.createdAt,
       testResult: s.testResult
         ? {

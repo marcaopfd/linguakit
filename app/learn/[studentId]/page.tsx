@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { MODULES } from '@/lib/curriculum'
 import { EN_MODULES } from '@/lib/curriculum-en'
@@ -9,6 +9,8 @@ import { EN_MODULES } from '@/lib/curriculum-en'
 type StudentData = {
   id: string
   name: string
+  email?: string | null
+  course?: string | null
   testResult?: {
     level: string
     levelName: string
@@ -26,8 +28,25 @@ const LEVEL_COLORS: Record<string, string> = {
 
 export default function LearnPage() {
   const { studentId } = useParams<{ studentId: string }>()
+  const router = useRouter()
   const [student, setStudent] = useState<StudentData | null>(null)
   const [loading, setLoading] = useState(true)
+  // Only students who signed up have a session to end. Those reached through a
+  // shared /learn/<id> link have nothing to log out of, so the button is hidden.
+  const [signedIn, setSignedIn] = useState(false)
+
+  useEffect(() => {
+    fetch('/api/student/me')
+      .then(r => r.json())
+      .then(d => setSignedIn(d.student?.id === studentId))
+      .catch(() => {})
+  }, [studentId])
+
+  async function logout() {
+    await fetch('/api/student/logout', { method: 'POST' })
+    router.push('/entrar')
+    router.refresh()
+  }
 
   useEffect(() => {
     fetch(`/api/students/${studentId}`)
@@ -47,7 +66,7 @@ export default function LearnPage() {
     </div>
   )
 
-  const isEN = student.testResult?.course === 'en'
+  const isEN = (student.course ?? student.testResult?.course) === 'en'
   const modules = isEN ? EN_MODULES : MODULES
   const completedSet = new Set(student.lessons.map(l => `${l.moduleId}-${l.unitIndex}`))
   const lvlColor = student.testResult ? (LEVEL_COLORS[student.testResult.level] ?? 'var(--ink)') : 'var(--ink)'
@@ -63,9 +82,19 @@ export default function LearnPage() {
         <div style={{ fontSize: 12, color: 'rgba(255,255,255,.4)', marginBottom: '.35rem', textTransform: 'uppercase', letterSpacing: '.07em' }}>
           {isEN ? '🇺🇸 English Course' : '🇧🇷 Portuguese Course'} · LinguaKit
         </div>
-        <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 26, fontWeight: 700, marginBottom: '.5rem' }}>
-          Olá, {student.name} 👋
-        </h1>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+          <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 26, fontWeight: 700, marginBottom: '.5rem' }}>
+            Olá, {student.name} 👋
+          </h1>
+          {signedIn && (
+            <button
+              onClick={logout}
+              style={{ flexShrink: 0, padding: '.35rem .75rem', borderRadius: 8, border: '1px solid rgba(255,255,255,.25)', background: 'transparent', color: 'rgba(255,255,255,.7)', fontSize: 12.5, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+            >
+              Sair
+            </button>
+          )}
+        </div>
         {student.testResult && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
             <span style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 18, fontWeight: 700, color: lvlColor, background: 'rgba(255,255,255,.12)', borderRadius: 8, padding: '.15rem .65rem' }}>

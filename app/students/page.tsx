@@ -8,7 +8,11 @@ type SkillScore = { correct: number; pct: number }
 type Student = {
   id: string
   name: string
-  email?: string
+  email?: string | null
+  course?: string | null
+  newsletter?: boolean
+  newsletterAt?: string | null
+  hasAccount?: boolean
   createdAt: string
   testResult?: {
     level: string
@@ -40,6 +44,20 @@ export default function StudentsPage() {
   const [error, setError] = useState('')
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [refreshing, setRefreshing] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  const subscribers = students.filter(s => s.newsletter && s.email)
+
+  async function copySubscribers() {
+    const list = subscribers.map(s => s.email).join(', ')
+    try {
+      await navigator.clipboard.writeText(list)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      window.prompt('Copie os e-mails:', list)
+    }
+  }
 
   async function fetchStudents(showSpinner = false) {
     if (showSpinner) setRefreshing(true)
@@ -107,6 +125,27 @@ export default function StudentsPage() {
         </a>
       </div>
 
+      {/* Signup link + newsletter list */}
+      <div style={{ background: '#eef4fb', borderBottom: '1px solid #cfe0f2', padding: '.75rem 1.5rem', display: 'flex', alignItems: 'center', gap: '.75rem', flexWrap: 'wrap' }}>
+        <span style={{ fontSize: 13, color: '#1a5c9e', flex: 1 }}>
+          Cadastro de aluno · <strong>{subscribers.length}</strong> {subscribers.length === 1 ? 'inscrito' : 'inscritos'} na newsletter
+        </span>
+        <a
+          href="/cadastro"
+          target="_blank"
+          style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.35rem .75rem', background: '#fff', border: '1px solid #cfe0f2', borderRadius: 8 }}
+        >
+          🔗 Link do cadastro →
+        </a>
+        <button
+          onClick={copySubscribers}
+          disabled={subscribers.length === 0}
+          style={{ fontSize: 13, fontWeight: 600, color: subscribers.length ? 'var(--ink)' : 'var(--ink3)', padding: '.35rem .75rem', background: '#fff', border: '1px solid #cfe0f2', borderRadius: 8, fontFamily: 'inherit', cursor: subscribers.length ? 'pointer' : 'default' }}
+        >
+          {copied ? '✓ Copiado' : '✉️ Copiar e-mails'}
+        </button>
+      </div>
+
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '1.5rem' }}>
         {loading && <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--ink3)', fontSize: 14 }}>Loading...</div>}
         {error && <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--red)', fontSize: 14 }}>{error}</div>}
@@ -125,6 +164,7 @@ export default function StudentsPage() {
 
 function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id: string) => void }) {
   const r = s.testResult
+  const course = s.course ?? r?.course ?? null
   const levelColor = r ? (LEVEL_COLORS[r.level] ?? 'var(--ink)') : 'var(--ink3)'
   const [confirming, setConfirming] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -150,15 +190,26 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
             <span style={{ fontSize: 15, fontWeight: 600 }}>{s.name}</span>
-            {r?.course && (
-              <span style={{ fontSize: 11, padding: '.15rem .45rem', borderRadius: 5, background: r.course === 'en' ? '#fff3e8' : '#e8f1fb', color: r.course === 'en' ? '#9a4f0a' : '#1a5c9e', fontWeight: 600 }}>
-                {r.course === 'en' ? '🇺🇸 EN' : '🇧🇷 PT'}
+            {course && (
+              <span style={{ fontSize: 11, padding: '.15rem .45rem', borderRadius: 5, background: course === 'en' ? '#fff3e8' : '#e8f1fb', color: course === 'en' ? '#9a4f0a' : '#1a5c9e', fontWeight: 600 }}>
+                {course === 'en' ? '🇺🇸 EN' : '🇧🇷 PT'}
+              </span>
+            )}
+            {s.newsletter && (
+              <span title={s.newsletterAt ? `Aceitou em ${new Date(s.newsletterAt).toLocaleDateString('pt-BR')}` : undefined} style={{ fontSize: 11, padding: '.15rem .45rem', borderRadius: 5, background: '#eaf7ee', color: '#1f6b2e', fontWeight: 600 }}>
+                ✉️ newsletter
+              </span>
+            )}
+            {s.hasAccount && (
+              <span style={{ fontSize: 11, padding: '.15rem .45rem', borderRadius: 5, background: 'var(--paper)', color: 'var(--ink3)', fontWeight: 600 }}>
+                🔑 conta
               </span>
             )}
           </div>
           <div style={{ fontSize: 12, color: 'var(--ink3)' }}>
             {r ? `${r.level} · ${r.levelName}` : 'No test result yet'} · joined {new Date(s.createdAt).toLocaleDateString('en-IE', { day: 'numeric', month: 'short', year: 'numeric' })}
           </div>
+          {s.email && <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 1 }}>{s.email}</div>}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '.35rem' }}>
           {r && (
