@@ -32,6 +32,21 @@ O curso do aluno vem de `Student.course` (escolhido no cadastro) e, para quem
 veio pelo teste, de `TestResult.course` — sempre leia com
 `student.course ?? student.testResult?.course`.
 
+### Senha esquecida
+
+Não há fluxo por e-mail. No painel de alunos, cada aluno com conta tem o botão
+**Resetar senha**: ele gera uma senha temporária (`lk-xxxx-xxxx`, sem caracteres
+ambíguos), grava o hash e devolve o texto puro **uma única vez** na resposta —
+nada é armazenado em claro. Você repassa ao aluno pelo canal que quiser.
+
+Como você conhece seus alunos pessoalmente, a verificação de identidade é sua.
+Alunos sem conta (os que vieram do teste) não têm o botão: eles acessam pelo
+link e não têm senha para resetar.
+
+> Ressalva conhecida: o reset troca a senha, mas não encerra sessões já abertas
+> em outros aparelhos — o cookie é assinado sobre o id, não sobre a senha. Serve
+> para "esqueci minha senha", não para expulsar alguém de uma conta invadida.
+
 ### Newsletter
 
 `Student.newsletter` só fica `true` com o checkbox marcado no cadastro, e
@@ -73,6 +88,7 @@ refaz a checagem com `requireTeacher` de `lib/auth.ts`:
 | `/api/students/[id]` | `GET` | público (portal do aluno) |
 | `/api/students/[id]` | `DELETE` | professor |
 | `/api/student/signup`, `/login`, `/logout`, `/me` | `POST` / `GET` | público |
+| `/api/students/[id]/reset-password` | `POST` | professor |
 | `/api/logout` | `POST` | professor |
 | `/api/progress` | `GET` / `POST` | público (portal do aluno) |
 | `/api/pdf/{pt,en}/[mod]/[unit]` | `GET` | público (aluno baixa a apostila) |

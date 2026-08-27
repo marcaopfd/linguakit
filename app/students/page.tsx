@@ -168,6 +168,37 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
   const levelColor = r ? (LEVEL_COLORS[r.level] ?? 'var(--ink)') : 'var(--ink3)'
   const [confirming, setConfirming] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [resetting, setResetting] = useState(false)
+  const [confirmingReset, setConfirmingReset] = useState(false)
+  const [tempPassword, setTempPassword] = useState('')
+  const [resetError, setResetError] = useState('')
+  const [copiedPassword, setCopiedPassword] = useState(false)
+
+  async function handleReset() {
+    setResetting(true)
+    setResetError('')
+    try {
+      const res = await fetch(`/api/students/${s.id}/reset-password`, { method: 'POST' })
+      const data = await res.json()
+      if (res.ok) setTempPassword(data.password)
+      else setResetError(data.error ?? 'Não foi possível resetar.')
+    } catch {
+      setResetError('Falha de rede.')
+    } finally {
+      setResetting(false)
+      setConfirmingReset(false)
+    }
+  }
+
+  async function copyPassword() {
+    try {
+      await navigator.clipboard.writeText(tempPassword)
+      setCopiedPassword(true)
+      setTimeout(() => setCopiedPassword(false), 2000)
+    } catch {
+      window.prompt('Copie a senha:', tempPassword)
+    }
+  }
 
   async function handleDelete() {
     setDeleting(true)
@@ -228,12 +259,55 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
               </button>
             </div>
           ) : (
-            <button onClick={() => setConfirming(true)} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: '1px solid var(--border)', background: 'none', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink3)' }}>
-              🗑 Excluir
-            </button>
+            <div style={{ display: 'flex', gap: '.3rem' }}>
+              {s.hasAccount && (
+                confirmingReset ? (
+                  <>
+                    <button onClick={() => setConfirmingReset(false)} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: '1px solid var(--border)', background: 'var(--paper)', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink3)' }}>
+                      Cancelar
+                    </button>
+                    <button onClick={handleReset} disabled={resetting} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: 'none', background: 'var(--ink)', color: '#fff', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600 }}>
+                      {resetting ? '...' : 'Gerar senha'}
+                    </button>
+                  </>
+                ) : (
+                  <button onClick={() => { setConfirmingReset(true); setTempPassword(''); setResetError('') }} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: '1px solid var(--border)', background: 'none', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink3)' }}>
+                    🔑 Resetar senha
+                  </button>
+                )
+              )}
+              <button onClick={() => setConfirming(true)} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: '1px solid var(--border)', background: 'none', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink3)' }}>
+                🗑 Excluir
+              </button>
+            </div>
           )}
         </div>
       </div>
+
+      {resetError && (
+        <div style={{ borderTop: '1px solid var(--border)', padding: '.6rem 1.25rem', background: '#fdecea', fontSize: 12.5, color: 'var(--red)' }}>
+          {resetError}
+        </div>
+      )}
+
+      {tempPassword && (
+        <div style={{ borderTop: '1px solid var(--border)', padding: '.85rem 1.25rem', background: '#eef4fb' }}>
+          <div style={{ fontSize: 12, color: '#1a5c9e', marginBottom: '.5rem', lineHeight: 1.5 }}>
+            Senha temporária de <strong>{s.name}</strong>. Ela aparece <strong>uma única vez</strong> — copie e envie ao aluno agora.
+          </div>
+          <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+            <code style={{ fontSize: 15, fontWeight: 700, letterSpacing: '.5px', background: '#fff', border: '1px solid #cfe0f2', borderRadius: 8, padding: '.4rem .7rem', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace' }}>
+              {tempPassword}
+            </code>
+            <button onClick={copyPassword} style={{ fontSize: 12, fontWeight: 600, padding: '.4rem .7rem', borderRadius: 8, border: '1px solid #cfe0f2', background: '#fff', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink)' }}>
+              {copiedPassword ? '✓ Copiada' : '📋 Copiar'}
+            </button>
+            <button onClick={() => setTempPassword('')} style={{ fontSize: 12, padding: '.4rem .7rem', borderRadius: 8, border: 'none', background: 'none', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink3)' }}>
+              Ocultar
+            </button>
+          </div>
+        </div>
+      )}
 
       {r && (
         <div style={{ borderTop: '1px solid var(--border)', padding: '.85rem 1.25rem', background: 'var(--cream)' }}>
