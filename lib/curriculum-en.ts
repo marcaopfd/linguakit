@@ -100,6 +100,28 @@ export const EN_MODULES: Module[] = [
               "pt": "I am fine, thank you.",
               "en": "Eu estou bem, obrigado."
             }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I am from Brazil.",
+              "en": "Eu sou do Brasil."
+            },
+            {
+              "pt": "You are my teacher.",
+              "en": "Você é meu professor."
+            },
+            {
+              "pt": "He is at home.",
+              "en": "Ele está em casa."
+            },
+            {
+              "pt": "She is very kind.",
+              "en": "Ela é muito gentil."
+            },
+            {
+              "pt": "I am happy to be here.",
+              "en": "Eu estou feliz de estar aqui."
+            }
           ]
         },
         "dialogue": {
@@ -234,7 +256,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como os falantes de inglês se cumprimentam?",
           "text": "Nos países de língua inglesa, como os Estados Unidos e o Reino Unido, é muito comum cumprimentar estranhos com um simples 'Hi!' ou 'Hello!' seguido de um sorriso. Em contextos formais, como reuniões de trabalho ou encontros com pessoas mais velhas, prefere-se 'Good morning' ou 'Good afternoon'. O aperto de mão (handshake) é o cumprimento físico mais comum em situações formais, enquanto amigos próximos podem se abraçar. Diferente do Brasil, beijos no rosto não são comuns entre pessoas que acabaram de se conhecer em países como os EUA ou o Reino Unido."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "good morning",
+            "en": "bom dia",
+            "ex": "Good morning, Mr. Silva!",
+            "exEn": "Bom dia, Sr. Silva!"
+          },
+          {
+            "pt": "good evening",
+            "en": "boa noite (ao chegar)",
+            "ex": "Good evening, everyone.",
+            "exEn": "Boa noite, pessoal."
+          },
+          {
+            "pt": "nice to meet you",
+            "en": "prazer em conhecer",
+            "ex": "Nice to meet you, Ana.",
+            "exEn": "Prazer em conhecer, Ana."
+          },
+          {
+            "pt": "see you later",
+            "en": "até mais tarde",
+            "ex": "See you later, Tom!",
+            "exEn": "Até mais tarde, Tom!"
+          },
+          {
+            "pt": "how are you?",
+            "en": "como você está?",
+            "ex": "Hi Marta, how are you?",
+            "exEn": "Oi Marta, como você está?"
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I have 30 years.",
+            "correct": "I am 30 years old.",
+            "note": "Em inglês a idade usa o verbo 'to be', nunca 'to have'. É o erro número um de brasileiros."
+          },
+          {
+            "wrong": "She is teacher.",
+            "correct": "She is a teacher.",
+            "note": "Profissões em inglês pedem o artigo 'a/an'. Em português dizemos 'ela é professora', sem artigo."
+          },
+          {
+            "wrong": "I am agree.",
+            "correct": "I agree.",
+            "note": "'Agree' já é um verbo em inglês. Não se usa 'to be' junto, ao contrário do português 'eu estou de acordo'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a forma correta do verbo 'to be'.",
+            "items": [
+              {
+                "q": "We ___ from Ireland.",
+                "ans": "are"
+              },
+              {
+                "q": "She ___ from Portugal.",
+                "ans": "is"
+              },
+              {
+                "q": "You ___ very tall.",
+                "ans": "are"
+              },
+              {
+                "q": "He ___ my brother.",
+                "ans": "is"
+              },
+              {
+                "q": "I ___ happy today.",
+                "ans": "am"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "Good ___! (said at 9 a.m.)",
+                "opts": [
+                  "night",
+                  "morning",
+                  "evening",
+                  "afternoon"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "___ is my sister, Carla.",
+                "opts": [
+                  "He",
+                  "She",
+                  "They",
+                  "It"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "See you ___!",
+                "opts": [
+                  "later",
+                  "late",
+                  "lately",
+                  "latest"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "They ___ my friends.",
+                "opts": [
+                  "am",
+                  "is",
+                  "are",
+                  "be"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___ are you? — I'm fine, thanks.",
+                "opts": [
+                  "What",
+                  "Who",
+                  "How",
+                  "Where"
+                ],
+                "ans": 2
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu sou brasileiro.",
+                "ans": "I am Brazilian."
+              },
+              {
+                "q": "Ela é minha professora.",
+                "ans": "She is my teacher."
+              },
+              {
+                "q": "Bom dia! Como você está?",
+                "ans": "Good morning! How are you?"
+              },
+              {
+                "q": "Prazer em conhecer você.",
+                "ans": "Nice to meet you."
+              },
+              {
+                "q": "Até logo!",
+                "ans": "See you later!"
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Insista desde o primeiro dia que idade e profissão em inglês usam 'to be' + artigo ('I am a doctor'). Corrigir isso agora evita um erro fossilizado que persiste até o B2."
       },
       {
         "title": "Numbers & Age",
@@ -320,6 +502,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "My sister is thirteen years old.",
               "en": "Minha irmã tem treze anos."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "How old are you?",
+              "en": "Quantos anos você tem?"
+            },
+            {
+              "pt": "I am twenty-five years old.",
+              "en": "Eu tenho vinte e cinco anos."
+            },
+            {
+              "pt": "How old is your brother?",
+              "en": "Quantos anos tem o seu irmão?"
+            },
+            {
+              "pt": "He is thirty years old.",
+              "en": "Ele tem trinta anos."
+            },
+            {
+              "pt": "My daughter is six years old.",
+              "en": "Minha filha tem seis anos."
             }
           ]
         },
@@ -455,7 +659,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Aniversários nos países de língua inglesa",
           "text": "Nos Estados Unidos e no Reino Unido, os aniversários são celebrados com bolos, velas e a famosa música 'Happy Birthday to You', que é cantada por amigos e familiares antes de apagar as velas. É tradição fazer um pedido secreto enquanto se apaga as velas do bolo. Em muitos países de língua inglesa, a festa de 18 anos é considerada especialmente importante, pois marca a entrada na vida adulta. Nos Estados Unidos, a festa de 16 anos, chamada de 'Sweet Sixteen', também é muito comemorada entre os jovens."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "birthday",
+            "en": "aniversário",
+            "ex": "My birthday is in May.",
+            "exEn": "Meu aniversário é em maio."
+          },
+          {
+            "pt": "hundred",
+            "en": "cem",
+            "ex": "There are one hundred people here.",
+            "exEn": "Há cem pessoas aqui."
+          },
+          {
+            "pt": "phone number",
+            "en": "número de telefone",
+            "ex": "What is your phone number?",
+            "exEn": "Qual é o seu número de telefone?"
+          },
+          {
+            "pt": "first",
+            "en": "primeiro",
+            "ex": "This is my first day.",
+            "exEn": "Este é o meu primeiro dia."
+          },
+          {
+            "pt": "twice",
+            "en": "duas vezes",
+            "ex": "I call my mother twice a week.",
+            "exEn": "Eu ligo para minha mãe duas vezes por semana."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "How many years do you have?",
+            "correct": "How old are you?",
+            "note": "Tradução literal de 'quantos anos você tem'. Em inglês a pergunta é sempre 'How old are you?'."
+          },
+          {
+            "wrong": "I have twenty years.",
+            "correct": "I am twenty years old.",
+            "note": "De novo o 'to be' para idade. 'Years old' pode ser omitido: 'I am twenty' também está correto."
+          },
+          {
+            "wrong": "I am twenty years.",
+            "correct": "I am twenty years old.",
+            "note": "Se você disser o número seguido de 'years', é obrigatório completar com 'old'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "How ___ are you?",
+                "ans": "old"
+              },
+              {
+                "q": "I am forty years ___.",
+                "ans": "old"
+              },
+              {
+                "q": "She ___ eighteen years old.",
+                "ans": "is"
+              },
+              {
+                "q": "My birthday ___ in December.",
+                "ans": "is"
+              },
+              {
+                "q": "How old ___ your parents?",
+                "ans": "are"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "I am twenty-one years ___.",
+                "opts": [
+                  "old",
+                  "age",
+                  "years",
+                  "long"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "The number after nineteen is ___.",
+                "opts": [
+                  "ten",
+                  "twelve",
+                  "twenty",
+                  "thirty"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___ old is your sister?",
+                "opts": [
+                  "What",
+                  "How",
+                  "When",
+                  "Which"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "My son ___ five years old.",
+                "opts": [
+                  "have",
+                  "has",
+                  "is",
+                  "are"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "The number 15 is ___.",
+                "opts": [
+                  "fifty",
+                  "fifteen",
+                  "five",
+                  "forty"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Quantos anos você tem?",
+                "ans": "How old are you?"
+              },
+              {
+                "q": "Eu tenho trinta anos.",
+                "ans": "I am thirty years old."
+              },
+              {
+                "q": "Meu aniversário é em julho.",
+                "ans": "My birthday is in July."
+              },
+              {
+                "q": "Ela tem doze anos.",
+                "ans": "She is twelve years old."
+              },
+              {
+                "q": "Qual é o seu número de telefone?",
+                "ans": "What is your phone number?"
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Treine números altos em voz alta: brasileiros confundem 'thirteen/thirty', 'fourteen/forty', 'fifteen/fifty'. A diferença está na sílaba tônica, não na escrita."
       },
       {
         "title": "Colors & Descriptions",
@@ -541,6 +905,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "They have a white house.",
               "en": "Eles têm uma casa branca."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "a red car",
+              "en": "um carro vermelho"
+            },
+            {
+              "pt": "an old book",
+              "en": "um livro velho"
+            },
+            {
+              "pt": "the green door",
+              "en": "a porta verde"
+            },
+            {
+              "pt": "a small white dog",
+              "en": "um cachorro branco pequeno"
+            },
+            {
+              "pt": "an expensive black jacket",
+              "en": "uma jaqueta preta cara"
             }
           ]
         },
@@ -676,7 +1062,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Cores na cultura dos países de língua inglesa",
           "text": "Nos países de língua inglesa, as cores têm significados culturais importantes. Por exemplo, nos Estados Unidos e no Reino Unido, o preto é frequentemente usado em eventos formais e funerais, enquanto o branco é associado a casamentos e pureza. Nos esportes, as cores dos times são levadas muito a sério — torcer pelo time errado usando a cor errada pode até causar confusão! Além disso, expressões idiomáticas com cores são muito comuns no inglês, como 'feeling blue' (estar triste) ou 'green with envy' (com inveja)."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "bright",
+            "en": "claro, vivo (cor)",
+            "ex": "She has a bright yellow bag.",
+            "exEn": "Ela tem uma bolsa amarela viva."
+          },
+          {
+            "pt": "dark",
+            "en": "escuro",
+            "ex": "He wears a dark blue suit.",
+            "exEn": "Ele usa um terno azul escuro."
+          },
+          {
+            "pt": "heavy",
+            "en": "pesado",
+            "ex": "This is a heavy box.",
+            "exEn": "Esta é uma caixa pesada."
+          },
+          {
+            "pt": "cheap",
+            "en": "barato",
+            "ex": "It is a cheap phone.",
+            "exEn": "É um telefone barato."
+          },
+          {
+            "pt": "beautiful",
+            "en": "bonito, lindo",
+            "ex": "They live in a beautiful house.",
+            "exEn": "Eles moram em uma casa linda."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "a car red",
+            "correct": "a red car",
+            "note": "Em inglês o adjetivo vem SEMPRE antes do substantivo. É o inverso do português."
+          },
+          {
+            "wrong": "a old book",
+            "correct": "an old book",
+            "note": "Antes de som de vogal usa-se 'an', não 'a'."
+          },
+          {
+            "wrong": "They are reds.",
+            "correct": "They are red.",
+            "note": "Adjetivos em inglês nunca vão para o plural. 'Reds' não existe como adjetivo."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com o artigo correto (a ou an).",
+            "items": [
+              {
+                "q": "I have ___ orange bag.",
+                "ans": "an"
+              },
+              {
+                "q": "She wants ___ blue shirt.",
+                "ans": "a"
+              },
+              {
+                "q": "This is ___ easy question.",
+                "ans": "an"
+              },
+              {
+                "q": "He bought ___ green car.",
+                "ans": "a"
+              },
+              {
+                "q": "It is ___ expensive watch.",
+                "ans": "an"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a ordem correta das palavras.",
+            "items": [
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "a house big",
+                  "a big house",
+                  "big a house",
+                  "house a big"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "the shoes black",
+                  "black the shoes",
+                  "the black shoes",
+                  "shoes the black"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "My sister has ___ hair.",
+                "opts": [
+                  "long brown",
+                  "brown long the",
+                  "hair long",
+                  "long the brown"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "two cars reds",
+                  "two red cars",
+                  "two reds cars",
+                  "red two cars"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "It is ___ day.",
+                "opts": [
+                  "beautiful a",
+                  "a beautiful",
+                  "beautiful",
+                  "a beautifuls"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Um carro vermelho.",
+                "ans": "A red car."
+              },
+              {
+                "q": "Ela tem olhos azuis.",
+                "ans": "She has blue eyes."
+              },
+              {
+                "q": "É uma casa velha.",
+                "ans": "It is an old house."
+              },
+              {
+                "q": "Eu quero a camisa branca.",
+                "ans": "I want the white shirt."
+              },
+              {
+                "q": "Eles são bonitos.",
+                "ans": "They are beautiful."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "A ordem adjetivo-substantivo é a primeira grande inversão estrutural que o aluno brasileiro enfrenta. Faça drills rápidos de tradução reversa até sair automático."
       },
       {
         "title": "Family & People",
@@ -762,6 +1308,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Their brother plays the guitar.",
               "en": "O irmão deles toca violão."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "my brother",
+              "en": "meu irmão"
+            },
+            {
+              "pt": "her mother",
+              "en": "a mãe dela"
+            },
+            {
+              "pt": "his father",
+              "en": "o pai dele"
+            },
+            {
+              "pt": "our family",
+              "en": "nossa família"
+            },
+            {
+              "pt": "their children",
+              "en": "os filhos deles"
             }
           ]
         },
@@ -897,7 +1465,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como as famílias falam sobre si mesmas em países de língua inglesa",
           "text": "Nos países de língua inglesa, como os Estados Unidos e o Reino Unido, é muito comum apresentar os membros da família usando pronomes possessivos em conversas do dia a dia, como 'my mom' ou 'my dad'. O termo 'mom' é mais usado nos EUA, enquanto 'mum' é preferido no Reino Unido. Em muitas famílias anglófonas, é natural chamar avós por apelidos carinhosos como 'Grandma' e 'Grandpa'. Falar sobre a família é considerado um ótimo jeito de criar conexão em conversas informais em inglês."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "grandparents",
+            "en": "avós",
+            "ex": "My grandparents live in Bahia.",
+            "exEn": "Meus avós moram na Bahia."
+          },
+          {
+            "pt": "cousin",
+            "en": "primo, prima",
+            "ex": "Her cousin is a nurse.",
+            "exEn": "A prima dela é enfermeira."
+          },
+          {
+            "pt": "husband",
+            "en": "marido",
+            "ex": "Her husband works at the hospital.",
+            "exEn": "O marido dela trabalha no hospital."
+          },
+          {
+            "pt": "wife",
+            "en": "esposa",
+            "ex": "His wife works downtown.",
+            "exEn": "A esposa dele trabalha no centro."
+          },
+          {
+            "pt": "only child",
+            "en": "filho único",
+            "ex": "I am an only child.",
+            "exEn": "Eu sou filho único."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "The mother of him is a doctor.",
+            "correct": "His mother is a doctor.",
+            "note": "Em inglês usa-se o possessivo antes do substantivo, não 'de + pronome' como em português."
+          },
+          {
+            "wrong": "She is my sister. Her name is Ana. His brother is Pedro.",
+            "correct": "Her brother is Pedro.",
+            "note": "'His' é para homem e 'her' para mulher — o possessivo concorda com o DONO, não com o objeto possuído."
+          },
+          {
+            "wrong": "my parents are teachers, they childrens study here",
+            "correct": "their children study here",
+            "note": "'They' é sujeito, 'their' é possessivo. E 'children' já é plural — 'childrens' não existe."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com o pronome possessivo correto.",
+            "items": [
+              {
+                "q": "This is Ana and this is ___ mother.",
+                "ans": "her"
+              },
+              {
+                "q": "That is Pedro and that is ___ car.",
+                "ans": "his"
+              },
+              {
+                "q": "We love ___ city.",
+                "ans": "our"
+              },
+              {
+                "q": "I like ___ new job.",
+                "ans": "my"
+              },
+              {
+                "q": "They sold ___ house last year.",
+                "ans": "their"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "Maria is here with ___ husband.",
+                "opts": [
+                  "his",
+                  "her",
+                  "their",
+                  "our"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "My father's father is my ___.",
+                "opts": [
+                  "uncle",
+                  "cousin",
+                  "grandfather",
+                  "nephew"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "John and Ana love ___ daughter.",
+                "opts": [
+                  "his",
+                  "her",
+                  "their",
+                  "your"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "The plural of 'child' is ___.",
+                "opts": [
+                  "childs",
+                  "childes",
+                  "children",
+                  "childrens"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "Is this ___ book, Tom?",
+                "opts": [
+                  "you",
+                  "your",
+                  "yours",
+                  "his"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "A mãe dele é médica.",
+                "ans": "His mother is a doctor."
+              },
+              {
+                "q": "Nossa família é grande.",
+                "ans": "Our family is big."
+              },
+              {
+                "q": "Eu tenho dois irmãos.",
+                "ans": "I have two brothers."
+              },
+              {
+                "q": "O irmão dela mora em Lisboa.",
+                "ans": "Her brother lives in Lisbon."
+              },
+              {
+                "q": "Os filhos deles estudam aqui.",
+                "ans": "Their children study here."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "O erro clássico é escolher his/her pelo gênero do objeto possuído, como em português. Reforce: o possessivo concorda com quem possui, não com o que é possuído."
       },
       {
         "title": "Food & Drinks",
@@ -983,6 +1711,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Would you like some cake for dessert?",
               "en": "Você gostaria de um pouco de bolo de sobremesa?"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "Would you like some coffee?",
+              "en": "Você gostaria de um café?"
+            },
+            {
+              "pt": "I'd like a glass of water, please.",
+              "en": "Eu queria um copo de água, por favor."
+            },
+            {
+              "pt": "Would you like to order now?",
+              "en": "Você gostaria de pedir agora?"
+            },
+            {
+              "pt": "I'd like to see the menu.",
+              "en": "Eu queria ver o cardápio."
+            },
+            {
+              "pt": "Would you like anything else?",
+              "en": "Você gostaria de mais alguma coisa?"
             }
           ]
         },
@@ -1118,7 +1868,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Educação à mesa nos países de língua inglesa",
           "text": "Em países como os Estados Unidos, o Reino Unido e a Austrália, é muito comum usar expressões educadas como 'Would you like...?' e 'I'd like...' ao pedir comida em restaurantes ou cafés. Dizer apenas 'I want' pode soar rude ou indelicado nesses contextos, por isso os nativos preferem sempre a forma mais gentil com 'would like'. Nos Estados Unidos, é tradição os garçons se apresentarem pelo nome e visitarem a mesa com frequência para perguntar 'Is everything okay?' — ou seja, se está tudo bem com o pedido. No Reino Unido, é comum pedir a conta dizendo 'Could I have the bill, please?' em vez de simplesmente 'Bill!' como se faz em alguns outros países."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "breakfast",
+            "en": "café da manhã",
+            "ex": "I have breakfast at seven.",
+            "exEn": "Eu tomo café da manhã às sete."
+          },
+          {
+            "pt": "sparkling water",
+            "en": "água com gás",
+            "ex": "I'd like sparkling water, please.",
+            "exEn": "Eu queria água com gás, por favor."
+          },
+          {
+            "pt": "starter",
+            "en": "entrada (prato)",
+            "ex": "Would you like a starter?",
+            "exEn": "Você gostaria de uma entrada?"
+          },
+          {
+            "pt": "spicy",
+            "en": "apimentado",
+            "ex": "This soup is very spicy.",
+            "exEn": "Esta sopa é muito apimentada."
+          },
+          {
+            "pt": "the bill",
+            "en": "a conta",
+            "ex": "Could we have the bill, please?",
+            "exEn": "Poderíamos ter a conta, por favor?"
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I want a coffee.",
+            "correct": "I'd like a coffee.",
+            "note": "'I want' soa rude ao pedir algo. Use 'I'd like' (I would like) para ser educado."
+          },
+          {
+            "wrong": "Do you like a coffee?",
+            "correct": "Would you like a coffee?",
+            "note": "'Do you like coffee?' pergunta se você gosta em geral. 'Would you like' é uma oferta agora."
+          },
+          {
+            "wrong": "I'd like to a sandwich.",
+            "correct": "I'd like a sandwich.",
+            "note": "Use 'to' apenas antes de verbo: 'I'd like to eat'. Antes de substantivo, sem 'to'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "___ you like some tea?",
+                "ans": "Would"
+              },
+              {
+                "q": "I'd ___ a sandwich, please.",
+                "ans": "like"
+              },
+              {
+                "q": "I would like ___ order now.",
+                "ans": "to"
+              },
+              {
+                "q": "Could we have the ___, please?",
+                "ans": "bill"
+              },
+              {
+                "q": "I have ___ at seven in the morning.",
+                "ans": "breakfast"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ you like a dessert?",
+                "opts": [
+                  "Do",
+                  "Would",
+                  "Are",
+                  "Have"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I'd like ___ drink something cold.",
+                "opts": [
+                  "to",
+                  "for",
+                  "at",
+                  "of"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "The first meal of the day is ___.",
+                "opts": [
+                  "dinner",
+                  "lunch",
+                  "breakfast",
+                  "supper"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "This curry is very ___.",
+                "opts": [
+                  "spicy",
+                  "loud",
+                  "tall",
+                  "early"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "Water with gas is ___ water.",
+                "opts": [
+                  "still",
+                  "sparkling",
+                  "flat",
+                  "hard"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu queria um café, por favor.",
+                "ans": "I'd like a coffee, please."
+              },
+              {
+                "q": "Você gostaria de uma sobremesa?",
+                "ans": "Would you like a dessert?"
+              },
+              {
+                "q": "Eu queria ver o cardápio.",
+                "ans": "I'd like to see the menu."
+              },
+              {
+                "q": "A conta, por favor.",
+                "ans": "The bill, please."
+              },
+              {
+                "q": "Você gostaria de mais alguma coisa?",
+                "ans": "Would you like anything else?"
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Ensine 'I'd like' como bloco fixo antes de explicar que é 'I would like'. O aluno usa desde o primeiro dia e a gramática do conditional entra naturalmente depois."
       },
       {
         "title": "Days, Months & Time",
@@ -1204,6 +2114,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "It's half past eight.",
               "en": "São oito e meia."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "What time is it?",
+              "en": "Que horas são?"
+            },
+            {
+              "pt": "It's seven o'clock.",
+              "en": "São sete horas."
+            },
+            {
+              "pt": "It's half past ten.",
+              "en": "São dez e meia."
+            },
+            {
+              "pt": "It's a quarter past six.",
+              "en": "São seis e quinze."
+            },
+            {
+              "pt": "The class starts at two thirty.",
+              "en": "A aula começa às duas e meia."
             }
           ]
         },
@@ -1339,7 +2271,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como os americanos e britânicos falam as horas",
           "text": "Nos Estados Unidos, é muito comum usar o formato de 12 horas com 'AM' (manhã) e 'PM' (tarde/noite), como '7 AM' para sete da manhã e '3 PM' para três da tarde. No Reino Unido, as pessoas também usam expressões como 'half past' (e meia) e 'quarter to' (quinze para), que são menos usadas nos EUA. Além disso, nos países de língua inglesa, a semana geralmente começa no domingo nos calendários, ao contrário do Brasil, onde começa na segunda-feira. Conhecer essas diferenças ajuda muito na comunicação do dia a dia!"
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "half past",
+            "en": "e meia (horas)",
+            "ex": "It's half past three.",
+            "exEn": "São três e meia."
+          },
+          {
+            "pt": "quarter to",
+            "en": "quinze para (horas)",
+            "ex": "It's a quarter to nine.",
+            "exEn": "São quinze para as nove."
+          },
+          {
+            "pt": "weekend",
+            "en": "fim de semana",
+            "ex": "I work on the weekend.",
+            "exEn": "Eu trabalho no fim de semana."
+          },
+          {
+            "pt": "tomorrow",
+            "en": "amanhã",
+            "ex": "The meeting is tomorrow.",
+            "exEn": "A reunião é amanhã."
+          },
+          {
+            "pt": "midnight",
+            "en": "meia-noite",
+            "ex": "The train leaves at midnight.",
+            "exEn": "O trem parte à meia-noite."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "What hours are it?",
+            "correct": "What time is it?",
+            "note": "Tradução literal de 'que horas são'. Em inglês é sempre 'What time is it?', no singular."
+          },
+          {
+            "wrong": "They are seven o'clock.",
+            "correct": "It is seven o'clock.",
+            "note": "Para horas o inglês usa sempre 'it is', mesmo que em português usemos o plural 'são'."
+          },
+          {
+            "wrong": "I work in Monday.",
+            "correct": "I work on Monday.",
+            "note": "Dias da semana pedem 'on'. Meses e anos pedem 'in': 'in May', 'in 2026'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "What time ___ it?",
+                "ans": "is"
+              },
+              {
+                "q": "It ___ nine o'clock.",
+                "ans": "is"
+              },
+              {
+                "q": "I have class ___ Tuesday.",
+                "ans": "on"
+              },
+              {
+                "q": "My birthday is ___ August.",
+                "ans": "in"
+              },
+              {
+                "q": "It's ___ past four.",
+                "ans": "half"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ time is it?",
+                "opts": [
+                  "Which",
+                  "How",
+                  "What",
+                  "When"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "10:30 is ___ past ten.",
+                "opts": [
+                  "quarter",
+                  "half",
+                  "twenty",
+                  "full"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The day after Sunday is ___.",
+                "opts": [
+                  "Saturday",
+                  "Friday",
+                  "Monday",
+                  "Tuesday"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "The meeting is ___ Friday.",
+                "opts": [
+                  "in",
+                  "at",
+                  "on",
+                  "to"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "12:00 at night is ___.",
+                "opts": [
+                  "noon",
+                  "midnight",
+                  "midday",
+                  "evening"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Que horas são?",
+                "ans": "What time is it?"
+              },
+              {
+                "q": "São oito horas.",
+                "ans": "It is eight o'clock."
+              },
+              {
+                "q": "A aula é na segunda-feira.",
+                "ans": "The class is on Monday."
+              },
+              {
+                "q": "Meu aniversário é em março.",
+                "ans": "My birthday is in March."
+              },
+              {
+                "q": "São cinco e meia.",
+                "ans": "It's half past five."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "'São sete horas' vira 'It IS seven o'clock' — o singular obrigatório pega todo brasileiro. Trate como fórmula fixa: horário sempre começa com 'It is'."
       },
       {
         "title": "Home & Objects",
@@ -1425,6 +2517,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "There is a big kitchen in my apartment.",
               "en": "Há uma cozinha grande no meu apartamento."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "There is a table in the kitchen.",
+              "en": "Há uma mesa na cozinha."
+            },
+            {
+              "pt": "There are two chairs here.",
+              "en": "Há duas cadeiras aqui."
+            },
+            {
+              "pt": "There is no milk in the fridge.",
+              "en": "Não há leite na geladeira."
+            },
+            {
+              "pt": "Are there any windows in this room?",
+              "en": "Há janelas neste cômodo?"
+            },
+            {
+              "pt": "There are many books on the shelf.",
+              "en": "Há muitos livros na prateleira."
             }
           ]
         },
@@ -1560,7 +2674,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como as casas são nos países de língua inglesa?",
           "text": "Nos Estados Unidos e no Reino Unido, é muito comum as casas terem um 'living room' (sala de estar) separado do 'dining room' (sala de jantar). Na maioria das casas americanas, há uma garagem e um quintal, chamado de 'backyard'. Nos apartamentos britânicos, os cômodos tendem a ser menores do que os brasileiros estão acostumados. Uma curiosidade: na Inglaterra, o banheiro é frequentemente chamado de 'loo' ou 'toilet' no dia a dia, e não de 'bathroom'!"
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "furniture",
+            "en": "móveis",
+            "ex": "The furniture is very old.",
+            "exEn": "Os móveis são muito velhos."
+          },
+          {
+            "pt": "wardrobe",
+            "en": "guarda-roupa",
+            "ex": "There is a wardrobe in my room.",
+            "exEn": "Há um guarda-roupa no meu quarto."
+          },
+          {
+            "pt": "upstairs",
+            "en": "no andar de cima",
+            "ex": "The bathroom is upstairs.",
+            "exEn": "O banheiro fica no andar de cima."
+          },
+          {
+            "pt": "drawer",
+            "en": "gaveta",
+            "ex": "The keys are in the drawer.",
+            "exEn": "As chaves estão na gaveta."
+          },
+          {
+            "pt": "next to",
+            "en": "ao lado de",
+            "ex": "The lamp is next to the bed.",
+            "exEn": "O abajur está ao lado da cama."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "Have a book on the table.",
+            "correct": "There is a book on the table.",
+            "note": "O 'há' do português vira 'there is/there are', nunca 'have'. Erro muito comum."
+          },
+          {
+            "wrong": "There is three chairs.",
+            "correct": "There are three chairs.",
+            "note": "'There is' para singular, 'there are' para plural. Diferente do português, onde 'há' serve para os dois."
+          },
+          {
+            "wrong": "It has a problem here.",
+            "correct": "There is a problem here.",
+            "note": "'Tem' no sentido de existir é 'there is', não 'it has'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com 'is' ou 'are'.",
+            "items": [
+              {
+                "q": "There ___ a sofa in the living room.",
+                "ans": "is"
+              },
+              {
+                "q": "There ___ four people in my family.",
+                "ans": "are"
+              },
+              {
+                "q": "There ___ some milk in the fridge.",
+                "ans": "is"
+              },
+              {
+                "q": "There ___ two bathrooms upstairs.",
+                "ans": "are"
+              },
+              {
+                "q": "There ___ no chairs in this room.",
+                "ans": "are"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ a big window in my room.",
+                "opts": [
+                  "There is",
+                  "There are",
+                  "It has",
+                  "Have"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "___ any eggs in the kitchen?",
+                "opts": [
+                  "There is",
+                  "Is there",
+                  "Are there",
+                  "Have there"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "You keep your clothes in a ___.",
+                "opts": [
+                  "drawer",
+                  "wardrobe",
+                  "fridge",
+                  "shelf"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The lamp is ___ the bed.",
+                "opts": [
+                  "next to",
+                  "next of",
+                  "next",
+                  "beside of"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "There ___ a lot of furniture here.",
+                "opts": [
+                  "are",
+                  "is",
+                  "have",
+                  "has"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Há uma mesa na cozinha.",
+                "ans": "There is a table in the kitchen."
+              },
+              {
+                "q": "Há três quartos na casa.",
+                "ans": "There are three bedrooms in the house."
+              },
+              {
+                "q": "Não há leite na geladeira.",
+                "ans": "There is no milk in the fridge."
+              },
+              {
+                "q": "O banheiro fica no andar de cima.",
+                "ans": "The bathroom is upstairs."
+              },
+              {
+                "q": "As chaves estão na gaveta.",
+                "ans": "The keys are in the drawer."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "'Tem uma mesa aqui' → 'There is a table here', nunca 'Have a table here'. Esse é provavelmente o erro estrutural mais frequente de brasileiros no A1."
       },
       {
         "title": "Getting Around",
@@ -1646,6 +2920,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "The school is next to the park.",
               "en": "A escola fica ao lado do parque."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "Turn left at the corner.",
+              "en": "Vire à esquerda na esquina."
+            },
+            {
+              "pt": "Go straight for two blocks.",
+              "en": "Siga em frente por dois quarteirões."
+            },
+            {
+              "pt": "Turn right after the bank.",
+              "en": "Vire à direita depois do banco."
+            },
+            {
+              "pt": "Go straight and then turn left.",
+              "en": "Siga em frente e depois vire à esquerda."
+            },
+            {
+              "pt": "Turn right at the traffic lights.",
+              "en": "Vire à direita no semáforo."
             }
           ]
         },
@@ -1781,7 +3077,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Pedir direções em países de língua inglesa",
           "text": "Nos Estados Unidos e no Reino Unido, é muito comum pedir direções a estranhos na rua, e as pessoas geralmente são prestativas. É importante começar sempre com 'Excuse me' (Com licença) para ser educado. Em cidades americanas, as direções costumam usar referências a quarteirões (blocks), enquanto no Reino Unido é mais comum usar pontos de referência como lojas ou monumentos. Em ambos os países, dizer 'Thank you' ao final é essencial para demonstrar gratidão."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "crossroads",
+            "en": "cruzamento",
+            "ex": "Turn left at the crossroads.",
+            "exEn": "Vire à esquerda no cruzamento."
+          },
+          {
+            "pt": "traffic lights",
+            "en": "semáforo",
+            "ex": "Go straight past the traffic lights.",
+            "exEn": "Siga em frente passando o semáforo."
+          },
+          {
+            "pt": "corner",
+            "en": "esquina",
+            "ex": "The shop is on the corner.",
+            "exEn": "A loja fica na esquina."
+          },
+          {
+            "pt": "opposite",
+            "en": "em frente a",
+            "ex": "The bank is opposite the school.",
+            "exEn": "O banco fica em frente à escola."
+          },
+          {
+            "pt": "get lost",
+            "en": "se perder",
+            "ex": "Don't get lost in the city centre.",
+            "exEn": "Não se perca no centro da cidade."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "Turn to the left.",
+            "correct": "Turn left.",
+            "note": "Em inglês não se usa 'to the' com left/right nesse contexto. Apenas 'turn left' ou 'turn right'."
+          },
+          {
+            "wrong": "Go direct.",
+            "correct": "Go straight.",
+            "note": "Falso cognato: 'direct' não significa 'em frente'. Use 'straight' ou 'straight ahead'."
+          },
+          {
+            "wrong": "Where is the bank? — Is in front of the school.",
+            "correct": "It is opposite the school.",
+            "note": "'In front of' é 'na frente de' (do lado de fora). Para 'do outro lado da rua' use 'opposite'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "___ left at the corner.",
+                "ans": "Turn"
+              },
+              {
+                "q": "Go ___ for two blocks.",
+                "ans": "straight"
+              },
+              {
+                "q": "The shop is on the ___.",
+                "ans": "corner"
+              },
+              {
+                "q": "Stop at the traffic ___.",
+                "ans": "lights"
+              },
+              {
+                "q": "The bank is ___ the school.",
+                "ans": "opposite"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ right after the bank.",
+                "opts": [
+                  "Go",
+                  "Turn",
+                  "Walk",
+                  "Come"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Keep going ___ ahead.",
+                "opts": [
+                  "direct",
+                  "straight",
+                  "front",
+                  "forward of"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Excuse me, ___ is the station?",
+                "opts": [
+                  "what",
+                  "which",
+                  "where",
+                  "how"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "The pharmacy is ___ the supermarket.",
+                "opts": [
+                  "next to",
+                  "next",
+                  "near of",
+                  "beside of"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "Cross the street at the ___.",
+                "opts": [
+                  "corner",
+                  "roof",
+                  "ceiling",
+                  "shelf"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Vire à esquerda.",
+                "ans": "Turn left."
+              },
+              {
+                "q": "Siga em frente.",
+                "ans": "Go straight."
+              },
+              {
+                "q": "Onde fica a estação?",
+                "ans": "Where is the station?"
+              },
+              {
+                "q": "A loja fica na esquina.",
+                "ans": "The shop is on the corner."
+              },
+              {
+                "q": "Vire à direita no semáforo.",
+                "ans": "Turn right at the traffic lights."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Vale fazer o exercício em pé, apontando. Direções são das poucas coisas que o aluno precisa produzir sob pressão na vida real — automatizar o gesto ajuda a fixar."
       },
       {
         "title": "Shopping & Money",
@@ -1867,6 +3323,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "How much are the apples?",
               "en": "Quanto custam as maçãs?"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "How much is it?",
+              "en": "Quanto custa?"
+            },
+            {
+              "pt": "It costs twenty euros.",
+              "en": "Custa vinte euros."
+            },
+            {
+              "pt": "How much are these shoes?",
+              "en": "Quanto custam estes sapatos?"
+            },
+            {
+              "pt": "They cost fifty euros.",
+              "en": "Eles custam cinquenta euros."
+            },
+            {
+              "pt": "It is too expensive for me.",
+              "en": "É caro demais para mim."
             }
           ]
         },
@@ -2002,7 +3480,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Dinheiro e costumes de compra nos países de língua inglesa",
           "text": "Nos Estados Unidos e no Reino Unido, é muito comum pagar compras com cartão de crédito ou débito, inclusive valores pequenos como uma xícara de café. Dar gorjeta (tip) é uma prática cultural importante nos EUA, especialmente em restaurantes, onde o valor costuma ser entre 15% e 20% da conta. Na maioria das lojas americanas, o preço exibido não inclui os impostos, que são adicionados somente na hora do pagamento. No Reino Unido, os preços já incluem os impostos (VAT), então o valor que você vê é o que você paga."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "change",
+            "en": "troco",
+            "ex": "Here is your change.",
+            "exEn": "Aqui está o seu troco."
+          },
+          {
+            "pt": "receipt",
+            "en": "recibo, nota fiscal",
+            "ex": "Can I have a receipt, please?",
+            "exEn": "Posso ter um recibo, por favor?"
+          },
+          {
+            "pt": "discount",
+            "en": "desconto",
+            "ex": "Is there a discount today?",
+            "exEn": "Há desconto hoje?"
+          },
+          {
+            "pt": "expensive",
+            "en": "caro",
+            "ex": "This jacket is too expensive.",
+            "exEn": "Esta jaqueta é cara demais."
+          },
+          {
+            "pt": "size",
+            "en": "tamanho",
+            "ex": "Do you have this in a bigger size?",
+            "exEn": "Você tem isto num tamanho maior?"
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "How much costs it?",
+            "correct": "How much does it cost?",
+            "note": "Perguntas com verbo comum precisam do auxiliar 'do/does' em inglês."
+          },
+          {
+            "wrong": "It cost twenty euros.",
+            "correct": "It costs twenty euros.",
+            "note": "Terceira pessoa do singular no presente leva -s: he/she/it costs."
+          },
+          {
+            "wrong": "This is very expensive, I don't have money enough.",
+            "correct": "I don't have enough money.",
+            "note": "'Enough' vem antes do substantivo: 'enough money', não 'money enough'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "How much ___ it cost?",
+                "ans": "does"
+              },
+              {
+                "q": "It ___ ten euros.",
+                "ans": "costs"
+              },
+              {
+                "q": "How much ___ these shoes?",
+                "ans": "are"
+              },
+              {
+                "q": "Here is your ___ — twenty cents.",
+                "ans": "change"
+              },
+              {
+                "q": "Do you have a bigger ___?",
+                "ans": "size"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ much is this bag?",
+                "opts": [
+                  "What",
+                  "How",
+                  "Which",
+                  "Where"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The money you get back is the ___.",
+                "opts": [
+                  "bill",
+                  "change",
+                  "receipt",
+                  "discount"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "It ___ thirty euros.",
+                "opts": [
+                  "cost",
+                  "costs",
+                  "costing",
+                  "is cost"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "This is too ___. I can't buy it.",
+                "opts": [
+                  "cheap",
+                  "expensive",
+                  "small",
+                  "early"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I don't have ___ money.",
+                "opts": [
+                  "money enough",
+                  "enough",
+                  "enough of",
+                  "enough money"
+                ],
+                "ans": 3
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Quanto custa?",
+                "ans": "How much is it?"
+              },
+              {
+                "q": "Custa quinze euros.",
+                "ans": "It costs fifteen euros."
+              },
+              {
+                "q": "É caro demais.",
+                "ans": "It is too expensive."
+              },
+              {
+                "q": "Posso ter um recibo, por favor?",
+                "ans": "Can I have a receipt, please?"
+              },
+              {
+                "q": "Você tem num tamanho maior?",
+                "ans": "Do you have a bigger size?"
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Duas formas convivem: 'How much is it?' (mais comum na fala) e 'How much does it cost?' (mais completa). Ensine as duas, mas deixe o aluno fixar a primeira."
       },
       {
         "title": "Weather & Seasons",
@@ -2088,6 +3726,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "What's the weather like today?",
               "en": "Como está o tempo hoje?"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "What's the weather like today?",
+              "en": "Como está o tempo hoje?"
+            },
+            {
+              "pt": "It's sunny and warm.",
+              "en": "Está ensolarado e quente."
+            },
+            {
+              "pt": "It's cold in winter.",
+              "en": "Faz frio no inverno."
+            },
+            {
+              "pt": "It's raining right now.",
+              "en": "Está chovendo agora."
+            },
+            {
+              "pt": "It's very hot in summer.",
+              "en": "Faz muito calor no verão."
             }
           ]
         },
@@ -2223,7 +3883,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "O clima e a cultura nos países de língua inglesa",
           "text": "Nos países de língua inglesa, especialmente no Reino Unido, falar sobre o clima é um dos assuntos mais comuns no dia a dia — é até considerado uma forma educada de iniciar uma conversa com desconhecidos. Nos Estados Unidos e na Austrália, o clima varia muito de região para região: enquanto o sul dos EUA tem verões muito quentes, partes do Canadá têm invernos com neve intensa. Na Austrália, as estações do ano são opostas às do Brasil: quando é verão no Brasil, é inverno lá. Conhecer o vocabulário do clima ajuda muito a se comunicar em situações cotidianas com falantes de inglês."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "cloudy",
+            "en": "nublado",
+            "ex": "It's cloudy today.",
+            "exEn": "Está nublado hoje."
+          },
+          {
+            "pt": "windy",
+            "en": "ventoso",
+            "ex": "It's very windy in Dublin.",
+            "exEn": "É muito ventoso em Dublin."
+          },
+          {
+            "pt": "forecast",
+            "en": "previsão do tempo",
+            "ex": "The forecast says rain tomorrow.",
+            "exEn": "A previsão diz chuva amanhã."
+          },
+          {
+            "pt": "umbrella",
+            "en": "guarda-chuva",
+            "ex": "Take an umbrella with you.",
+            "exEn": "Leve um guarda-chuva com você."
+          },
+          {
+            "pt": "autumn",
+            "en": "outono",
+            "ex": "Autumn is my favourite season.",
+            "exEn": "Outono é minha estação favorita."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "How is the weather like?",
+            "correct": "What's the weather like?",
+            "note": "A expressão fixa é 'What ... like?'. Misturar com 'how' é o erro mais comum aqui."
+          },
+          {
+            "wrong": "Is making cold.",
+            "correct": "It is cold.",
+            "note": "'Faz frio' não usa 'make' em inglês. Clima sempre começa com 'It is'."
+          },
+          {
+            "wrong": "Today is rain.",
+            "correct": "It is raining today.",
+            "note": "'Rain' é substantivo ou verbo. Para descrever agora, use 'It is raining'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "___ the weather like today?",
+                "ans": "What's"
+              },
+              {
+                "q": "It ___ very cold in January.",
+                "ans": "is"
+              },
+              {
+                "q": "Take an ___ — it's raining.",
+                "ans": "umbrella"
+              },
+              {
+                "q": "It's ___ today, so the sky is grey.",
+                "ans": "cloudy"
+              },
+              {
+                "q": "The season after summer is ___.",
+                "ans": "autumn"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ the weather like in Dublin?",
+                "opts": [
+                  "How is",
+                  "What is",
+                  "How does",
+                  "What does"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "It ___ hot in Brazil.",
+                "opts": [
+                  "makes",
+                  "does",
+                  "is",
+                  "has"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "There is a lot of wind. It's ___.",
+                "opts": [
+                  "rainy",
+                  "sunny",
+                  "windy",
+                  "snowy"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "The coldest season is ___.",
+                "opts": [
+                  "summer",
+                  "spring",
+                  "autumn",
+                  "winter"
+                ],
+                "ans": 3
+              },
+              {
+                "q": "The ___ says it will rain.",
+                "opts": [
+                  "forecast",
+                  "weather",
+                  "season",
+                  "climate"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Como está o tempo hoje?",
+                "ans": "What's the weather like today?"
+              },
+              {
+                "q": "Está frio.",
+                "ans": "It is cold."
+              },
+              {
+                "q": "Faz muito calor no verão.",
+                "ans": "It is very hot in summer."
+              },
+              {
+                "q": "Está chovendo.",
+                "ans": "It is raining."
+              },
+              {
+                "q": "Leve um guarda-chuva.",
+                "ans": "Take an umbrella."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Clima em inglês sempre começa com 'It is' — não existe sujeito oculto como em 'faz frio'. Ligue essa unit com a de horas, que segue a mesma lógica do 'it' vazio."
       },
       {
         "title": "Daily Routine",
@@ -2309,6 +4129,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "I always go to bed at 10 p.m.",
               "en": "Eu sempre vou para a cama às 22 horas."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I wake up at seven.",
+              "en": "Eu acordo às sete."
+            },
+            {
+              "pt": "You work from home.",
+              "en": "Você trabalha de casa."
+            },
+            {
+              "pt": "We eat dinner at eight.",
+              "en": "Nós jantamos às oito."
+            },
+            {
+              "pt": "They study every evening.",
+              "en": "Eles estudam toda noite."
+            },
+            {
+              "pt": "I go to bed late.",
+              "en": "Eu vou dormir tarde."
             }
           ]
         },
@@ -2444,7 +4286,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Rotinas nos países de língua inglesa",
           "text": "Nos Estados Unidos e no Reino Unido, é muito comum as pessoas tomarem café da manhã cedo e irem ao trabalho de carro, ônibus ou metrô. O almoço costuma ser uma refeição rápida — muitas pessoas comem um sanduíche na mesa de trabalho mesmo. O jantar, chamado de dinner, é geralmente a refeição principal do dia e é feito em casa com a família, normalmente entre 6 e 8 da noite."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "wake up",
+            "en": "acordar",
+            "ex": "I wake up at six every day.",
+            "exEn": "Eu acordo às seis todo dia."
+          },
+          {
+            "pt": "get dressed",
+            "en": "se vestir",
+            "ex": "She gets dressed quickly.",
+            "exEn": "Ela se veste rápido."
+          },
+          {
+            "pt": "commute",
+            "en": "trajeto casa-trabalho",
+            "ex": "My commute takes forty minutes.",
+            "exEn": "Meu trajeto até o trabalho leva quarenta minutos."
+          },
+          {
+            "pt": "go to bed",
+            "en": "ir dormir",
+            "ex": "They go to bed at eleven.",
+            "exEn": "Eles vão dormir às onze."
+          },
+          {
+            "pt": "usually",
+            "en": "normalmente",
+            "ex": "I usually have lunch at one.",
+            "exEn": "Eu normalmente almoço à uma."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I wake up me at six.",
+            "correct": "I wake up at six.",
+            "note": "Verbos reflexivos do português ('me acordo') não levam pronome em inglês."
+          },
+          {
+            "wrong": "She work in a hospital.",
+            "correct": "She works in a hospital.",
+            "note": "He/she/it no presente simples sempre leva -s no verbo. Esse -s some com muita frequência."
+          },
+          {
+            "wrong": "I no work on Sunday.",
+            "correct": "I don't work on Sunday.",
+            "note": "A negativa do presente simples usa 'don't/doesn't', não apenas 'no'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com a forma correta do verbo.",
+            "items": [
+              {
+                "q": "I ___ up at seven every day.",
+                "ans": "wake"
+              },
+              {
+                "q": "She ___ in a bank.",
+                "ans": "works"
+              },
+              {
+                "q": "We ___ dinner at eight.",
+                "ans": "have"
+              },
+              {
+                "q": "He ___ to bed early.",
+                "ans": "goes"
+              },
+              {
+                "q": "They ___ English every week.",
+                "ans": "study"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "My sister ___ coffee every morning.",
+                "opts": [
+                  "drink",
+                  "drinks",
+                  "drinking",
+                  "is drink"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I ___ work on Sundays.",
+                "opts": [
+                  "no",
+                  "not",
+                  "don't",
+                  "doesn't"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___ you work on Saturday?",
+                "opts": [
+                  "Do",
+                  "Does",
+                  "Are",
+                  "Is"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "He ___ at six in the morning.",
+                "opts": [
+                  "wake up",
+                  "wakes up",
+                  "waking up",
+                  "wake ups"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I ___ have lunch at one.",
+                "opts": [
+                  "usual",
+                  "usually",
+                  "usualy",
+                  "as usual"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu acordo às seis.",
+                "ans": "I wake up at six."
+              },
+              {
+                "q": "Ela trabalha num hospital.",
+                "ans": "She works in a hospital."
+              },
+              {
+                "q": "Nós jantamos às oito.",
+                "ans": "We have dinner at eight."
+              },
+              {
+                "q": "Eu não trabalho no domingo.",
+                "ans": "I don't work on Sunday."
+              },
+              {
+                "q": "Ele vai dormir cedo.",
+                "ans": "He goes to bed early."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "O -s da terceira pessoa é o erro que mais sobrevive até níveis altos. Vale corrigir sempre, mesmo interrompendo a fluência, enquanto o aluno está no A1."
       },
       {
         "title": "A1 Review & Conversation",
@@ -2530,6 +4532,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Do you speak English at work?",
               "en": "Você fala inglês no trabalho?"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "Are you from Brazil?",
+              "en": "Você é do Brasil?"
+            },
+            {
+              "pt": "I have got two brothers.",
+              "en": "Eu tenho dois irmãos."
+            },
+            {
+              "pt": "She works in a school.",
+              "en": "Ela trabalha numa escola."
+            },
+            {
+              "pt": "Do you speak English?",
+              "en": "Você fala inglês?"
+            },
+            {
+              "pt": "Does he live near here?",
+              "en": "Ele mora perto daqui?"
             }
           ]
         },
@@ -2665,7 +4689,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como se apresentar em países de língua inglesa",
           "text": "Em países como o Reino Unido, os Estados Unidos e a Austrália, é muito comum se apresentar com um sorriso e um aperto de mão firme ao conhecer alguém pela primeira vez. As pessoas costumam usar o primeiro nome logo no início da conversa, mesmo em situações formais, o que pode parecer informal para brasileiros. Perguntar 'How are you?' é uma saudação padrão, mas normalmente espera-se uma resposta curta e positiva como 'Fine, thanks!' e não um relato detalhado. Demonstrar interesse genuíno fazendo perguntas sobre a profissão ou os hobbies da outra pessoa é considerado educado e amigável."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "actually",
+            "en": "na verdade",
+            "ex": "Actually, I live in Cork.",
+            "exEn": "Na verdade, eu moro em Cork."
+          },
+          {
+            "pt": "quite",
+            "en": "bastante",
+            "ex": "It's quite cold today.",
+            "exEn": "Está bastante frio hoje."
+          },
+          {
+            "pt": "a little",
+            "en": "um pouco",
+            "ex": "I speak a little English.",
+            "exEn": "Eu falo um pouco de inglês."
+          },
+          {
+            "pt": "of course",
+            "en": "claro, com certeza",
+            "ex": "Of course, no problem.",
+            "exEn": "Claro, sem problema."
+          },
+          {
+            "pt": "I don't understand",
+            "en": "eu não entendo",
+            "ex": "Sorry, I don't understand.",
+            "exEn": "Desculpe, eu não entendo."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "You are from Brazil?",
+            "correct": "Are you from Brazil?",
+            "note": "Perguntas em inglês invertem sujeito e verbo. Não basta mudar a entonação como em português."
+          },
+          {
+            "wrong": "Do you are a teacher?",
+            "correct": "Are you a teacher?",
+            "note": "Com 'to be' não se usa 'do'. O próprio verbo vai para frente."
+          },
+          {
+            "wrong": "Does she works here?",
+            "correct": "Does she work here?",
+            "note": "Quando 'does' aparece, o verbo principal volta à forma base — o -s já está no auxiliar."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com o auxiliar correto (do, does, am, is, are).",
+            "items": [
+              {
+                "q": "___ you speak English?",
+                "ans": "Do"
+              },
+              {
+                "q": "___ she from Portugal?",
+                "ans": "Is"
+              },
+              {
+                "q": "___ he work on Saturdays?",
+                "ans": "Does"
+              },
+              {
+                "q": "___ they students?",
+                "ans": "Are"
+              },
+              {
+                "q": "___ I late?",
+                "ans": "Am"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ you have a car?",
+                "opts": [
+                  "Are",
+                  "Is",
+                  "Do",
+                  "Does"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___ your sister live in Lisbon?",
+                "opts": [
+                  "Do",
+                  "Does",
+                  "Is",
+                  "Are"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Does he ___ here?",
+                "opts": [
+                  "works",
+                  "working",
+                  "work",
+                  "to work"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "I ___ got two children.",
+                "opts": [
+                  "has",
+                  "have",
+                  "am",
+                  "do"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Sorry, I don't ___.",
+                "opts": [
+                  "understand",
+                  "understands",
+                  "understanding",
+                  "to understand"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Você fala inglês?",
+                "ans": "Do you speak English?"
+              },
+              {
+                "q": "Ela é professora?",
+                "ans": "Is she a teacher?"
+              },
+              {
+                "q": "Ele mora perto daqui?",
+                "ans": "Does he live near here?"
+              },
+              {
+                "q": "Eu tenho dois irmãos.",
+                "ans": "I have got two brothers."
+              },
+              {
+                "q": "Desculpe, eu não entendo.",
+                "ans": "Sorry, I don't understand."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Feche o A1 com a distinção do/does vs. to be nas perguntas. Se o aluno sair daqui escolhendo o auxiliar certo, o A2 flui muito melhor."
       }
     ]
   },
@@ -2763,6 +4947,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "They stayed at a hotel for three days.",
               "en": "Eles ficaram em um hotel por três dias."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "She watched a film last night.",
+              "en": "Ela assistiu a um filme ontem à noite."
+            },
+            {
+              "pt": "They went to the park.",
+              "en": "Eles foram ao parque."
+            },
+            {
+              "pt": "I studied English yesterday.",
+              "en": "Eu estudei inglês ontem."
+            },
+            {
+              "pt": "He bought a car last week.",
+              "en": "Ele comprou um carro semana passada."
+            },
+            {
+              "pt": "We didn't work on Monday.",
+              "en": "Nós não trabalhamos na segunda."
             }
           ]
         },
@@ -2898,7 +5104,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como os falantes de inglês falam sobre o passado no dia a dia",
           "text": "Nos países de língua inglesa, como os Estados Unidos e o Reino Unido, é muito comum as pessoas começarem conversas perguntando sobre o fim de semana ou sobre o que a pessoa fez recentemente — frases como 'How was your weekend?' são usadas com frequência entre amigos e colegas de trabalho. Contar histórias curtas sobre o passado é uma forma importante de criar conexões sociais na cultura anglófona. Além disso, em inglês americano, é comum usar expressões de tempo como 'last night', 'yesterday' e 'last weekend' para situar os acontecimentos, tornando a conversa mais natural e fluida."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "last night",
+            "en": "ontem à noite",
+            "ex": "I saw her last night.",
+            "exEn": "Eu a vi ontem à noite."
+          },
+          {
+            "pt": "ago",
+            "en": "atrás (tempo)",
+            "ex": "He moved here two years ago.",
+            "exEn": "Ele se mudou para cá dois anos atrás."
+          },
+          {
+            "pt": "bought",
+            "en": "comprou (passado de buy)",
+            "ex": "She bought a new laptop.",
+            "exEn": "Ela comprou um laptop novo."
+          },
+          {
+            "pt": "went",
+            "en": "foi (passado de go)",
+            "ex": "We went to the beach.",
+            "exEn": "Nós fomos à praia."
+          },
+          {
+            "pt": "yesterday",
+            "en": "ontem",
+            "ex": "Yesterday was a busy day.",
+            "exEn": "Ontem foi um dia cheio."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I didn't went to the party.",
+            "correct": "I didn't go to the party.",
+            "note": "Com 'did/didn't' o verbo principal volta à forma base. O passado já está no auxiliar."
+          },
+          {
+            "wrong": "She goed to school.",
+            "correct": "She went to school.",
+            "note": "'Go' é irregular. Não existe 'goed' — verbos irregulares precisam ser memorizados um a um."
+          },
+          {
+            "wrong": "Two years behind I lived in Recife.",
+            "correct": "Two years ago I lived in Recife.",
+            "note": "'Atrás' no sentido temporal é 'ago', que vem DEPOIS do período. 'Behind' é atrás no espaço."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com o passado do verbo indicado.",
+            "items": [
+              {
+                "q": "Yesterday I ___ to the cinema. (go)",
+                "ans": "went"
+              },
+              {
+                "q": "She ___ a new dress last week. (buy)",
+                "ans": "bought"
+              },
+              {
+                "q": "We ___ television all evening. (watch)",
+                "ans": "watched"
+              },
+              {
+                "q": "They ___ dinner at nine. (have)",
+                "ans": "had"
+              },
+              {
+                "q": "He ___ English at university. (study)",
+                "ans": "studied"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "I ___ go to work yesterday.",
+                "opts": [
+                  "didn't",
+                  "don't",
+                  "doesn't",
+                  "wasn't"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "She ___ the film last night.",
+                "opts": [
+                  "see",
+                  "saw",
+                  "seen",
+                  "did saw"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "We moved here three years ___.",
+                "opts": [
+                  "behind",
+                  "before",
+                  "ago",
+                  "past"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "Did you ___ the email?",
+                "opts": [
+                  "sent",
+                  "send",
+                  "sends",
+                  "sending"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "They ___ at home all weekend.",
+                "opts": [
+                  "was",
+                  "were",
+                  "are",
+                  "is"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu fui ao cinema ontem.",
+                "ans": "I went to the cinema yesterday."
+              },
+              {
+                "q": "Ela comprou um carro novo.",
+                "ans": "She bought a new car."
+              },
+              {
+                "q": "Nós não trabalhamos na segunda.",
+                "ans": "We didn't work on Monday."
+              },
+              {
+                "q": "Você viu o filme?",
+                "ans": "Did you see the film?"
+              },
+              {
+                "q": "Ele se mudou dois anos atrás.",
+                "ans": "He moved two years ago."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "O erro 'didn't went' aparece em praticamente todo aluno. Explique que o passado só pode estar em UM lugar da frase: ou no auxiliar, ou no verbo — nunca nos dois."
       },
       {
         "title": "Making Plans",
@@ -2984,6 +5350,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "It is cold in here — I will close the window.",
               "en": "Está frio aqui — eu vou fechar a janela. (decisão espontânea)"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I am going to visit my family.",
+              "en": "Eu vou visitar minha família."
+            },
+            {
+              "pt": "She is going to start a new job.",
+              "en": "Ela vai começar um emprego novo."
+            },
+            {
+              "pt": "I'll help you with that.",
+              "en": "Eu te ajudo com isso."
+            },
+            {
+              "pt": "We are going to travel in July.",
+              "en": "Nós vamos viajar em julho."
+            },
+            {
+              "pt": "I think it will rain tomorrow.",
+              "en": "Eu acho que vai chover amanhã."
             }
           ]
         },
@@ -3119,7 +5507,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como os falantes de inglês fazem planos no dia a dia",
           "text": "Nos países de língua inglesa, como o Reino Unido, os Estados Unidos e a Austrália, é muito comum as pessoas combinarem planos com bastante antecedência, especialmente para jantares, visitas e eventos sociais. Expressar disponibilidade com frases como 'Are you free on Saturday?' é uma forma natural e educada de convidar alguém. Em contextos informais, aplicativos de mensagens como WhatsApp e iMessage são usados para confirmar compromissos com frases curtas como 'I will text you later' (Eu te mando mensagem depois). Planejar com antecedência é visto como sinal de respeito pelo tempo do outro."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "plan",
+            "en": "plano",
+            "ex": "What are your plans for the weekend?",
+            "exEn": "Quais são seus planos para o fim de semana?"
+          },
+          {
+            "pt": "book (a ticket)",
+            "en": "reservar",
+            "ex": "I'm going to book the tickets tonight.",
+            "exEn": "Vou reservar as passagens hoje à noite."
+          },
+          {
+            "pt": "probably",
+            "en": "provavelmente",
+            "ex": "I'll probably stay home.",
+            "exEn": "Eu provavelmente vou ficar em casa."
+          },
+          {
+            "pt": "definitely",
+            "en": "com certeza",
+            "ex": "We're definitely going.",
+            "exEn": "Nós vamos com certeza."
+          },
+          {
+            "pt": "cancel",
+            "en": "cancelar",
+            "ex": "They cancelled the meeting.",
+            "exEn": "Eles cancelaram a reunião."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I go to travel next month.",
+            "correct": "I am going to travel next month.",
+            "note": "'Vou viajar' precisa da estrutura completa 'am/is/are going to'. Só 'go' não indica futuro."
+          },
+          {
+            "wrong": "I will visit my mother tomorrow, it's already planned.",
+            "correct": "I am going to visit my mother tomorrow.",
+            "note": "Para planos já decididos use 'going to'. 'Will' é para decisões tomadas na hora."
+          },
+          {
+            "wrong": "I'll to call you later.",
+            "correct": "I'll call you later.",
+            "note": "Depois de 'will' vem o verbo na forma base, sem 'to'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "I am ___ to study tonight.",
+                "ans": "going"
+              },
+              {
+                "q": "She ___ going to call you.",
+                "ans": "is"
+              },
+              {
+                "q": "I ___ help you with that.",
+                "ans": "will"
+              },
+              {
+                "q": "We are going ___ travel in June.",
+                "ans": "to"
+              },
+              {
+                "q": "They ___ going to move house.",
+                "ans": "are"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "I've already decided: I ___ study medicine.",
+                "opts": [
+                  "will",
+                  "am going to",
+                  "go to",
+                  "would"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The phone is ringing. — I ___ answer it!",
+                "opts": [
+                  "am going to",
+                  "will",
+                  "go to",
+                  "would"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "She ___ going to arrive at six.",
+                "opts": [
+                  "are",
+                  "am",
+                  "is",
+                  "be"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "I'll ___ you tomorrow.",
+                "opts": [
+                  "to call",
+                  "calling",
+                  "call",
+                  "called"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "We are going to ___ the tickets tonight.",
+                "opts": [
+                  "book",
+                  "booking",
+                  "books",
+                  "booked"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu vou viajar em julho.",
+                "ans": "I am going to travel in July."
+              },
+              {
+                "q": "Ela vai começar um emprego novo.",
+                "ans": "She is going to start a new job."
+              },
+              {
+                "q": "Eu te ligo mais tarde.",
+                "ans": "I'll call you later."
+              },
+              {
+                "q": "Quais são seus planos?",
+                "ans": "What are your plans?"
+              },
+              {
+                "q": "Eu acho que vai chover.",
+                "ans": "I think it will rain."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "A distinção útil: 'going to' = já decidido antes desta conversa; 'will' = decidido agora, neste segundo. Um telefone tocando é o melhor exemplo de 'will'."
       },
       {
         "title": "Likes & Opinions",
@@ -3205,6 +5753,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "He thinks that traveling is amazing.",
               "en": "Ele acha que viajar é incrível."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I like cooking on weekends.",
+              "en": "Eu gosto de cozinhar nos fins de semana."
+            },
+            {
+              "pt": "She loves travelling.",
+              "en": "Ela adora viajar."
+            },
+            {
+              "pt": "They hate waking up early.",
+              "en": "Eles odeiam acordar cedo."
+            },
+            {
+              "pt": "I think that this book is great.",
+              "en": "Eu acho que este livro é ótimo."
+            },
+            {
+              "pt": "He enjoys playing football.",
+              "en": "Ele gosta de jogar futebol."
             }
           ]
         },
@@ -3340,7 +5910,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como os falantes de inglês expressam gostos no dia a dia",
           "text": "Nos países de língua inglesa, como os Estados Unidos, o Reino Unido e a Austrália, é muito comum as pessoas conversarem sobre seus gostos e opiniões durante situações cotidianas, como no intervalo do trabalho ou em reuniões sociais. Perguntas como 'What do you like doing?' (O que você gosta de fazer?) são uma forma educada e amigável de iniciar uma conversa e conhecer melhor alguém. Dar opiniões usando 'I think that...' é considerado uma forma respeitosa de se expressar, pois indica que você está falando por si mesmo. Essa cultura de compartilhar preferências pessoais torna as conversas mais naturais e ajuda a criar conexões entre as pessoas."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "enjoy",
+            "en": "gostar de, curtir",
+            "ex": "I enjoy reading at night.",
+            "exEn": "Eu gosto de ler à noite."
+          },
+          {
+            "pt": "can't stand",
+            "en": "não suportar",
+            "ex": "I can't stand waiting in queues.",
+            "exEn": "Eu não suporto esperar em filas."
+          },
+          {
+            "pt": "prefer",
+            "en": "preferir",
+            "ex": "I prefer tea to coffee.",
+            "exEn": "Eu prefiro chá a café."
+          },
+          {
+            "pt": "boring",
+            "en": "chato, entediante",
+            "ex": "That film was boring.",
+            "exEn": "Aquele filme foi chato."
+          },
+          {
+            "pt": "in my opinion",
+            "en": "na minha opinião",
+            "ex": "In my opinion, it's too expensive.",
+            "exEn": "Na minha opinião, é caro demais."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I like to cooking.",
+            "correct": "I like cooking.",
+            "note": "Depois de like/love/hate use o verbo com -ing, ou 'to' + base — nunca os dois juntos."
+          },
+          {
+            "wrong": "I am agree with you.",
+            "correct": "I agree with you.",
+            "note": "'Agree' é verbo pleno em inglês. Nunca 'I am agree', apesar do português 'eu estou de acordo'."
+          },
+          {
+            "wrong": "I am boring with this film.",
+            "correct": "I am bored with this film.",
+            "note": "'Boring' descreve a coisa (o filme é chato); 'bored' descreve você (você está entediado)."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com a forma -ing do verbo.",
+            "items": [
+              {
+                "q": "I love ___ to music. (listen)",
+                "ans": "listening"
+              },
+              {
+                "q": "She hates ___ early. (wake)",
+                "ans": "waking"
+              },
+              {
+                "q": "They enjoy ___ football. (play)",
+                "ans": "playing"
+              },
+              {
+                "q": "He likes ___ books. (read)",
+                "ans": "reading"
+              },
+              {
+                "q": "We can't stand ___ in queues. (wait)",
+                "ans": "waiting"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "I ___ with your opinion.",
+                "opts": [
+                  "am agree",
+                  "agree",
+                  "am agreeing",
+                  "is agree"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "That lesson was really ___.",
+                "opts": [
+                  "bored",
+                  "boring",
+                  "bore",
+                  "bores"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I love ___ new places.",
+                "opts": [
+                  "to visiting",
+                  "visit",
+                  "visiting",
+                  "visits"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "I ___ tea to coffee.",
+                "opts": [
+                  "prefer",
+                  "prefers",
+                  "am prefer",
+                  "preferring"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "I think ___ this film is excellent.",
+                "opts": [
+                  "what",
+                  "that",
+                  "which",
+                  "who"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu gosto de cozinhar.",
+                "ans": "I like cooking."
+              },
+              {
+                "q": "Ela adora viajar.",
+                "ans": "She loves travelling."
+              },
+              {
+                "q": "Eu concordo com você.",
+                "ans": "I agree with you."
+              },
+              {
+                "q": "Na minha opinião, é caro demais.",
+                "ans": "In my opinion, it is too expensive."
+              },
+              {
+                "q": "Eu não suporto acordar cedo.",
+                "ans": "I can't stand waking up early."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "O par bored/boring vale um minuto de aula própria: '-ed' é como você se sente, '-ing' é como a coisa é. Vale para interested/interesting, tired/tiring, etc."
       },
       {
         "title": "Describing People & Places",
@@ -3426,6 +6156,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "My neighborhood is quieter than the city center.",
               "en": "Meu bairro é mais tranquilo do que o centro da cidade."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "London is bigger than Dublin.",
+              "en": "Londres é maior que Dublin."
+            },
+            {
+              "pt": "This is the biggest room in the house.",
+              "en": "Este é o maior cômodo da casa."
+            },
+            {
+              "pt": "Her car is more expensive than mine.",
+              "en": "O carro dela é mais caro que o meu."
+            },
+            {
+              "pt": "He is the most interesting person here.",
+              "en": "Ele é a pessoa mais interessante aqui."
+            },
+            {
+              "pt": "Today is hotter than yesterday.",
+              "en": "Hoje está mais quente que ontem."
             }
           ]
         },
@@ -3561,7 +6313,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como os ingleses descrevem lugares e pessoas",
           "text": "Nos países de língua inglesa, especialmente no Reino Unido e nos Estados Unidos, é muito comum usar comparativos e superlativos no dia a dia para descrever cidades, bairros e características das pessoas. Expressões como 'the friendliest city' ou 'the most beautiful place' aparecem frequentemente em guias de viagem, anúncios e conversas informais. No Reino Unido, é tradicional descrever lugares históricos usando adjetivos como 'ancient' e 'old', já que o país possui castelos e construções com séculos de história. Nos Estados Unidos, é comum comparar o tamanho das cidades, pois o país possui tanto metrópoles gigantescas, como Nova York, quanto pequenas cidades tranquilas no interior."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "crowded",
+            "en": "lotado",
+            "ex": "The train is very crowded.",
+            "exEn": "O trem está muito lotado."
+          },
+          {
+            "pt": "quiet",
+            "en": "silencioso, calmo",
+            "ex": "This is a quiet neighbourhood.",
+            "exEn": "Este é um bairro calmo."
+          },
+          {
+            "pt": "friendly",
+            "en": "simpático",
+            "ex": "People here are very friendly.",
+            "exEn": "As pessoas aqui são muito simpáticas."
+          },
+          {
+            "pt": "far from",
+            "en": "longe de",
+            "ex": "My house is far from the centre.",
+            "exEn": "Minha casa é longe do centro."
+          },
+          {
+            "pt": "safe",
+            "en": "seguro",
+            "ex": "It's a safe city at night.",
+            "exEn": "É uma cidade segura à noite."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "She is more tall than me.",
+            "correct": "She is taller than me.",
+            "note": "Adjetivos curtos (uma sílaba) usam -er, não 'more'. 'More' é para adjetivos longos."
+          },
+          {
+            "wrong": "This is the more expensive hotel.",
+            "correct": "This is the most expensive hotel.",
+            "note": "Superlativo de adjetivo longo usa 'the most'. 'More' é comparativo."
+          },
+          {
+            "wrong": "He is bigger of me.",
+            "correct": "He is bigger than me.",
+            "note": "A comparação usa 'than', não 'of' nem 'that'. Erro de tradução direta de 'do que'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com o comparativo ou superlativo correto.",
+            "items": [
+              {
+                "q": "Dublin is ___ than London. (small)",
+                "ans": "smaller"
+              },
+              {
+                "q": "This is the ___ hotel in town. (expensive)",
+                "ans": "most expensive"
+              },
+              {
+                "q": "Today is ___ than yesterday. (hot)",
+                "ans": "hotter"
+              },
+              {
+                "q": "She is the ___ student in the class. (good)",
+                "ans": "best"
+              },
+              {
+                "q": "My flat is ___ than yours. (big)",
+                "ans": "bigger"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "My brother is ___ than me.",
+                "opts": [
+                  "more tall",
+                  "taller",
+                  "tallest",
+                  "the taller"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "This is the ___ interesting book here.",
+                "opts": [
+                  "more",
+                  "most",
+                  "much",
+                  "many"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Brazil is bigger ___ Portugal.",
+                "opts": [
+                  "that",
+                  "of",
+                  "than",
+                  "then"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "It's the ___ day of the year.",
+                "opts": [
+                  "hotter",
+                  "hottest",
+                  "more hot",
+                  "most hot"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The train is very ___ at rush hour.",
+                "opts": [
+                  "crowded",
+                  "quiet",
+                  "empty",
+                  "safe"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Londres é maior que Dublin.",
+                "ans": "London is bigger than Dublin."
+              },
+              {
+                "q": "Este é o hotel mais caro.",
+                "ans": "This is the most expensive hotel."
+              },
+              {
+                "q": "Ela é mais alta que eu.",
+                "ans": "She is taller than me."
+              },
+              {
+                "q": "As pessoas aqui são muito simpáticas.",
+                "ans": "People here are very friendly."
+              },
+              {
+                "q": "É a cidade mais segura do país.",
+                "ans": "It is the safest city in the country."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Regra prática: uma sílaba → -er/-est; três ou mais → more/most. Duas sílabas é zona cinzenta, ensine caso a caso (happy → happier, mas modern → more modern)."
       },
       {
         "title": "Home & Living",
@@ -3647,6 +6559,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "He is talking to the landlord today.",
               "en": "Ele está conversando com o proprietário hoje."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I am living in Dublin now.",
+              "en": "Eu estou morando em Dublin agora."
+            },
+            {
+              "pt": "She is working from home today.",
+              "en": "Ela está trabalhando de casa hoje."
+            },
+            {
+              "pt": "They are looking for a new flat.",
+              "en": "Eles estão procurando um apartamento novo."
+            },
+            {
+              "pt": "We are painting the kitchen.",
+              "en": "Nós estamos pintando a cozinha."
+            },
+            {
+              "pt": "He is not studying at the moment.",
+              "en": "Ele não está estudando no momento."
             }
           ]
         },
@@ -3782,7 +6716,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Moradia e Vizinhança nos Países de Língua Inglesa",
           "text": "Em países como os Estados Unidos, o Reino Unido e a Austrália, é muito comum as pessoas alugarem apartamentos ou casas por longos períodos antes de comprar um imóvel próprio. Nos EUA, muitos jovens adultos têm 'roommates' — colegas de quarto com quem dividem o aluguel e as despesas da casa. No Reino Unido, é tradicional os vizinhos se cumprimentarem e, em muitos bairros menores, as pessoas se conhecem bem e se ajudam. Na Austrália, as casas frequentemente têm áreas externas generosas, como varandas e jardins, onde as famílias se reúnem para o famoso 'barbecue' nos fins de semana."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "rent",
+            "en": "aluguel; alugar",
+            "ex": "We rent a flat in the city.",
+            "exEn": "Nós alugamos um apartamento na cidade."
+          },
+          {
+            "pt": "move house",
+            "en": "mudar de casa",
+            "ex": "They are moving house next month.",
+            "exEn": "Eles estão mudando de casa mês que vem."
+          },
+          {
+            "pt": "neighbour",
+            "en": "vizinho",
+            "ex": "My neighbour is very kind.",
+            "exEn": "Meu vizinho é muito gentil."
+          },
+          {
+            "pt": "share",
+            "en": "dividir, compartilhar",
+            "ex": "I share a flat with two friends.",
+            "exEn": "Eu divido um apartamento com dois amigos."
+          },
+          {
+            "pt": "at the moment",
+            "en": "no momento",
+            "ex": "I'm looking for a new place at the moment.",
+            "exEn": "Estou procurando um lugar novo no momento."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I working in Dublin.",
+            "correct": "I am working in Dublin.",
+            "note": "O present continuous precisa do verbo 'to be'. Sozinho, o -ing não forma frase."
+          },
+          {
+            "wrong": "I am knowing the answer.",
+            "correct": "I know the answer.",
+            "note": "Verbos de estado (know, like, want, need, understand) não aceitam -ing em inglês."
+          },
+          {
+            "wrong": "She is living here since 2020.",
+            "correct": "She has lived here since 2020.",
+            "note": "Para algo que começou no passado e continua, use present perfect, não continuous."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com o present continuous do verbo.",
+            "items": [
+              {
+                "q": "I ___ working from home today. (be)",
+                "ans": "am"
+              },
+              {
+                "q": "She is ___ for a new flat. (look)",
+                "ans": "looking"
+              },
+              {
+                "q": "They ___ moving house next week. (be)",
+                "ans": "are"
+              },
+              {
+                "q": "We are ___ the kitchen. (paint)",
+                "ans": "painting"
+              },
+              {
+                "q": "He ___ not studying right now. (be)",
+                "ans": "is"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "I ___ living in Cork at the moment.",
+                "opts": [
+                  "am",
+                  "is",
+                  "are",
+                  "be"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "I am knowing him",
+                  "I know him",
+                  "I am know him",
+                  "I knowing him"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "She ___ working today — it's her day off.",
+                "opts": [
+                  "isn't",
+                  "doesn't",
+                  "not",
+                  "aren't"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "I ___ a flat with two friends.",
+                "opts": [
+                  "share",
+                  "am share",
+                  "sharing",
+                  "shares"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "What ___ you doing?",
+                "opts": [
+                  "is",
+                  "do",
+                  "are",
+                  "does"
+                ],
+                "ans": 2
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu estou morando em Dublin.",
+                "ans": "I am living in Dublin."
+              },
+              {
+                "q": "Ela está trabalhando de casa hoje.",
+                "ans": "She is working from home today."
+              },
+              {
+                "q": "Nós alugamos um apartamento.",
+                "ans": "We rent a flat."
+              },
+              {
+                "q": "Eles estão procurando uma casa nova.",
+                "ans": "They are looking for a new house."
+              },
+              {
+                "q": "Meu vizinho é muito gentil.",
+                "ans": "My neighbour is very kind."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Verbos de estado sem -ing (know, want, like, need) é um bloco que vale decorar. O aluno brasileiro tende a usar o continuous demais porque em português 'estou sabendo' existe."
       },
       {
         "title": "Work & Study",
@@ -3868,6 +6962,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Can you speak English at work?",
               "en": "Você consegue falar inglês no trabalho?"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I can speak three languages.",
+              "en": "Eu sei falar três idiomas."
+            },
+            {
+              "pt": "She can't drive.",
+              "en": "Ela não sabe dirigir."
+            },
+            {
+              "pt": "I have to work on Saturday.",
+              "en": "Eu tenho que trabalhar no sábado."
+            },
+            {
+              "pt": "He has to finish the report today.",
+              "en": "Ele tem que terminar o relatório hoje."
+            },
+            {
+              "pt": "Can you help me with this?",
+              "en": "Você pode me ajudar com isso?"
             }
           ]
         },
@@ -4003,7 +7119,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Cultura profissional nos países de língua inglesa",
           "text": "Em países como os Estados Unidos e o Reino Unido, é muito comum que profissionais listem suas habilidades (skills) no currículo usando expressões com 'can', como 'I can manage a team' ou 'I can use Microsoft Office'. Entrevistas de emprego geralmente incluem perguntas como 'What can you bring to this company?' — ou seja, o que você pode oferecer à empresa. Além disso, a pontualidade é muito valorizada no ambiente de trabalho: chegar atrasado a uma reunião pode ser visto como falta de respeito. Saber falar inglês profissional (Business English) é considerado uma habilidade muito importante no mercado de trabalho global."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "deadline",
+            "en": "prazo",
+            "ex": "The deadline is on Friday.",
+            "exEn": "O prazo é na sexta."
+          },
+          {
+            "pt": "meeting",
+            "en": "reunião",
+            "ex": "I have a meeting at ten.",
+            "exEn": "Eu tenho uma reunião às dez."
+          },
+          {
+            "pt": "degree",
+            "en": "diploma, graduação",
+            "ex": "She has a degree in biology.",
+            "exEn": "Ela tem uma graduação em biologia."
+          },
+          {
+            "pt": "shift",
+            "en": "turno",
+            "ex": "I work the night shift.",
+            "exEn": "Eu trabalho no turno da noite."
+          },
+          {
+            "pt": "apply for",
+            "en": "candidatar-se a",
+            "ex": "He applied for a new job.",
+            "exEn": "Ele se candidatou a um emprego novo."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I can to drive.",
+            "correct": "I can drive.",
+            "note": "Depois de 'can' o verbo vem na forma base, sem 'to'. Vale para todos os modais."
+          },
+          {
+            "wrong": "She cans speak English.",
+            "correct": "She can speak English.",
+            "note": "Modais nunca levam -s na terceira pessoa. 'Cans' não existe."
+          },
+          {
+            "wrong": "I have that work tomorrow.",
+            "correct": "I have to work tomorrow.",
+            "note": "A obrigação é 'have TO' + verbo. Sem o 'to', a frase muda de sentido."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "I ___ speak Spanish very well.",
+                "ans": "can"
+              },
+              {
+                "q": "She ___ to work on Saturday.",
+                "ans": "has"
+              },
+              {
+                "q": "They can't ___ tomorrow.",
+                "ans": "come"
+              },
+              {
+                "q": "I have ___ finish this today.",
+                "ans": "to"
+              },
+              {
+                "q": "The ___ is on Friday, so hurry up.",
+                "ans": "deadline"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "She ___ speak four languages.",
+                "opts": [
+                  "cans",
+                  "can",
+                  "can to",
+                  "is can"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I ___ work this weekend. It's obligatory.",
+                "opts": [
+                  "can",
+                  "have to",
+                  "would",
+                  "like to"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "He can ___ a car.",
+                "opts": [
+                  "to drive",
+                  "drives",
+                  "drive",
+                  "driving"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___ you help me, please?",
+                "opts": [
+                  "Can",
+                  "Do can",
+                  "Are can",
+                  "Have"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "She ___ to work at six every day.",
+                "opts": [
+                  "have",
+                  "has",
+                  "having",
+                  "is have"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu sei falar inglês.",
+                "ans": "I can speak English."
+              },
+              {
+                "q": "Ela não sabe dirigir.",
+                "ans": "She can't drive."
+              },
+              {
+                "q": "Eu tenho que trabalhar amanhã.",
+                "ans": "I have to work tomorrow."
+              },
+              {
+                "q": "Você pode me ajudar?",
+                "ans": "Can you help me?"
+              },
+              {
+                "q": "Ele tem uma reunião às dez.",
+                "ans": "He has a meeting at ten."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "'Can' traduz tanto 'poder' quanto 'saber' (habilidade). 'Eu sei nadar' = 'I can swim', não 'I know to swim' — vale explicitar, porque a tradução literal é tentadora."
       },
       {
         "title": "Hobbies & Free Time",
@@ -4089,6 +7365,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "How often do you watch movies?",
               "en": "Com que frequência você assiste filmes?"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I always drink coffee in the morning.",
+              "en": "Eu sempre tomo café de manhã."
+            },
+            {
+              "pt": "She usually goes to the gym.",
+              "en": "Ela normalmente vai à academia."
+            },
+            {
+              "pt": "They sometimes play tennis.",
+              "en": "Eles às vezes jogam tênis."
+            },
+            {
+              "pt": "He never watches football.",
+              "en": "Ele nunca assiste futebol."
+            },
+            {
+              "pt": "How often do you read?",
+              "en": "Com que frequência você lê?"
             }
           ]
         },
@@ -4224,7 +7522,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Hobbies e tempo livre nos países de língua inglesa",
           "text": "Nos Estados Unidos e no Reino Unido, falar sobre hobbies é uma forma muito comum de iniciar conversas e fazer amizades. Atividades como hiking (trilhas), going to the gym (academia) e watching sports (assistir esportes) são extremamente populares no dia a dia. Nos países anglófonos, é comum as pessoas participarem de clubes organizados para seus hobbies, como book clubs (clubes do livro) ou running clubs (grupos de corrida). Perguntar 'What do you do in your free time?' é uma das primeiras perguntas feitas quando alguém quer conhecer melhor uma pessoa nova."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "hardly ever",
+            "en": "quase nunca",
+            "ex": "I hardly ever watch TV.",
+            "exEn": "Eu quase nunca assisto TV."
+          },
+          {
+            "pt": "once a week",
+            "en": "uma vez por semana",
+            "ex": "I go swimming once a week.",
+            "exEn": "Eu vou nadar uma vez por semana."
+          },
+          {
+            "pt": "spare time",
+            "en": "tempo livre",
+            "ex": "What do you do in your spare time?",
+            "exEn": "O que você faz no seu tempo livre?"
+          },
+          {
+            "pt": "take up",
+            "en": "começar (um hobby)",
+            "ex": "She took up painting last year.",
+            "exEn": "Ela começou a pintar ano passado."
+          },
+          {
+            "pt": "keen on",
+            "en": "interessado em",
+            "ex": "He is keen on photography.",
+            "exEn": "Ele é interessado em fotografia."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I go always to the gym.",
+            "correct": "I always go to the gym.",
+            "note": "Advérbios de frequência vêm ANTES do verbo principal, não depois."
+          },
+          {
+            "wrong": "She is always late. / She always is late.",
+            "correct": "She is always late.",
+            "note": "Exceção importante: com o verbo 'to be', o advérbio vem DEPOIS. Antes de verbo comum, depois de 'to be'."
+          },
+          {
+            "wrong": "I don't never go there.",
+            "correct": "I never go there.",
+            "note": "'Never' já é negativo. Dupla negativa é natural em português, mas erro em inglês."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "I ___ go to the gym on Mondays.",
+                "ans": "always"
+              },
+              {
+                "q": "How ___ do you play tennis?",
+                "ans": "often"
+              },
+              {
+                "q": "She is ___ late for class.",
+                "ans": "always"
+              },
+              {
+                "q": "I go swimming ___ a week.",
+                "ans": "once"
+              },
+              {
+                "q": "What do you do in your ___ time?",
+                "ans": "spare"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "I go always there",
+                  "I always go there",
+                  "Always I go there",
+                  "I go there always"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "She always is tired",
+                  "She is always tired",
+                  "Always she is tired",
+                  "She is tired always"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "___ often do you travel?",
+                "opts": [
+                  "What",
+                  "How",
+                  "When",
+                  "Which"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I ___ ever eat fast food.",
+                "opts": [
+                  "hard",
+                  "hardly",
+                  "hardest",
+                  "harder"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "He is ___ on photography.",
+                "opts": [
+                  "keen",
+                  "kind",
+                  "keep",
+                  "key"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu sempre acordo cedo.",
+                "ans": "I always wake up early."
+              },
+              {
+                "q": "Ela nunca chega atrasada.",
+                "ans": "She is never late."
+              },
+              {
+                "q": "Com que frequência você viaja?",
+                "ans": "How often do you travel?"
+              },
+              {
+                "q": "Eles às vezes jogam futebol.",
+                "ans": "They sometimes play football."
+              },
+              {
+                "q": "Eu vou à academia duas vezes por semana.",
+                "ans": "I go to the gym twice a week."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "A regra da posição é simples e vale ensinar como bloco: antes do verbo comum, depois do 'to be'. Um único exemplo de cada fixa melhor que a explicação."
       },
       {
         "title": "At the Restaurant",
@@ -4310,6 +7768,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "We don't have any tables available right now.",
               "en": "Não temos nenhuma mesa disponível no momento."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "Could I have the menu, please?",
+              "en": "Poderia me trazer o cardápio, por favor?"
+            },
+            {
+              "pt": "I'd like some water, please.",
+              "en": "Eu queria um pouco de água, por favor."
+            },
+            {
+              "pt": "Do you have any vegetarian options?",
+              "en": "Vocês têm opções vegetarianas?"
+            },
+            {
+              "pt": "Could I have the bill, please?",
+              "en": "Poderia me trazer a conta, por favor?"
+            },
+            {
+              "pt": "I don't want any sugar, thank you.",
+              "en": "Eu não quero açúcar, obrigado."
             }
           ]
         },
@@ -4445,7 +7925,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Etiqueta em Restaurantes nos Países de Língua Inglesa",
           "text": "Em países como o Reino Unido e os Estados Unidos, é muito comum chamar o garçom dizendo 'Excuse me' em vez de acenar ou chamar em voz alta. Fazer pedidos de forma educada usando 'please' e 'thank you' é considerado essencial e demonstra respeito. Nos Estados Unidos, é habitual deixar gorjeta (tip) de 15% a 20% do valor da conta, pois faz parte importante da renda dos garçons. Já no Reino Unido, a gorjeta é bem-vinda mas opcional, geralmente em torno de 10%."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "starter",
+            "en": "entrada",
+            "ex": "Would you like a starter first?",
+            "exEn": "Você gostaria de uma entrada primeiro?"
+          },
+          {
+            "pt": "main course",
+            "en": "prato principal",
+            "ex": "The main course was delicious.",
+            "exEn": "O prato principal estava delicioso."
+          },
+          {
+            "pt": "still water",
+            "en": "água sem gás",
+            "ex": "Could I have still water, please?",
+            "exEn": "Poderia me trazer água sem gás, por favor?"
+          },
+          {
+            "pt": "book a table",
+            "en": "reservar uma mesa",
+            "ex": "I'd like to book a table for two.",
+            "exEn": "Eu queria reservar uma mesa para dois."
+          },
+          {
+            "pt": "well done",
+            "en": "bem passado",
+            "ex": "I'd like my steak well done.",
+            "exEn": "Eu queria meu bife bem passado."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "Do you have some vegetarian food?",
+            "correct": "Do you have any vegetarian food?",
+            "note": "Use 'some' em afirmativas e 'any' em perguntas e negativas."
+          },
+          {
+            "wrong": "Can I have the bill?",
+            "correct": "Could I have the bill, please?",
+            "note": "'Could' é mais educado que 'can' em pedidos. Em restaurante, 'could' + 'please' é o padrão."
+          },
+          {
+            "wrong": "Bring me the menu.",
+            "correct": "Could I have the menu, please?",
+            "note": "O imperativo direto soa grosseiro em inglês, mesmo que em português 'me traz o cardápio' seja normal."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com 'some' ou 'any'.",
+            "items": [
+              {
+                "q": "I'd like ___ water, please.",
+                "ans": "some"
+              },
+              {
+                "q": "Are there ___ tables by the window?",
+                "ans": "any"
+              },
+              {
+                "q": "There isn't ___ sugar in my coffee.",
+                "ans": "any"
+              },
+              {
+                "q": "Could I have ___ bread, please?",
+                "ans": "some"
+              },
+              {
+                "q": "I don't want ___ ice in my drink.",
+                "ans": "any"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ I have the bill, please?",
+                "opts": [
+                  "Could",
+                  "Would",
+                  "Should",
+                  "Do"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "The dish you eat first is the ___.",
+                "opts": [
+                  "main course",
+                  "starter",
+                  "dessert",
+                  "bill"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I'd like to ___ a table for four.",
+                "opts": [
+                  "book",
+                  "buy",
+                  "take",
+                  "make"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "Water without gas is ___ water.",
+                "opts": [
+                  "sparkling",
+                  "still",
+                  "hard",
+                  "soft"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Do you have ___ desserts?",
+                "opts": [
+                  "some",
+                  "any",
+                  "a",
+                  "much"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Poderia me trazer o cardápio, por favor?",
+                "ans": "Could I have the menu, please?"
+              },
+              {
+                "q": "Eu queria reservar uma mesa para dois.",
+                "ans": "I'd like to book a table for two."
+              },
+              {
+                "q": "Vocês têm opções vegetarianas?",
+                "ans": "Do you have any vegetarian options?"
+              },
+              {
+                "q": "A conta, por favor.",
+                "ans": "The bill, please."
+              },
+              {
+                "q": "Eu não quero açúcar.",
+                "ans": "I don't want any sugar."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Some/any é regra mecânica e rende resultado rápido. Já a polidez ('could' + 'please') é cultural: vale avisar que em inglês soar direto demais custa caro socialmente."
       },
       {
         "title": "Travel & Tourism",
@@ -4531,6 +8171,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "We've been to five different countries.",
               "en": "Nós já fomos a cinco países diferentes."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "Have you ever been to Ireland?",
+              "en": "Você já esteve na Irlanda?"
+            },
+            {
+              "pt": "I have been to Spain twice.",
+              "en": "Eu já estive na Espanha duas vezes."
+            },
+            {
+              "pt": "She has never travelled by plane.",
+              "en": "Ela nunca viajou de avião."
+            },
+            {
+              "pt": "They have visited ten countries.",
+              "en": "Eles já visitaram dez países."
+            },
+            {
+              "pt": "Have you ever tried sushi?",
+              "en": "Você já experimentou sushi?"
             }
           ]
         },
@@ -4666,7 +8328,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Viagens e o costume de conversar com desconhecidos",
           "text": "Em países de língua inglesa como o Reino Unido, os Estados Unidos e a Austrália, é comum as pessoas fazerem pequenas conversas (chamadas de 'small talk') com desconhecidos em locais públicos, incluindo aeroportos. Perguntas como 'Have you ever been here before?' (Você já esteve aqui antes?) são uma forma educada e amigável de iniciar uma conversa. Nos aeroportos britânicos e americanos, os funcionários costumam ser bastante atenciosos e é normal trocar algumas frases durante o check-in. Saber responder com 'Yes, I've been to...' ou 'No, I've never been there' pode tornar sua experiência de viagem muito mais agradável e natural!"
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "abroad",
+            "en": "no exterior",
+            "ex": "Have you ever lived abroad?",
+            "exEn": "Você já morou no exterior?"
+          },
+          {
+            "pt": "luggage",
+            "en": "bagagem",
+            "ex": "My luggage is very heavy.",
+            "exEn": "Minha bagagem está muito pesada."
+          },
+          {
+            "pt": "boarding pass",
+            "en": "cartão de embarque",
+            "ex": "Show your boarding pass here.",
+            "exEn": "Mostre seu cartão de embarque aqui."
+          },
+          {
+            "pt": "sightseeing",
+            "en": "passeio turístico",
+            "ex": "We went sightseeing in Rome.",
+            "exEn": "Nós fizemos um passeio turístico em Roma."
+          },
+          {
+            "pt": "delayed",
+            "en": "atrasado (voo)",
+            "ex": "The flight was delayed.",
+            "exEn": "O voo estava atrasado."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "Have you ever went to London?",
+            "correct": "Have you ever been to London?",
+            "note": "O present perfect usa o particípio ('been'), não o passado simples ('went')."
+          },
+          {
+            "wrong": "I have been in Spain twice.",
+            "correct": "I have been to Spain twice.",
+            "note": "'Been to' = foi e voltou. 'Been in' sugere que ainda está lá."
+          },
+          {
+            "wrong": "I know him since 2019.",
+            "correct": "I have known him since 2019.",
+            "note": "Para algo que começou no passado e continua até agora, o inglês exige present perfect."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "Have you ever ___ to Ireland?",
+                "ans": "been"
+              },
+              {
+                "q": "I ___ never travelled by ship.",
+                "ans": "have"
+              },
+              {
+                "q": "She ___ visited five countries.",
+                "ans": "has"
+              },
+              {
+                "q": "I have been ___ Spain twice.",
+                "ans": "to"
+              },
+              {
+                "q": "The flight was ___ by two hours.",
+                "ans": "delayed"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "Have you ever ___ sushi?",
+                "opts": [
+                  "try",
+                  "tried",
+                  "trying",
+                  "tries"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "She ___ been to Japan.",
+                "opts": [
+                  "have",
+                  "has",
+                  "is",
+                  "did"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I have ___ seen that film.",
+                "opts": [
+                  "ever",
+                  "never",
+                  "yet",
+                  "since"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Living in another country is living ___.",
+                "opts": [
+                  "abroad",
+                  "aboard",
+                  "above",
+                  "abreast"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "Your bags at the airport are your ___.",
+                "opts": [
+                  "language",
+                  "luggage",
+                  "package",
+                  "baggages"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Você já esteve em Londres?",
+                "ans": "Have you ever been to London?"
+              },
+              {
+                "q": "Eu nunca viajei de avião.",
+                "ans": "I have never travelled by plane."
+              },
+              {
+                "q": "Ela já visitou dez países.",
+                "ans": "She has visited ten countries."
+              },
+              {
+                "q": "O voo estava atrasado.",
+                "ans": "The flight was delayed."
+              },
+              {
+                "q": "Você já morou no exterior?",
+                "ans": "Have you ever lived abroad?"
+              }
+            ]
+          }
+        ],
+        "teacherTip": "'Been to' vs 'gone to' vale marcar: 'He has been to Paris' (foi e voltou) contra 'He has gone to Paris' (está lá agora). É uma distinção que o português não faz."
       },
       {
         "title": "Emotions & Relationships",
@@ -4752,6 +8574,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "They look excited about the party.",
               "en": "Eles parecem animados com a festa."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I feel tired today.",
+              "en": "Eu me sinto cansado hoje."
+            },
+            {
+              "pt": "You look happy.",
+              "en": "Você parece feliz."
+            },
+            {
+              "pt": "He seems worried.",
+              "en": "Ele parece preocupado."
+            },
+            {
+              "pt": "She feels nervous before exams.",
+              "en": "Ela se sente nervosa antes das provas."
+            },
+            {
+              "pt": "They look tired after the trip.",
+              "en": "Eles parecem cansados depois da viagem."
             }
           ]
         },
@@ -4887,7 +8731,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como os americanos e britânicos falam sobre emoções",
           "text": "Em países de língua inglesa, como os Estados Unidos e o Reino Unido, é muito comum as pessoas perguntarem 'How are you feeling?' (Como você está se sentindo?) como forma de demonstrar cuidado e atenção. No ambiente de trabalho, expressões como 'I feel overwhelmed' (Me sinto sobrecarregado/a) são cada vez mais aceitas, pois a saúde mental é levada muito a sério nessas culturas. No Reino Unido, as pessoas tendem a ser um pouco mais reservadas ao expressar emoções fortes em público, preferindo dizer 'I seem a bit off today' (Estou um pouco fora do normal hoje) em vez de falar diretamente sobre tristeza ou raiva. Já nos Estados Unidos, é mais comum ser direto e dizer abertamente como você se sente para amigos e colegas próximos."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "upset",
+            "en": "chateado",
+            "ex": "She looks upset today.",
+            "exEn": "Ela parece chateada hoje."
+          },
+          {
+            "pt": "get on well with",
+            "en": "se dar bem com",
+            "ex": "I get on well with my colleagues.",
+            "exEn": "Eu me dou bem com meus colegas."
+          },
+          {
+            "pt": "miss (someone)",
+            "en": "sentir falta de",
+            "ex": "I miss my family a lot.",
+            "exEn": "Eu sinto muita falta da minha família."
+          },
+          {
+            "pt": "worried",
+            "en": "preocupado",
+            "ex": "He seems worried about the exam.",
+            "exEn": "Ele parece preocupado com a prova."
+          },
+          {
+            "pt": "proud",
+            "en": "orgulhoso",
+            "ex": "I feel proud of my students.",
+            "exEn": "Eu me sinto orgulhoso dos meus alunos."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I feel me tired.",
+            "correct": "I feel tired.",
+            "note": "'Feel' não é reflexivo em inglês. O 'me' de 'me sinto' não se traduz."
+          },
+          {
+            "wrong": "You look happily.",
+            "correct": "You look happy.",
+            "note": "Depois de feel/look/seem vem adjetivo, não advérbio."
+          },
+          {
+            "wrong": "I have saudades of my family.",
+            "correct": "I miss my family.",
+            "note": "Não existe 'saudade' em inglês. A construção é 'I miss + pessoa' — o sujeito é quem sente."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "I ___ tired after work.",
+                "ans": "feel"
+              },
+              {
+                "q": "You ___ very happy today.",
+                "ans": "look"
+              },
+              {
+                "q": "He ___ worried about something.",
+                "ans": "seems"
+              },
+              {
+                "q": "I ___ my family a lot.",
+                "ans": "miss"
+              },
+              {
+                "q": "I get ___ well with my colleagues.",
+                "ans": "on"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "You look ___ today.",
+                "opts": [
+                  "happily",
+                  "happy",
+                  "happiness",
+                  "happier than"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "I feel me sad",
+                  "I feel sad",
+                  "I am feel sad",
+                  "I feeling sad"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'Sinto falta de você' in English is ___.",
+                "opts": [
+                  "I have saudades of you",
+                  "You miss me",
+                  "I miss you",
+                  "I feel lack of you"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "She ___ upset about the news.",
+                "opts": [
+                  "seem",
+                  "seems",
+                  "seeming",
+                  "is seem"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I feel ___ of my students.",
+                "opts": [
+                  "proud",
+                  "proudly",
+                  "pride",
+                  "prouder"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu me sinto cansado.",
+                "ans": "I feel tired."
+              },
+              {
+                "q": "Você parece feliz.",
+                "ans": "You look happy."
+              },
+              {
+                "q": "Ele parece preocupado.",
+                "ans": "He seems worried."
+              },
+              {
+                "q": "Eu sinto falta da minha família.",
+                "ans": "I miss my family."
+              },
+              {
+                "q": "Eu me dou bem com meus colegas.",
+                "ans": "I get on well with my colleagues."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "'I miss you' inverte a lógica do português: em 'sinto sua falta' o sujeito também é quem sente, mas alunos frequentemente produzem 'You miss me'. Vale um drill curto."
       },
       {
         "title": "A2 Review & Consolidation",
@@ -4973,6 +8977,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Have you already bought the tickets?",
               "en": "Você já comprou os ingressos?"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I went to Porto last summer.",
+              "en": "Eu fui ao Porto no verão passado."
+            },
+            {
+              "pt": "She is going to study abroad.",
+              "en": "Ela vai estudar no exterior."
+            },
+            {
+              "pt": "This city is bigger than my hometown.",
+              "en": "Esta cidade é maior que minha cidade natal."
+            },
+            {
+              "pt": "I have lived here for three years.",
+              "en": "Eu moro aqui há três anos."
+            },
+            {
+              "pt": "He didn't call me yesterday.",
+              "en": "Ele não me ligou ontem."
             }
           ]
         },
@@ -5108,7 +9134,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Viagens e cultura nos países de língua inglesa",
           "text": "Em países como o Reino Unido, os Estados Unidos e a Austrália, é muito comum as pessoas planejarem viagens internacionais com bastante antecedência, especialmente durante as férias de verão ou fim de ano. Perguntar 'Have you ever been to...?' é uma forma muito natural de iniciar uma conversa sobre viagens e experiências de vida. Nos países de língua inglesa, compartilhar histórias de viagem é uma maneira popular de criar conexões sociais em encontros casuais. Frases no Present Perfect, como 'I've already visited five countries', são usadas com frequência para falar sobre conquistas pessoais."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "by the way",
+            "en": "a propósito",
+            "ex": "By the way, did you call her?",
+            "exEn": "A propósito, você ligou para ela?"
+          },
+          {
+            "pt": "as well",
+            "en": "também",
+            "ex": "I speak Spanish as well.",
+            "exEn": "Eu falo espanhol também."
+          },
+          {
+            "pt": "instead of",
+            "en": "em vez de",
+            "ex": "I had tea instead of coffee.",
+            "exEn": "Eu tomei chá em vez de café."
+          },
+          {
+            "pt": "on my own",
+            "en": "sozinho, por conta própria",
+            "ex": "I travelled on my own.",
+            "exEn": "Eu viajei sozinho."
+          },
+          {
+            "pt": "at least",
+            "en": "pelo menos",
+            "ex": "It costs at least fifty euros.",
+            "exEn": "Custa pelo menos cinquenta euros."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I live here since three years.",
+            "correct": "I have lived here for three years.",
+            "note": "'For' + período de duração; 'since' + ponto de início ('since 2023'). E o tempo verbal é present perfect."
+          },
+          {
+            "wrong": "Yesterday I have gone to the cinema.",
+            "correct": "Yesterday I went to the cinema.",
+            "note": "Com marcador de tempo passado definido (yesterday, last week) use simple past, nunca present perfect."
+          },
+          {
+            "wrong": "She didn't liked the film.",
+            "correct": "She didn't like the film.",
+            "note": "Depois de 'didn't', verbo na base. Erro persistente que vale revisar sempre."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "I have lived here ___ three years.",
+                "ans": "for"
+              },
+              {
+                "q": "She has worked here ___ 2020.",
+                "ans": "since"
+              },
+              {
+                "q": "Yesterday I ___ to the market.",
+                "ans": "went"
+              },
+              {
+                "q": "He didn't ___ the film.",
+                "ans": "like"
+              },
+              {
+                "q": "I am going ___ study abroad.",
+                "ans": "to"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "I have known her ___ 2018.",
+                "opts": [
+                  "for",
+                  "since",
+                  "ago",
+                  "during"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Last week we ___ to Galway.",
+                "opts": [
+                  "have gone",
+                  "go",
+                  "went",
+                  "are going"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "She didn't ___ me yesterday.",
+                "opts": [
+                  "called",
+                  "call",
+                  "calls",
+                  "calling"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "This film is ___ than the last one.",
+                "opts": [
+                  "good",
+                  "better",
+                  "best",
+                  "the best"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I travelled ___ my own.",
+                "opts": [
+                  "in",
+                  "at",
+                  "on",
+                  "by"
+                ],
+                "ans": 2
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu moro aqui há três anos.",
+                "ans": "I have lived here for three years."
+              },
+              {
+                "q": "Ontem eu fui ao cinema.",
+                "ans": "Yesterday I went to the cinema."
+              },
+              {
+                "q": "Ela vai estudar no exterior.",
+                "ans": "She is going to study abroad."
+              },
+              {
+                "q": "Esta cidade é maior que a minha.",
+                "ans": "This city is bigger than mine."
+              },
+              {
+                "q": "Ele não me ligou.",
+                "ans": "He didn't call me."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "For vs. since é o divisor de águas do A2 para o B1. Truque: 'for' responde 'quanto tempo?', 'since' responde 'desde quando?'."
       }
     ]
   },
@@ -5206,6 +9392,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "We saw a great movie last night.",
               "en": "Nós vimos um ótimo filme ontem à noite."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I have lived in Dublin for five years.",
+              "en": "Eu moro em Dublin há cinco anos."
+            },
+            {
+              "pt": "I lived in São Paulo in 2019.",
+              "en": "Eu morei em São Paulo em 2019."
+            },
+            {
+              "pt": "She has worked here since March.",
+              "en": "Ela trabalha aqui desde março."
+            },
+            {
+              "pt": "She worked there last year.",
+              "en": "Ela trabalhou lá ano passado."
+            },
+            {
+              "pt": "Have you finished the report yet?",
+              "en": "Você já terminou o relatório?"
             }
           ]
         },
@@ -5341,7 +9549,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Curriculo e experiências de vida em países de língua inglesa",
           "text": "Em países como Reino Unido, Estados Unidos e Austrália, é muito comum usar o Present Perfect em entrevistas de emprego para falar sobre experiências profissionais, como 'I have worked in marketing for five years.' Esse tempo verbal transmite a ideia de que a experiência ainda é relevante para o momento presente. Em conversas informais, falantes nativos de inglês também usam bastante o Present Perfect para compartilhar novidades recentes, como 'I've just seen the new movie!' Entender essa diferença cultural e linguística ajuda o aluno a soar mais natural e fluente no dia a dia."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "so far",
+            "en": "até agora",
+            "ex": "So far, everything is fine.",
+            "exEn": "Até agora, está tudo bem."
+          },
+          {
+            "pt": "recently",
+            "en": "recentemente",
+            "ex": "I have recently changed jobs.",
+            "exEn": "Eu mudei de emprego recentemente."
+          },
+          {
+            "pt": "already",
+            "en": "já",
+            "ex": "I have already finished the report.",
+            "exEn": "Eu já terminei o relatório."
+          },
+          {
+            "pt": "yet",
+            "en": "ainda (em perguntas e negativas)",
+            "ex": "Have you finished yet?",
+            "exEn": "Você já terminou?"
+          },
+          {
+            "pt": "achievement",
+            "en": "conquista",
+            "ex": "That was a great achievement.",
+            "exEn": "Aquilo foi uma grande conquista."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I have seen him yesterday.",
+            "correct": "I saw him yesterday.",
+            "note": "Marcador de tempo passado fechado (yesterday, last week, in 2020) exige simple past."
+          },
+          {
+            "wrong": "I am working here since 2021.",
+            "correct": "I have worked here since 2021.",
+            "note": "Ação iniciada no passado que continua agora pede present perfect, não present continuous."
+          },
+          {
+            "wrong": "I have already finished it yesterday.",
+            "correct": "I finished it yesterday.",
+            "note": "'Already' combina com present perfect. Se há data passada explícita, use simple past sem 'already'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com present perfect ou simple past.",
+            "items": [
+              {
+                "q": "I ___ him yesterday. (see)",
+                "ans": "saw"
+              },
+              {
+                "q": "She ___ here since 2020. (work)",
+                "ans": "has worked"
+              },
+              {
+                "q": "We ___ to Paris last summer. (go)",
+                "ans": "went"
+              },
+              {
+                "q": "They ___ never visited Brazil.",
+                "ans": "have"
+              },
+              {
+                "q": "I ___ already finished the report.",
+                "ans": "have"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "I ___ in Dublin for five years and I'm still here.",
+                "opts": [
+                  "lived",
+                  "have lived",
+                  "live",
+                  "was living"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "She ___ the film last night.",
+                "opts": [
+                  "has watched",
+                  "watched",
+                  "watch",
+                  "has watch"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Have you finished ___?",
+                "opts": [
+                  "already",
+                  "yet",
+                  "still",
+                  "since"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I have ___ finished my homework.",
+                "opts": [
+                  "yet",
+                  "since",
+                  "already",
+                  "ago"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "He has worked here ___ March.",
+                "opts": [
+                  "for",
+                  "since",
+                  "ago",
+                  "during"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu moro aqui há cinco anos.",
+                "ans": "I have lived here for five years."
+              },
+              {
+                "q": "Eu o vi ontem.",
+                "ans": "I saw him yesterday."
+              },
+              {
+                "q": "Você já terminou?",
+                "ans": "Have you finished yet?"
+              },
+              {
+                "q": "Ela trabalha aqui desde março.",
+                "ans": "She has worked here since March."
+              },
+              {
+                "q": "Nós fomos a Paris no verão passado.",
+                "ans": "We went to Paris last summer."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Teste rápido de sala: se a frase responde 'quando exatamente?', é simple past. Se responde 'até agora' ou não diz quando, é present perfect."
       },
       {
         "title": "Hypothetical Situations",
@@ -5427,6 +9795,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "What would you do if you won the lottery?",
               "en": "O que você faria se ganhasse na loteria?"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "If I had more time, I would learn the piano.",
+              "en": "Se eu tivesse mais tempo, aprenderia piano."
+            },
+            {
+              "pt": "If she studied more, she would pass.",
+              "en": "Se ela estudasse mais, passaria."
+            },
+            {
+              "pt": "If I were you, I would accept the offer.",
+              "en": "Se eu fosse você, aceitaria a oferta."
+            },
+            {
+              "pt": "What would you do if you lost your job?",
+              "en": "O que você faria se perdesse o emprego?"
+            },
+            {
+              "pt": "If we lived closer, we would visit more often.",
+              "en": "Se morássemos mais perto, visitaríamos com mais frequência."
             }
           ]
         },
@@ -5562,7 +9952,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Sonhos e Hipóteses na Cultura dos Países de Língua Inglesa",
           "text": "Nos Estados Unidos e no Reino Unido, é muito comum as pessoas falarem sobre situações hipotéticas em conversas informais, especialmente usando a famosa pergunta 'What would you do if you won the lottery?' (O que você faria se ganhasse na loteria?). Esse tipo de conversa é visto como uma forma divertida e descontraída de conhecer melhor os valores e sonhos das pessoas. Em países como Austrália e Canadá, falar sobre planos imaginários e desejos também é uma maneira popular de criar conexão entre amigos. Essa prática mostra que o uso do condicional não é apenas gramática — é uma janela para a cultura e os sonhos das pessoas!"
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "afford",
+            "en": "ter condições de pagar",
+            "ex": "If I had more money, I could afford a car.",
+            "exEn": "Se eu tivesse mais dinheiro, poderia comprar um carro."
+          },
+          {
+            "pt": "quit",
+            "en": "pedir demissão, largar",
+            "ex": "If I won the lottery, I would quit my job.",
+            "exEn": "Se eu ganhasse na loteria, largaria meu emprego."
+          },
+          {
+            "pt": "in your shoes",
+            "en": "no seu lugar",
+            "ex": "If I were in your shoes, I would accept.",
+            "exEn": "Se eu estivesse no seu lugar, aceitaria."
+          },
+          {
+            "pt": "otherwise",
+            "en": "caso contrário",
+            "ex": "Leave now, otherwise you'll be late.",
+            "exEn": "Saia agora, caso contrário você vai se atrasar."
+          },
+          {
+            "pt": "unlikely",
+            "en": "improvável",
+            "ex": "That is very unlikely to happen.",
+            "exEn": "Isso é muito improvável de acontecer."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "If I would have more money, I would travel.",
+            "correct": "If I had more money, I would travel.",
+            "note": "'Would' nunca aparece na oração com 'if' no segundo condicional. Só na oração principal."
+          },
+          {
+            "wrong": "If I was you, I would go.",
+            "correct": "If I were you, I would go.",
+            "note": "Em situações hipotéticas o inglês formal usa 'were' para todas as pessoas. 'If I were you' é expressão fixa."
+          },
+          {
+            "wrong": "If I will have time, I would call.",
+            "correct": "If I had time, I would call.",
+            "note": "Depois de 'if' nunca vem 'will'. O segundo condicional usa passado simples ali."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com a forma correta do verbo.",
+            "items": [
+              {
+                "q": "If I ___ more money, I would travel. (have)",
+                "ans": "had"
+              },
+              {
+                "q": "If she studied, she ___ pass the exam. (will)",
+                "ans": "would"
+              },
+              {
+                "q": "If I ___ you, I would accept. (be)",
+                "ans": "were"
+              },
+              {
+                "q": "What would you do if you ___ the lottery? (win)",
+                "ans": "won"
+              },
+              {
+                "q": "If we lived closer, we ___ visit more. (will)",
+                "ans": "would"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "If I ___ rich, I would buy a house.",
+                "opts": [
+                  "am",
+                  "was",
+                  "were",
+                  "would be"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "If he had time, he ___ help you.",
+                "opts": [
+                  "will",
+                  "would",
+                  "did",
+                  "has"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "If I would have time...",
+                  "If I will have time...",
+                  "If I had time...",
+                  "If I have had time..."
+                ],
+                "ans": 2
+              },
+              {
+                "q": "If I were in your ___, I'd say yes.",
+                "opts": [
+                  "place",
+                  "shoes",
+                  "feet",
+                  "position of"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I can't ___ a new car right now.",
+                "opts": [
+                  "afford",
+                  "afford to",
+                  "pay for it",
+                  "buy of"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Se eu tivesse mais tempo, eu estudaria.",
+                "ans": "If I had more time, I would study."
+              },
+              {
+                "q": "Se eu fosse você, eu aceitaria.",
+                "ans": "If I were you, I would accept."
+              },
+              {
+                "q": "O que você faria se ganhasse na loteria?",
+                "ans": "What would you do if you won the lottery?"
+              },
+              {
+                "q": "Se ela estudasse mais, passaria.",
+                "ans": "If she studied more, she would pass."
+              },
+              {
+                "q": "Se morássemos mais perto, nos veríamos mais.",
+                "ans": "If we lived closer, we would see each other more."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "A regra de ouro: 'would' e 'if' nunca dividem a mesma oração. Escreva isso no quadro — corrige metade dos erros de condicional de uma vez."
       },
       {
         "title": "Expressing Opinions",
@@ -5648,6 +10198,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "I believe that technology can help solve many problems.",
               "en": "Eu acredito que a tecnologia pode ajudar a resolver muitos problemas."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "In my opinion, the plan is too expensive.",
+              "en": "Na minha opinião, o plano é caro demais."
+            },
+            {
+              "pt": "I agree with you about the deadline.",
+              "en": "Eu concordo com você sobre o prazo."
+            },
+            {
+              "pt": "I disagree with that approach.",
+              "en": "Eu discordo dessa abordagem."
+            },
+            {
+              "pt": "That's a good point, but I see it differently.",
+              "en": "É um bom argumento, mas eu vejo diferente."
+            },
+            {
+              "pt": "From my point of view, we need more time.",
+              "en": "Do meu ponto de vista, precisamos de mais tempo."
             }
           ]
         },
@@ -5783,7 +10355,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como os falantes de inglês expressam opiniões no dia a dia",
           "text": "Em países de língua inglesa, como o Reino Unido e os Estados Unidos, expressar uma opinião de forma direta é comum, mas a educação ao discordar é muito valorizada. Frases como 'That's a good point, but...' ajudam a manter a conversa respeitosa e construtiva. Em ambientes de trabalho e acadêmicos, é esperado que as pessoas defendam seus pontos de vista com argumentos claros e ouçam ativamente os outros. Essa habilidade de debater de forma educada é considerada um sinal de maturidade e inteligência social na cultura anglófona."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "point of view",
+            "en": "ponto de vista",
+            "ex": "I understand your point of view.",
+            "exEn": "Eu entendo seu ponto de vista."
+          },
+          {
+            "pt": "to be honest",
+            "en": "para ser sincero",
+            "ex": "To be honest, I don't agree.",
+            "exEn": "Para ser sincero, eu não concordo."
+          },
+          {
+            "pt": "make a point",
+            "en": "levantar um argumento",
+            "ex": "She made a good point.",
+            "exEn": "Ela levantou um bom argumento."
+          },
+          {
+            "pt": "partly",
+            "en": "em parte",
+            "ex": "I partly agree with you.",
+            "exEn": "Eu concordo em parte com você."
+          },
+          {
+            "pt": "regarding",
+            "en": "com relação a",
+            "ex": "Regarding the budget, I have doubts.",
+            "exEn": "Com relação ao orçamento, eu tenho dúvidas."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I am agree with you.",
+            "correct": "I agree with you.",
+            "note": "O erro mais persistente de brasileiros em inglês. 'Agree' é verbo, não adjetivo."
+          },
+          {
+            "wrong": "In my opinion, I think that...",
+            "correct": "In my opinion, the plan is risky.",
+            "note": "'In my opinion' e 'I think' são redundantes juntos. Escolha um dos dois."
+          },
+          {
+            "wrong": "I agree of your idea.",
+            "correct": "I agree with your idea.",
+            "note": "A preposição é 'with' para pessoas e ideias, ou 'on' para um ponto específico."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "I ___ with your opinion.",
+                "ans": "agree"
+              },
+              {
+                "q": "In my ___, this is a mistake.",
+                "ans": "opinion"
+              },
+              {
+                "q": "I disagree ___ that idea.",
+                "ans": "with"
+              },
+              {
+                "q": "That's a good ___, but I'm not sure.",
+                "ans": "point"
+              },
+              {
+                "q": "To be ___, I didn't like it.",
+                "ans": "honest"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "I am agree",
+                  "I agree",
+                  "I am agreed",
+                  "I do agree with of"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I agree ___ you.",
+                "opts": [
+                  "of",
+                  "to",
+                  "with",
+                  "in"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___ my opinion, it's too risky.",
+                "opts": [
+                  "On",
+                  "At",
+                  "In",
+                  "By"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "I ___ agree — some parts are good.",
+                "opts": [
+                  "part",
+                  "partly",
+                  "partial",
+                  "a part"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "___ the budget, I have some doubts.",
+                "opts": [
+                  "Regarding",
+                  "Regard",
+                  "Regards",
+                  "In regard"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu concordo com você.",
+                "ans": "I agree with you."
+              },
+              {
+                "q": "Na minha opinião, é caro demais.",
+                "ans": "In my opinion, it is too expensive."
+              },
+              {
+                "q": "Eu discordo dessa ideia.",
+                "ans": "I disagree with that idea."
+              },
+              {
+                "q": "É um bom argumento, mas eu vejo diferente.",
+                "ans": "That's a good point, but I see it differently."
+              },
+              {
+                "q": "Para ser sincero, eu não gostei.",
+                "ans": "To be honest, I didn't like it."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Se o aluno sair do B1 ainda dizendo 'I am agree', o erro vai fossilizar. Vale corrigir toda vez, mesmo interrompendo — é o mais reconhecível marcador de brasileiro falando inglês."
       },
       {
         "title": "Passive Voice",
@@ -5869,6 +10601,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "The pyramids were built thousands of years ago.",
               "en": "As pirâmides foram construídas há milhares de anos."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "The book was written by an Irish author.",
+              "en": "O livro foi escrito por um autor irlandês."
+            },
+            {
+              "pt": "English is spoken all over the world.",
+              "en": "Inglês é falado no mundo inteiro."
+            },
+            {
+              "pt": "The house was built in 1920.",
+              "en": "A casa foi construída em 1920."
+            },
+            {
+              "pt": "The results will be published next week.",
+              "en": "Os resultados serão publicados semana que vem."
+            },
+            {
+              "pt": "My car is being repaired.",
+              "en": "Meu carro está sendo consertado."
             }
           ]
         },
@@ -6004,7 +10758,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "A Voz Passiva nos Meios de Comunicação em Inglês",
           "text": "Nos países de língua inglesa, a voz passiva é muito comum em notícias, relatórios e documentos formais, pois permite apresentar informações de forma objetiva e impessoal. Em manchetes de jornais britânicos e americanos, é frequente ver frases como 'Three arrested after protest' ou 'New law passed by Senate', onde o agente é omitido para dar destaque ao fato em si. Essa estrutura também é amplamente usada em textos acadêmicos e científicos, onde o foco está nos resultados da pesquisa, não nos pesquisadores. Aprender a voz passiva é essencial para quem quer ler e escrever em inglês em contextos profissionais e formais."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "be built",
+            "en": "ser construído",
+            "ex": "The bridge was built in 1890.",
+            "exEn": "A ponte foi construída em 1890."
+          },
+          {
+            "pt": "be invented",
+            "en": "ser inventado",
+            "ex": "The telephone was invented by Bell.",
+            "exEn": "O telefone foi inventado por Bell."
+          },
+          {
+            "pt": "deliver",
+            "en": "entregar",
+            "ex": "The package was delivered yesterday.",
+            "exEn": "O pacote foi entregue ontem."
+          },
+          {
+            "pt": "carry out",
+            "en": "realizar, executar",
+            "ex": "The research was carried out in Brazil.",
+            "exEn": "A pesquisa foi realizada no Brasil."
+          },
+          {
+            "pt": "be allowed",
+            "en": "ser permitido",
+            "ex": "Smoking is not allowed here.",
+            "exEn": "Não é permitido fumar aqui."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "The book was write by him.",
+            "correct": "The book was written by him.",
+            "note": "A voz passiva usa o particípio passado, não o infinitivo nem o passado simples."
+          },
+          {
+            "wrong": "The house built in 1920.",
+            "correct": "The house was built in 1920.",
+            "note": "A passiva exige o verbo 'to be'. Sem ele, a frase fica sem verbo principal."
+          },
+          {
+            "wrong": "It was made for a famous architect.",
+            "correct": "It was made by a famous architect.",
+            "note": "O agente da passiva usa 'by'. 'For' indica finalidade, não autoria."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com o particípio passado do verbo.",
+            "items": [
+              {
+                "q": "The book was ___ by Machado de Assis. (write)",
+                "ans": "written"
+              },
+              {
+                "q": "English is ___ in many countries. (speak)",
+                "ans": "spoken"
+              },
+              {
+                "q": "The bridge was ___ in 1890. (build)",
+                "ans": "built"
+              },
+              {
+                "q": "The letter was ___ yesterday. (send)",
+                "ans": "sent"
+              },
+              {
+                "q": "The car was ___ last week. (repair)",
+                "ans": "repaired"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "The house ___ built in 1920.",
+                "opts": [
+                  "is",
+                  "was",
+                  "has",
+                  "did"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The telephone was invented ___ Bell.",
+                "opts": [
+                  "for",
+                  "from",
+                  "by",
+                  "of"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "Portuguese ___ in Brazil and Portugal.",
+                "opts": [
+                  "speaks",
+                  "is speaking",
+                  "is spoken",
+                  "speak"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "The results will ___ published tomorrow.",
+                "opts": [
+                  "be",
+                  "are",
+                  "is",
+                  "being"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "Smoking is not ___ in this building.",
+                "opts": [
+                  "allow",
+                  "allowing",
+                  "allowed",
+                  "allows"
+                ],
+                "ans": 2
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "O livro foi escrito por um autor irlandês.",
+                "ans": "The book was written by an Irish author."
+              },
+              {
+                "q": "Inglês é falado no mundo inteiro.",
+                "ans": "English is spoken all over the world."
+              },
+              {
+                "q": "A casa foi construída em 1920.",
+                "ans": "The house was built in 1920."
+              },
+              {
+                "q": "Não é permitido fumar aqui.",
+                "ans": "Smoking is not allowed here."
+              },
+              {
+                "q": "O pacote foi entregue ontem.",
+                "ans": "The package was delivered yesterday."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "A passiva é bem mais frequente em inglês formal e jornalístico do que em português. Vale mostrar manchetes reais — o aluno percebe que não é construção artificial de livro didático."
       },
       {
         "title": "Advice & Obligation",
@@ -6090,6 +11004,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "You shouldn't eat so much sugar if you want to be healthy.",
               "en": "Você não deveria comer tanto açúcar se quiser ser saudável."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "You should see a doctor.",
+              "en": "Você deveria ver um médico."
+            },
+            {
+              "pt": "You must wear a seatbelt.",
+              "en": "Você tem que usar cinto de segurança."
+            },
+            {
+              "pt": "I have to work this weekend.",
+              "en": "Eu tenho que trabalhar neste fim de semana."
+            },
+            {
+              "pt": "You ought to apologise.",
+              "en": "Você deveria se desculpar."
+            },
+            {
+              "pt": "You mustn't smoke in here.",
+              "en": "Você não pode fumar aqui dentro."
             }
           ]
         },
@@ -6225,7 +11161,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Conselhos e educação nos países de língua inglesa",
           "text": "Nos Estados Unidos e no Reino Unido, dar conselhos de forma direta pode soar agressivo em alguns contextos. Por isso, os falantes nativos costumam suavizar suas sugestões usando 'you should' ou 'you might want to' em vez de ordens diretas. No ambiente de trabalho britânico, por exemplo, é muito comum usar 'ought to' para soar mais formal e respeitoso. Já nos EUA, a cultura valoriza a comunicação clara e objetiva, então usar 'must' ou 'have to' em contextos profissionais é perfeitamente normal e não é considerado rude."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "deadline",
+            "en": "prazo final",
+            "ex": "You must respect the deadline.",
+            "exEn": "Você deve respeitar o prazo final."
+          },
+          {
+            "pt": "be supposed to",
+            "en": "dever, ter a expectativa de",
+            "ex": "You are supposed to wear a helmet.",
+            "exEn": "Você deveria usar capacete."
+          },
+          {
+            "pt": "get in trouble",
+            "en": "se meter em encrenca",
+            "ex": "You'll get in trouble if you're late.",
+            "exEn": "Você vai se meter em encrenca se se atrasar."
+          },
+          {
+            "pt": "rule",
+            "en": "regra",
+            "ex": "These are the rules of the house.",
+            "exEn": "Estas são as regras da casa."
+          },
+          {
+            "pt": "in advance",
+            "en": "com antecedência",
+            "ex": "You should book in advance.",
+            "exEn": "Você deveria reservar com antecedência."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "You should to see a doctor.",
+            "correct": "You should see a doctor.",
+            "note": "Modais (should, must, might) são sempre seguidos de verbo na base, sem 'to'."
+          },
+          {
+            "wrong": "You don't have to smoke here.",
+            "correct": "You mustn't smoke here.",
+            "note": "'Don't have to' = não é necessário. 'Mustn't' = é proibido. A diferença é grande."
+          },
+          {
+            "wrong": "She musts finish today.",
+            "correct": "She must finish today.",
+            "note": "Modais não recebem -s na terceira pessoa, nunca."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "You ___ see a doctor about that cough.",
+                "ans": "should"
+              },
+              {
+                "q": "Drivers ___ wear a seatbelt. It's the law.",
+                "ans": "must"
+              },
+              {
+                "q": "I have ___ work this weekend.",
+                "ans": "to"
+              },
+              {
+                "q": "You ___ smoke here — it's forbidden.",
+                "ans": "mustn't"
+              },
+              {
+                "q": "You should book ___ advance.",
+                "ans": "in"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "You should ___ more water.",
+                "opts": [
+                  "to drink",
+                  "drinking",
+                  "drink",
+                  "drinks"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "It's forbidden. You ___ do that.",
+                "opts": [
+                  "don't have to",
+                  "mustn't",
+                  "shouldn't have",
+                  "needn't"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "It's optional. You ___ come if you're busy.",
+                "opts": [
+                  "mustn't",
+                  "don't have to",
+                  "can't",
+                  "shouldn't"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "She ___ finish the report today.",
+                "opts": [
+                  "musts",
+                  "must",
+                  "must to",
+                  "is must"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "You ___ to apologise for that.",
+                "opts": [
+                  "should",
+                  "must",
+                  "ought",
+                  "have"
+                ],
+                "ans": 2
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Você deveria ver um médico.",
+                "ans": "You should see a doctor."
+              },
+              {
+                "q": "Eu tenho que trabalhar amanhã.",
+                "ans": "I have to work tomorrow."
+              },
+              {
+                "q": "Você não pode fumar aqui.",
+                "ans": "You mustn't smoke here."
+              },
+              {
+                "q": "Você deveria reservar com antecedência.",
+                "ans": "You should book in advance."
+              },
+              {
+                "q": "Estas são as regras.",
+                "ans": "These are the rules."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "'Mustn't' (proibido) vs 'don't have to' (opcional) é a distinção que mais gera mal-entendido real. Use exemplos concretos: passaporte no aeroporto vs. gravata no escritório."
       },
       {
         "title": "Probability & Uncertainty",
@@ -6311,6 +11407,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "This could be a great opportunity.",
               "en": "Esta poderia ser uma ótima oportunidade."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "It might rain later.",
+              "en": "Pode chover mais tarde."
+            },
+            {
+              "pt": "She may be at home now.",
+              "en": "Ela pode estar em casa agora."
+            },
+            {
+              "pt": "They could arrive early.",
+              "en": "Eles podem chegar cedo."
+            },
+            {
+              "pt": "He might not come to the party.",
+              "en": "Ele pode não vir à festa."
+            },
+            {
+              "pt": "That may be the reason.",
+              "en": "Essa pode ser a razão."
             }
           ]
         },
@@ -6446,7 +11564,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Incerteza e polidez na cultura britânica e americana",
           "text": "Em países de língua inglesa, especialmente no Reino Unido, expressar incerteza com palavras como 'might', 'may' e 'perhaps' é considerado uma forma educada e respeitosa de falar. Dizer algo diretamente como 'You are wrong' pode soar rude, enquanto 'You might be mistaken' soa mais gentil e diplomático. Nos Estados Unidos, é comum ouvir expressões como 'maybe' e 'possibly' em conversas cotidianas para evitar afirmações muito diretas. Essa cultura de suavizar opiniões com verbos modais é uma parte importante da comunicação em inglês."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "chance",
+            "en": "chance, possibilidade",
+            "ex": "There's a chance it might rain.",
+            "exEn": "Há uma chance de chover."
+          },
+          {
+            "pt": "I'm not sure",
+            "en": "não tenho certeza",
+            "ex": "I'm not sure, but it could work.",
+            "exEn": "Não tenho certeza, mas pode funcionar."
+          },
+          {
+            "pt": "perhaps",
+            "en": "talvez",
+            "ex": "Perhaps she forgot the meeting.",
+            "exEn": "Talvez ela tenha esquecido a reunião."
+          },
+          {
+            "pt": "turn out",
+            "en": "acabar sendo, revelar-se",
+            "ex": "It might turn out well.",
+            "exEn": "Pode acabar dando certo."
+          },
+          {
+            "pt": "guess",
+            "en": "achar, supor",
+            "ex": "I guess he is at home.",
+            "exEn": "Eu acho que ele está em casa."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "It might to rain.",
+            "correct": "It might rain.",
+            "note": "Modais são seguidos de verbo na forma base, sem 'to'."
+          },
+          {
+            "wrong": "Maybe she is right. / May be she is right.",
+            "correct": "Maybe she is right.",
+            "note": "'Maybe' (junto) é advérbio, 'may be' (separado) é verbo. Confundir os dois é comum."
+          },
+          {
+            "wrong": "It can rain tomorrow.",
+            "correct": "It might rain tomorrow.",
+            "note": "Para probabilidade futura use might/may/could. 'Can' expressa capacidade ou permissão, não probabilidade."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "It ___ rain later — take an umbrella.",
+                "ans": "might"
+              },
+              {
+                "q": "She ___ be at home now, I'm not sure.",
+                "ans": "may"
+              },
+              {
+                "q": "They could ___ early.",
+                "ans": "arrive"
+              },
+              {
+                "q": "___ she forgot the meeting.",
+                "ans": "Perhaps"
+              },
+              {
+                "q": "There's a ___ it might snow.",
+                "ans": "chance"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "It ___ rain tomorrow.",
+                "opts": [
+                  "can",
+                  "might",
+                  "must to",
+                  "will can"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "He might ___ late.",
+                "opts": [
+                  "to be",
+                  "being",
+                  "be",
+                  "is"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___ she is right. We don't know.",
+                "opts": [
+                  "May be",
+                  "Maybe",
+                  "Can be",
+                  "Perhaps to"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "They ___ not come — they didn't confirm.",
+                "opts": [
+                  "might",
+                  "must",
+                  "should",
+                  "can"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "I ___ he's at home.",
+                "opts": [
+                  "guess",
+                  "guesses",
+                  "am guess",
+                  "guessing"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Pode chover mais tarde.",
+                "ans": "It might rain later."
+              },
+              {
+                "q": "Ela pode estar em casa.",
+                "ans": "She may be at home."
+              },
+              {
+                "q": "Talvez ela tenha esquecido.",
+                "ans": "Perhaps she forgot."
+              },
+              {
+                "q": "Eles podem chegar cedo.",
+                "ans": "They could arrive early."
+              },
+              {
+                "q": "Eu não tenho certeza.",
+                "ans": "I'm not sure."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Em português 'pode' cobre capacidade, permissão e probabilidade. Em inglês são verbos diferentes: can, may, might. Separar isso desbloqueia muita precisão no B1."
       },
       {
         "title": "Connectors & Discourse",
@@ -6532,6 +11810,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Working from home saves time. On the other hand, it can feel lonely.",
               "en": "Trabalhar em casa economiza tempo. Por outro lado, pode ser solitário."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "Although it was raining, we went for a walk.",
+              "en": "Embora estivesse chovendo, nós fomos caminhar."
+            },
+            {
+              "pt": "The hotel was cheap. However, it was very noisy.",
+              "en": "O hotel era barato. No entanto, era muito barulhento."
+            },
+            {
+              "pt": "He studied hard. Therefore, he passed the exam.",
+              "en": "Ele estudou muito. Portanto, passou na prova."
+            },
+            {
+              "pt": "The flat is small. Moreover, it is expensive.",
+              "en": "O apartamento é pequeno. Além disso, é caro."
+            },
+            {
+              "pt": "It's risky. On the other hand, the reward is high.",
+              "en": "É arriscado. Por outro lado, a recompensa é alta."
             }
           ]
         },
@@ -6667,7 +11967,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "O uso de conectivos na comunicação formal em inglês",
           "text": "Em países de língua inglesa, como o Reino Unido e os Estados Unidos, o uso correto de conectivos é considerado um sinal de boa educação formal e escrita profissional. Em e-mails de trabalho, redações acadêmicas e apresentações, conectivos como 'however' e 'therefore' são muito comuns e demonstram clareza de raciocínio. Em conversas informais, os falantes nativos tendem a usar versões mais simples, como 'but' no lugar de 'however' ou 'so' no lugar de 'therefore'. Aprender a alternar entre esses registros — formal e informal — é uma habilidade importante para quem deseja se comunicar bem em inglês em diferentes contextos."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "nevertheless",
+            "en": "mesmo assim",
+            "ex": "It was expensive; nevertheless, we bought it.",
+            "exEn": "Era caro; mesmo assim, nós compramos."
+          },
+          {
+            "pt": "in addition",
+            "en": "além disso",
+            "ex": "In addition, the price includes breakfast.",
+            "exEn": "Além disso, o preço inclui café da manhã."
+          },
+          {
+            "pt": "as a result",
+            "en": "como resultado",
+            "ex": "As a result, sales increased.",
+            "exEn": "Como resultado, as vendas aumentaram."
+          },
+          {
+            "pt": "whereas",
+            "en": "enquanto que",
+            "ex": "He likes tea, whereas she prefers coffee.",
+            "exEn": "Ele gosta de chá, enquanto que ela prefere café."
+          },
+          {
+            "pt": "despite",
+            "en": "apesar de",
+            "ex": "Despite the rain, we went out.",
+            "exEn": "Apesar da chuva, nós saímos."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "Although it was raining, but we went out.",
+            "correct": "Although it was raining, we went out.",
+            "note": "Não se usa 'although' e 'but' na mesma frase. Escolha um dos dois conectores."
+          },
+          {
+            "wrong": "Despite of the rain, we went out.",
+            "correct": "Despite the rain, we went out.",
+            "note": "'Despite' não leva 'of'. Já 'in spite of' leva. Confundir os dois é muito comum."
+          },
+          {
+            "wrong": "However, the hotel was cheap it was noisy.",
+            "correct": "The hotel was cheap. However, it was noisy.",
+            "note": "'However' liga duas frases separadas, com ponto ou ponto e vírgula antes — não funciona como 'but' no meio da oração."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com o conector correto.",
+            "items": [
+              {
+                "q": "___ it was raining, we went out.",
+                "ans": "Although"
+              },
+              {
+                "q": "It was cheap. ___, it was very noisy.",
+                "ans": "However"
+              },
+              {
+                "q": "He studied hard. ___, he passed.",
+                "ans": "Therefore"
+              },
+              {
+                "q": "___ the rain, the match continued.",
+                "ans": "Despite"
+              },
+              {
+                "q": "He likes tea, ___ she prefers coffee.",
+                "ans": "whereas"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "Although it rained, but we went",
+                  "Although it rained, we went",
+                  "Although but it rained we went",
+                  "But although it rained we went"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "___ the traffic, we arrived on time.",
+                "opts": [
+                  "Despite of",
+                  "Despite",
+                  "Although of",
+                  "However"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The plan is risky. ___, it could work.",
+                "opts": [
+                  "Moreover",
+                  "Therefore",
+                  "However",
+                  "In addition"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "It rained all day. ___, the event was cancelled.",
+                "opts": [
+                  "However",
+                  "Nevertheless",
+                  "As a result",
+                  "On the other hand"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "It's small. ___, it's expensive.",
+                "opts": [
+                  "Moreover",
+                  "However",
+                  "Whereas",
+                  "Despite"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Embora estivesse chovendo, nós saímos.",
+                "ans": "Although it was raining, we went out."
+              },
+              {
+                "q": "Era barato. No entanto, era barulhento.",
+                "ans": "It was cheap. However, it was noisy."
+              },
+              {
+                "q": "Apesar da chuva, o jogo continuou.",
+                "ans": "Despite the rain, the match continued."
+              },
+              {
+                "q": "Ele estudou muito. Portanto, passou.",
+                "ans": "He studied hard. Therefore, he passed."
+              },
+              {
+                "q": "Por outro lado, é mais caro.",
+                "ans": "On the other hand, it is more expensive."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Conectores são o que separa fala de B1 de fala de A2. Peça ao aluno para reescrever um texto próprio inserindo três conectores — o ganho de naturalidade é imediato."
       },
       {
         "title": "Complaints & Problems",
@@ -6753,6 +12213,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Could you possibly speak to the manager for me?",
               "en": "Você poderia falar com o gerente por mim?"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I'm afraid there is a problem with my order.",
+              "en": "Receio que haja um problema com meu pedido."
+            },
+            {
+              "pt": "I'd like to complain about the service.",
+              "en": "Eu gostaria de reclamar do serviço."
+            },
+            {
+              "pt": "Could you possibly check this for me?",
+              "en": "Você poderia por favor verificar isso para mim?"
+            },
+            {
+              "pt": "I'm afraid this isn't what I ordered.",
+              "en": "Receio que não seja isto que eu pedi."
+            },
+            {
+              "pt": "I'd like to complain about the noise.",
+              "en": "Eu gostaria de reclamar do barulho."
             }
           ]
         },
@@ -6888,7 +12370,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Como reclamar educadamente em países de língua inglesa",
           "text": "Em países como o Reino Unido, os Estados Unidos e a Austrália, fazer reclamações de forma educada e indireta é considerado muito importante. Britânicos, por exemplo, são conhecidos por evitar confrontos diretos e preferem expressões suaves como 'I'm afraid' ou 'I'm sorry to bother you, but...' ao invés de reclamar de forma agressiva. Nos Estados Unidos, é comum que empresas ofereçam reembolsos ou trocas sem muita burocracia, pois o bom atendimento ao cliente é altamente valorizado. Saber reclamar com educação em inglês pode fazer uma grande diferença na hora de resolver problemas quando você estiver viajando ou trabalhando em um país de língua inglesa."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "refund",
+            "en": "reembolso",
+            "ex": "I would like a refund, please.",
+            "exEn": "Eu gostaria de um reembolso, por favor."
+          },
+          {
+            "pt": "faulty",
+            "en": "com defeito",
+            "ex": "The product arrived faulty.",
+            "exEn": "O produto chegou com defeito."
+          },
+          {
+            "pt": "sort out",
+            "en": "resolver",
+            "ex": "Could you sort this out for me?",
+            "exEn": "Você poderia resolver isso para mim?"
+          },
+          {
+            "pt": "apologise",
+            "en": "pedir desculpas",
+            "ex": "They apologised for the delay.",
+            "exEn": "Eles pediram desculpas pelo atraso."
+          },
+          {
+            "pt": "unacceptable",
+            "en": "inaceitável",
+            "ex": "This service is unacceptable.",
+            "exEn": "Este serviço é inaceitável."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I want to complain of the service.",
+            "correct": "I'd like to complain about the service.",
+            "note": "A preposição é 'about'. E 'I'd like' soa muito menos agressivo que 'I want' numa reclamação."
+          },
+          {
+            "wrong": "I'm afraid of there is a problem.",
+            "correct": "I'm afraid there is a problem.",
+            "note": "'I'm afraid' como abertura educada não leva 'of'. Com 'of' significa literalmente ter medo."
+          },
+          {
+            "wrong": "Could you possibly to help me?",
+            "correct": "Could you possibly help me?",
+            "note": "Depois de 'could' o verbo vem na base, mesmo com 'possibly' no meio."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "I'd like to complain ___ the service.",
+                "ans": "about"
+              },
+              {
+                "q": "I'm ___ there is a problem with my order.",
+                "ans": "afraid"
+              },
+              {
+                "q": "Could you ___ check this for me?",
+                "ans": "possibly"
+              },
+              {
+                "q": "I would like a ___, please.",
+                "ans": "refund"
+              },
+              {
+                "q": "The product arrived ___.",
+                "ans": "faulty"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "I'd like to complain ___ the noise.",
+                "opts": [
+                  "of",
+                  "about",
+                  "for",
+                  "on"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Could you possibly ___ this out?",
+                "opts": [
+                  "to sort",
+                  "sorting",
+                  "sort",
+                  "sorts"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "Money returned to you is a ___.",
+                "opts": [
+                  "receipt",
+                  "refund",
+                  "discount",
+                  "change"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "They ___ for the delay.",
+                "opts": [
+                  "apologised",
+                  "apologised of",
+                  "excused",
+                  "sorry"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "This behaviour is completely ___.",
+                "opts": [
+                  "unacceptable",
+                  "unaccepted",
+                  "not accept",
+                  "inacceptable"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu gostaria de reclamar do serviço.",
+                "ans": "I'd like to complain about the service."
+              },
+              {
+                "q": "Receio que haja um problema.",
+                "ans": "I'm afraid there is a problem."
+              },
+              {
+                "q": "Você poderia verificar isso?",
+                "ans": "Could you possibly check this?"
+              },
+              {
+                "q": "Eu gostaria de um reembolso.",
+                "ans": "I would like a refund."
+              },
+              {
+                "q": "O produto chegou com defeito.",
+                "ans": "The product arrived faulty."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Reclamar em inglês exige mais amortecimento linguístico que em português. 'I'm afraid', 'could you possibly' e 'I'd like to' são os três amortecedores que o aluno precisa dominar."
       },
       {
         "title": "Narrating Stories",
@@ -6974,6 +12616,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "We were talking in the park when a stranger approached us.",
               "en": "Nós estávamos conversando no parque quando um desconhecido se aproximou de nós."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I was walking home when I saw her.",
+              "en": "Eu estava indo para casa quando a vi."
+            },
+            {
+              "pt": "She was cooking when the phone rang.",
+              "en": "Ela estava cozinhando quando o telefone tocou."
+            },
+            {
+              "pt": "They were sleeping when the alarm went off.",
+              "en": "Eles estavam dormindo quando o alarme disparou."
+            },
+            {
+              "pt": "While I was studying, my brother arrived.",
+              "en": "Enquanto eu estudava, meu irmão chegou."
+            },
+            {
+              "pt": "It was raining when we left the house.",
+              "en": "Estava chovendo quando saímos de casa."
             }
           ]
         },
@@ -7109,7 +12773,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "A arte de contar histórias nos países de língua inglesa",
           "text": "Nos países de língua inglesa, como Reino Unido, Estados Unidos e Austrália, contar histórias pessoais é uma forma muito comum de criar conexão em conversas informais. É muito natural começar um papo com 'You won't believe what happened to me!' (Você não vai acreditar no que aconteceu comigo!). Os britânicos, em particular, são famosos por usar o humor e o exagero ao contar anedotas do dia a dia, tornando situações simples muito mais divertidas. Aprender a narrar histórias em inglês — usando expressões como 'suddenly', 'meanwhile' e 'at that moment' — vai ajudá-lo a soar muito mais natural e fluente nas suas conversas."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "suddenly",
+            "en": "de repente",
+            "ex": "Suddenly, the lights went out.",
+            "exEn": "De repente, as luzes se apagaram."
+          },
+          {
+            "pt": "meanwhile",
+            "en": "enquanto isso",
+            "ex": "Meanwhile, she was waiting outside.",
+            "exEn": "Enquanto isso, ela estava esperando lá fora."
+          },
+          {
+            "pt": "notice",
+            "en": "perceber, notar",
+            "ex": "I didn't notice the sign.",
+            "exEn": "Eu não percebi a placa."
+          },
+          {
+            "pt": "on my way",
+            "en": "a caminho",
+            "ex": "I was on my way home.",
+            "exEn": "Eu estava a caminho de casa."
+          },
+          {
+            "pt": "eventually",
+            "en": "por fim, acabou que",
+            "ex": "Eventually, we found the hotel.",
+            "exEn": "Por fim, nós encontramos o hotel."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I walked home when I saw her.",
+            "correct": "I was walking home when I saw her.",
+            "note": "A ação longa e interrompida vai no past continuous; a ação curta que interrompe vai no simple past."
+          },
+          {
+            "wrong": "I was seeing her when I walked home.",
+            "correct": "I was walking home when I saw her.",
+            "note": "Inverter os tempos inverte o sentido. 'See' é verbo de estado e raramente vai para o continuous."
+          },
+          {
+            "wrong": "Eventually he was very angry.",
+            "correct": "In the end, he was very angry.",
+            "note": "Falso cognato: 'eventually' significa 'por fim', não 'eventualmente' no sentido de ocasionalmente."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com past continuous ou simple past.",
+            "items": [
+              {
+                "q": "I ___ home when I saw her. (walk)",
+                "ans": "was walking"
+              },
+              {
+                "q": "She was cooking when the phone ___. (ring)",
+                "ans": "rang"
+              },
+              {
+                "q": "They ___ when the alarm went off. (sleep)",
+                "ans": "were sleeping"
+              },
+              {
+                "q": "While I was studying, my brother ___. (arrive)",
+                "ans": "arrived"
+              },
+              {
+                "q": "It ___ when we left the house. (rain)",
+                "ans": "was raining"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "I ___ TV when the power went out.",
+                "opts": [
+                  "watched",
+                  "was watching",
+                  "watch",
+                  "have watched"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "She was reading when he ___.",
+                "opts": [
+                  "was arriving",
+                  "arrives",
+                  "arrived",
+                  "arrive"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___, the lights went out.",
+                "opts": [
+                  "Suddenly",
+                  "Sudden",
+                  "Suddenness",
+                  "Sudden of"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "___ I was cooking, she was studying.",
+                "opts": [
+                  "When",
+                  "While",
+                  "During",
+                  "Since"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'Por fim, encontramos o hotel' = ___, we found the hotel.",
+                "opts": [
+                  "Eventually",
+                  "Actually",
+                  "Currently",
+                  "Presently"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu estava indo para casa quando a vi.",
+                "ans": "I was walking home when I saw her."
+              },
+              {
+                "q": "Ela estava cozinhando quando o telefone tocou.",
+                "ans": "She was cooking when the phone rang."
+              },
+              {
+                "q": "De repente, as luzes se apagaram.",
+                "ans": "Suddenly, the lights went out."
+              },
+              {
+                "q": "Estava chovendo quando saímos.",
+                "ans": "It was raining when we left."
+              },
+              {
+                "q": "Eu não percebi a placa.",
+                "ans": "I didn't notice the sign."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Desenhe uma linha longa (past continuous) cortada por uma seta curta (simple past). O aluno visualiza em cinco segundos o que o texto leva um parágrafo para explicar."
       },
       {
         "title": "Media & Current Events",
@@ -7195,6 +13019,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "They said that the report contained false information.",
               "en": "Eles disseram que o relatório continha informações falsas."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "She said that she was tired.",
+              "en": "Ela disse que estava cansada."
+            },
+            {
+              "pt": "He told me that he would call later.",
+              "en": "Ele me disse que ligaria mais tarde."
+            },
+            {
+              "pt": "They said they had finished the work.",
+              "en": "Eles disseram que tinham terminado o trabalho."
+            },
+            {
+              "pt": "She told us that she lived in Cork.",
+              "en": "Ela nos disse que morava em Cork."
+            },
+            {
+              "pt": "He said that he could not come.",
+              "en": "Ele disse que não podia vir."
             }
           ]
         },
@@ -7330,7 +13176,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "A mídia nos países de língua inglesa",
           "text": "Nos Estados Unidos e no Reino Unido, a mídia tem um papel muito importante na vida pública, e a liberdade de imprensa é considerada um pilar da democracia. Canais como a BBC (britânica) e a CNN (americana) são reconhecidos mundialmente por suas coberturas de eventos internacionais. Nos últimos anos, o consumo de notícias nas redes sociais cresceu muito entre os jovens, mas especialistas alertam para o risco das 'fake news'. Por isso, verificar as fontes antes de compartilhar informações é um hábito cada vez mais valorizado nesses países."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "headline",
+            "en": "manchete",
+            "ex": "Did you read the headline today?",
+            "exEn": "Você leu a manchete hoje?"
+          },
+          {
+            "pt": "according to",
+            "en": "de acordo com",
+            "ex": "According to the report, prices will rise.",
+            "exEn": "De acordo com o relatório, os preços vão subir."
+          },
+          {
+            "pt": "claim",
+            "en": "afirmar, alegar",
+            "ex": "He claimed that he was innocent.",
+            "exEn": "Ele alegou que era inocente."
+          },
+          {
+            "pt": "broadcast",
+            "en": "transmissão; transmitir",
+            "ex": "The match was broadcast live.",
+            "exEn": "A partida foi transmitida ao vivo."
+          },
+          {
+            "pt": "reliable",
+            "en": "confiável",
+            "ex": "That is a reliable source.",
+            "exEn": "Aquela é uma fonte confiável."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "He said me that he was busy.",
+            "correct": "He told me that he was busy.",
+            "note": "'Say' não leva objeto de pessoa direto; 'tell' leva. É 'say to me' ou 'tell me'."
+          },
+          {
+            "wrong": "She said that she is tired.",
+            "correct": "She said that she was tired.",
+            "note": "No discurso indireto o tempo verbal recua um passo: present vira past."
+          },
+          {
+            "wrong": "He told that he would come.",
+            "correct": "He told me that he would come.",
+            "note": "'Tell' exige a pessoa: tell me, tell her, tell them. Sem ela, use 'said'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com 'said' ou 'told'.",
+            "items": [
+              {
+                "q": "She ___ me that she was tired.",
+                "ans": "told"
+              },
+              {
+                "q": "He ___ that he would call later.",
+                "ans": "said"
+              },
+              {
+                "q": "They ___ us the news yesterday.",
+                "ans": "told"
+              },
+              {
+                "q": "She ___ that she lived in Cork.",
+                "ans": "said"
+              },
+              {
+                "q": "___ to the report, prices will rise.",
+                "ans": "According"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "He ___ me he was busy.",
+                "opts": [
+                  "said",
+                  "told",
+                  "say",
+                  "tells to"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "She said that she ___ tired.",
+                "opts": [
+                  "is",
+                  "was",
+                  "will be",
+                  "has been"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "He said he ___ come tomorrow.",
+                "opts": [
+                  "will",
+                  "would",
+                  "shall",
+                  "can"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The main title of a news story is the ___.",
+                "opts": [
+                  "headline",
+                  "heading",
+                  "topline",
+                  "title line"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "That newspaper is a ___ source.",
+                "opts": [
+                  "reliable",
+                  "relying",
+                  "reliant",
+                  "reliably"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Ela disse que estava cansada.",
+                "ans": "She said that she was tired."
+              },
+              {
+                "q": "Ele me disse que ligaria depois.",
+                "ans": "He told me that he would call later."
+              },
+              {
+                "q": "De acordo com o relatório, os preços vão subir.",
+                "ans": "According to the report, prices will rise."
+              },
+              {
+                "q": "Eles disseram que tinham terminado.",
+                "ans": "They said they had finished."
+              },
+              {
+                "q": "Aquela é uma fonte confiável.",
+                "ans": "That is a reliable source."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Say vs. tell resolve-se com uma pergunta: tem uma pessoa logo depois do verbo? Se sim, 'tell'. Se não, 'said'. Funciona em 95% dos casos."
       },
       {
         "title": "B1 Review & Assessment",
@@ -7416,6 +13422,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "She told me that she had already finished the project.",
               "en": "Ela me disse que já havia terminado o projeto."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I have worked here since 2021.",
+              "en": "Eu trabalho aqui desde 2021."
+            },
+            {
+              "pt": "If I had more time, I would travel more.",
+              "en": "Se eu tivesse mais tempo, viajaria mais."
+            },
+            {
+              "pt": "The report was written by our team.",
+              "en": "O relatório foi escrito pela nossa equipe."
+            },
+            {
+              "pt": "She told me that she had already left.",
+              "en": "Ela me disse que já tinha saído."
+            },
+            {
+              "pt": "If it rains, we will stay at home.",
+              "en": "Se chover, ficaremos em casa."
             }
           ]
         },
@@ -7551,7 +13579,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Inglês como língua global: por que o B1 abre portas",
           "text": "O inglês é falado como língua oficial ou amplamente usada em mais de 50 países, incluindo Reino Unido, Estados Unidos, Austrália, Canadá e Nova Zelândia. Atingir o nível B1 significa que você consegue se comunicar em situações cotidianas e profissionais, como viagens, entrevistas de emprego e e-mails formais. Em países como o Reino Unido, o nível B1 é exigido em testes de cidadania e vistos de longa duração. Isso mostra que o B1 não é apenas uma conquista acadêmica, mas uma ferramenta real para a vida."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "manage to",
+            "en": "conseguir (fazer algo)",
+            "ex": "I managed to finish on time.",
+            "exEn": "Eu consegui terminar no prazo."
+          },
+          {
+            "pt": "come across",
+            "en": "encontrar por acaso",
+            "ex": "I came across an old photo.",
+            "exEn": "Eu encontrei uma foto antiga por acaso."
+          },
+          {
+            "pt": "point out",
+            "en": "apontar, destacar",
+            "ex": "She pointed out the mistake.",
+            "exEn": "Ela apontou o erro."
+          },
+          {
+            "pt": "look forward to",
+            "en": "estar ansioso por",
+            "ex": "I look forward to hearing from you.",
+            "exEn": "Eu aguardo ansiosamente seu retorno."
+          },
+          {
+            "pt": "as far as I know",
+            "en": "até onde eu sei",
+            "ex": "As far as I know, it's still open.",
+            "exEn": "Até onde eu sei, ainda está aberto."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "If it will rain, we will stay home.",
+            "correct": "If it rains, we will stay home.",
+            "note": "Depois de 'if' nunca vem 'will', nem no primeiro condicional. O presente ali já indica futuro."
+          },
+          {
+            "wrong": "I look forward to hear from you.",
+            "correct": "I look forward to hearing from you.",
+            "note": "Aqui 'to' é preposição, não infinitivo. Por isso o verbo vem com -ing."
+          },
+          {
+            "wrong": "He said me that he had finished.",
+            "correct": "He told me that he had finished.",
+            "note": "Revisão do say/tell: com pessoa logo depois, use 'tell'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a forma correta.",
+            "items": [
+              {
+                "q": "If it ___ tomorrow, we will stay home. (rain)",
+                "ans": "rains"
+              },
+              {
+                "q": "I have worked here ___ 2021.",
+                "ans": "since"
+              },
+              {
+                "q": "The report ___ written by our team.",
+                "ans": "was"
+              },
+              {
+                "q": "I look forward to ___ from you. (hear)",
+                "ans": "hearing"
+              },
+              {
+                "q": "She ___ me that she had left.",
+                "ans": "told"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "If I ___ more money, I would buy a house.",
+                "opts": [
+                  "have",
+                  "had",
+                  "would have",
+                  "will have"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The email ___ sent yesterday.",
+                "opts": [
+                  "is",
+                  "was",
+                  "has",
+                  "did"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "If it ___, we'll cancel the picnic.",
+                "opts": [
+                  "will rain",
+                  "rains",
+                  "rained",
+                  "would rain"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "I ___ to finish the project on time.",
+                "opts": [
+                  "managed",
+                  "manage of",
+                  "could to",
+                  "succeeded to"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "___ as I know, the shop is open.",
+                "opts": [
+                  "As long",
+                  "As far",
+                  "So far",
+                  "As much"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Se chover, ficaremos em casa.",
+                "ans": "If it rains, we will stay at home."
+              },
+              {
+                "q": "Se eu tivesse mais tempo, viajaria mais.",
+                "ans": "If I had more time, I would travel more."
+              },
+              {
+                "q": "O relatório foi escrito pela nossa equipe.",
+                "ans": "The report was written by our team."
+              },
+              {
+                "q": "Ela me disse que já tinha saído.",
+                "ans": "She told me that she had already left."
+              },
+              {
+                "q": "Eu trabalho aqui desde 2021.",
+                "ans": "I have worked here since 2021."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Feche o B1 checando os quatro pilares: present perfect, condicionais, passiva e discurso indireto. Se algum ainda falha, vale revisar antes de seguir para o B2."
       }
     ]
   },
@@ -7649,6 +13837,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "He would be healthier today if he had changed his habits years ago.",
               "en": "Ele estaria mais saudável hoje se tivesse mudado seus hábitos anos atrás."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "If I had studied harder, I would have passed.",
+              "en": "Se eu tivesse estudado mais, teria passado."
+            },
+            {
+              "pt": "If she had left earlier, she wouldn't have missed the train.",
+              "en": "Se ela tivesse saído mais cedo, não teria perdido o trem."
+            },
+            {
+              "pt": "If I had accepted that job, I would be in London now.",
+              "en": "Se eu tivesse aceitado aquele emprego, estaria em Londres agora."
+            },
+            {
+              "pt": "If he weren't so stubborn, he would have apologised.",
+              "en": "Se ele não fosse tão teimoso, teria pedido desculpas."
+            },
+            {
+              "pt": "We would have arrived on time if the flight hadn't been delayed.",
+              "en": "Teríamos chegado no horário se o voo não tivesse atrasado."
             }
           ]
         },
@@ -7784,7 +13994,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Arrependimento e reflexão na cultura anglófona",
           "text": "Em países de língua inglesa, como os Estados Unidos e o Reino Unido, é muito comum usar condicionais passados em conversas cotidianas para refletir sobre escolhas de vida — especialmente em contextos de coaching, terapia e autoajuda. Frases como 'If only I had done things differently' (Se ao menos eu tivesse feito as coisas de forma diferente) aparecem com frequência em filmes, músicas e livros. Essa cultura de reflexão sobre o passado está tão presente que existe até um gênero literário chamado 'counterfactual fiction', que explora histórias baseadas em eventos históricos que poderiam ter acontecido de outra forma. Compreender os condicionais avançados, portanto, não é apenas uma habilidade gramatical — é uma forma de participar de conversas profundas e culturalmente ricas em inglês."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "regret",
+            "en": "arrependimento; arrepender-se",
+            "ex": "I regret not taking that job.",
+            "exEn": "Eu me arrependo de não ter aceitado aquele emprego."
+          },
+          {
+            "pt": "hindsight",
+            "en": "visão retrospectiva",
+            "ex": "In hindsight, it was a mistake.",
+            "exEn": "Em retrospecto, foi um erro."
+          },
+          {
+            "pt": "turn down",
+            "en": "recusar",
+            "ex": "He turned down the offer.",
+            "exEn": "Ele recusou a oferta."
+          },
+          {
+            "pt": "outcome",
+            "en": "resultado, desfecho",
+            "ex": "The outcome would have been different.",
+            "exEn": "O desfecho teria sido diferente."
+          },
+          {
+            "pt": "had it not been for",
+            "en": "se não fosse por",
+            "ex": "Had it not been for her, we would have failed.",
+            "exEn": "Se não fosse por ela, teríamos fracassado."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "If I would have studied, I would have passed.",
+            "correct": "If I had studied, I would have passed.",
+            "note": "'Would' jamais entra na oração do 'if'. Vale para todos os condicionais, e o terceiro é onde mais escorrega."
+          },
+          {
+            "wrong": "If I had studied, I would passed.",
+            "correct": "If I had studied, I would have passed.",
+            "note": "O terceiro condicional precisa de 'would HAVE + particípio' na oração principal."
+          },
+          {
+            "wrong": "If I had accepted that job, I would have been in London now.",
+            "correct": "If I had accepted that job, I would be in London now.",
+            "note": "Condicional misto: causa no passado, consequência no presente. Aí a principal usa 'would + base', sem 'have'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com a forma correta do verbo.",
+            "items": [
+              {
+                "q": "If I ___ studied harder, I would have passed. (have)",
+                "ans": "had"
+              },
+              {
+                "q": "If she had left earlier, she ___ have caught the train. (will)",
+                "ans": "would"
+              },
+              {
+                "q": "We would have won if we ___ played better. (have)",
+                "ans": "had"
+              },
+              {
+                "q": "If he hadn't helped me, I ___ have failed. (will)",
+                "ans": "would"
+              },
+              {
+                "q": "If I had taken that job, I ___ be in London now. (will)",
+                "ans": "would"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "If I ___ known, I would have told you.",
+                "opts": [
+                  "would have",
+                  "had",
+                  "have",
+                  "did"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "She would have come if you ___ her.",
+                "opts": [
+                  "invited",
+                  "had invited",
+                  "would invite",
+                  "have invited"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "If I had saved money, I ___ a car now.",
+                "opts": [
+                  "would have had",
+                  "would have",
+                  "would had",
+                  "will have"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "___ it not been for her help, we would have failed.",
+                "opts": [
+                  "If",
+                  "Had",
+                  "Have",
+                  "Would"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "In ___, it was clearly a mistake.",
+                "opts": [
+                  "hindsight",
+                  "backsight",
+                  "rearview",
+                  "afterthought"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Se eu tivesse estudado mais, teria passado.",
+                "ans": "If I had studied harder, I would have passed."
+              },
+              {
+                "q": "Se ela tivesse saído mais cedo, não teria perdido o trem.",
+                "ans": "If she had left earlier, she wouldn't have missed the train."
+              },
+              {
+                "q": "Se eu tivesse aceitado, estaria em Londres agora.",
+                "ans": "If I had accepted, I would be in London now."
+              },
+              {
+                "q": "Ele recusou a oferta.",
+                "ans": "He turned down the offer."
+              },
+              {
+                "q": "Em retrospecto, foi um erro.",
+                "ans": "In hindsight, it was a mistake."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "O condicional misto é o que separa B2 de C1. Marque bem: 'would have' aponta para consequência no passado; 'would' sozinho aponta para consequência agora."
       },
       {
         "title": "Nuanced Vocabulary",
@@ -7870,6 +14240,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "We must take into account all the risks before making a substantial investment.",
               "en": "Devemos levar em consideração todos os riscos antes de fazer um investimento considerável."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "They postponed the meeting. / They put off the meeting.",
+              "en": "Eles adiaram a reunião. (formal / informal)"
+            },
+            {
+              "pt": "We will investigate the issue. / We'll look into it.",
+              "en": "Nós vamos investigar a questão. (formal / informal)"
+            },
+            {
+              "pt": "She tolerates the noise. / She puts up with the noise.",
+              "en": "Ela tolera o barulho. (formal / informal)"
+            },
+            {
+              "pt": "He declined the offer. / He turned it down.",
+              "en": "Ele recusou a oferta. (formal / informal)"
+            },
+            {
+              "pt": "I need to make a decision, not take one.",
+              "en": "Eu preciso tomar uma decisão — em inglês é 'make', não 'take'."
             }
           ]
         },
@@ -8005,7 +14397,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Registro formal em inglês: quando e por que importa",
           "text": "Em países de língua inglesa, como o Reino Unido e os Estados Unidos, o uso do registro formal é especialmente valorizado em ambientes corporativos, acadêmicos e governamentais. Usar linguagem precisa e collocations corretas demonstra profissionalismo e domínio do idioma, o que pode fazer grande diferença em entrevistas de emprego, apresentações e e-mails oficiais. Curiosamente, o inglês britânico tende a ser percebido como mais formal e conservador do que o americano — por isso, expressões formais são ainda mais comuns em documentos britânicos. Aprender a alternar entre registro informal e formal é uma habilidade essencial para qualquer falante de inglês no nível B2 e acima."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "put off",
+            "en": "adiar (informal)",
+            "ex": "They put off the meeting until Friday.",
+            "exEn": "Eles adiaram a reunião para sexta."
+          },
+          {
+            "pt": "postpone",
+            "en": "adiar (formal)",
+            "ex": "The meeting has been postponed.",
+            "exEn": "A reunião foi adiada."
+          },
+          {
+            "pt": "look into",
+            "en": "investigar (informal)",
+            "ex": "We will look into the matter.",
+            "exEn": "Nós vamos investigar o assunto."
+          },
+          {
+            "pt": "take on",
+            "en": "assumir (responsabilidade)",
+            "ex": "She took on a new role.",
+            "exEn": "Ela assumiu um novo cargo."
+          },
+          {
+            "pt": "make a decision",
+            "en": "tomar uma decisão",
+            "ex": "We need to make a decision today.",
+            "exEn": "Precisamos tomar uma decisão hoje."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I need to take a decision.",
+            "correct": "I need to make a decision.",
+            "note": "Collocation fixa: 'make a decision'. 'Take a decision' existe no inglês britânico formal, mas soa estranho na maioria dos contextos."
+          },
+          {
+            "wrong": "I did a mistake.",
+            "correct": "I made a mistake.",
+            "note": "'Make' para o que você cria ou produz; 'do' para atividades e tarefas. 'Make a mistake' é fixo."
+          },
+          {
+            "wrong": "Please, we will look the problem.",
+            "correct": "We will look into the problem.",
+            "note": "Phrasal verbs mudam completamente de sentido com a partícula: look at, look for, look into, look after são quatro verbos diferentes."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com 'make' ou 'do'.",
+            "items": [
+              {
+                "q": "I need to ___ a decision today.",
+                "ans": "make"
+              },
+              {
+                "q": "She ___ a mistake in the report.",
+                "ans": "made"
+              },
+              {
+                "q": "Could you ___ me a favour?",
+                "ans": "do"
+              },
+              {
+                "q": "They ___ a lot of progress this year.",
+                "ans": "made"
+              },
+              {
+                "q": "I have to ___ the housework tonight.",
+                "ans": "do"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "We will ___ the matter and report back.",
+                "opts": [
+                  "look at",
+                  "look for",
+                  "look into",
+                  "look after"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "The formal equivalent of 'put off' is ___.",
+                "opts": [
+                  "postpone",
+                  "propose",
+                  "prepone",
+                  "prolong"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "She ___ a new role in the company.",
+                "opts": [
+                  "took on",
+                  "took off",
+                  "took up with",
+                  "took in"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "I can't ___ up with this noise.",
+                "opts": [
+                  "make",
+                  "put",
+                  "take",
+                  "do"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "He ___ down the job offer.",
+                "opts": [
+                  "turned",
+                  "put",
+                  "made",
+                  "looked"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Eu preciso tomar uma decisão.",
+                "ans": "I need to make a decision."
+              },
+              {
+                "q": "Ela cometeu um erro.",
+                "ans": "She made a mistake."
+              },
+              {
+                "q": "Nós vamos investigar o assunto.",
+                "ans": "We will look into the matter."
+              },
+              {
+                "q": "A reunião foi adiada.",
+                "ans": "The meeting has been postponed."
+              },
+              {
+                "q": "Ele recusou a oferta.",
+                "ans": "He turned down the offer."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Collocations não se deduzem, se memorizam. Vale montar com o aluno uma lista pessoal de make/do/take/have que ele consulte — a tradução literal do português falha quase sempre aqui."
       },
       {
         "title": "Argumentation & Debate",
@@ -8091,6 +14643,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "One might suggest that stricter laws could reduce corruption significantly.",
               "en": "Alguém poderia sugerir que leis mais rígidas poderiam reduzir significativamente a corrupção."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "It seems to me that the data is incomplete.",
+              "en": "Parece-me que os dados estão incompletos."
+            },
+            {
+              "pt": "It could be argued that the policy failed.",
+              "en": "Poderia-se argumentar que a política fracassou."
+            },
+            {
+              "pt": "There tends to be a delay in these cases.",
+              "en": "Costuma haver um atraso nesses casos."
+            },
+            {
+              "pt": "It would appear that the results are inconclusive.",
+              "en": "Parece que os resultados são inconclusivos."
+            },
+            {
+              "pt": "One might suggest a different approach.",
+              "en": "Poder-se-ia sugerir uma abordagem diferente."
             }
           ]
         },
@@ -8221,7 +14795,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "A cultura do debate formal nos países de língua inglesa",
           "text": "Em países como o Reino Unido, os Estados Unidos e a Austrália, o debate formal é uma habilidade altamente valorizada desde o ensino médio, com competições universitárias como o famoso Oxford Union Debate sendo eventos de grande prestígio. Nessas culturas, saber argumentar de forma estruturada, respeitosa e usando linguagem de atenuação é visto como sinal de inteligência e maturidade intelectual. É comum que debatedores defendam posições com as quais não concordam pessoalmente, apenas para praticar a habilidade de argumentação. Essa tradição influencia diretamente o ambiente profissional e acadêmico, onde apresentar opiniões com nuances e cautela é mais valorizado do que afirmações absolutas."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "arguably",
+            "en": "possivelmente, é defensável que",
+            "ex": "This is arguably the best solution.",
+            "exEn": "Esta é possivelmente a melhor solução."
+          },
+          {
+            "pt": "to some extent",
+            "en": "até certo ponto",
+            "ex": "I agree to some extent.",
+            "exEn": "Eu concordo até certo ponto."
+          },
+          {
+            "pt": "bear in mind",
+            "en": "levar em conta",
+            "ex": "Bear in mind that costs may rise.",
+            "exEn": "Leve em conta que os custos podem subir."
+          },
+          {
+            "pt": "counterargument",
+            "en": "contra-argumento",
+            "ex": "There is a strong counterargument.",
+            "exEn": "Há um contra-argumento forte."
+          },
+          {
+            "pt": "compelling",
+            "en": "convincente",
+            "ex": "That is a compelling case.",
+            "exEn": "Esse é um argumento convincente."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "It seems me that the data is wrong.",
+            "correct": "It seems to me that the data is wrong.",
+            "note": "A construção exige a preposição 'to': 'it seems to me'."
+          },
+          {
+            "wrong": "I have absolute certain that this is wrong.",
+            "correct": "It could be argued that this is wrong.",
+            "note": "Em debate acadêmico ou profissional em inglês, afirmação categórica soa arrogante. O hedging é esperado, não é fraqueza."
+          },
+          {
+            "wrong": "It could be argue that...",
+            "correct": "It could be argued that...",
+            "note": "É voz passiva: 'be' + particípio. 'Argue' sozinho não funciona aqui."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "It seems ___ me that this is wrong.",
+                "ans": "to"
+              },
+              {
+                "q": "It could be ___ that the policy failed.",
+                "ans": "argued"
+              },
+              {
+                "q": "There ___ to be a delay in these cases.",
+                "ans": "tends"
+              },
+              {
+                "q": "I agree to some ___.",
+                "ans": "extent"
+              },
+              {
+                "q": "___ in mind that costs may rise.",
+                "ans": "Bear"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "It ___ appear that the data is incomplete.",
+                "opts": [
+                  "will",
+                  "would",
+                  "could to",
+                  "does"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "One ___ suggest an alternative.",
+                "opts": [
+                  "might",
+                  "might to",
+                  "mights",
+                  "is might"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "This is ___ the strongest argument.",
+                "opts": [
+                  "arguable",
+                  "argued",
+                  "arguably",
+                  "arguing"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "That's a very ___ case.",
+                "opts": [
+                  "compelling",
+                  "compelled",
+                  "compel",
+                  "compulsory"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "It could be ___ that the study is flawed.",
+                "opts": [
+                  "argue",
+                  "argued",
+                  "arguing",
+                  "to argue"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Parece-me que os dados estão incompletos.",
+                "ans": "It seems to me that the data is incomplete."
+              },
+              {
+                "q": "Poderia-se argumentar que a política fracassou.",
+                "ans": "It could be argued that the policy failed."
+              },
+              {
+                "q": "Eu concordo até certo ponto.",
+                "ans": "I agree to some extent."
+              },
+              {
+                "q": "Leve em conta que os custos podem subir.",
+                "ans": "Bear in mind that costs may rise."
+              },
+              {
+                "q": "Esse é um argumento convincente.",
+                "ans": "That is a compelling argument."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Hedging é traço cultural, não só gramatical. Em inglês profissional, suavizar a afirmação sinaliza sofisticação; o aluno brasileiro costuma achar que soa inseguro. Vale explicitar isso."
       },
       {
         "title": "Literary English",
@@ -8307,6 +15041,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "No sooner had the king spoken than silence fell upon the hall.",
               "en": "Assim que o rei falou, o silêncio tomou conta do salão."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "Never have I seen such a beautiful sunset.",
+              "en": "Nunca vi um pôr do sol tão bonito."
+            },
+            {
+              "pt": "Not only did he arrive late, but he also forgot the documents.",
+              "en": "Ele não só chegou tarde, como também esqueceu os documentos."
+            },
+            {
+              "pt": "Rarely does she complain about anything.",
+              "en": "Raramente ela reclama de alguma coisa."
+            },
+            {
+              "pt": "No sooner had we sat down than the phone rang.",
+              "en": "Mal nos sentamos e o telefone tocou."
+            },
+            {
+              "pt": "Under no circumstances should you sign that.",
+              "en": "De forma alguma você deve assinar aquilo."
             }
           ]
         },
@@ -8442,7 +15198,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "A tradição literária em inglês e o uso da linguagem formal",
           "text": "A língua inglesa possui uma das tradições literárias mais ricas do mundo, com autores como William Shakespeare, Jane Austen, Charles Dickens e Virginia Woolf. Estruturas como a inversão para ênfase eram muito comuns na prosa e poesia dos séculos XVIII e XIX, dando à escrita um tom elevado e dramático. Hoje, esse estilo é estudado em universidades de países como o Reino Unido, os Estados Unidos, a Austrália e o Canadá, e ainda aparece em discursos formais e textos jornalísticos de prestígio. Conhecer essas estruturas ajuda o estudante não apenas a entender textos literários clássicos, mas também a escrever com mais elegância e sofisticação em inglês."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "seldom",
+            "en": "raramente",
+            "ex": "Seldom have I seen such talent.",
+            "exEn": "Raramente vi tanto talento."
+          },
+          {
+            "pt": "scarcely",
+            "en": "mal, apenas",
+            "ex": "Scarcely had he arrived when it started.",
+            "exEn": "Mal ele tinha chegado quando começou."
+          },
+          {
+            "pt": "no sooner",
+            "en": "assim que, mal",
+            "ex": "No sooner had we left than it rained.",
+            "exEn": "Mal saímos e começou a chover."
+          },
+          {
+            "pt": "under no circumstances",
+            "en": "de forma alguma",
+            "ex": "Under no circumstances should you open it.",
+            "exEn": "De forma alguma você deve abrir isso."
+          },
+          {
+            "pt": "remarkable",
+            "en": "notável",
+            "ex": "It was a remarkable performance.",
+            "exEn": "Foi uma apresentação notável."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "Never I have seen such a thing.",
+            "correct": "Never have I seen such a thing.",
+            "note": "Depois do advérbio negativo, o auxiliar vem ANTES do sujeito. É inversão obrigatória."
+          },
+          {
+            "wrong": "Not only he arrived late, but also forgot the keys.",
+            "correct": "Not only did he arrive late, but he also forgot the keys.",
+            "note": "Se não há auxiliar na frase, é preciso inserir 'do/does/did' para fazer a inversão."
+          },
+          {
+            "wrong": "No sooner had we left when it rained.",
+            "correct": "No sooner had we left than it rained.",
+            "note": "'No sooner' pede 'than', não 'when'. Já 'hardly/scarcely' pedem 'when'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "Never ___ I seen such a thing.",
+                "ans": "have"
+              },
+              {
+                "q": "Not only ___ he arrive late, he also forgot the keys.",
+                "ans": "did"
+              },
+              {
+                "q": "Rarely ___ she complain.",
+                "ans": "does"
+              },
+              {
+                "q": "No sooner had we left ___ it started to rain.",
+                "ans": "than"
+              },
+              {
+                "q": "Under no circumstances ___ you sign that.",
+                "ans": "should"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "Which is correct?",
+                "opts": [
+                  "Never I have seen it",
+                  "Never have I seen it",
+                  "Never I saw it have",
+                  "Have never I seen it"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Not only ___ she sing, she also plays piano.",
+                "opts": [
+                  "does",
+                  "do",
+                  "is",
+                  "has"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "No sooner had he spoken ___ everyone laughed.",
+                "opts": [
+                  "when",
+                  "then",
+                  "than",
+                  "that"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___ have I been so surprised.",
+                "opts": [
+                  "Seldom",
+                  "Seldomly",
+                  "Seldom of",
+                  "The seldom"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "Scarcely had she arrived ___ the phone rang.",
+                "opts": [
+                  "than",
+                  "when",
+                  "that",
+                  "then"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Nunca vi algo assim.",
+                "ans": "Never have I seen such a thing."
+              },
+              {
+                "q": "Ele não só chegou tarde, como esqueceu os documentos.",
+                "ans": "Not only did he arrive late, but he also forgot the documents."
+              },
+              {
+                "q": "Raramente ela reclama.",
+                "ans": "Rarely does she complain."
+              },
+              {
+                "q": "De forma alguma você deve assinar isso.",
+                "ans": "Under no circumstances should you sign this."
+              },
+              {
+                "q": "Foi uma apresentação notável.",
+                "ans": "It was a remarkable performance."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Inversão é recurso de escrita formal e discurso enfático — não de conversa cotidiana. Deixe isso claro, senão o aluno começa a usar em e-mail de trabalho e soa teatral."
       },
       {
         "title": "Advanced Grammar",
@@ -8528,6 +15444,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "It was the heavy rain that caused the delay.",
               "en": "Foi a chuva forte que causou o atraso."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "It was John who called you.",
+              "en": "Foi o John que te ligou."
+            },
+            {
+              "pt": "What I need is more time.",
+              "en": "O que eu preciso é de mais tempo."
+            },
+            {
+              "pt": "It was in 2019 that we moved here.",
+              "en": "Foi em 2019 que nos mudamos para cá."
+            },
+            {
+              "pt": "What surprised me was her reaction.",
+              "en": "O que me surpreendeu foi a reação dela."
+            },
+            {
+              "pt": "It is the price that worries me.",
+              "en": "É o preço que me preocupa."
             }
           ]
         },
@@ -8663,7 +15601,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Ênfase e Comunicação Direta na Cultura Anglo-Saxônica",
           "text": "Em países de língua inglesa como o Reino Unido, os Estados Unidos e a Austrália, a clareza e a precisão na comunicação são muito valorizadas, especialmente em contextos profissionais e acadêmicos. As cleft sentences são frequentemente usadas em debates, apresentações e noticiários para destacar informações importantes sem ambiguidade. Em discursos políticos britânicos e americanos, por exemplo, é muito comum ouvir estruturas como 'It is the people who decide' para criar impacto emocional e direcionar a atenção do público. Dominar esse recurso faz com que o falante de inglês soe mais natural, sofisticado e persuasivo em situações formais."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "emphasise",
+            "en": "enfatizar",
+            "ex": "I want to emphasise this point.",
+            "exEn": "Eu quero enfatizar este ponto."
+          },
+          {
+            "pt": "the reason why",
+            "en": "a razão pela qual",
+            "ex": "The reason why I left is simple.",
+            "exEn": "A razão pela qual eu saí é simples."
+          },
+          {
+            "pt": "all I need",
+            "en": "tudo o que eu preciso",
+            "ex": "All I need is a quiet room.",
+            "exEn": "Tudo o que eu preciso é um quarto silencioso."
+          },
+          {
+            "pt": "the thing is",
+            "en": "a questão é",
+            "ex": "The thing is, we have no budget.",
+            "exEn": "A questão é que não temos orçamento."
+          },
+          {
+            "pt": "highlight",
+            "en": "destacar",
+            "ex": "The report highlights three risks.",
+            "exEn": "O relatório destaca três riscos."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "It was John that called you? No, was Mary.",
+            "correct": "It was Mary who called you.",
+            "note": "A estrutura completa é obrigatória: 'It was + elemento + who/that + resto'. Não se omite o 'it was'."
+          },
+          {
+            "wrong": "What I need is more time, is what I need.",
+            "correct": "What I need is more time.",
+            "note": "A cleft já enfatiza. Repetir a estrutura no fim é redundante e soa errado."
+          },
+          {
+            "wrong": "It was me who did it.",
+            "correct": "It was I who did it. / It was me that did it.",
+            "note": "Em registro formal usa-se 'It was I who'. Na fala, 'It was me that' é aceito. Misturar 'me' com 'who' soa inconsistente."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "It was John ___ called you.",
+                "ans": "who"
+              },
+              {
+                "q": "___ I need is more time.",
+                "ans": "What"
+              },
+              {
+                "q": "It ___ in 2019 that we moved here.",
+                "ans": "was"
+              },
+              {
+                "q": "What surprised me ___ her reaction.",
+                "ans": "was"
+              },
+              {
+                "q": "It is the price ___ worries me.",
+                "ans": "that"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ was Maria who sent the email.",
+                "opts": [
+                  "That",
+                  "It",
+                  "She",
+                  "There"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "___ I really want is a holiday.",
+                "opts": [
+                  "That",
+                  "Which",
+                  "What",
+                  "It"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "It was in Dublin ___ we met.",
+                "opts": [
+                  "who",
+                  "that",
+                  "where",
+                  "when"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The reason ___ I left is personal.",
+                "opts": [
+                  "why",
+                  "that why",
+                  "for which why",
+                  "because"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "___ I need is a quiet room.",
+                "opts": [
+                  "All that",
+                  "All",
+                  "That all",
+                  "Whole"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Foi o John que te ligou.",
+                "ans": "It was John who called you."
+              },
+              {
+                "q": "O que eu preciso é de mais tempo.",
+                "ans": "What I need is more time."
+              },
+              {
+                "q": "Foi em 2019 que nos mudamos.",
+                "ans": "It was in 2019 that we moved."
+              },
+              {
+                "q": "O que me surpreendeu foi a reação dela.",
+                "ans": "What surprised me was her reaction."
+              },
+              {
+                "q": "É o preço que me preocupa.",
+                "ans": "It is the price that worries me."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Cleft sentences dão ao inglês o recurso que o português resolve com entonação e ordem livre. Mostre a frase neutra e a clivada lado a lado — a função fica óbvia."
       },
       {
         "title": "American Culture & Slang",
@@ -8749,6 +15847,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Nope, I haven't seen that show yet.",
               "en": "Não, eu ainda não assisti a essa série."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I'm gonna call you later. (going to)",
+              "en": "Eu vou te ligar mais tarde."
+            },
+            {
+              "pt": "Do you wanna grab a coffee? (want to)",
+              "en": "Você quer tomar um café?"
+            },
+            {
+              "pt": "It's kinda cold today. (kind of)",
+              "en": "Está meio frio hoje."
+            },
+            {
+              "pt": "Yeah, I got it. (yes)",
+              "en": "É, entendi."
+            },
+            {
+              "pt": "Nope, not today. (no)",
+              "en": "Não, hoje não."
             }
           ]
         },
@@ -8884,7 +16004,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Inglês informal: como os americanos realmente falam",
           "text": "O inglês que você aprende nos livros e o inglês falado no dia a dia nos Estados Unidos podem ser bem diferentes. Formas como 'gonna' e 'wanna' aparecem constantemente em filmes, séries, músicas e conversas cotidianas, e entendê-las é essencial para compreender nativos de verdade. Além disso, gírias americanas mudam com frequência e variam por região — o que é comum em Nova York pode soar diferente no Texas ou na Califórnia. Assistir a séries americanas sem legendas é uma das melhores formas de se acostumar com esse inglês mais natural e espontâneo."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "hang out",
+            "en": "sair, passar um tempo",
+            "ex": "We hung out at the mall.",
+            "exEn": "Nós ficamos no shopping."
+          },
+          {
+            "pt": "no worries",
+            "en": "sem problema",
+            "ex": "No worries, I'll handle it.",
+            "exEn": "Sem problema, eu resolvo."
+          },
+          {
+            "pt": "awesome",
+            "en": "incrível",
+            "ex": "That concert was awesome.",
+            "exEn": "Aquele show foi incrível."
+          },
+          {
+            "pt": "y'all",
+            "en": "vocês (sul dos EUA)",
+            "ex": "Are y'all coming tonight?",
+            "exEn": "Vocês vêm hoje à noite?"
+          },
+          {
+            "pt": "hit me up",
+            "en": "me chama, me liga",
+            "ex": "Hit me up when you arrive.",
+            "exEn": "Me chama quando chegar."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I wrote 'I'm gonna send the report' in a work email.",
+            "correct": "I am going to send the report.",
+            "note": "Gonna/wanna/kinda são exclusivamente da fala informal. Em texto escrito profissional, soam desleixados."
+          },
+          {
+            "wrong": "I gonna call you.",
+            "correct": "I'm gonna call you.",
+            "note": "'Gonna' substitui só 'going to' — o verbo 'to be' continua obrigatório."
+          },
+          {
+            "wrong": "I wanna a coffee.",
+            "correct": "I want a coffee. / I wanna have a coffee.",
+            "note": "'Wanna' = 'want to', então só cabe antes de verbo. Antes de substantivo use 'want'."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Escreva a forma completa da expressão informal.",
+            "items": [
+              {
+                "q": "'gonna' in full form is going ___.",
+                "ans": "to"
+              },
+              {
+                "q": "'wanna' in full form is ___ to.",
+                "ans": "want"
+              },
+              {
+                "q": "'kinda' in full form is kind ___.",
+                "ans": "of"
+              },
+              {
+                "q": "I ___ gonna call you later.",
+                "ans": "am"
+              },
+              {
+                "q": "'Nope' is an informal way to say ___.",
+                "ans": "no"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "Which is correct in speech?",
+                "opts": [
+                  "I gonna go",
+                  "I'm gonna go",
+                  "I am gonna to go",
+                  "I gonna to go"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'Wanna' can only come before ___.",
+                "opts": [
+                  "a noun",
+                  "a verb",
+                  "an adjective",
+                  "an article"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "In a formal work email you should write ___.",
+                "opts": [
+                  "I'm gonna send it",
+                  "I am going to send it",
+                  "Imma send it",
+                  "I wanna send it"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'Let's ___ out this weekend' means to spend time together.",
+                "opts": [
+                  "hang",
+                  "hold",
+                  "hand",
+                  "hit"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "'___ me up' means 'contact me'.",
+                "opts": [
+                  "Hang",
+                  "Hit",
+                  "Hold",
+                  "Have"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês informal falado.",
+            "items": [
+              {
+                "q": "Eu vou te ligar mais tarde.",
+                "ans": "I'm gonna call you later."
+              },
+              {
+                "q": "Você quer tomar um café?",
+                "ans": "Do you wanna grab a coffee?"
+              },
+              {
+                "q": "Está meio frio hoje.",
+                "ans": "It's kinda cold today."
+              },
+              {
+                "q": "Sem problema, eu resolvo.",
+                "ans": "No worries, I'll handle it."
+              },
+              {
+                "q": "Aquele show foi incrível.",
+                "ans": "That concert was awesome."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Ensine gonna/wanna para COMPREENSÃO antes de produção. O aluno precisa entender séries e conversa real, mas usar isso no lugar errado custa credibilidade profissional."
       },
       {
         "title": "Advanced Reading",
@@ -8970,6 +16250,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "The introduction of the new framework improved overall performance.",
               "en": "A introdução da nova estrutura melhorou o desempenho geral."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "They decided quickly. → Their decision was quick.",
+              "en": "Eles decidiram rápido. → A decisão deles foi rápida."
+            },
+            {
+              "pt": "The company developed the software. → The development of the software...",
+              "en": "A empresa desenvolveu o software. → O desenvolvimento do software..."
+            },
+            {
+              "pt": "The results are significant. → The significance of the results...",
+              "en": "Os resultados são significativos. → A significância dos resultados..."
+            },
+            {
+              "pt": "She contributed a lot. → Her contribution was substantial.",
+              "en": "Ela contribuiu muito. → A contribuição dela foi substancial."
+            },
+            {
+              "pt": "We assumed the data was correct. → Our assumption was that the data was correct.",
+              "en": "Nós supusemos que os dados estavam corretos. → Nossa suposição era que os dados estavam corretos."
             }
           ]
         },
@@ -9105,7 +16407,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "A linguagem acadêmica no mundo anglófono",
           "text": "Em países como Estados Unidos, Reino Unido e Austrália, a escrita acadêmica segue convenções muito específicas que valorizam a objetividade, a formalidade e o uso de nominalizações. Universidades como Oxford, Cambridge e MIT publicam guias de estilo para orientar estudantes a escrever de forma técnica e impessoal. Esse estilo é diferente da comunicação cotidiana e pode surpreender quem está começando a ler textos universitários em inglês. Aprender a reconhecer essas estruturas é essencial para ter sucesso em ambientes acadêmicos internacionais."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "assumption",
+            "en": "suposição",
+            "ex": "That assumption is not supported by data.",
+            "exEn": "Essa suposição não é sustentada por dados."
+          },
+          {
+            "pt": "implementation",
+            "en": "implementação",
+            "ex": "The implementation took six months.",
+            "exEn": "A implementação levou seis meses."
+          },
+          {
+            "pt": "findings",
+            "en": "achados, resultados",
+            "ex": "The findings were published last year.",
+            "exEn": "Os resultados foram publicados ano passado."
+          },
+          {
+            "pt": "furthermore",
+            "en": "além disso",
+            "ex": "Furthermore, the costs were underestimated.",
+            "exEn": "Além disso, os custos foram subestimados."
+          },
+          {
+            "pt": "significance",
+            "en": "importância, significância",
+            "ex": "The significance of this cannot be overstated.",
+            "exEn": "A importância disso não pode ser exagerada."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "The develop of the project was slow.",
+            "correct": "The development of the project was slow.",
+            "note": "Nominalização exige a forma substantiva correta. Cada verbo tem seu sufixo: -ment, -tion, -ance, -sion."
+          },
+          {
+            "wrong": "The significance are clear.",
+            "correct": "The significance is clear.",
+            "note": "Nominalizações são singulares. Ao nominalizar, o verbo precisa concordar com o novo sujeito."
+          },
+          {
+            "wrong": "In this paper I will talk about the results.",
+            "correct": "This paper examines the results.",
+            "note": "Registro acadêmico em inglês prefere sujeito impessoal e verbo preciso. 'Talk about' é conversacional demais."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Escreva o substantivo derivado do verbo ou adjetivo.",
+            "items": [
+              {
+                "q": "decide → ___",
+                "ans": "decision"
+              },
+              {
+                "q": "develop → ___",
+                "ans": "development"
+              },
+              {
+                "q": "contribute → ___",
+                "ans": "contribution"
+              },
+              {
+                "q": "assume → ___",
+                "ans": "assumption"
+              },
+              {
+                "q": "significant → ___",
+                "ans": "significance"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "The ___ of the new system took months.",
+                "opts": [
+                  "implement",
+                  "implementing",
+                  "implementation",
+                  "implemented"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "Their ___ was published in Nature.",
+                "opts": [
+                  "find",
+                  "findings",
+                  "founding",
+                  "founds"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The significance of these results ___ clear.",
+                "opts": [
+                  "are",
+                  "is",
+                  "were",
+                  "be"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "___, the costs were underestimated.",
+                "opts": [
+                  "Furthermore",
+                  "Further more",
+                  "Farther",
+                  "Furthermost"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "analyse → ___",
+                "opts": [
+                  "analysation",
+                  "analysing",
+                  "analysis",
+                  "analyst"
+                ],
+                "ans": 2
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês acadêmico.",
+            "items": [
+              {
+                "q": "A implementação levou seis meses.",
+                "ans": "The implementation took six months."
+              },
+              {
+                "q": "Essa suposição não é sustentada por dados.",
+                "ans": "That assumption is not supported by data."
+              },
+              {
+                "q": "Os resultados foram publicados ano passado.",
+                "ans": "The findings were published last year."
+              },
+              {
+                "q": "Além disso, os custos foram subestimados.",
+                "ans": "Furthermore, the costs were underestimated."
+              },
+              {
+                "q": "A contribuição dela foi substancial.",
+                "ans": "Her contribution was substantial."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Nominalização deixa o texto denso e formal — mas em excesso vira ilegível. Vale mostrar um parágrafo nominalizado demais e pedir para o aluno 'desnominalizar' e comparar."
       },
       {
         "title": "B2 Consolidation",
@@ -9191,6 +16653,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "What I really need is more time to prepare.",
               "en": "O que eu realmente preciso é de mais tempo para me preparar."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "Had I known, I would have acted differently.",
+              "en": "Se eu soubesse, teria agido diferente."
+            },
+            {
+              "pt": "Never had she felt so relieved.",
+              "en": "Nunca ela tinha se sentido tão aliviada."
+            },
+            {
+              "pt": "What matters most is the outcome.",
+              "en": "O que mais importa é o resultado."
+            },
+            {
+              "pt": "It was the delay that caused the problem.",
+              "en": "Foi o atraso que causou o problema."
+            },
+            {
+              "pt": "If he had left earlier, he would be here now.",
+              "en": "Se ele tivesse saído mais cedo, estaria aqui agora."
             }
           ]
         },
@@ -9326,7 +16810,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Formalidade e ênfase na comunicação em inglês",
           "text": "Em países de língua inglesa, especialmente no Reino Unido e nos Estados Unidos, o uso de inversão e frases clivadas é muito comum em contextos formais, como discursos políticos, documentos legais e textos acadêmicos. Políticos britânicos, por exemplo, frequentemente usam inversão para dar mais peso às suas declarações em debates no Parlamento. Nos Estados Unidos, frases clivadas aparecem com frequência em apresentações de negócios e artigos jornalísticos para guiar a atenção do leitor. Dominar essas estruturas é um sinal claro de fluência avançada e causa uma ótima impressão em entrevistas e ambientes profissionais."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "grasp",
+            "en": "compreender, dominar",
+            "ex": "She has a good grasp of the subject.",
+            "exEn": "Ela tem um bom domínio do assunto."
+          },
+          {
+            "pt": "fluency",
+            "en": "fluência",
+            "ex": "His fluency improved a lot.",
+            "exEn": "A fluência dele melhorou muito."
+          },
+          {
+            "pt": "nuance",
+            "en": "nuance, sutileza",
+            "ex": "There is a nuance you are missing.",
+            "exEn": "Há uma sutileza que você está deixando passar."
+          },
+          {
+            "pt": "consolidate",
+            "en": "consolidar",
+            "ex": "This unit consolidates everything.",
+            "exEn": "Esta unit consolida tudo."
+          },
+          {
+            "pt": "confident",
+            "en": "confiante",
+            "ex": "I feel confident speaking English now.",
+            "exEn": "Eu me sinto confiante falando inglês agora."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "If I would have known, I would have acted.",
+            "correct": "Had I known, I would have acted.",
+            "note": "'Would' nunca na oração do 'if'. A inversão 'Had I known' é a versão formal e elegante."
+          },
+          {
+            "wrong": "Never she had felt so relieved.",
+            "correct": "Never had she felt so relieved.",
+            "note": "Inversão obrigatória depois de advérbio negativo: auxiliar antes do sujeito."
+          },
+          {
+            "wrong": "What matters most are the outcome.",
+            "correct": "What matters most is the outcome.",
+            "note": "A cleft com 'what' é singular. O verbo concorda com a estrutura, não com o que vem depois."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "___ I known, I would have acted differently.",
+                "ans": "Had"
+              },
+              {
+                "q": "Never ___ she felt so relieved.",
+                "ans": "had"
+              },
+              {
+                "q": "What matters most ___ the outcome.",
+                "ans": "is"
+              },
+              {
+                "q": "It was the delay ___ caused the problem.",
+                "ans": "that"
+              },
+              {
+                "q": "If he had left earlier, he ___ be here now.",
+                "ans": "would"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ I known earlier, I would have helped.",
+                "opts": [
+                  "If",
+                  "Had",
+                  "Have",
+                  "Would"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "If she had studied, she ___ be a doctor now.",
+                "opts": [
+                  "would have",
+                  "would",
+                  "will",
+                  "would had"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Not only ___ he apologise, he also paid.",
+                "opts": [
+                  "did",
+                  "do",
+                  "was",
+                  "has"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "___ I want is a clear answer.",
+                "opts": [
+                  "That",
+                  "Which",
+                  "All",
+                  "It"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "She has a good ___ of the subject.",
+                "opts": [
+                  "grasp",
+                  "grip",
+                  "grab",
+                  "graze"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Se eu soubesse, teria agido diferente.",
+                "ans": "Had I known, I would have acted differently."
+              },
+              {
+                "q": "Nunca ela tinha se sentido tão aliviada.",
+                "ans": "Never had she felt so relieved."
+              },
+              {
+                "q": "O que mais importa é o resultado.",
+                "ans": "What matters most is the outcome."
+              },
+              {
+                "q": "Foi o atraso que causou o problema.",
+                "ans": "It was the delay that caused the problem."
+              },
+              {
+                "q": "Eu me sinto confiante falando inglês agora.",
+                "ans": "I feel confident speaking English now."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Feche o B2 checando os três recursos de ênfase — condicional misto, inversão e cleft. São eles que fazem a fala soar avançada, mais até que vocabulário raro."
       }
     ]
   },
@@ -9424,6 +17068,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "I've told you everything I know — the ball is in your court.",
               "en": "Eu te disse tudo o que sei — a decisão é sua agora."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "She hit the nail on the head with that comment.",
+              "en": "Ela acertou em cheio com aquele comentário."
+            },
+            {
+              "pt": "Break a leg at your audition tomorrow!",
+              "en": "Boa sorte na sua audição amanhã!"
+            },
+            {
+              "pt": "We'll have to bite the bullet and cut the budget.",
+              "en": "Vamos ter que encarar e cortar o orçamento."
+            },
+            {
+              "pt": "That was the last straw — I resigned.",
+              "en": "Aquela foi a gota d'água — eu pedi demissão."
+            },
+            {
+              "pt": "Don't cut corners on safety.",
+              "en": "Não faça nas coxas quando o assunto é segurança."
             }
           ]
         },
@@ -9559,7 +17225,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "A origem cultural dos idioms em inglês",
           "text": "Muitas expressões idiomáticas do inglês têm origens históricas surpreendentes: 'bite the bullet', por exemplo, vem de práticas militares do século XVIII, quando soldados mordiam uma bala durante cirurgias sem anestesia para suportar a dor. Já 'break a leg' é popular no mundo do teatro anglo-saxão, onde desejar 'boa sorte' diretamente era considerado um mau presságio — então se dizia o oposto. Nos países de língua inglesa, o domínio de idioms é visto como um sinal de fluência real e pertencimento cultural, pois nativos os usam constantemente em conversas cotidianas, reuniões de trabalho e até discursos formais. Aprender essas expressões não é apenas uma questão de vocabulário, mas de compreender a história e o humor da cultura anglófona."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "bite the bullet",
+            "en": "encarar algo difícil",
+            "ex": "I had to bite the bullet and apologise.",
+            "exEn": "Eu tive que encarar e pedir desculpas."
+          },
+          {
+            "pt": "the last straw",
+            "en": "a gota d'água",
+            "ex": "That was the last straw for me.",
+            "exEn": "Aquilo foi a gota d'água para mim."
+          },
+          {
+            "pt": "cut corners",
+            "en": "fazer nas coxas",
+            "ex": "They cut corners to save money.",
+            "exEn": "Eles fizeram nas coxas para economizar."
+          },
+          {
+            "pt": "get the ball rolling",
+            "en": "dar o pontapé inicial",
+            "ex": "Let's get the ball rolling on this project.",
+            "exEn": "Vamos dar o pontapé inicial neste projeto."
+          },
+          {
+            "pt": "under the weather",
+            "en": "indisposto",
+            "ex": "I'm feeling a bit under the weather.",
+            "exEn": "Estou me sentindo um pouco indisposto."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "He hit the nail in the head.",
+            "correct": "He hit the nail on the head.",
+            "note": "Idioms são fixos até na preposição. Trocar uma palavra desmonta a expressão inteira."
+          },
+          {
+            "wrong": "Break your leg!",
+            "correct": "Break a leg!",
+            "note": "Sem possessivo e no singular. 'Break your leg' vira uma ameaça literal."
+          },
+          {
+            "wrong": "I'm feeling under the time.",
+            "correct": "I'm feeling under the weather.",
+            "note": "Idioms não se traduzem por analogia. Cada um precisa ser aprendido como bloco único."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete o idiom com a palavra correta.",
+            "items": [
+              {
+                "q": "He hit the nail ___ the head.",
+                "ans": "on"
+              },
+              {
+                "q": "Break a ___! Good luck tonight.",
+                "ans": "leg"
+              },
+              {
+                "q": "That was the last ___ for me.",
+                "ans": "straw"
+              },
+              {
+                "q": "I'm feeling under the ___.",
+                "ans": "weather"
+              },
+              {
+                "q": "Let's get the ball ___.",
+                "ans": "rolling"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha o significado correto do idiom.",
+            "items": [
+              {
+                "q": "'To bite the bullet' means to ___.",
+                "opts": [
+                  "eat quickly",
+                  "face something difficult",
+                  "get angry",
+                  "give up"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'To cut corners' means to ___.",
+                "opts": [
+                  "do something badly to save time",
+                  "turn while driving",
+                  "reduce staff",
+                  "be efficient"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "'Under the weather' means ___.",
+                "opts": [
+                  "outdoors",
+                  "slightly ill",
+                  "very cold",
+                  "depressed"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'Hit the nail on the head' means to ___.",
+                "opts": [
+                  "be exactly right",
+                  "work hard",
+                  "hurt someone",
+                  "finish a job"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "'The last straw' means ___.",
+                "opts": [
+                  "the final drink",
+                  "the final problem you can tolerate",
+                  "the best option",
+                  "the last chance"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês usando um idiom.",
+            "items": [
+              {
+                "q": "Ela acertou em cheio.",
+                "ans": "She hit the nail on the head."
+              },
+              {
+                "q": "Aquilo foi a gota d'água.",
+                "ans": "That was the last straw."
+              },
+              {
+                "q": "Boa sorte!",
+                "ans": "Break a leg!"
+              },
+              {
+                "q": "Estou meio indisposto.",
+                "ans": "I'm feeling under the weather."
+              },
+              {
+                "q": "Eles fizeram nas coxas.",
+                "ans": "They cut corners."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Idioms devem entrar por compreensão primeiro. Um aluno que usa idiom demais soa forçado — a meta é reconhecer todos e produzir uns poucos com naturalidade."
       },
       {
         "title": "Advanced Listening",
@@ -9645,6 +17471,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "She woulda stayed longer, but she had an early flight.",
               "en": "Ela teria ficado mais tempo, mas tinha um voo cedo."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I shoulda called you. (should have)",
+              "en": "Eu deveria ter te ligado."
+            },
+            {
+              "pt": "She coulda won the race. (could have)",
+              "en": "Ela poderia ter ganhado a corrida."
+            },
+            {
+              "pt": "We woulda gone, but it rained. (would have)",
+              "en": "Nós teríamos ido, mas choveu."
+            },
+            {
+              "pt": "Whatcha doing tonight? (what are you)",
+              "en": "O que você vai fazer hoje à noite?"
+            },
+            {
+              "pt": "I'm gonna hafta leave early. (have to)",
+              "en": "Eu vou ter que sair cedo."
             }
           ]
         },
@@ -9780,7 +17628,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Fala Reduzida: Por que os nativos falam tão rápido?",
           "text": "Falantes nativos de inglês, especialmente nos Estados Unidos, Canadá, Austrália e Reino Unido, usam formas reduzidas constantemente na fala cotidiana — isso não é desleixo, mas sim uma característica natural da língua oral. Esse fenômeno é chamado de 'connected speech' (fala conectada), e inclui contrações, elisões e reduções que tornam a comunicação mais fluida e natural. Para quem está aprendendo inglês, é essencial treinar o ouvido para essas formas, pois filmes, séries, podcasts e conversas reais estão cheios delas. Estudar apenas o inglês formal escrito pode criar uma lacuna significativa na compreensão auditiva, por isso ouvir conteúdo autêntico todos os dias é uma estratégia indispensável no nível C1."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "gimme",
+            "en": "me dá (give me)",
+            "ex": "Gimme a second.",
+            "exEn": "Me dá um segundo."
+          },
+          {
+            "pt": "lemme",
+            "en": "me deixa (let me)",
+            "ex": "Lemme check that for you.",
+            "exEn": "Deixa eu verificar isso pra você."
+          },
+          {
+            "pt": "dunno",
+            "en": "não sei (don't know)",
+            "ex": "I dunno what happened.",
+            "exEn": "Eu não sei o que aconteceu."
+          },
+          {
+            "pt": "outta",
+            "en": "para fora de (out of)",
+            "ex": "Get outta here!",
+            "exEn": "Sai daqui!"
+          },
+          {
+            "pt": "ya",
+            "en": "você (you)",
+            "ex": "See ya tomorrow.",
+            "exEn": "Te vejo amanhã."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I should of called you.",
+            "correct": "I should have called you.",
+            "note": "'Shoulda' soa como 'should of', mas a escrita correta é sempre 'should have'. Nativos erram isso também."
+          },
+          {
+            "wrong": "Writing 'I dunno' in a professional email.",
+            "correct": "I'm not sure.",
+            "note": "Reduções são fenômeno exclusivamente fonético. Escrever assim em contexto formal é erro de registro grave."
+          },
+          {
+            "wrong": "I coulda to go.",
+            "correct": "I could have gone.",
+            "note": "'Coulda' já contém o 'have'. Depois vem o particípio, nunca 'to' + infinitivo."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Escreva a forma completa da redução.",
+            "items": [
+              {
+                "q": "'shoulda' = should ___",
+                "ans": "have"
+              },
+              {
+                "q": "'gimme' = give ___",
+                "ans": "me"
+              },
+              {
+                "q": "'lemme' = let ___",
+                "ans": "me"
+              },
+              {
+                "q": "'dunno' = don't ___",
+                "ans": "know"
+              },
+              {
+                "q": "'hafta' = have ___",
+                "ans": "to"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "The correct written form of 'shoulda' is ___.",
+                "opts": [
+                  "should of",
+                  "should have",
+                  "should had",
+                  "shoulded"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'Whatcha doing?' in full form is ___.",
+                "opts": [
+                  "What you doing",
+                  "What are you doing",
+                  "What do you doing",
+                  "What is you doing"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'I coulda ___ there.' Complete correctly.",
+                "opts": [
+                  "go",
+                  "went",
+                  "gone",
+                  "to go"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "Reduced speech belongs to ___.",
+                "opts": [
+                  "formal writing",
+                  "informal speech",
+                  "academic papers",
+                  "legal documents"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'Get outta here' means get out ___ here.",
+                "opts": [
+                  "of",
+                  "from",
+                  "in",
+                  "at"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês (forma completa e correta).",
+            "items": [
+              {
+                "q": "Eu deveria ter te ligado.",
+                "ans": "I should have called you."
+              },
+              {
+                "q": "Ela poderia ter ganhado.",
+                "ans": "She could have won."
+              },
+              {
+                "q": "Nós teríamos ido, mas choveu.",
+                "ans": "We would have gone, but it rained."
+              },
+              {
+                "q": "Eu não sei o que aconteceu.",
+                "ans": "I don't know what happened."
+              },
+              {
+                "q": "Eu vou ter que sair cedo.",
+                "ans": "I am going to have to leave early."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "O objetivo aqui é ouvido, não boca. Passe áudio real e peça a transcrição na forma completa — o aluno percebe que não estava perdendo vocabulário, estava perdendo redução."
       },
       {
         "title": "Academic Writing",
@@ -9866,6 +17874,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Not only did the experiment confirm the hypothesis, but it also revealed unexpected variables that warrant further investigation.",
               "en": "O experimento não apenas confirmou a hipótese, mas também revelou variáveis inesperadas que merecem investigação adicional."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "Although the sample was small, the results were consistent.",
+              "en": "Embora a amostra fosse pequena, os resultados foram consistentes."
+            },
+            {
+              "pt": "The study, which was funded privately, reached different conclusions.",
+              "en": "O estudo, que foi financiado com verba privada, chegou a conclusões diferentes."
+            },
+            {
+              "pt": "Having reviewed the literature, the authors propose a new model.",
+              "en": "Tendo revisado a literatura, os autores propõem um novo modelo."
+            },
+            {
+              "pt": "The findings were significant, albeit preliminary.",
+              "en": "Os achados foram significativos, ainda que preliminares."
+            },
+            {
+              "pt": "Not only does the theory explain the data, it also predicts new cases.",
+              "en": "A teoria não só explica os dados, como também prevê novos casos."
             }
           ]
         },
@@ -10001,7 +18031,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "A tradição da escrita acadêmica nos países de língua inglesa",
           "text": "Nos países de língua inglesa, especialmente no Reino Unido e nos Estados Unidos, a escrita acadêmica segue convenções rigorosas que valorizam clareza, objetividade e argumentação lógica bem estruturada. Universidades como Oxford, Cambridge, Harvard e MIT exigem que estudantes dominem estilos de citação específicos — como APA, MLA ou Chicago — e que construam textos coesos com introdução, desenvolvimento e conclusão claros. O conceito de 'academic integrity' (integridade acadêmica) é levado muito a sério: plágios podem resultar em expulsão, pois citar fontes corretamente é considerado um dever ético fundamental. Para brasileiros, adaptar-se a esse estilo pode exigir esforço, já que o inglês acadêmico tende a ser mais direto e menos retórico do que o português formal utilizado em contextos universitários no Brasil."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "notwithstanding",
+            "en": "não obstante",
+            "ex": "Notwithstanding the delays, we finished.",
+            "exEn": "Não obstante os atrasos, nós terminamos."
+          },
+          {
+            "pt": "insofar as",
+            "en": "na medida em que",
+            "ex": "This holds insofar as the data is reliable.",
+            "exEn": "Isso se sustenta na medida em que os dados são confiáveis."
+          },
+          {
+            "pt": "thereby",
+            "en": "assim, desse modo",
+            "ex": "Costs fell, thereby increasing profit.",
+            "exEn": "Os custos caíram, aumentando assim o lucro."
+          },
+          {
+            "pt": "albeit",
+            "en": "embora, ainda que",
+            "ex": "The results were positive, albeit modest.",
+            "exEn": "Os resultados foram positivos, ainda que modestos."
+          },
+          {
+            "pt": "hence",
+            "en": "portanto, daí",
+            "ex": "The sample was small; hence the caution.",
+            "exEn": "A amostra era pequena; daí a cautela."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "The study which was funded privately reached other conclusions.",
+            "correct": "The study, which was funded privately, reached other conclusions.",
+            "note": "'Which' não restritivo exige vírgulas. Sem elas, o sentido muda: passa a distinguir um estudo entre vários."
+          },
+          {
+            "wrong": "Having reviewed the literature, a new model is proposed.",
+            "correct": "Having reviewed the literature, the authors propose a new model.",
+            "note": "Particípio solto: o sujeito da oração principal precisa ser quem realizou a ação do particípio."
+          },
+          {
+            "wrong": "In this essay I will talk about three points.",
+            "correct": "This essay examines three points.",
+            "note": "Escrita acadêmica em inglês evita o 'eu' anunciador e prefere o texto como sujeito da ação."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com o conector adequado.",
+            "items": [
+              {
+                "q": "The results were positive, ___ modest.",
+                "ans": "albeit"
+              },
+              {
+                "q": "The sample was small; ___ the caution.",
+                "ans": "hence"
+              },
+              {
+                "q": "___ the delays, the project finished on time.",
+                "ans": "Notwithstanding"
+              },
+              {
+                "q": "Costs fell, ___ increasing profit.",
+                "ans": "thereby"
+              },
+              {
+                "q": "This holds ___ as the data is reliable.",
+                "ans": "insofar"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "Which sentence is correctly punctuated?",
+                "opts": [
+                  "The report which was late caused problems",
+                  "The report, which was late, caused problems",
+                  "The report, which was late caused problems",
+                  "The report which was late, caused problems"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Which is academic register?",
+                "opts": [
+                  "I'm gonna show three points",
+                  "In this essay I will talk about",
+                  "This essay examines three points",
+                  "Let me tell you about"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___ reviewed the data, the team revised its model.",
+                "opts": [
+                  "Have",
+                  "Having",
+                  "Has",
+                  "To have"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The results were promising, ___ preliminary.",
+                "opts": [
+                  "although",
+                  "albeit",
+                  "despite",
+                  "however"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Costs rose; ___, profits fell.",
+                "opts": [
+                  "hence",
+                  "thereby",
+                  "albeit",
+                  "insofar"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês acadêmico.",
+            "items": [
+              {
+                "q": "Embora a amostra fosse pequena, os resultados foram consistentes.",
+                "ans": "Although the sample was small, the results were consistent."
+              },
+              {
+                "q": "Os achados foram significativos, ainda que preliminares.",
+                "ans": "The findings were significant, albeit preliminary."
+              },
+              {
+                "q": "Não obstante os atrasos, nós terminamos.",
+                "ans": "Notwithstanding the delays, we finished."
+              },
+              {
+                "q": "A amostra era pequena; daí a cautela.",
+                "ans": "The sample was small; hence the caution."
+              },
+              {
+                "q": "Este artigo examina três questões.",
+                "ans": "This paper examines three issues."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "A vírgula do 'which' não restritivo muda o sentido da frase, não só a pontuação. Vale um exercício de pares mínimos — o aluno vê que é semântica, não estilo."
       },
       {
         "title": "Humour & Irony",
@@ -10087,6 +18277,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Yes, because sitting in traffic for two hours is exactly how I love spending my evenings.",
               "en": "Sim, porque ficar preso no trânsito por duas horas é exatamente como eu adoro passar minhas noites."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "It's a bit chilly. (said at -10°C)",
+              "en": "Está um pouco friozinho. (dito a -10°C — understatement)"
+            },
+            {
+              "pt": "Oh, brilliant. Another delay.",
+              "en": "Ah, ótimo. Mais um atraso. (sarcasmo)"
+            },
+            {
+              "pt": "That went well. (after a disaster)",
+              "en": "Correu bem. (depois de um desastre — ironia)"
+            },
+            {
+              "pt": "I'm not exactly an expert, but...",
+              "en": "Eu não sou exatamente um especialista, mas... (autodepreciação)"
+            },
+            {
+              "pt": "He's had slightly too much to drink.",
+              "en": "Ele bebeu um pouquinho além da conta. (understatement)"
             }
           ]
         },
@@ -10222,7 +18434,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "O humor britânico e a arte da ironia",
           "text": "O humor britânico é mundialmente conhecido por seu uso sofisticado de understatement e ironia — o que pode confundir quem não está acostumado, pois os britânicos frequentemente dizem o oposto do que sentem sem alterar o tom de voz. Nos Estados Unidos, o humor tende a ser mais direto e exagerado, enquanto na Austrália é comum o uso de sarcasmo pesado entre amigos como forma de demonstrar carinho e proximidade. Entender esse tipo de humor é essencial para se comunicar naturalmente com falantes nativos, pois ele aparece em conversas cotidianas, séries de TV, notícias e até em reuniões de trabalho. Programas britânicos como 'The Office' e 'Blackadder' são ótimas referências para quem quer aprender a identificar e apreciar o humor irônico em inglês."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "tongue-in-cheek",
+            "en": "irônico, de brincadeira",
+            "ex": "His remark was tongue-in-cheek.",
+            "exEn": "O comentário dele era de brincadeira."
+          },
+          {
+            "pt": "deadpan",
+            "en": "sem alterar a expressão",
+            "ex": "She delivered the joke deadpan.",
+            "exEn": "Ela contou a piada sem mudar a expressão."
+          },
+          {
+            "pt": "self-deprecating",
+            "en": "autodepreciativo",
+            "ex": "British humour is often self-deprecating.",
+            "exEn": "O humor britânico é frequentemente autodepreciativo."
+          },
+          {
+            "pt": "banter",
+            "en": "brincadeira, zoeira",
+            "ex": "It was just friendly banter.",
+            "exEn": "Era só uma zoeira amigável."
+          },
+          {
+            "pt": "take the mickey",
+            "en": "tirar sarro (britânico)",
+            "ex": "They were taking the mickey out of him.",
+            "exEn": "Eles estavam tirando sarro dele."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "Taking 'Oh, brilliant' literally as praise.",
+            "correct": "Reading the tone: it is usually sarcasm.",
+            "note": "O sarcasmo em inglês costuma vir com entonação plana, não exagerada como em português. Sem o contexto, passa despercebido."
+          },
+          {
+            "wrong": "It's a bit cold. → translating as 'está um pouco frio' at -10°C.",
+            "correct": "Understanding it as strong understatement.",
+            "note": "O understatement britânico inverte a escala: 'a bit' pode significar 'extremamente'. Traduzir literal perde a força."
+          },
+          {
+            "wrong": "Responding seriously to banter.",
+            "correct": "Responding in kind.",
+            "note": "Em contextos britânicos e irlandeses, 'banter' é sinal de aceitação social. Levar a sério pode isolar o falante."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "His comment was tongue-in-___.",
+                "ans": "cheek"
+              },
+              {
+                "q": "She told the joke ___, without smiling.",
+                "ans": "deadpan"
+              },
+              {
+                "q": "British humour is often self-___.",
+                "ans": "deprecating"
+              },
+              {
+                "q": "It was just friendly ___.",
+                "ans": "banter"
+              },
+              {
+                "q": "They were taking the ___ out of him.",
+                "ans": "mickey"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a interpretação correta.",
+            "items": [
+              {
+                "q": "At -10°C, 'It's a bit chilly' is an example of ___.",
+                "opts": [
+                  "exaggeration",
+                  "understatement",
+                  "literal description",
+                  "a compliment"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "After a disaster, 'That went well' is ___.",
+                "opts": [
+                  "praise",
+                  "irony",
+                  "a question",
+                  "a correction"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'Oh, brilliant. Another delay.' expresses ___.",
+                "opts": [
+                  "genuine delight",
+                  "sarcasm",
+                  "confusion",
+                  "gratitude"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Humour that mocks oneself is ___.",
+                "opts": [
+                  "sarcastic",
+                  "deadpan",
+                  "self-deprecating",
+                  "ironic"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "'He's had slightly too much to drink' probably means he is ___.",
+                "opts": [
+                  "sober",
+                  "quite drunk",
+                  "thirsty",
+                  "tired"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "O comentário dele era de brincadeira.",
+                "ans": "His remark was tongue-in-cheek."
+              },
+              {
+                "q": "Era só uma zoeira amigável.",
+                "ans": "It was just friendly banter."
+              },
+              {
+                "q": "O humor britânico é frequentemente autodepreciativo.",
+                "ans": "British humour is often self-deprecating."
+              },
+              {
+                "q": "Eles estavam tirando sarro dele.",
+                "ans": "They were taking the mickey out of him."
+              },
+              {
+                "q": "Ela contou a piada sem mudar a expressão.",
+                "ans": "She delivered the joke deadpan."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Ironia é o último obstáculo real da fluência. O aluno pode ter gramática perfeita e ainda perder metade de uma conversa social — vale usar clipes de sitcom britânica e pedir a interpretação."
       },
       {
         "title": "C1 Synthesis",
@@ -10308,6 +18680,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "The cultural nuance embedded in British humour often relies on understatement and irony.",
               "en": "A nuance cultural no humor britânico frequentemente depende do eufemismo e da ironia."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "By and large, the strategy has paid off, albeit slowly.",
+              "en": "De modo geral, a estratégia compensou, ainda que lentamente."
+            },
+            {
+              "pt": "Never had the team faced such a challenge.",
+              "en": "Nunca a equipe tinha enfrentado tamanho desafio."
+            },
+            {
+              "pt": "What concerns me most is the timeline, not the budget.",
+              "en": "O que mais me preocupa é o prazo, não o orçamento."
+            },
+            {
+              "pt": "Had we anticipated the delay, we would have planned differently.",
+              "en": "Se tivéssemos previsto o atraso, teríamos planejado diferente."
+            },
+            {
+              "pt": "It seems to me that we need to strike a balance.",
+              "en": "Parece-me que precisamos encontrar um equilíbrio."
             }
           ]
         },
@@ -10443,7 +18837,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Ironia, Eufemismo e a Arte da Comunicação Britânica",
           "text": "Uma das características mais marcantes da comunicação no Reino Unido é o uso do understatement — a tendência de minimizar situações sérias com linguagem suave ou até bem-humorada. Um britânico que diz 'it's not ideal' provavelmente está descrevendo algo que considera um desastre completo. Esse estilo indireto pode confundir falantes de outras culturas, incluindo americanos, que geralmente preferem uma comunicação mais direta e entusiástica. Compreender essas nuances culturais é essencial para qualquer falante de inglês em nível C1, pois o domínio da língua vai muito além da gramática — envolve saber quando, como e por que algo é dito de determinada forma."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "articulate",
+            "en": "articular; articulado",
+            "ex": "She articulated her position clearly.",
+            "exEn": "Ela articulou sua posição com clareza."
+          },
+          {
+            "pt": "come to terms with",
+            "en": "aceitar, conformar-se com",
+            "ex": "He came to terms with the decision.",
+            "exEn": "Ele se conformou com a decisão."
+          },
+          {
+            "pt": "by and large",
+            "en": "de modo geral",
+            "ex": "By and large, the plan worked.",
+            "exEn": "De modo geral, o plano funcionou."
+          },
+          {
+            "pt": "in retrospect",
+            "en": "em retrospecto",
+            "ex": "In retrospect, we should have waited.",
+            "exEn": "Em retrospecto, deveríamos ter esperado."
+          },
+          {
+            "pt": "strike a balance",
+            "en": "encontrar um equilíbrio",
+            "ex": "We need to strike a balance here.",
+            "exEn": "Precisamos encontrar um equilíbrio aqui."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "Using idioms in every sentence to sound advanced.",
+            "correct": "Using one well-placed idiom per conversation.",
+            "note": "Densidade excessiva de idioms é marcador de falante não nativo, não de proficiência. Menos é mais."
+          },
+          {
+            "wrong": "In retrospective, we should have waited.",
+            "correct": "In retrospect, we should have waited.",
+            "note": "A expressão fixa é 'in retrospect'. 'Retrospective' é adjetivo ou substantivo com outro sentido."
+          },
+          {
+            "wrong": "We need to make a balance.",
+            "correct": "We need to strike a balance.",
+            "note": "Collocation fixa com 'strike'. 'Make a balance' não existe em inglês."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "By and ___, the plan worked.",
+                "ans": "large"
+              },
+              {
+                "q": "In ___, we should have waited.",
+                "ans": "retrospect"
+              },
+              {
+                "q": "We need to ___ a balance.",
+                "ans": "strike"
+              },
+              {
+                "q": "He came to ___ with the decision.",
+                "ans": "terms"
+              },
+              {
+                "q": "Never ___ the team faced such a challenge.",
+                "ans": "had"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "___ and large, the results were positive.",
+                "opts": [
+                  "By",
+                  "In",
+                  "At",
+                  "For"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "We need to ___ a balance between speed and quality.",
+                "opts": [
+                  "make",
+                  "do",
+                  "strike",
+                  "take"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "___ we known earlier, we would have acted.",
+                "opts": [
+                  "If",
+                  "Had",
+                  "Have",
+                  "Would"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "___ concerns me most is the timeline.",
+                "opts": [
+                  "That",
+                  "Which",
+                  "What",
+                  "It"
+                ],
+                "ans": 2
+              },
+              {
+                "q": "She ___ her position very clearly.",
+                "opts": [
+                  "articulated",
+                  "articulate of",
+                  "was articulate",
+                  "articulating"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "De modo geral, o plano funcionou.",
+                "ans": "By and large, the plan worked."
+              },
+              {
+                "q": "Em retrospecto, deveríamos ter esperado.",
+                "ans": "In retrospect, we should have waited."
+              },
+              {
+                "q": "Precisamos encontrar um equilíbrio.",
+                "ans": "We need to strike a balance."
+              },
+              {
+                "q": "O que mais me preocupa é o prazo.",
+                "ans": "What concerns me most is the timeline."
+              },
+              {
+                "q": "Nunca a equipe tinha enfrentado tamanho desafio.",
+                "ans": "Never had the team faced such a challenge."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "No C1 o trabalho deixa de ser adicionar estrutura e passa a ser calibrar registro. Um bom exercício: pedir a mesma mensagem em três versões — e-mail formal, mensagem a colega, conversa de bar."
       }
     ]
   },
@@ -10541,6 +19095,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Her latest novel, which was published last spring, has won three awards.",
               "en": "Seu último romance, que foi publicado na primavera passada, ganhou três prêmios."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "Shall we begin? (suggestion, first person)",
+              "en": "Vamos começar? (sugestão, primeira pessoa)"
+            },
+            {
+              "pt": "The contract shall be governed by Irish law. (legal obligation)",
+              "en": "O contrato será regido pela lei irlandesa. (obrigação jurídica)"
+            },
+            {
+              "pt": "May I leave early? (permission, formal)",
+              "en": "Posso sair mais cedo? (permissão, formal)"
+            },
+            {
+              "pt": "The book that I bought is excellent. (restrictive, no commas)",
+              "en": "O livro que eu comprei é excelente. (restritiva, sem vírgulas)"
+            },
+            {
+              "pt": "The book, which I bought last week, is excellent. (non-restrictive)",
+              "en": "O livro, que eu comprei semana passada, é excelente. (não restritiva)"
             }
           ]
         },
@@ -10676,7 +19252,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "Precisão linguística e prestígio social no mundo anglófono",
           "text": "Em países como o Reino Unido e os Estados Unidos, o uso preciso de 'shall', 'may' e 'which' é visto como marca de educação formal e sofisticação linguística — especialmente em ambientes jurídicos, acadêmicos e diplomáticos. O 'shall' é particularmente associado ao inglês britânico formal e ainda é amplamente usado em contratos e legislação para expressar obrigação legal incontestável. Nos EUA, o uso de 'may I' em vez de 'can I' em contextos profissionais ou ao falar com superiores é considerado sinal de boa educação e respeito. Dominar essas distinções sutis permite que o falante não nativo seja percebido como verdadeiramente fluente, pois demonstra consciência do registro e da intenção comunicativa — algo que vai muito além da gramática básica."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "restrictive clause",
+            "en": "oração restritiva",
+            "ex": "A restrictive clause takes 'that' and no commas.",
+            "exEn": "Uma oração restritiva usa 'that' e não leva vírgulas."
+          },
+          {
+            "pt": "connote",
+            "en": "conotar, sugerir",
+            "ex": "The word connotes disapproval.",
+            "exEn": "A palavra conota reprovação."
+          },
+          {
+            "pt": "prescriptive",
+            "en": "prescritivo",
+            "ex": "That is a prescriptive rule, not a descriptive one.",
+            "exEn": "Essa é uma regra prescritiva, não descritiva."
+          },
+          {
+            "pt": "obsolescent",
+            "en": "em desuso",
+            "ex": "'Shall' is largely obsolescent in American English.",
+            "exEn": "'Shall' está bastante em desuso no inglês americano."
+          },
+          {
+            "pt": "distinction",
+            "en": "distinção",
+            "ex": "The distinction is subtle but real.",
+            "exEn": "A distinção é sutil, mas real."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "The book, that I bought, is excellent.",
+            "correct": "The book that I bought is excellent.",
+            "note": "'That' introduz oração restritiva e nunca leva vírgulas. Com vírgulas, use 'which'."
+          },
+          {
+            "wrong": "Can I leave early, sir?",
+            "correct": "May I leave early, sir?",
+            "note": "Em registro formal, 'may' pede permissão e 'can' fala de capacidade. Na fala cotidiana a distinção se perdeu, mas em contexto formal ainda pesa."
+          },
+          {
+            "wrong": "I shall call you tomorrow. (in casual American speech)",
+            "correct": "I will call you tomorrow.",
+            "note": "'Shall' na primeira pessoa soa arcaico ou britânico formal. Em contrato, porém, é termo técnico de obrigação."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete com 'that' ou 'which'.",
+            "items": [
+              {
+                "q": "The report ___ I sent yesterday needs revision.",
+                "ans": "that"
+              },
+              {
+                "q": "The report, ___ was written by Ana, needs revision.",
+                "ans": "which"
+              },
+              {
+                "q": "The house ___ we bought is small.",
+                "ans": "that"
+              },
+              {
+                "q": "Her novel, ___ won three prizes, is out of print.",
+                "ans": "which"
+              },
+              {
+                "q": "The only thing ___ matters is the result.",
+                "ans": "that"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "In a legal contract, 'shall' expresses ___.",
+                "opts": [
+                  "a polite suggestion",
+                  "binding obligation",
+                  "future possibility",
+                  "past habit"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "The most formal way to ask permission is ___.",
+                "opts": [
+                  "Can I",
+                  "May I",
+                  "Could I possibly not",
+                  "Will I"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Which is correctly punctuated?",
+                "opts": [
+                  "The book, that I read, was long",
+                  "The book that I read was long",
+                  "The book which I read, was long",
+                  "The book, that I read was long"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'Shall we begin?' is ___.",
+                "opts": [
+                  "a command",
+                  "a suggestion",
+                  "an obligation",
+                  "a refusal"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "A clause that adds non-essential information takes ___.",
+                "opts": [
+                  "that, no commas",
+                  "which, with commas",
+                  "that, with commas",
+                  "who, no commas"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês, respeitando o registro.",
+            "items": [
+              {
+                "q": "Vamos começar?",
+                "ans": "Shall we begin?"
+              },
+              {
+                "q": "Posso sair mais cedo, senhor?",
+                "ans": "May I leave early, sir?"
+              },
+              {
+                "q": "O livro que eu comprei é excelente.",
+                "ans": "The book that I bought is excellent."
+              },
+              {
+                "q": "O contrato será regido pela lei irlandesa.",
+                "ans": "The contract shall be governed by Irish law."
+              },
+              {
+                "q": "A distinção é sutil, mas real.",
+                "ans": "The distinction is subtle but real."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Aqui o aluno precisa saber que algumas dessas regras são prescritivas e nem todo nativo as segue. Ensine a distinção e o fato de ela ser opcional na fala — isso é proficiência de verdade."
       },
       {
         "title": "Sociolinguistics",
@@ -10762,6 +19498,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "Code-switching occurs when a speaker shifts from Standard English to a regional dialect mid-conversation.",
               "en": "A alternância de código ocorre quando um falante muda do inglês padrão para um dialeto regional no meio de uma conversa."
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "lift (BrE) / elevator (AmE)",
+              "en": "elevador"
+            },
+            {
+              "pt": "flat (BrE) / apartment (AmE)",
+              "en": "apartamento"
+            },
+            {
+              "pt": "I've just eaten. (BrE) / I just ate. (AmE)",
+              "en": "Eu acabei de comer."
+            },
+            {
+              "pt": "at the weekend (BrE) / on the weekend (AmE)",
+              "en": "no fim de semana"
+            },
+            {
+              "pt": "Have you got a pen? (BrE) / Do you have a pen? (AmE)",
+              "en": "Você tem uma caneta?"
             }
           ]
         },
@@ -10897,7 +19655,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "A diversidade linguística do mundo anglófono",
           "text": "O inglês é falado como língua oficial ou amplamente usada em mais de 50 países, o que resultou em uma riqueza impressionante de dialetos, sotaques e variedades regionais — do inglês jamaicano ao australiano, do indiano ao nigeriano. Cada variedade carrega marcas culturais, históricas e sociais únicas, e nenhuma é linguisticamente superior às outras. Na Grã-Bretanha, o sotaque chamado 'Received Pronunciation' (RP) foi historicamente associado ao prestígio social, mas hoje os britânicos valorizam cada vez mais os sotaques regionais como parte de sua identidade. Nos Estados Unidos, movimentos como o reconhecimento do AAVE (African American Vernacular English) reforçam a ideia de que variação linguística não é erro, mas expressão de cultura e comunidade."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "code-switching",
+            "en": "alternância de registro ou língua",
+            "ex": "She code-switches between formal and casual English.",
+            "exEn": "Ela alterna entre inglês formal e casual."
+          },
+          {
+            "pt": "colloquial",
+            "en": "coloquial",
+            "ex": "That expression is highly colloquial.",
+            "exEn": "Essa expressão é bastante coloquial."
+          },
+          {
+            "pt": "vernacular",
+            "en": "vernáculo, fala local",
+            "ex": "He writes in the local vernacular.",
+            "exEn": "Ele escreve no vernáculo local."
+          },
+          {
+            "pt": "received pronunciation",
+            "en": "pronúncia padrão britânica",
+            "ex": "Received Pronunciation is no longer the norm.",
+            "exEn": "A pronúncia padrão britânica já não é a norma."
+          },
+          {
+            "pt": "register",
+            "en": "registro (nível de formalidade)",
+            "ex": "Match your register to the audience.",
+            "exEn": "Ajuste seu registro ao público."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "Mixing 'I've just ate' from both varieties.",
+            "correct": "I've just eaten. (BrE) / I just ate. (AmE)",
+            "note": "Escolha uma variedade e seja consistente. Misturar as duas dentro da mesma frase é o que mais denuncia o falante."
+          },
+          {
+            "wrong": "Using 'pants' in Britain to mean trousers.",
+            "correct": "trousers (BrE) / pants (AmE)",
+            "note": "Em inglês britânico 'pants' significa roupa íntima. É a diferença lexical que mais gera constrangimento."
+          },
+          {
+            "wrong": "Writing 'colour' and 'organize' in the same document.",
+            "correct": "colour/organise (BrE) or color/organize (AmE)",
+            "note": "Ortografia também precisa ser consistente. Corretores automáticos costumam misturar as duas."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Escreva o equivalente britânico da palavra americana.",
+            "items": [
+              {
+                "q": "elevator (AmE) → ___ (BrE)",
+                "ans": "lift"
+              },
+              {
+                "q": "apartment (AmE) → ___ (BrE)",
+                "ans": "flat"
+              },
+              {
+                "q": "truck (AmE) → ___ (BrE)",
+                "ans": "lorry"
+              },
+              {
+                "q": "vacation (AmE) → ___ (BrE)",
+                "ans": "holiday"
+              },
+              {
+                "q": "subway (AmE) → the ___ (BrE, London)",
+                "ans": "underground"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "In British English, 'pants' usually means ___.",
+                "opts": [
+                  "trousers",
+                  "underwear",
+                  "shorts",
+                  "socks"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Which is British spelling?",
+                "opts": [
+                  "color",
+                  "colour",
+                  "colur",
+                  "coler"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'I've just eaten' is more typical of ___.",
+                "opts": [
+                  "American English",
+                  "British English",
+                  "Australian only",
+                  "neither"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Adjusting formality to your audience is called ___.",
+                "opts": [
+                  "dialect",
+                  "register",
+                  "accent",
+                  "idiom"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "'At the weekend' is ___ usage.",
+                "opts": [
+                  "American",
+                  "British",
+                  "Canadian only",
+                  "incorrect"
+                ],
+                "ans": 1
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês britânico.",
+            "items": [
+              {
+                "q": "O elevador está quebrado.",
+                "ans": "The lift is broken."
+              },
+              {
+                "q": "Eu moro num apartamento pequeno.",
+                "ans": "I live in a small flat."
+              },
+              {
+                "q": "Eu acabei de comer.",
+                "ans": "I've just eaten."
+              },
+              {
+                "q": "O que você vai fazer no fim de semana?",
+                "ans": "What are you doing at the weekend?"
+              },
+              {
+                "q": "Você tem uma caneta?",
+                "ans": "Have you got a pen?"
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Para um aluno em Dublin, o inglês britânico e o hiberno-inglês são o insumo diário, mas o material de estudo costuma ser americano. Vale explicitar a escolha em vez de deixar o aluno oscilar."
       },
       {
         "title": "C2 Capstone",
@@ -10983,6 +19901,28 @@ export const EN_MODULES: Module[] = [
             {
               "pt": "She must have been exhausted after working three consecutive night shifts.",
               "en": "Ela deve ter estado exausta depois de trabalhar três turnos noturnos consecutivos. (modal de dedução no passado — B2/C1)"
+            }
+          ],
+          "extendedExamples": [
+            {
+              "pt": "I am a teacher. (A1 — to be)",
+              "en": "Eu sou professor."
+            },
+            {
+              "pt": "I have taught here for ten years. (B1 — present perfect)",
+              "en": "Eu leciono aqui há dez anos."
+            },
+            {
+              "pt": "Had I not moved abroad, I would never have learnt this. (B2 — third conditional)",
+              "en": "Se eu não tivesse me mudado para fora, nunca teria aprendido isso."
+            },
+            {
+              "pt": "Rarely does one encounter such dedication. (C1 — inversion)",
+              "en": "Raramente se encontra tamanha dedicação."
+            },
+            {
+              "pt": "What strikes me most is not the grammar but the confidence. (C2 — cleft)",
+              "en": "O que mais me impressiona não é a gramática, mas a confiança."
             }
           ]
         },
@@ -11118,7 +20058,167 @@ export const EN_MODULES: Module[] = [
         "culture": {
           "title": "O que significa 'dominar' o inglês para um falante nativo?",
           "text": "Para os falantes nativos de inglês — seja no Reino Unido, nos Estados Unidos, na Austrália ou em outros países — dominar o idioma vai muito além da gramática correta: envolve compreender humor sutil, ironia, sarcasmo e referências culturais que mudam de geração em geração. Na Grã-Bretanha, por exemplo, o uso de understatement (eufemismo proposital) é tão arraigado na cultura que dizer 'not bad at all' pode significar, na verdade, um elogio entusiasmado. Nos Estados Unidos, expressões coloquiais regionais e gírias evoluem tão rapidamente que até jornais de prestígio publicam glossários anuais para acompanhar as mudanças. Chegar ao nível C2 significa justamente ter a sensibilidade para navegar por essas camadas invisíveis da língua — e é por isso que esse nível é considerado equivalente ao de um falante culto nativo."
-        }
+        },
+        "extraVocab": [
+          {
+            "pt": "command of the language",
+            "en": "domínio do idioma",
+            "ex": "She has an excellent command of English.",
+            "exEn": "Ela tem um excelente domínio do inglês."
+          },
+          {
+            "pt": "second nature",
+            "en": "algo automático",
+            "ex": "By now, English is second nature to him.",
+            "exEn": "A esta altura, o inglês é automático para ele."
+          },
+          {
+            "pt": "hold your own",
+            "en": "se sair bem, se defender",
+            "ex": "She can hold her own in any debate.",
+            "exEn": "Ela se sai bem em qualquer debate."
+          },
+          {
+            "pt": "well-versed",
+            "en": "versado, bem informado",
+            "ex": "He is well-versed in the subject.",
+            "exEn": "Ele é versado no assunto."
+          },
+          {
+            "pt": "milestone",
+            "en": "marco",
+            "ex": "Reaching C2 is a real milestone.",
+            "exEn": "Chegar ao C2 é um marco de verdade."
+          }
+        ],
+        "commonMistakes": [
+          {
+            "wrong": "I have an excellent domain of English.",
+            "correct": "I have an excellent command of English.",
+            "note": "Falso cognato: 'domain' é área ou campo. Domínio de idioma é 'command'."
+          },
+          {
+            "wrong": "Rarely one encounters such dedication.",
+            "correct": "Rarely does one encounter such dedication.",
+            "note": "Inversão obrigatória depois de advérbio negativo. Sem auxiliar na frase, insira 'does'."
+          },
+          {
+            "wrong": "What strikes me most are not the grammar but the confidence.",
+            "correct": "What strikes me most is not the grammar but the confidence.",
+            "note": "A cleft com 'what' leva verbo singular, independentemente do que vem depois."
+          }
+        ],
+        "extraExercises": [
+          {
+            "type": "Fill in the blank",
+            "instruction": "Complete a frase com a palavra correta.",
+            "items": [
+              {
+                "q": "She has an excellent ___ of English.",
+                "ans": "command"
+              },
+              {
+                "q": "Rarely ___ one encounter such dedication.",
+                "ans": "does"
+              },
+              {
+                "q": "What strikes me most ___ the confidence.",
+                "ans": "is"
+              },
+              {
+                "q": "___ I not moved abroad, I would never have learnt this.",
+                "ans": "Had"
+              },
+              {
+                "q": "By now, English is second ___ to him.",
+                "ans": "nature"
+              }
+            ]
+          },
+          {
+            "type": "Multiple choice",
+            "instruction": "Escolha a opção correta.",
+            "items": [
+              {
+                "q": "'Domínio do idioma' in English is ___.",
+                "opts": [
+                  "domain of the language",
+                  "command of the language",
+                  "dominion of language",
+                  "control of language"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "Rarely ___ such an opportunity arise.",
+                "opts": [
+                  "do",
+                  "does",
+                  "is",
+                  "has"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "___ I known then what I know now...",
+                "opts": [
+                  "If",
+                  "Had",
+                  "Have",
+                  "Would"
+                ],
+                "ans": 1
+              },
+              {
+                "q": "She can ___ her own in any debate.",
+                "opts": [
+                  "hold",
+                  "keep",
+                  "take",
+                  "make"
+                ],
+                "ans": 0
+              },
+              {
+                "q": "He is well-___ in the subject.",
+                "opts": [
+                  "versed",
+                  "version",
+                  "versing",
+                  "verse"
+                ],
+                "ans": 0
+              }
+            ]
+          },
+          {
+            "type": "Translation",
+            "instruction": "Traduza para o inglês.",
+            "items": [
+              {
+                "q": "Ela tem um excelente domínio do inglês.",
+                "ans": "She has an excellent command of English."
+              },
+              {
+                "q": "Raramente se encontra tamanha dedicação.",
+                "ans": "Rarely does one encounter such dedication."
+              },
+              {
+                "q": "O que mais me impressiona é a confiança.",
+                "ans": "What strikes me most is the confidence."
+              },
+              {
+                "q": "Se eu não tivesse me mudado, nunca teria aprendido isso.",
+                "ans": "Had I not moved, I would never have learnt this."
+              },
+              {
+                "q": "Chegar ao C2 é um marco de verdade.",
+                "ans": "Reaching C2 is a real milestone."
+              }
+            ]
+          }
+        ],
+        "teacherTip": "Na última unit, peça ao aluno para produzir uma frase de cada nível sobre a própria trajetória. Ver A1 e C2 lado a lado no próprio texto é o fechamento mais convincente do curso."
       }
     ]
   }

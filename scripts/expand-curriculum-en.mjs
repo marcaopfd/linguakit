@@ -13,6 +13,9 @@
  * Usage:
  *   ANTHROPIC_API_KEY=sk-... node scripts/expand-curriculum-en.mjs
  *
+ * Or, when the cache is already filled in by hand (no API key, no cost):
+ *   node scripts/expand-curriculum-en.mjs --build-only
+ *
  * Progress is saved to scripts/en-expansion-cache.json after every unit, so you
  * can Ctrl+C and re-run — already-processed units are skipped and cost nothing.
  *
@@ -136,8 +139,10 @@ Rules:
 }
 
 async function main() {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.error('Set ANTHROPIC_API_KEY env var first.')
+  const buildOnly = process.argv.includes('--build-only')
+
+  if (!buildOnly && !process.env.ANTHROPIC_API_KEY) {
+    console.error('Set ANTHROPIC_API_KEY env var first, or pass --build-only to merge an existing cache.')
     process.exit(1)
   }
 
@@ -150,6 +155,7 @@ async function main() {
   let saved = 0, skipped = 0, errors = 0
 
   for (const mod of modules) {
+    if (buildOnly) break
     for (let ui = 0; ui < mod.units.length; ui++) {
       const key = `${mod.id}-${ui}`
       if (cache[key]) {
@@ -184,7 +190,18 @@ async function main() {
     }
   }
 
-  console.log(`\nDone. New: ${saved}, Skipped: ${skipped}, Errors: ${errors}`)
+  if (buildOnly) {
+    const missing = []
+    for (const mod of modules) {
+      for (let ui = 0; ui < mod.units.length; ui++) {
+        if (!cache[`${mod.id}-${ui}`]) missing.push(`${mod.id}-${ui}`)
+      }
+    }
+    console.log(`Build-only: ${Object.keys(cache).length} cached units, ${missing.length} missing.`)
+    if (missing.length) console.log(`  missing: ${missing.join(', ')}`)
+  } else {
+    console.log(`\nDone. New: ${saved}, Skipped: ${skipped}, Errors: ${errors}`)
+  }
 
   if (Object.keys(cache).length === 0) {
     console.log('No data in cache — nothing to write.')
