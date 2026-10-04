@@ -10,6 +10,7 @@ export default function LessonPage() {
       moduleBase="/module"
       pdfBase="/api/pdf/pt"
       progressKey="lk_progress"
+      lang="pt-BR"
     />
   )
 }

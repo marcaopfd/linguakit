@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import { Exercise, Module, Unit } from '@/lib/curriculum'
 import { useModuleProgress } from '@/lib/use-progress'
+import { SpeakButton, useVoice } from '@/components/SpeakButton'
+import { cancelSpeech, firstVariant, speak } from '@/lib/speak'
 
 interface Props {
   modules: Module[]
@@ -12,9 +14,15 @@ interface Props {
   pdfBase: string      // e.g. '/api/pdf/pt' or '/api/pdf/en'
   progressKey: string  // localStorage key (teacher mode only)
   studentId?: string   // if provided, progress is read from and saved to the DB
+  /**
+   * BCP-47 tag of the language being taught, for speech synthesis. In both
+   * curricula the `pt` field holds the target language, so this one tag covers
+   * vocabulary, grammar examples and dialogue.
+   */
+  lang: string
 }
 
-export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, studentId }: Props) {
+export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, studentId, lang }: Props) {
   const { mod: modId, unit: unitIndexStr } = useParams<{ mod: string; unit: string }>()
   const router = useRouter()
   const unitIndex = parseInt(unitIndexStr)
@@ -22,6 +30,7 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
   const unit = mod?.units[unitIndex]
 
   const { done: completed, markDone } = useModuleProgress(modId, progressKey, studentId)
+  const audio = useVoice(lang)
   const [step, setStep] = useState(0)
   const [exerciseAnswers, setExerciseAnswers] = useState<Record<string, string | number>>({})
   const [revealed, setRevealed] = useState<Record<string, boolean>>({})
@@ -81,9 +90,9 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
 
         {/* Content area */}
         {step === 0 && <ObjectivesStep unit={unit} />}
-        {step === 1 && <VocabStep unit={unit} />}
-        {step === 2 && <GrammarStep unit={unit} />}
-        {step === 3 && <DialogueStep unit={unit} />}
+        {step === 1 && <VocabStep unit={unit} lang={lang} audio={audio} />}
+        {step === 2 && <GrammarStep unit={unit} lang={lang} audio={audio} />}
+        {step === 3 && <DialogueStep unit={unit} lang={lang} audio={audio} />}
         {step === 4 && (
           <ExercisesStep
             unit={unit}
@@ -146,24 +155,28 @@ function ObjectivesStep({ unit }: { unit: Unit }) {
   )
 }
 
-function VocabStep({ unit }: { unit: Unit }) {
+type Audio = ReturnType<typeof useVoice>
+
+function VocabStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: Audio }) {
+  const items = [
+    ...unit.vocabulary.map(v => ({ v, extra: false })),
+    ...(unit.extraVocab ?? []).map(v => ({ v, extra: true })),
+  ]
   return (
     <div>
       <SectionHeading icon="📖" label="Vocabulary" />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.5rem' }}>
-        {unit.vocabulary.map((v, i) => (
-          <div key={i} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 10, padding: '.75rem' }}>
-            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 600, color: 'var(--ink)' }}>{v.pt}</div>
+        {items.map(({ v, extra }, i) => (
+          <div key={i} style={{ background: '#fff', border: `1px ${extra ? 'dashed' : 'solid'} var(--border)`, borderRadius: 10, padding: '.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem' }}>
+              <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 600, color: 'var(--ink)', flex: 1 }}>{v.pt}</div>
+              <SpeakButton text={firstVariant(v.pt)} lang={lang} voice={audio.voice} ready={audio.ready} />
+            </div>
             <div style={{ fontSize: 12, color: 'var(--ink3)', margin: '.15rem 0 .4rem' }}>{v.en}</div>
-            <div style={{ fontSize: 12, color: 'var(--ink2)', fontStyle: 'italic', lineHeight: 1.45 }}>{v.ex}</div>
-            <div style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 2 }}>{v.exEn}</div>
-          </div>
-        ))}
-        {unit.extraVocab?.map((v, i) => (
-          <div key={`ex-${i}`} style={{ background: '#fff', border: '1px dashed var(--border)', borderRadius: 10, padding: '.75rem' }}>
-            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 600, color: 'var(--ink)' }}>{v.pt}</div>
-            <div style={{ fontSize: 12, color: 'var(--ink3)', margin: '.15rem 0 .4rem' }}>{v.en}</div>
-            <div style={{ fontSize: 12, color: 'var(--ink2)', fontStyle: 'italic', lineHeight: 1.45 }}>{v.ex}</div>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.4rem' }}>
+              <div style={{ fontSize: 12, color: 'var(--ink2)', fontStyle: 'italic', lineHeight: 1.45, flex: 1 }}>{v.ex}</div>
+              <SpeakButton text={v.ex} lang={lang} voice={audio.voice} ready={audio.ready} />
+            </div>
             <div style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 2 }}>{v.exEn}</div>
           </div>
         ))}
@@ -172,7 +185,7 @@ function VocabStep({ unit }: { unit: Unit }) {
   )
 }
 
-function GrammarStep({ unit }: { unit: Unit }) {
+function GrammarStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: Audio }) {
   const g = unit.grammar
   const allExamples = [...g.examples, ...(g.extendedExamples ?? [])]
   return (
@@ -189,7 +202,8 @@ function GrammarStep({ unit }: { unit: Unit }) {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
             {allExamples.map((ex, i) => (
-              <div key={i} style={{ display: 'flex', gap: '.75rem', fontSize: 13, padding: '.35rem 0', borderBottom: i < allExamples.length - 1 ? '1px solid var(--border)' : 'none', alignItems: 'baseline' }}>
+              <div key={i} style={{ display: 'flex', gap: '.6rem', fontSize: 13, padding: '.35rem 0', borderBottom: i < allExamples.length - 1 ? '1px solid var(--border)' : 'none', alignItems: 'center' }}>
+                <SpeakButton text={ex.pt} lang={lang} voice={audio.voice} ready={audio.ready} />
                 <span style={{ fontWeight: 500, flex: 1 }}>{ex.pt}</span>
                 <span style={{ color: 'var(--ink3)', flex: 1 }}>{ex.en}</span>
               </div>
@@ -213,22 +227,73 @@ function GrammarStep({ unit }: { unit: Unit }) {
   )
 }
 
-function DialogueStep({ unit }: { unit: Unit }) {
+function DialogueStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: Audio }) {
   const d = unit.dialogue
+  const [playingAll, setPlayingAll] = useState(false)
+  const [current, setCurrent] = useState(-1)
+  const [slow, setSlow] = useState(false)
+  // Lets an in-flight sequence know it was cancelled without racing state.
+  const runId = useRef(0)
+
+  useEffect(() => () => { runId.current++; cancelSpeech() }, [])
+
+  async function playAll() {
+    if (playingAll) {
+      runId.current++
+      cancelSpeech()
+      setPlayingAll(false)
+      setCurrent(-1)
+      return
+    }
+
+    const run = ++runId.current
+    setPlayingAll(true)
+    for (let i = 0; i < d.lines.length; i++) {
+      if (runId.current !== run) return
+      setCurrent(i)
+      await speak(d.lines[i].pt, lang, audio.voice, slow ? 0.65 : 0.95)
+      // A short gap makes the exchange sound like two people, not one block.
+      await new Promise(r => setTimeout(r, 350))
+    }
+    if (runId.current !== run) return
+    setPlayingAll(false)
+    setCurrent(-1)
+  }
+
   return (
     <div>
       <SectionHeading icon="💬" label="Dialogue" />
       <div style={{ fontSize: 12, color: 'var(--ink3)', fontStyle: 'italic', background: 'var(--paper)', borderRadius: 8, padding: '.5rem .75rem', marginBottom: '.75rem' }}>
         📍 {d.scene}
       </div>
+      {audio.ready && (
+        <div style={{ display: 'flex', gap: '.5rem', marginBottom: '.75rem' }}>
+          <button
+            onClick={playAll}
+            style={{ padding: '.45rem .85rem', borderRadius: 8, border: '1px solid var(--border)', background: playingAll ? 'var(--ink)' : '#fff', color: playingAll ? '#fff' : 'var(--ink)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+          >
+            {playingAll ? '■ Parar' : '▶ Ouvir diálogo'}
+          </button>
+          <button
+            onClick={() => setSlow(v => !v)}
+            aria-pressed={slow}
+            style={{ padding: '.45rem .75rem', borderRadius: 8, border: `1px solid ${slow ? 'var(--ink)' : 'var(--border)'}`, background: slow ? 'var(--paper)' : '#fff', color: slow ? 'var(--ink)' : 'var(--ink3)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+          >
+            🐢 Devagar
+          </button>
+        </div>
+      )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
         {d.lines.map((line, i) => (
-          <div key={i} style={{ display: 'flex', gap: '.65rem', alignItems: 'flex-start' }}>
+          <div key={i} style={{ display: 'flex', gap: '.65rem', alignItems: 'flex-start', background: current === i ? 'var(--gold-light)' : 'transparent', borderRadius: 8, padding: current === i ? '.4rem' : '.4rem', margin: current === i ? '-.4rem' : '-.4rem', transition: 'background .2s' }}>
             <div style={{ width: 28, height: 28, borderRadius: '50%', fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: 'var(--font-fraunces), Fraunces, serif', background: line.sp === 'a' ? 'var(--ink)' : 'var(--gold)', color: line.sp === 'a' ? 'var(--cream)' : 'var(--ink)' }}>
               {line.sp === 'a' ? 'S' : 'M'}
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.4 }}>{line.pt}</div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.4rem' }}>
+                <div style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.4, flex: 1 }}>{line.pt}</div>
+                <SpeakButton text={line.pt} lang={lang} voice={audio.voice} ready={audio.ready} rate={slow ? 0.65 : 0.95} />
+              </div>
               <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 2 }}>{line.en}</div>
             </div>
           </div>

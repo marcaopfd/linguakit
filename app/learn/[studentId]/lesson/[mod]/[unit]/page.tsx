@@ -27,6 +27,7 @@ export default function LearnLessonPage() {
       pdfBase={isEN ? '/api/pdf/en' : '/api/pdf/pt'}
       progressKey={isEN ? 'lk_progress_en' : 'lk_progress'}
       studentId={studentId}
+      lang={isEN ? 'en-US' : 'pt-BR'}
     />
   )
 }

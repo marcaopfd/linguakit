@@ -10,6 +10,7 @@ export default function EnLessonPage() {
       moduleBase="/en/module"
       pdfBase="/api/pdf/en"
       progressKey="lk_progress_en"
+      lang="en-US"
     />
   )
 }

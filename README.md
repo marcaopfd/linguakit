@@ -32,6 +32,31 @@ O curso do aluno vem de `Student.course` (escolhido no cadastro) e, para quem
 veio pelo teste, de `TestResult.course` — sempre leia com
 `student.course ?? student.testResult?.course`.
 
+### Áudio
+
+A lição fala o idioma-alvo através da Web Speech API do navegador
+(`lib/speak.ts`): sem servidor, sem chave, sem custo por uso. Há um ▶ em cada
+palavra e frase do vocabulário, em cada exemplo de gramática e em cada linha do
+diálogo, além de um "Ouvir diálogo" que toca a conversa inteira em sequência
+destacando a linha falada, com um modo devagar.
+
+Em ambos os currículos o campo `pt` guarda o idioma-alvo, então um único prop
+`lang` (`pt-BR` ou `en-US`) cobre tudo.
+
+Dois cuidados que o código já trata:
+
+- **Vozes de brincadeira.** A Apple distribui vozes como Boing e Bubbles na
+  mesma lista das reais, algumas marcadas `en-US`. Escolher só por idioma pode
+  cair numa delas, então há uma lista de exclusão por nome e uma de preferência
+  (Luciana para pt-BR, Samantha para en-US).
+- **Texto que não se lê em voz alta.** `firstVariant()` fala só a primeira
+  opção de entradas como "olá / oi", e `normaliseForSpeech()` remove glosas
+  entre parênteses como em "book (a ticket)".
+
+A qualidade depende do aparelho do aluno — macOS e iOS têm vozes boas, Android
+usa o TTS do Google, Windows antigo é pior. Se um dia isso incomodar, o caminho
+é gerar os áudios uma vez e versioná-los, como foi feito com os exercícios.
+
 ### Senha esquecida
 
 Não há fluxo por e-mail. No painel de alunos, cada aluno com conta tem o botão
