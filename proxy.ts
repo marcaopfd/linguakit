@@ -17,6 +17,7 @@ const PUBLIC_PATHS = [
   '/entrar',         // student login
   '/api/student',    // student signup / login / logout / me
   '/api/progress',   // student portal marks units complete
+  '/api/attempts',   // POST records an answer; GET is teacher-only
   '/api/pdf',        // student downloads the unit PDF from inside a lesson
   '/api/results',    // POST is public (test submission); GET is teacher-only
   '/api/students',   // GET is public (student portal); DELETE is teacher-only

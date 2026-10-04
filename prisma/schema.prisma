@@ -26,6 +26,7 @@ model Student {
 
   testResult TestResult?
   lessons    StudentLesson[]
+  attempts   ExerciseAttempt[]
 }
 
 model TestResult {
@@ -42,6 +43,35 @@ model TestResult {
   recommendation String
   course         String   @default("pt")
   createdAt      DateTime @default(now())
+}
+
+/// One answered exercise item.
+///
+/// Only the FIRST answer per item is kept: the lesson reveals the correct
+/// answer as soon as the student answers, so a second attempt reflects reading
+/// the answer rather than knowing it. That also bounds growth to one row per
+/// item per student.
+model ExerciseAttempt {
+  id        String  @id @default(cuid())
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  moduleId  String
+  unitIndex Int
+  /// Position of the item inside the unit, e.g. "c0-2" (core block 0, item 2)
+  /// or "x1-3" (extra block 1, item 3). Matches the key used in the lesson UI.
+  itemKey   String
+
+  exerciseType String
+  question     String
+  answer       String
+  expected     String
+  correct      Boolean
+
+  answeredAt DateTime @default(now())
+
+  @@unique([studentId, moduleId, unitIndex, itemKey])
+  @@index([studentId, correct])
 }
 
 model StudentLesson {

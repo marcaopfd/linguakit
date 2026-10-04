@@ -6,9 +6,22 @@ import Link from 'next/link'
 import { MODULES } from '@/lib/curriculum'
 import { EN_MODULES } from '@/lib/curriculum-en'
 
+type Attempt = {
+  moduleId: string
+  unitIndex: number
+  itemKey: string
+  exerciseType: string
+  question: string
+  answer: string
+  expected: string
+  correct: boolean
+  answeredAt: string
+}
+
 type StudentDetail = {
   id: string
   name: string
+  course?: string | null
   createdAt: string
   testResult?: {
     level: string
@@ -28,6 +41,7 @@ const LEVEL_COLORS: Record<string, string> = {
 export default function StudentDetailPage() {
   const { id } = useParams<{ id: string }>()
   const [student, setStudent] = useState<StudentDetail | null>(null)
+  const [attempts, setAttempts] = useState<Attempt[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -35,6 +49,11 @@ export default function StudentDetailPage() {
       .then(r => r.json())
       .then(data => { setStudent(data.student); setLoading(false) })
       .catch(() => setLoading(false))
+
+    fetch(`/api/attempts?studentId=${encodeURIComponent(id)}`)
+      .then(r => r.json())
+      .then(data => setAttempts(data.attempts ?? []))
+      .catch(() => {})
   }, [id])
 
   if (loading) return (
@@ -48,10 +67,16 @@ export default function StudentDetailPage() {
     </div>
   )
 
-  const isEN = student.testResult?.course === 'en'
+  const isEN = (student.course ?? student.testResult?.course) === 'en'
   const modules = isEN ? EN_MODULES : MODULES
   const completedSet = new Set(student.lessons.map(l => `${l.moduleId}-${l.unitIndex}`))
   const lvlColor = student.testResult ? (LEVEL_COLORS[student.testResult.level] ?? 'var(--ink)') : 'var(--ink3)'
+
+  const unitTitle = (moduleId: string, unitIndex: number) => {
+    const mod = modules.find(m => m.id === moduleId)
+    const unit = mod?.units[unitIndex]
+    return unit ? `${mod!.label} · ${unit.title}` : `${moduleId.toUpperCase()} · unit ${unitIndex + 1}`
+  }
 
   const totalUnits = modules.reduce((s, m) => s + m.units.length, 0)
   const totalDone = student.lessons.length
@@ -101,6 +126,11 @@ export default function StudentDetailPage() {
             <div style={{ height: 6, borderRadius: 3, background: 'rgba(255,255,255,.65)', width: `${overallPct}%`, transition: 'width .6s' }} />
           </div>
         </div>
+      </div>
+
+      {/* O que o aluno errou */}
+      <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 700, margin: '0 auto' }}>
+        <WeakSpots attempts={attempts} unitTitle={unitTitle} />
       </div>
 
       {/* Module cards */}
@@ -155,6 +185,100 @@ export default function StudentDetailPage() {
           )
         })}
       </div>
+    </div>
+  )
+}
+
+function WeakSpots({ attempts, unitTitle }: { attempts: Attempt[]; unitTitle: (m: string, u: number) => string }) {
+  const [showAll, setShowAll] = useState(false)
+
+  if (attempts.length === 0) {
+    return (
+      <div style={{ background: '#fff', border: '1px dashed var(--border)', borderRadius: 12, padding: '1.25rem', textAlign: 'center' }}>
+        <div style={{ fontSize: 13, fontWeight: 600, marginBottom: '.3rem' }}>Nenhum exercício respondido ainda</div>
+        <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.5 }}>
+          Assim que o aluno responder os exercícios de uma lição, os erros dele aparecem aqui.
+        </div>
+      </div>
+    )
+  }
+
+  const wrong = attempts.filter(a => !a.correct)
+  const pct = Math.round(((attempts.length - wrong.length) / attempts.length) * 100)
+  const accuracyColor = pct >= 80 ? 'var(--green)' : pct >= 60 ? '#9a4f0a' : 'var(--red)'
+
+  // Acerto por tipo de exercício — mostra se o problema é gramática, vocabulário ou produção.
+  const types = new Map<string, { total: number; right: number }>()
+  for (const a of attempts) {
+    const t = types.get(a.exerciseType) ?? { total: 0, right: 0 }
+    t.total++
+    if (a.correct) t.right++
+    types.set(a.exerciseType, t)
+  }
+
+  const visible = showAll ? wrong : wrong.slice(0, 8)
+
+  return (
+    <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+      <div style={{ padding: '.9rem 1.1rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
+        <div>
+          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700 }}>🎯 Pontos fracos</div>
+          <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 1 }}>
+            {attempts.length} exercício{attempts.length !== 1 ? 's' : ''} respondido{attempts.length !== 1 ? 's' : ''} · {wrong.length} erro{wrong.length !== 1 ? 's' : ''}
+          </div>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, color: accuracyColor }}>{pct}%</div>
+          <div style={{ fontSize: 11, color: 'var(--ink3)' }}>de acerto</div>
+        </div>
+      </div>
+
+      <div style={{ padding: '.85rem 1.1rem', borderBottom: wrong.length ? '1px solid var(--border)' : 'none', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.5rem .9rem' }}>
+        {[...types.entries()].map(([type, t]) => {
+          const tp = Math.round((t.right / t.total) * 100)
+          return (
+            <div key={type}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--ink3)', marginBottom: 2 }}>
+                <span>{type}</span>
+                <span>{t.right}/{t.total}</span>
+              </div>
+              <div style={{ height: 4, background: 'var(--border)', borderRadius: 2 }}>
+                <div style={{ height: 4, borderRadius: 2, width: `${tp}%`, background: tp >= 80 ? 'var(--green)' : tp >= 60 ? '#e8973e' : 'var(--red)' }} />
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {wrong.length > 0 && (
+        <div style={{ padding: '.75rem 1.1rem 1rem' }}>
+          <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.07em', color: 'var(--ink3)', marginBottom: '.5rem' }}>
+            Erros
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
+            {visible.map((a, i) => (
+              <div key={i} style={{ background: 'var(--cream)', border: '1px solid var(--border)', borderRadius: 9, padding: '.6rem .8rem' }}>
+                <div style={{ fontSize: 10.5, color: 'var(--ink3)', marginBottom: '.25rem', textTransform: 'uppercase', letterSpacing: '.05em' }}>
+                  {unitTitle(a.moduleId, a.unitIndex)}
+                </div>
+                <div style={{ fontSize: 13, marginBottom: '.3rem', lineHeight: 1.4 }}>{a.question}</div>
+                <div style={{ display: 'flex', gap: '.75rem', flexWrap: 'wrap', fontSize: 12.5 }}>
+                  <span style={{ color: 'var(--red)' }}>✗ {a.answer || <em style={{ color: 'var(--ink3)' }}>em branco</em>}</span>
+                  <span style={{ color: 'var(--green)' }}>✓ {a.expected}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          {wrong.length > 8 && (
+            <button
+              onClick={() => setShowAll(v => !v)}
+              style={{ marginTop: '.6rem', width: '100%', padding: '.5rem', borderRadius: 8, border: '1px dashed var(--border)', background: 'var(--paper)', color: 'var(--ink2)', fontSize: 12.5, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+            >
+              {showAll ? 'Mostrar menos' : `Ver todos os ${wrong.length} erros`}
+            </button>
+          )}
+        </div>
+      )}
     </div>
   )
 }

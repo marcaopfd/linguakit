@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import { Exercise, Module, Unit } from '@/lib/curriculum'
@@ -32,6 +32,20 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
   const { done: completed, markDone } = useModuleProgress(modId, progressKey, studentId)
   const audio = useVoice(lang)
   const [step, setStep] = useState(0)
+
+  /**
+   * Reports one answered item. Only students are recorded — when the teacher
+   * browses the course there is no studentId and nothing is stored.
+   * Fire-and-forget: a failed save must never block the lesson.
+   */
+  const recordAttempt = useCallback<RecordAttempt>(a => {
+    if (!studentId) return
+    fetch('/api/attempts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ studentId, moduleId: modId, unitIndex, ...a }),
+    }).catch(() => {})
+  }, [studentId, modId, unitIndex])
   const [exerciseAnswers, setExerciseAnswers] = useState<Record<string, string | number>>({})
   const [revealed, setRevealed] = useState<Record<string, boolean>>({})
 
@@ -100,6 +114,7 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
             setAnswers={setExerciseAnswers}
             revealed={revealed}
             setRevealed={setRevealed}
+            onAnswer={recordAttempt}
           />
         )}
         {step === 5 && <CultureStep unit={unit} />}
@@ -156,6 +171,16 @@ function ObjectivesStep({ unit }: { unit: Unit }) {
 }
 
 type Audio = ReturnType<typeof useVoice>
+
+type Attempt = {
+  itemKey: string
+  exerciseType: string
+  question: string
+  answer: string
+  expected: string
+  correct: boolean
+}
+type RecordAttempt = (a: Attempt) => void
 
 function VocabStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: Audio }) {
   const items = [
@@ -304,13 +329,14 @@ function DialogueStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: 
 }
 
 function ExercisesStep({
-  unit, answers, setAnswers, revealed, setRevealed,
+  unit, answers, setAnswers, revealed, setRevealed, onAnswer,
 }: {
   unit: Unit
   answers: Record<string, string | number>
   setAnswers: (v: Record<string, string | number>) => void
   revealed: Record<string, boolean>
   setRevealed: (v: Record<string, boolean>) => void
+  onAnswer: RecordAttempt
 }) {
   const [showExtra, setShowExtra] = useState(false)
   const extra = unit.extraExercises ?? []
@@ -324,6 +350,7 @@ function ExercisesStep({
           key={`c${ei}`} ex={ex} keyPrefix={`c${ei}`}
           answers={answers} setAnswers={setAnswers}
           revealed={revealed} setRevealed={setRevealed}
+          onAnswer={onAnswer}
         />
       ))}
 
@@ -343,6 +370,7 @@ function ExercisesStep({
                 key={`x${ei}`} ex={ex} keyPrefix={`x${ei}`}
                 answers={answers} setAnswers={setAnswers}
                 revealed={revealed} setRevealed={setRevealed}
+                onAnswer={onAnswer}
               />
             ))}
           </>
@@ -360,7 +388,7 @@ function ExercisesStep({
 }
 
 function ExerciseCard({
-  ex, keyPrefix, answers, setAnswers, revealed, setRevealed,
+  ex, keyPrefix, answers, setAnswers, revealed, setRevealed, onAnswer,
 }: {
   ex: Exercise
   keyPrefix: string
@@ -368,6 +396,7 @@ function ExerciseCard({
   setAnswers: (v: Record<string, string | number>) => void
   revealed: Record<string, boolean>
   setRevealed: (v: Record<string, boolean>) => void
+  onAnswer: RecordAttempt
 }) {
   return (
     <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem 1.1rem', marginBottom: '.6rem' }}>
@@ -394,7 +423,24 @@ function ExerciseCard({
                       color = isRevealed ? (oi === item.ans ? 'var(--green)' : 'var(--red)') : '#fff'
                     }
                     return (
-                      <button key={oi} onClick={() => { setAnswers({ ...answers, [key]: oi }); setRevealed({ ...revealed, [key]: true }) }} style={{ padding: '.3rem .7rem', border: `1.5px solid ${borderColor}`, borderRadius: 6, fontSize: 14, background: bg, color, cursor: 'pointer', fontFamily: 'inherit' }}>
+                      <button
+                        key={oi}
+                        onClick={() => {
+                          setAnswers({ ...answers, [key]: oi })
+                          setRevealed({ ...revealed, [key]: true })
+                          // Correctness comes from `oi`, not the `correct` above:
+                          // that one still holds the previous answer at this point.
+                          onAnswer({
+                            itemKey: key,
+                            exerciseType: ex.type,
+                            question: item.q,
+                            answer: opt,
+                            expected: item.opts?.[item.ans as number] ?? String(item.ans),
+                            correct: oi === item.ans,
+                          })
+                        }}
+                        style={{ padding: '.3rem .7rem', border: `1.5px solid ${borderColor}`, borderRadius: 6, fontSize: 14, background: bg, color, cursor: 'pointer', fontFamily: 'inherit' }}
+                      >
                         {opt}
                       </button>
                     )
@@ -403,7 +449,20 @@ function ExerciseCard({
               ) : (
                 <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
                   <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder="Type your answer..." style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? '#e8fdf0' : '#fdecea') : '#fff' }} />
-                  <button onClick={() => setRevealed({ ...revealed, [key]: true })} style={{ padding: '.4rem .8rem', border: '1.5px solid var(--border)', borderRadius: 6, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit', background: 'var(--paper)' }}>Check</button>
+                  <button
+                    onClick={() => {
+                      setRevealed({ ...revealed, [key]: true })
+                      onAnswer({
+                        itemKey: key,
+                        exerciseType: ex.type,
+                        question: item.q,
+                        answer: (userAns as string) ?? '',
+                        expected: String(item.ans),
+                        correct,
+                      })
+                    }}
+                    style={{ padding: '.4rem .8rem', border: '1.5px solid var(--border)', borderRadius: 6, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit', background: 'var(--paper)' }}
+                  >Check</button>
                   {isRevealed && !correct && <span style={{ fontSize: 12, color: 'var(--green)' }}>&rarr; {item.ans}</span>}
                 </div>
               )}

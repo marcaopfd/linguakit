@@ -118,6 +118,22 @@ refaz a checagem com `requireTeacher` de `lib/auth.ts`:
 | `/api/progress` | `GET` / `POST` | público (portal do aluno) |
 | `/api/pdf/{pt,en}/[mod]/[unit]` | `GET` | público (aluno baixa a apostila) |
 
+## O que o aluno respondeu
+
+Cada item de exercício respondido vira uma linha em `ExerciseAttempt`, com a
+pergunta, o que o aluno marcou, o que era esperado e se acertou. A tela
+`/students/[id]` resume isso em "Pontos fracos": acerto geral, acerto por tipo
+de exercício e a lista dos erros com a unit de origem — é o material para
+preparar a próxima aula.
+
+Só a **primeira** resposta de cada item é guardada. A lição revela a resposta
+certa assim que o aluno responde, então uma segunda tentativa registraria ter
+lido a resposta, não sabê-la. Isso também limita o crescimento a uma linha por
+item por aluno.
+
+A gravação só acontece quando há `studentId` — o professor navegando pelo curso
+não gera registro.
+
 ## Progresso
 
 O professor navegando pelo curso guarda progresso em `localStorage` — é um
