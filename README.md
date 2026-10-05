@@ -193,6 +193,43 @@ node scripts/expand-curriculum-en.mjs
 cp lib/curriculum-en-expanded.ts lib/curriculum-en.ts
 ```
 
+## Testes
+
+```bash
+npm test          # uma passada
+npm run test:watch
+```
+
+Vitest, sem banco e sem servidor — a suíte roda em menos de meio segundo, então
+vale rodar antes de cada push.
+
+Ela cobre de propósito só o que já quebrou ou pode vazar:
+
+| Arquivo | O que protege |
+| --- | --- |
+| `tests/student-auth.test.ts` | hash de senha, e o token de sessão contra id trocado, assinatura forjada, validade esticada, expirado e segredo diferente |
+| `tests/teacher-auth.test.ts` | `requireTeacher`, incluindo negar todo mundo quando `SESSION_SECRET` não está definido |
+| `tests/route-guards.test.ts` | lê o próprio código-fonte (ver abaixo) |
+| `tests/content-helpers.test.ts` | normalização do texto falado e o idioma da interface, que é fácil de inverter |
+
+`route-guards` é diferente dos outros: em vez de executar as rotas, ele lê
+`prisma/schema.prisma` e os arquivos de rota. Isso pega três classes de erro que
+um teste unitário comum não pegaria:
+
+1. **Tabela nova referenciando `Student` sem limpeza no DELETE.** O teste
+   descobre sozinho quais modelos apontam para `Student` e exige que o handler
+   remova cada um. As chaves estrangeiras são `RESTRICT`, então esquecer uma
+   quebra a exclusão em produção — foi exatamente o que aconteceu com
+   `ExerciseAttempt`.
+2. **Handler teacher-only sem `requireTeacher`.** Como `/api/students`,
+   `/api/results` e `/api/attempts` estão na allowlist do proxy, o proxy não
+   protege a metade privada; cada handler precisa checar por conta.
+3. **`include` em vez de `select` na rota pública de aluno.** `include` devolve
+   toda coluna escalar, então um campo sensível novo vazaria sozinho.
+
+Os três foram verificados reintroduzindo cada defeito e confirmando que a suíte
+falha com uma mensagem que diz o que fazer.
+
 ## Deploy
 
 Vercel, conectado ao branch `main`. Push em `main` publica em produção. As
