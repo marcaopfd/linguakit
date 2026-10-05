@@ -28,6 +28,7 @@ export default function LearnModulePage() {
       backHref={`/learn/${studentId}`}
       progressKey={isEN ? 'lk_progress_en' : 'lk_progress'}
       studentId={studentId}
+      lang={isEN ? 'en-US' : 'pt-BR'}
     />
   )
 }

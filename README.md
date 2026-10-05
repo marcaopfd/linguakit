@@ -32,6 +32,18 @@ O curso do aluno vem de `Student.course` (escolhido no cadastro) e, para quem
 veio pelo teste, de `TestResult.course` — sempre leia com
 `student.course ?? student.testResult?.course`.
 
+### Idioma da interface
+
+A navegação da lição e do módulo aparece na língua que o aluno **já sabe**, que é
+o oposto da que ele está aprendendo: o brasileiro do curso de inglês lê
+"Vocabulário / Gramática / Conferir", e o anglófono do curso de português lê
+"Vocabulary / Grammar / Check".
+
+`uiStrings(lang)` em `lib/ui-strings.ts` deriva isso do mesmo `lang` já usado
+para a síntese de voz (`pt-BR` ensina português → interface em inglês), então
+não há um segundo prop para manter em sincronia. O conteúdo em si nunca é
+traduzido — só a navegação.
+
 ### Áudio
 
 A lição fala o idioma-alvo através da Web Speech API do navegador

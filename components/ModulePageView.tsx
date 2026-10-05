@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Module } from '@/lib/curriculum'
 import { useModuleProgress } from '@/lib/use-progress'
+import { uiStrings } from '@/lib/ui-strings'
 
 interface Props {
   modId: string
@@ -11,13 +12,16 @@ interface Props {
   backHref: string
   progressKey: string
   studentId?: string   // when set, progress comes from the DB instead of localStorage
+  /** Language being taught; the chrome is shown in the learner's other language. */
+  lang: string
 }
 
-export function ModulePageView({ modId, modules, lessonBase, backHref, progressKey, studentId }: Props) {
+export function ModulePageView({ modId, modules, lessonBase, backHref, progressKey, studentId, lang }: Props) {
   const mod = modules.find(m => m.id === modId)
   const { done: progress } = useModuleProgress(modId, progressKey, studentId)
+  const t = uiStrings(lang)
 
-  if (!mod) return <div style={{ padding: '2rem', color: 'var(--ink3)' }}>Module not found.</div>
+  if (!mod) return <div style={{ padding: '2rem', color: 'var(--ink3)' }}>{t.moduleNotFound}</div>
 
   const done = progress.length
   const pct = Math.round((done / mod.units.length) * 100)
@@ -26,7 +30,7 @@ export function ModulePageView({ modId, modules, lessonBase, backHref, progressK
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       <div style={{ background: '#fff', borderBottom: '1px solid var(--border)', padding: '1.5rem 1.5rem 1rem' }}>
         <Link href={backHref} style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'var(--ink3)', textDecoration: 'none', marginBottom: '.85rem', width: 'fit-content' }}>
-          ← Back
+          ← {t.back}
         </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '.4rem' }}>
           <div style={{ width: 40, height: 40, borderRadius: 8, background: mod.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 18, fontWeight: 700, color: mod.accent }}>
@@ -38,7 +42,7 @@ export function ModulePageView({ modId, modules, lessonBase, backHref, progressK
         <div style={{ marginTop: '.85rem', height: 4, background: 'var(--border)', borderRadius: 2 }}>
           <div style={{ height: 4, borderRadius: 2, background: mod.bar, width: `${pct}%`, transition: 'width .6s' }} />
         </div>
-        <div style={{ marginTop: '.3rem', fontSize: 12, color: 'var(--ink3)' }}>{done} of {mod.units.length} units completed</div>
+        <div style={{ marginTop: '.3rem', fontSize: 12, color: 'var(--ink3)' }}>{t.unitsCompleted(done, mod.units.length)}</div>
       </div>
 
       <div style={{ padding: '1rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
@@ -60,7 +64,7 @@ export function ModulePageView({ modId, modules, lessonBase, backHref, progressK
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
                   <div style={{ fontSize: 11, color: 'var(--ink3)' }}>{unit.duration}</div>
-                  {isDone && <div style={{ fontSize: 11, color: 'var(--green)', fontWeight: 500 }}>✓ Done</div>}
+                  {isDone && <div style={{ fontSize: 11, color: 'var(--green)', fontWeight: 500 }}>✓ {t.done}</div>}
                 </div>
               </div>
             </Link>

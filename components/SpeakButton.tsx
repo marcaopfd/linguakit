@@ -40,10 +40,12 @@ type Props = {
   ready: boolean
   rate?: number
   label?: string
+  /** The word for "listen" in the learner's own language, for the accessible name. */
+  listen: string
   size?: 'sm' | 'md'
 }
 
-export function SpeakButton({ text, lang, voice, ready, rate, label, size = 'sm' }: Props) {
+export function SpeakButton({ text, lang, voice, ready, rate, label, listen, size = 'sm' }: Props) {
   const [speaking, setSpeaking] = useState(false)
   const mounted = useRef(true)
 
@@ -70,8 +72,8 @@ export function SpeakButton({ text, lang, voice, ready, rate, label, size = 'sm'
   return (
     <button
       onClick={handleClick}
-      aria-label={label ?? `Ouvir: ${text}`}
-      title={label ?? 'Ouvir'}
+      aria-label={label ?? `${listen}: ${text}`}
+      title={label ?? listen}
       style={{
         flexShrink: 0,
         width: label ? 'auto' : dim,

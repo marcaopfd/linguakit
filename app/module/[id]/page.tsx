@@ -13,6 +13,7 @@ export default function ModulePage() {
       lessonBase="/lesson"
       backHref="/pt"
       progressKey="lk_progress"
+      lang="pt-BR"
     />
   )
 }

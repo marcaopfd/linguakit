@@ -7,6 +7,7 @@ import { Exercise, Module, Unit } from '@/lib/curriculum'
 import { useModuleProgress } from '@/lib/use-progress'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
 import { cancelSpeech, firstVariant, speak } from '@/lib/speak'
+import { uiStrings, type UiStrings } from '@/lib/ui-strings'
 
 interface Props {
   modules: Module[]
@@ -31,6 +32,7 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
 
   const { done: completed, markDone } = useModuleProgress(modId, progressKey, studentId)
   const audio = useVoice(lang)
+  const t = uiStrings(lang)
   const [step, setStep] = useState(0)
 
   /**
@@ -51,19 +53,19 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
 
   const isDone = completed.includes(unitIndex)
 
-  if (!mod || !unit) return <div style={{ padding: '2rem', color: 'var(--ink3)' }}>Lesson not found.</div>
+  if (!mod || !unit) return <div style={{ padding: '2rem', color: 'var(--ink3)' }}>{t.lessonNotFound}</div>
 
-  const steps = ['Objectives', 'Vocabulary', 'Grammar', 'Dialogue', 'Exercises', 'Culture']
+  const steps = [t.steps.objectives, t.steps.vocabulary, t.steps.grammar, t.steps.dialogue, t.steps.exercises, t.steps.culture]
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       {/* Top bar */}
       <div style={{ position: 'sticky', top: 0, background: '#fff', borderBottom: '1px solid var(--border)', padding: '.85rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10 }}>
         <Link href={`${moduleBase}/${modId}`} style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'var(--ink3)', textDecoration: 'none' }}>
-          ← Back
+          ← {t.back}
         </Link>
         <div style={{ fontSize: 12, color: 'var(--ink3)', textAlign: 'center' }}>
-          {mod.label} · Unit {unitIndex + 1}/{mod.units.length}
+          {mod.label} · {t.unit} {unitIndex + 1}/{mod.units.length}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
           <a
@@ -82,11 +84,11 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
         <div style={{ background: 'var(--ink)', color: 'var(--cream)', borderRadius: 16, padding: '1.5rem', marginBottom: '1.25rem', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: 56, opacity: .2, pointerEvents: 'none' }}>{unit.emoji}</div>
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,.45)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: '.5rem' }}>
-            {mod.label} · {mod.name} · Unit {unitIndex + 1}
+            {mod.label} · {mod.name} · {t.unit} {unitIndex + 1}
           </div>
           <h2 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 600, marginBottom: '.35rem' }}>{unit.title}</h2>
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,.6)', lineHeight: 1.55 }}>{unit.sub} · {unit.duration}</p>
-          {isDone && <div style={{ marginTop: '.75rem', display: 'inline-flex', alignItems: 'center', gap: '.35rem', fontSize: 12, color: 'var(--green-light)', background: 'rgba(45,106,79,.3)', borderRadius: 6, padding: '.2rem .6rem' }}>✓ Completed</div>}
+          {isDone && <div style={{ marginTop: '.75rem', display: 'inline-flex', alignItems: 'center', gap: '.35rem', fontSize: 12, color: 'var(--green-light)', background: 'rgba(45,106,79,.3)', borderRadius: 6, padding: '.2rem .6rem' }}>✓ {t.completed}</div>}
         </div>
 
         {/* Step tabs */}
@@ -103,10 +105,10 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
         </div>
 
         {/* Content area */}
-        {step === 0 && <ObjectivesStep unit={unit} />}
-        {step === 1 && <VocabStep unit={unit} lang={lang} audio={audio} />}
-        {step === 2 && <GrammarStep unit={unit} lang={lang} audio={audio} />}
-        {step === 3 && <DialogueStep unit={unit} lang={lang} audio={audio} />}
+        {step === 0 && <ObjectivesStep unit={unit} t={t} />}
+        {step === 1 && <VocabStep unit={unit} lang={lang} audio={audio} t={t} />}
+        {step === 2 && <GrammarStep unit={unit} lang={lang} audio={audio} t={t} />}
+        {step === 3 && <DialogueStep unit={unit} lang={lang} audio={audio} t={t} />}
         {step === 4 && (
           <ExercisesStep
             unit={unit}
@@ -115,9 +117,10 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
             revealed={revealed}
             setRevealed={setRevealed}
             onAnswer={recordAttempt}
+            t={t}
           />
         )}
-        {step === 5 && <CultureStep unit={unit} />}
+        {step === 5 && <CultureStep unit={unit} t={t} />}
 
         {/* Bottom nav */}
         <div style={{ display: 'flex', gap: '.6rem', marginTop: '1.5rem' }}>
@@ -135,7 +138,7 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
               onClick={() => { markDone(unitIndex); router.push(`${moduleBase}/${modId}`) }}
               style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: 'var(--green)', color: '#fff' }}
             >
-              {isDone ? '✓ Completed' : 'Mark as done ✓'}
+              {isDone ? `✓ ${t.completed}` : `${t.markAsDone} ✓`}
             </button>
           )}
         </div>
@@ -154,10 +157,10 @@ function SectionHeading({ icon, label }: { icon: string; label: string }) {
   )
 }
 
-function ObjectivesStep({ unit }: { unit: Unit }) {
+function ObjectivesStep({ unit, t }: { unit: Unit; t: UiStrings }) {
   return (
     <div>
-      <SectionHeading icon="🎯" label="Learning Objectives" />
+      <SectionHeading icon="🎯" label={t.learningObjectives} />
       <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
         {unit.objectives.map((obj, i) => (
           <div key={i} style={{ background: 'var(--green-light)', borderRadius: 8, padding: '.6rem .85rem', fontSize: 13, color: 'var(--green)', display: 'flex', alignItems: 'flex-start', gap: '.5rem', lineHeight: 1.4 }}>
@@ -182,25 +185,25 @@ type Attempt = {
 }
 type RecordAttempt = (a: Attempt) => void
 
-function VocabStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: Audio }) {
+function VocabStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audio: Audio; t: UiStrings }) {
   const items = [
     ...unit.vocabulary.map(v => ({ v, extra: false })),
     ...(unit.extraVocab ?? []).map(v => ({ v, extra: true })),
   ]
   return (
     <div>
-      <SectionHeading icon="📖" label="Vocabulary" />
+      <SectionHeading icon="📖" label={t.steps.vocabulary} />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.5rem' }}>
         {items.map(({ v, extra }, i) => (
           <div key={i} style={{ background: '#fff', border: `1px ${extra ? 'dashed' : 'solid'} var(--border)`, borderRadius: 10, padding: '.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem' }}>
               <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 600, color: 'var(--ink)', flex: 1 }}>{v.pt}</div>
-              <SpeakButton text={firstVariant(v.pt)} lang={lang} voice={audio.voice} ready={audio.ready} />
+              <SpeakButton text={firstVariant(v.pt)} lang={lang} voice={audio.voice} ready={audio.ready} listen={t.listen} />
             </div>
             <div style={{ fontSize: 12, color: 'var(--ink3)', margin: '.15rem 0 .4rem' }}>{v.en}</div>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.4rem' }}>
               <div style={{ fontSize: 12, color: 'var(--ink2)', fontStyle: 'italic', lineHeight: 1.45, flex: 1 }}>{v.ex}</div>
-              <SpeakButton text={v.ex} lang={lang} voice={audio.voice} ready={audio.ready} />
+              <SpeakButton text={v.ex} lang={lang} voice={audio.voice} ready={audio.ready} listen={t.listen} />
             </div>
             <div style={{ fontSize: 11, color: 'var(--ink3)', marginTop: 2 }}>{v.exEn}</div>
           </div>
@@ -210,12 +213,12 @@ function VocabStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: Aud
   )
 }
 
-function GrammarStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: Audio }) {
+function GrammarStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audio: Audio; t: UiStrings }) {
   const g = unit.grammar
   const allExamples = [...g.examples, ...(g.extendedExamples ?? [])]
   return (
     <div>
-      <SectionHeading icon="⚙️" label="Grammar" />
+      <SectionHeading icon="⚙️" label={t.steps.grammar} />
       <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
         <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '.85rem 1.1rem' }}>
           <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 600, marginBottom: '.2rem' }}>{g.title}</div>
@@ -228,7 +231,7 @@ function GrammarStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: A
           <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
             {allExamples.map((ex, i) => (
               <div key={i} style={{ display: 'flex', gap: '.6rem', fontSize: 13, padding: '.35rem 0', borderBottom: i < allExamples.length - 1 ? '1px solid var(--border)' : 'none', alignItems: 'center' }}>
-                <SpeakButton text={ex.pt} lang={lang} voice={audio.voice} ready={audio.ready} />
+                <SpeakButton text={ex.pt} lang={lang} voice={audio.voice} ready={audio.ready} listen={t.listen} />
                 <span style={{ fontWeight: 500, flex: 1 }}>{ex.pt}</span>
                 <span style={{ color: 'var(--ink3)', flex: 1 }}>{ex.en}</span>
               </div>
@@ -238,7 +241,7 @@ function GrammarStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: A
       </div>
       {unit.commonMistakes && unit.commonMistakes.length > 0 && (
         <div style={{ marginTop: '.75rem', display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
-          <SectionHeading icon="⚠️" label="Common Mistakes" />
+          <SectionHeading icon="⚠️" label={t.commonMistakes} />
           {unit.commonMistakes.map((m, i) => (
             <div key={i} style={{ background: '#fdecea', borderRadius: 8, padding: '.6rem .85rem' }}>
               <div style={{ fontSize: 13, color: '#c0392b', fontWeight: 600, textDecoration: 'line-through', marginBottom: 2 }}>✗ {m.wrong}</div>
@@ -252,7 +255,7 @@ function GrammarStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: A
   )
 }
 
-function DialogueStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: Audio }) {
+function DialogueStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audio: Audio; t: UiStrings }) {
   const d = unit.dialogue
   const [playingAll, setPlayingAll] = useState(false)
   const [current, setCurrent] = useState(-1)
@@ -287,7 +290,7 @@ function DialogueStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: 
 
   return (
     <div>
-      <SectionHeading icon="💬" label="Dialogue" />
+      <SectionHeading icon="💬" label={t.steps.dialogue} />
       <div style={{ fontSize: 12, color: 'var(--ink3)', fontStyle: 'italic', background: 'var(--paper)', borderRadius: 8, padding: '.5rem .75rem', marginBottom: '.75rem' }}>
         📍 {d.scene}
       </div>
@@ -297,14 +300,14 @@ function DialogueStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: 
             onClick={playAll}
             style={{ padding: '.45rem .85rem', borderRadius: 8, border: '1px solid var(--border)', background: playingAll ? 'var(--ink)' : '#fff', color: playingAll ? '#fff' : 'var(--ink)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
           >
-            {playingAll ? '■ Parar' : '▶ Ouvir diálogo'}
+            {playingAll ? `■ ${t.stop}` : `▶ ${t.playDialogue}`}
           </button>
           <button
             onClick={() => setSlow(v => !v)}
             aria-pressed={slow}
             style={{ padding: '.45rem .75rem', borderRadius: 8, border: `1px solid ${slow ? 'var(--ink)' : 'var(--border)'}`, background: slow ? 'var(--paper)' : '#fff', color: slow ? 'var(--ink)' : 'var(--ink3)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
           >
-            🐢 Devagar
+            🐢 {t.slow}
           </button>
         </div>
       )}
@@ -317,7 +320,7 @@ function DialogueStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: 
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.4rem' }}>
                 <div style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.4, flex: 1 }}>{line.pt}</div>
-                <SpeakButton text={line.pt} lang={lang} voice={audio.voice} ready={audio.ready} rate={slow ? 0.65 : 0.95} />
+                <SpeakButton text={line.pt} lang={lang} voice={audio.voice} ready={audio.ready} rate={slow ? 0.65 : 0.95} listen={t.listen} />
               </div>
               <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 2 }}>{line.en}</div>
             </div>
@@ -329,7 +332,7 @@ function DialogueStep({ unit, lang, audio }: { unit: Unit; lang: string; audio: 
 }
 
 function ExercisesStep({
-  unit, answers, setAnswers, revealed, setRevealed, onAnswer,
+  unit, answers, setAnswers, revealed, setRevealed, onAnswer, t,
 }: {
   unit: Unit
   answers: Record<string, string | number>
@@ -337,6 +340,7 @@ function ExercisesStep({
   revealed: Record<string, boolean>
   setRevealed: (v: Record<string, boolean>) => void
   onAnswer: RecordAttempt
+  t: UiStrings
 }) {
   const [showExtra, setShowExtra] = useState(false)
   const extra = unit.extraExercises ?? []
@@ -344,13 +348,14 @@ function ExercisesStep({
 
   return (
     <div>
-      <SectionHeading icon="✏️" label="Exercises" />
+      <SectionHeading icon="✏️" label={t.steps.exercises} />
       {unit.exercises.map((ex, ei) => (
         <ExerciseCard
           key={`c${ei}`} ex={ex} keyPrefix={`c${ei}`}
           answers={answers} setAnswers={setAnswers}
           revealed={revealed} setRevealed={setRevealed}
           onAnswer={onAnswer}
+          t={t}
         />
       ))}
 
@@ -361,7 +366,7 @@ function ExercisesStep({
             <div style={{ margin: '1.25rem 0 .6rem', display: 'flex', alignItems: 'center', gap: '.5rem' }}>
               <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
               <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)' }}>
-                Extra practice
+                {t.extraPractice}
               </div>
               <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
             </div>
@@ -371,6 +376,7 @@ function ExercisesStep({
                 answers={answers} setAnswers={setAnswers}
                 revealed={revealed} setRevealed={setRevealed}
                 onAnswer={onAnswer}
+                t={t}
               />
             ))}
           </>
@@ -379,7 +385,7 @@ function ExercisesStep({
             onClick={() => setShowExtra(true)}
             style={{ width: '100%', marginTop: '1rem', padding: '.85rem', border: '1.5px dashed var(--border)', borderRadius: 12, background: 'var(--paper)', color: 'var(--ink2)', fontSize: 14, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
           >
-            + More exercises ({extraCount})
+            {t.moreExercises(extraCount)}
           </button>
         )
       )}
@@ -388,7 +394,7 @@ function ExercisesStep({
 }
 
 function ExerciseCard({
-  ex, keyPrefix, answers, setAnswers, revealed, setRevealed, onAnswer,
+  ex, keyPrefix, answers, setAnswers, revealed, setRevealed, onAnswer, t,
 }: {
   ex: Exercise
   keyPrefix: string
@@ -397,6 +403,7 @@ function ExerciseCard({
   revealed: Record<string, boolean>
   setRevealed: (v: Record<string, boolean>) => void
   onAnswer: RecordAttempt
+  t: UiStrings
 }) {
   return (
     <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem 1.1rem', marginBottom: '.6rem' }}>
@@ -448,7 +455,7 @@ function ExerciseCard({
                 </div>
               ) : (
                 <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
-                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder="Type your answer..." style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? '#e8fdf0' : '#fdecea') : '#fff' }} />
+                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder={t.typeYourAnswer} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? '#e8fdf0' : '#fdecea') : '#fff' }} />
                   <button
                     onClick={() => {
                       setRevealed({ ...revealed, [key]: true })
@@ -462,7 +469,7 @@ function ExerciseCard({
                       })
                     }}
                     style={{ padding: '.4rem .8rem', border: '1.5px solid var(--border)', borderRadius: 6, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit', background: 'var(--paper)' }}
-                  >Check</button>
+                  >{t.check}</button>
                   {isRevealed && !correct && <span style={{ fontSize: 12, color: 'var(--green)' }}>&rarr; {item.ans}</span>}
                 </div>
               )}
@@ -474,11 +481,11 @@ function ExerciseCard({
   )
 }
 
-function CultureStep({ unit }: { unit: Unit }) {
+function CultureStep({ unit, t }: { unit: Unit; t: UiStrings }) {
   const c = unit.culture
   return (
     <div>
-      <SectionHeading icon="🌍" label="Cultural Note" />
+      <SectionHeading icon="🌍" label={t.culturalNote} />
       <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
         <div style={{ background: 'var(--gold-light)', borderBottom: '1px solid #e8d48a', padding: '.85rem 1.1rem' }}>
           <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700, color: 'var(--ink)' }}>{c.title}</div>
@@ -487,7 +494,7 @@ function CultureStep({ unit }: { unit: Unit }) {
       </div>
       {unit.teacherTip && (
         <div style={{ marginTop: '.75rem', background: '#edf7ed', border: '1px solid #b7e4c7', borderRadius: 8, padding: '.6rem .85rem' }}>
-          <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', color: 'var(--green)', marginBottom: 3 }}>📋 Teacher Tip</div>
+          <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', color: 'var(--green)', marginBottom: 3 }}>📋 {t.teacherTip}</div>
           <div style={{ fontSize: 13, color: '#1f6b2e', lineHeight: 1.5 }}>{unit.teacherTip}</div>
         </div>
       )}

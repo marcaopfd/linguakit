@@ -13,6 +13,7 @@ export default function EnModulePage() {
       lessonBase="/en/lesson"
       backHref="/en"
       progressKey="lk_progress_en"
+      lang="en-US"
     />
   )
 }
