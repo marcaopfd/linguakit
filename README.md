@@ -65,6 +65,25 @@ Dois cuidados que o código já trata:
   opção de entradas como "olá / oi", e `normaliseForSpeech()` remove glosas
   entre parênteses como em "book (a ticket)".
 
+### Gravar a própria voz
+
+Cada linha do diálogo tem, ao lado do ▶ do modelo, um 🎤 para o aluno gravar a
+si mesmo e comparar — o drill de *shadowing*. Sem nota e sem julgamento: ele
+mesmo ouve a diferença.
+
+**A gravação nunca sai do navegador.** Vive como blob URL enquanto a lição está
+aberta e é revogada ao ser substituída ou ao sair da tela. Nada é enviado e nada
+é guardado — e a interface diz isso ao aluno.
+
+Dois cuidados no `components/RecordButton.tsx`:
+
+- **O microfone é liberado** (`track.stop()`) ao parar de gravar, senão o
+  navegador fica indicando captura indefinidamente.
+- **`getUserMedia` não rejeita quando o prompt de permissão é ignorado** — ele
+  simplesmente nunca resolve. Há um limite de 20s que devolve o botão ao estado
+  normal com uma mensagem; e se a permissão chegar depois disso, o stream é
+  fechado na hora em vez de abrir o microfone sem o aluno esperar.
+
 A qualidade depende do aparelho do aluno — macOS e iOS têm vozes boas, Android
 usa o TTS do Google, Windows antigo é pior. Se um dia isso incomodar, o caminho
 é gerar os áudios uma vez e versioná-los, como foi feito com os exercícios.

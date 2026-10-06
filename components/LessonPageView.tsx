@@ -6,6 +6,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { Exercise, Module, Unit } from '@/lib/curriculum'
 import { useModuleProgress } from '@/lib/use-progress'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
+import { RecordButton, recordingSupported } from '@/components/RecordButton'
 import { cancelSpeech, firstVariant, speak } from '@/lib/speak'
 import { uiStrings, type UiStrings } from '@/lib/ui-strings'
 
@@ -260,8 +261,12 @@ function DialogueStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audi
   const [playingAll, setPlayingAll] = useState(false)
   const [current, setCurrent] = useState(-1)
   const [slow, setSlow] = useState(false)
+  const [micError, setMicError] = useState('')
+  const [canRecord, setCanRecord] = useState(false)
   // Lets an in-flight sequence know it was cancelled without racing state.
   const runId = useRef(0)
+
+  useEffect(() => { setCanRecord(recordingSupported()) }, [])
 
   useEffect(() => () => { runId.current++; cancelSpeech() }, [])
 
@@ -311,6 +316,16 @@ function DialogueStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audi
           </button>
         </div>
       )}
+      {canRecord && (
+        <div style={{ fontSize: 11.5, color: 'var(--ink3)', lineHeight: 1.5, marginBottom: '.65rem', background: 'var(--paper)', border: '1px solid var(--border)', borderRadius: 8, padding: '.5rem .7rem' }}>
+          🎤 {t.recordingStaysHere}
+        </div>
+      )}
+      {micError && (
+        <div style={{ fontSize: 12, color: 'var(--red)', background: '#fdecea', border: '1px solid #f5c6c2', borderRadius: 8, padding: '.5rem .7rem', marginBottom: '.65rem' }}>
+          {micError}
+        </div>
+      )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
         {d.lines.map((line, i) => (
           <div key={i} style={{ display: 'flex', gap: '.65rem', alignItems: 'flex-start', background: current === i ? 'var(--gold-light)' : 'transparent', borderRadius: 8, padding: current === i ? '.4rem' : '.4rem', margin: current === i ? '-.4rem' : '-.4rem', transition: 'background .2s' }}>
@@ -321,6 +336,10 @@ function DialogueStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audi
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.4rem' }}>
                 <div style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.4, flex: 1 }}>{line.pt}</div>
                 <SpeakButton text={line.pt} lang={lang} voice={audio.voice} ready={audio.ready} rate={slow ? 0.65 : 0.95} listen={t.listen} />
+                <RecordButton
+                  labels={{ record: t.record, recordAgain: t.recordAgain, stopRecording: t.stopRecording, playYours: t.playYours, micDenied: t.micDenied }}
+                  onError={setMicError}
+                />
               </div>
               <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 2 }}>{line.en}</div>
             </div>

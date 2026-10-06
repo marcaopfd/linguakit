@@ -51,6 +51,14 @@ export type UiStrings = {
   seeAll: (n: number) => string
   showLess: string
   blank: string
+
+  // Gravar a própria voz (shadowing)
+  record: string
+  recordAgain: string
+  stopRecording: string
+  playYours: string
+  micDenied: string
+  recordingStaysHere: string
 }
 
 const EN: UiStrings = {
@@ -95,6 +103,13 @@ const EN: UiStrings = {
   seeAll: n => `See all ${n}`,
   showLess: 'Show less',
   blank: 'left blank',
+
+  record: 'Record yourself',
+  recordAgain: 'Record again',
+  stopRecording: 'Stop recording',
+  playYours: 'Play your recording',
+  micDenied: 'Could not use the microphone. Check your browser permissions.',
+  recordingStaysHere: 'Listen, record yourself, compare. Your recording stays on this device and is never uploaded.',
 }
 
 const PT: UiStrings = {
@@ -139,6 +154,13 @@ const PT: UiStrings = {
   seeAll: n => `Ver todos os ${n}`,
   showLess: 'Mostrar menos',
   blank: 'em branco',
+
+  record: 'Gravar sua voz',
+  recordAgain: 'Gravar de novo',
+  stopRecording: 'Parar gravação',
+  playYours: 'Ouvir sua gravação',
+  micDenied: 'Não foi possível usar o microfone. Verifique a permissão do navegador.',
+  recordingStaysHere: 'Ouça, grave sua voz e compare. Sua gravação fica neste aparelho e nunca é enviada.',
 }
 
 /** `lang` is the language being taught; the learner reads the other one. */
