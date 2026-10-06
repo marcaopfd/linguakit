@@ -18,11 +18,18 @@ export async function GET(req: NextRequest) {
         newsletterAt: true,
         createdAt: true,
         testResult: true,
+        // Newest row from each activity table, so "last active" costs two
+        // indexed lookups per student instead of loading their whole history.
+        lessons: { select: { completedAt: true }, orderBy: { completedAt: 'desc' }, take: 1 },
+        attempts: { select: { answeredAt: true }, orderBy: { answeredAt: 'desc' }, take: 1 },
       },
       orderBy: { createdAt: 'desc' },
     }))
 
-    const formatted = students.map(s => ({
+    const formatted = students.map(s => {
+      const marks = [s.lessons[0]?.completedAt, s.attempts[0]?.answeredAt].filter(Boolean) as Date[]
+      const lastActiveAt = marks.length ? new Date(Math.max(...marks.map(d => d.getTime()))) : null
+      return {
       id: s.id,
       name: s.name,
       email: s.email,
@@ -30,6 +37,7 @@ export async function GET(req: NextRequest) {
       newsletter: s.newsletter,
       newsletterAt: s.newsletterAt,
       hasAccount: Boolean(s.email),
+      lastActiveAt,
       createdAt: s.createdAt,
       testResult: s.testResult
         ? {
@@ -45,7 +53,8 @@ export async function GET(req: NextRequest) {
             createdAt: s.testResult.createdAt,
           }
         : null,
-    }))
+      }
+    })
 
     return NextResponse.json({ students: formatted })
   } catch (err) {

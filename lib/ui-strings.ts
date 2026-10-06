@@ -29,6 +29,28 @@ export type UiStrings = {
   slow: string
   unitsCompleted: (done: number, total: number) => string
   done: string
+
+  // Portal do aluno
+  loading: string
+  studentNotFound: string
+  hello: string
+  courseLabel: string
+  overallProgress: string
+  modules: string
+  signOut: string
+
+  // "Seus erros"
+  yourMistakes: string
+  noMistakesYet: string
+  noMistakesHint: string
+  accuracy: string
+  answeredCount: (n: number) => string
+  mistakeCount: (n: number) => string
+  youAnswered: string
+  correctAnswer: string
+  seeAll: (n: number) => string
+  showLess: string
+  blank: string
 }
 
 const EN: UiStrings = {
@@ -53,6 +75,26 @@ const EN: UiStrings = {
   slow: 'Slow',
   unitsCompleted: (done, total) => `${done} of ${total} units completed`,
   done: 'Done',
+
+  loading: 'Loading...',
+  studentNotFound: 'Student not found.',
+  hello: 'Hello',
+  courseLabel: 'Portuguese Course',
+  overallProgress: 'Overall progress',
+  modules: 'Modules',
+  signOut: 'Sign out',
+
+  yourMistakes: 'Your mistakes',
+  noMistakesYet: 'Nothing to review yet',
+  noMistakesHint: 'Answer the exercises in a lesson and anything you get wrong will show up here.',
+  accuracy: 'correct',
+  answeredCount: n => `${n} answered`,
+  mistakeCount: n => `${n} to review`,
+  youAnswered: 'You answered',
+  correctAnswer: 'Correct answer',
+  seeAll: n => `See all ${n}`,
+  showLess: 'Show less',
+  blank: 'left blank',
 }
 
 const PT: UiStrings = {
@@ -77,6 +119,26 @@ const PT: UiStrings = {
   slow: 'Devagar',
   unitsCompleted: (done, total) => `${done} de ${total} units concluídas`,
   done: 'Concluída',
+
+  loading: 'Carregando...',
+  studentNotFound: 'Aluno não encontrado.',
+  hello: 'Olá',
+  courseLabel: 'Curso de Inglês',
+  overallProgress: 'Progresso geral',
+  modules: 'Módulos',
+  signOut: 'Sair',
+
+  yourMistakes: 'Seus erros',
+  noMistakesYet: 'Nada para revisar ainda',
+  noMistakesHint: 'Responda os exercícios de uma lição e o que você errar aparece aqui.',
+  accuracy: 'de acerto',
+  answeredCount: n => `${n} respondidos`,
+  mistakeCount: n => `${n} para revisar`,
+  youAnswered: 'Você respondeu',
+  correctAnswer: 'Resposta certa',
+  seeAll: n => `Ver todos os ${n}`,
+  showLess: 'Mostrar menos',
+  blank: 'em branco',
 }
 
 /** `lang` is the language being taught; the learner reads the other one. */

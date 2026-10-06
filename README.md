@@ -146,6 +146,22 @@ item por aluno.
 A gravação só acontece quando há `studentId` — o professor navegando pelo curso
 não gera registro.
 
+## Revisão de erros e atividade
+
+O que o aluno responde serve a duas telas:
+
+- **"Seus erros"** no portal do aluno (`/learn/[studentId]`) — acerto geral e a
+  lista do que ele errou, com a resposta dele e a certa. Lê
+  `GET /api/student/attempts?studentId=`, que devolve só os campos dessa tela.
+- **"Pontos fracos"** no painel do professor (`/students/[id]`) — o mesmo dado
+  com acerto por tipo de exercício. Lê `GET /api/attempts`, que é teacher-only
+  e existe separada justamente para poder crescer sem afrouxar a rota do aluno.
+
+Cada card de aluno em `/students` traz também **há quanto tempo ele estudou**,
+calculado em `lib/last-active.ts` a partir do registro mais recente de
+`StudentLesson` ou `ExerciseAttempt` — verde até 2 dias, âmbar até 7, vermelho
+depois. É o sinal mais acionável para saber quem está esfriando.
+
 ## Progresso
 
 O professor navegando pelo curso guarda progresso em `localStorage` — é um

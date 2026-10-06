@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { activityColor, lastActive } from '@/lib/last-active'
 
 type SkillScore = { correct: number; pct: number }
 
@@ -13,6 +14,7 @@ type Student = {
   newsletter?: boolean
   newsletterAt?: string | null
   hasAccount?: boolean
+  lastActiveAt?: string | null
   createdAt: string
   testResult?: {
     level: string
@@ -236,6 +238,18 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
                 🔑 conta
               </span>
             )}
+            {(() => {
+              const a = lastActive(s.lastActiveAt)
+              const c = activityColor(a.days)
+              return (
+                <span
+                  title={s.lastActiveAt ? new Date(s.lastActiveAt).toLocaleString('pt-BR') : undefined}
+                  style={{ fontSize: 11, padding: '.15rem .45rem', borderRadius: 5, background: c.bg, color: c.fg, fontWeight: 600 }}
+                >
+                  🕐 {a.label}
+                </span>
+              )
+            })()}
           </div>
           <div style={{ fontSize: 12, color: 'var(--ink3)' }}>
             {r ? `${r.level} · ${r.levelName}` : 'No test result yet'} · joined {new Date(s.createdAt).toLocaleDateString('en-IE', { day: 'numeric', month: 'short', year: 'numeric' })}
