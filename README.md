@@ -181,6 +181,42 @@ calculado em `lib/last-active.ts` a partir do registro mais recente de
 `StudentLesson` ou `ExerciseAttempt` — verde até 2 dias, âmbar até 7, vermelho
 depois. É o sinal mais acionável para saber quem está esfriando.
 
+## Revisão espaçada
+
+Um item errado numa lição entra na fila de revisão (`ReviewItem`) e volta em
+intervalos crescentes — caixas de Leitner, em `lib/review.ts`:
+
+| Caixa | Volta em |
+| --- | --- |
+| 1 | 1 dia |
+| 2 | 3 dias |
+| 3 | 7 dias |
+| 4 | 14 dias |
+| 5 | 30 dias |
+
+Acertou sobe uma caixa; errou volta para a 1; acertar na caixa 5 **apaga** o
+item, então a fila drena em vez de crescer para sempre.
+
+A tela `/learn/[studentId]/revisar` é flashcard com autoavaliação — mostra a
+pergunta, revela a resposta, e o aluno diz se acertou. Não compara texto porque
+os itens vêm também de múltipla escolha, onde casar a string contra o rótulo de
+uma opção testaria a coisa errada. Por isso `ReviewItem` copia `question` e
+`expected`: a revisão é uma consulta só e não depende de o currículo ainda ter
+aquele item naquele índice.
+
+Dois pontos que já morderam:
+
+- **Responder de novo o mesmo item numa lição não re-enfileira.** `createMany`
+  devolve 0 quando a linha já existia, e é só com contagem maior que zero que a
+  revisão é criada — senão o progresso do aluno naquele item seria zerado.
+- **O portal passa `lang` para a tela de revisão, não o objeto de strings.**
+  `UiStrings` contém funções (`reviewDue`, `reviewProgress`), e função não
+  atravessa a fronteira servidor→cliente. O typecheck não pega isso; só aparece
+  em runtime.
+
+Um aluno que erra hoje só vê algo para revisar **amanhã** — é o intervalo da
+caixa 1, não um bug.
+
 ## Progresso
 
 O professor navegando pelo curso guarda progresso em `localStorage` — é um

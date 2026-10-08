@@ -42,6 +42,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
   const router = useRouter()
   const [student, setStudent] = useState<StudentData | null>(null)
   const [attempts, setAttempts] = useState<Attempt[]>([])
+  const [dueCount, setDueCount] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
   // Only students who signed up have a session to end. Those reached through a
   // shared /learn/<id> link have nothing to log out of, so the button is hidden.
@@ -69,6 +70,11 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
     fetch(`/api/student/attempts?studentId=${encodeURIComponent(studentId)}`)
       .then(r => r.json())
       .then(data => setAttempts(data.attempts ?? []))
+      .catch(() => {})
+
+    fetch(`/api/student/reviews?studentId=${encodeURIComponent(studentId)}`)
+      .then(r => r.json())
+      .then(data => setDueCount(data.dueCount ?? 0))
       .catch(() => {})
   }, [studentId])
 
@@ -135,6 +141,31 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
           </div>
         </div>
       </div>
+
+      {/* Review queue */}
+      {dueCount !== null && (
+        <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>
+          {dueCount > 0 ? (
+            <Link href={`/learn/${studentId}/revisar`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div style={{ background: 'var(--ink)', color: 'var(--cream)', borderRadius: 14, padding: '1.1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div style={{ fontSize: 28, flexShrink: 0 }}>🔁</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 17, fontWeight: 700 }}>{t.review}</div>
+                  <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', marginTop: 1 }}>{t.reviewDue(dueCount)}</div>
+                </div>
+                <span style={{ flexShrink: 0, background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 9, padding: '.5rem .9rem', fontSize: 13, fontWeight: 600 }}>
+                  {t.reviewStart} →
+                </span>
+              </div>
+            </Link>
+          ) : (
+            <div style={{ background: '#fff', border: '1px dashed var(--border)', borderRadius: 14, padding: '1rem 1.25rem' }}>
+              <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: '.2rem' }}>🔁 {t.reviewNothingDue}</div>
+              <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.5 }}>{t.reviewNothingDueHint}</div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Your mistakes */}
       <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>

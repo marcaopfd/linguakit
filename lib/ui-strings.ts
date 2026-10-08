@@ -59,6 +59,21 @@ export type UiStrings = {
   playYours: string
   micDenied: string
   recordingStaysHere: string
+
+  // Revisão espaçada
+  review: string
+  reviewDue: (n: number) => string
+  reviewNothingDue: string
+  reviewNothingDueHint: string
+  reviewStart: string
+  showAnswer: string
+  gotIt: string
+  missedIt: string
+  reviewProgress: (done: number, total: number) => string
+  reviewDone: string
+  reviewDoneHint: string
+  backToCourse: string
+  reviewExplain: string
 }
 
 const EN: UiStrings = {
@@ -110,6 +125,20 @@ const EN: UiStrings = {
   playYours: 'Play your recording',
   micDenied: 'Could not use the microphone. Check your browser permissions.',
   recordingStaysHere: 'Listen, record yourself, compare. Your recording stays on this device and is never uploaded.',
+
+  review: 'Review',
+  reviewDue: n => `${n} due today`,
+  reviewNothingDue: 'Nothing due right now',
+  reviewNothingDueHint: 'Anything you get wrong comes back here — tomorrow, then further apart each time you get it right.',
+  reviewStart: 'Start review',
+  showAnswer: 'Show answer',
+  gotIt: 'I got it',
+  missedIt: 'I missed it',
+  reviewProgress: (done, total) => `${done} of ${total}`,
+  reviewDone: 'Review finished',
+  reviewDoneHint: 'What you missed will come back sooner; what you got right, later.',
+  backToCourse: 'Back to my course',
+  reviewExplain: 'Get it right and it comes back later. Miss it and it comes back tomorrow.',
 }
 
 const PT: UiStrings = {
@@ -161,6 +190,20 @@ const PT: UiStrings = {
   playYours: 'Ouvir sua gravação',
   micDenied: 'Não foi possível usar o microfone. Verifique a permissão do navegador.',
   recordingStaysHere: 'Ouça, grave sua voz e compare. Sua gravação fica neste aparelho e nunca é enviada.',
+
+  review: 'Revisão',
+  reviewDue: n => `${n} para revisar hoje`,
+  reviewNothingDue: 'Nada para revisar agora',
+  reviewNothingDueHint: 'O que você errar volta aqui — amanhã, e depois cada vez mais espaçado conforme você acerta.',
+  reviewStart: 'Começar revisão',
+  showAnswer: 'Mostrar resposta',
+  gotIt: 'Acertei',
+  missedIt: 'Errei',
+  reviewProgress: (done, total) => `${done} de ${total}`,
+  reviewDone: 'Revisão concluída',
+  reviewDoneHint: 'O que você errou volta mais cedo; o que acertou, mais tarde.',
+  backToCourse: 'Voltar para o curso',
+  reviewExplain: 'Acertou, volta mais tarde. Errou, volta amanhã.',
 }
 
 /** `lang` is the language being taught; the learner reads the other one. */

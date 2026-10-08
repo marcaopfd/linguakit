@@ -27,6 +27,7 @@ model Student {
   testResult TestResult?
   lessons    StudentLesson[]
   attempts   ExerciseAttempt[]
+  reviews    ReviewItem[]
 }
 
 model TestResult {
@@ -43,6 +44,34 @@ model TestResult {
   recommendation String
   course         String   @default("pt")
   createdAt      DateTime @default(now())
+}
+
+/// An item the student missed, waiting to come back.
+///
+/// Leitner scheduling: `box` 1..5, each with a longer interval (lib/review.ts).
+/// The question and answer are copied in so the review screen is one query and
+/// does not depend on the curriculum file still having that item at that index.
+/// Retired items are deleted, so the queue drains instead of growing.
+model ReviewItem {
+  id        String  @id @default(cuid())
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  moduleId  String
+  unitIndex Int
+  itemKey   String
+
+  exerciseType String
+  question     String
+  expected     String
+
+  box            Int       @default(1)
+  dueAt          DateTime
+  lastReviewedAt DateTime?
+  createdAt      DateTime  @default(now())
+
+  @@unique([studentId, moduleId, unitIndex, itemKey])
+  @@index([studentId, dueAt])
 }
 
 /// One answered exercise item.

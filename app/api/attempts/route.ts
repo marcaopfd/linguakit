@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma, withDb } from '@/lib/db'
+import { firstSchedule } from '@/lib/review'
 import { requireTeacher } from '@/lib/auth'
 
 const MAX_TEXT = 500
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     const trim = (v: unknown) => String(v ?? '').slice(0, MAX_TEXT)
 
-    await withDb(() => prisma.exerciseAttempt.createMany({
+    const created = await withDb(() => prisma.exerciseAttempt.createMany({
       data: [{
         studentId,
         moduleId: trim(moduleId),
@@ -41,6 +42,30 @@ export async function POST(req: NextRequest) {
       }],
       skipDuplicates: true,
     }))
+
+    /**
+     * A missed item joins the review queue — but only on the first encounter.
+     * createMany reports 0 when the row already existed, which is also when the
+     * student is re-answering something already scheduled; re-queueing then
+     * would reset their progress on it.
+     */
+    if (created.count > 0 && !correct) {
+      const { box, dueAt } = firstSchedule()
+      await withDb(() => prisma.reviewItem.createMany({
+        data: [{
+          studentId,
+          moduleId: trim(moduleId),
+          unitIndex,
+          itemKey: trim(itemKey),
+          exerciseType: trim(exerciseType),
+          question: trim(question),
+          expected: trim(expected),
+          box,
+          dueAt,
+        }],
+        skipDuplicates: true,
+      }))
+    }
 
     return NextResponse.json({ ok: true })
   } catch (err) {
