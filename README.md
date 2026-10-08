@@ -228,6 +228,41 @@ node scripts/expand-curriculum-en.mjs
 cp lib/curriculum-en-expanded.ts lib/curriculum-en.ts
 ```
 
+## Por que as páginas são Server Components
+
+Os currículos somam ~835 KB de JSON. Como as páginas eram `'use client'` e
+importavam `MODULES` / `EN_MODULES` direto, o bundler mandava tudo para o
+navegador: uma lição baixava o curso inteiro (374 KB ou 461 KB) para renderizar
+uma unit de ~6 KB, e o dashboard carregava os dois cursos para desenhar nomes de
+módulo e barras de progresso.
+
+Agora cada `page.tsx` é Server Component: lê o currículo no servidor e passa
+adiante só o que a tela usa.
+
+| Tela | Recebe |
+| --- | --- |
+| Lição | a `Unit` e um `LessonContext` (label, nome, total de units) |
+| Módulo | um `ModuleSummary` — metadados + título/sub/emoji/duração das units |
+| Dashboard, `/pt`, `/en`, portal, detalhe do aluno | `ModuleSummary[]`, ~13 KB |
+
+Os tipos ficam em `lib/curriculum-index.ts`. Importe deles **apenas tipos** em
+componentes de cliente (`import type`), que somem na compilação; as funções
+recebem os módulos por parâmetro em vez de importá-los, para que nada puxe os
+arquivos grandes sem querer.
+
+Telas que precisam de estado do cliente (localStorage, fetch) ficam num
+`view.tsx` ao lado do `page.tsx`. As de aluno resolvem o curso lendo o
+`Student` do Prisma no servidor, em vez de buscar pelo navegador.
+
+**Se um componente de cliente voltar a importar `lib/curriculum*.ts`, os 835 KB
+voltam para o bundle.** Para conferir depois de um build:
+
+```bash
+grep -l "Hello & Goodbye" .next/static/chunks/*.js
+```
+
+Nenhum resultado é o esperado.
+
 ## Testes
 
 ```bash

@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { useParams, useRouter } from 'next/navigation'
-import { Exercise, Module, Unit } from '@/lib/curriculum'
+import { useRouter } from 'next/navigation'
+import type { Exercise, Unit } from '@/lib/curriculum'
+import type { LessonContext } from '@/lib/curriculum-index'
 import { useModuleProgress } from '@/lib/use-progress'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
 import { RecordButton, recordingSupported } from '@/components/RecordButton'
@@ -11,7 +12,10 @@ import { cancelSpeech, firstVariant, speak } from '@/lib/speak'
 import { uiStrings, type UiStrings } from '@/lib/ui-strings'
 
 interface Props {
-  modules: Module[]
+  /** The single unit to render — not the whole course. */
+  unit: Unit
+  mod: LessonContext
+  unitIndex: number
   moduleBase: string   // e.g. '/module' or '/en/module'
   pdfBase: string      // e.g. '/api/pdf/pt' or '/api/pdf/en'
   progressKey: string  // localStorage key (teacher mode only)
@@ -24,12 +28,9 @@ interface Props {
   lang: string
 }
 
-export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, studentId, lang }: Props) {
-  const { mod: modId, unit: unitIndexStr } = useParams<{ mod: string; unit: string }>()
+export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, progressKey, studentId, lang }: Props) {
   const router = useRouter()
-  const unitIndex = parseInt(unitIndexStr)
-  const mod = modules.find(m => m.id === modId)
-  const unit = mod?.units[unitIndex]
+  const modId = mod.id
 
   const { done: completed, markDone } = useModuleProgress(modId, progressKey, studentId)
   const audio = useVoice(lang)
@@ -54,8 +55,6 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
 
   const isDone = completed.includes(unitIndex)
 
-  if (!mod || !unit) return <div style={{ padding: '2rem', color: 'var(--ink3)' }}>{t.lessonNotFound}</div>
-
   const steps = [t.steps.objectives, t.steps.vocabulary, t.steps.grammar, t.steps.dialogue, t.steps.exercises, t.steps.culture]
 
   return (
@@ -66,7 +65,7 @@ export function LessonPageView({ modules, moduleBase, pdfBase, progressKey, stud
           ← {t.back}
         </Link>
         <div style={{ fontSize: 12, color: 'var(--ink3)', textAlign: 'center' }}>
-          {mod.label} · {t.unit} {unitIndex + 1}/{mod.units.length}
+          {mod.label} · {t.unit} {unitIndex + 1}/{mod.unitCount}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
           <a

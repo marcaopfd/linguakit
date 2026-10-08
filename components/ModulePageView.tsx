@@ -1,13 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { Module } from '@/lib/curriculum'
+import type { ModuleSummary } from '@/lib/curriculum-index'
 import { useModuleProgress } from '@/lib/use-progress'
 import { uiStrings } from '@/lib/ui-strings'
 
 interface Props {
-  modId: string
-  modules: Module[]
+  /** Module metadata and unit titles only — no lesson content. */
+  mod: ModuleSummary
   lessonBase: string  // e.g. '/lesson' or '/en/lesson'
   backHref: string
   progressKey: string
@@ -16,12 +16,9 @@ interface Props {
   lang: string
 }
 
-export function ModulePageView({ modId, modules, lessonBase, backHref, progressKey, studentId, lang }: Props) {
-  const mod = modules.find(m => m.id === modId)
-  const { done: progress } = useModuleProgress(modId, progressKey, studentId)
+export function ModulePageView({ mod, lessonBase, backHref, progressKey, studentId, lang }: Props) {
+  const { done: progress } = useModuleProgress(mod.id, progressKey, studentId)
   const t = uiStrings(lang)
-
-  if (!mod) return <div style={{ padding: '2rem', color: 'var(--ink3)' }}>{t.moduleNotFound}</div>
 
   const done = progress.length
   const pct = Math.round((done / mod.units.length) * 100)
@@ -49,7 +46,7 @@ export function ModulePageView({ modId, modules, lessonBase, backHref, progressK
         {mod.units.map((unit, i) => {
           const isDone = progress.includes(i)
           return (
-            <Link key={i} href={`${lessonBase}/${modId}/${i}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link key={i} href={`${lessonBase}/${mod.id}/${i}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div
                 style={{ border: `1px solid ${isDone ? '#b7e4c7' : 'var(--border)'}`, borderRadius: 12, padding: '.9rem 1.1rem', display: 'flex', alignItems: 'center', gap: '.85rem', cursor: 'pointer', background: isDone ? '#f8fdf9' : '#fff', transition: 'all .15s' }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = isDone ? '#b7e4c7' : 'var(--ink3)'; (e.currentTarget as HTMLElement).style.background = isDone ? '#f8fdf9' : 'var(--paper)' }}
