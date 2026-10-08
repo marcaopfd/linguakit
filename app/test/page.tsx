@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Suspense } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 // ── Portuguese test (for English speakers) ───────────────────────────────────
@@ -428,14 +428,7 @@ function TestPageInner() {
                   <div style={{ fontSize: 13, color: 'rgba(255,255,255,.55)', lineHeight: 1.6, marginBottom: savedStudentId ? '1rem' : 0 }}>
                     {isEN ? 'Seu professor já pode ver seu resultado. Ele entrará em contato para agendar sua primeira aula.' : 'Your teacher can already see your result. They\'ll be in touch to schedule your first lesson.'}
                   </div>
-                  {savedStudentId && (
-                    <a
-                      href={`/learn/${savedStudentId}`}
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '.4rem', padding: '.65rem 1.25rem', background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 10, color: '#fff', textDecoration: 'none', fontSize: 14, fontWeight: 600 }}
-                    >
-                      {isEN ? '📚 Acessar meu curso →' : '📚 Access my course →'}
-                    </a>
-                  )}
+                  {savedStudentId && <CourseLink studentId={savedStudentId} isEN={isEN} />}
                 </div>
               )}
               {saveStatus === 'fail' && (
@@ -510,4 +503,63 @@ function buildFallbackCode(result: ReturnType<typeof calculateResult>, name: str
     'Recommendation: ' + modNames[result.level],
     '========================',
   ].join('\n')
+}
+
+/**
+ * The student's course link, presented as the credential it is.
+ *
+ * A placement test creates a student without a password: this URL is the only
+ * way back into the course. It used to be a plain button, so closing the tab
+ * lost the account with no warning.
+ */
+function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
+  const [copied, setCopied] = useState(false)
+  const [url, setUrl] = useState(`/learn/${studentId}`)
+
+  // location is not available during the server render.
+  useEffect(() => { setUrl(`${window.location.origin}/learn/${studentId}`) }, [studentId])
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    } catch {
+      window.prompt(isEN ? 'Copie o seu link:' : 'Copy your link:', url)
+    }
+  }
+
+  return (
+    <div style={{ textAlign: 'left', background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.18)', borderRadius: 12, padding: '1rem' }}>
+      <div style={{ fontSize: 13, fontWeight: 700, marginBottom: '.3rem', color: '#fff' }}>
+        {isEN ? '🔑 Salve este link' : '🔑 Save this link'}
+      </div>
+      <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', lineHeight: 1.55, marginBottom: '.75rem' }}>
+        {isEN
+          ? 'É ele que te devolve ao curso, de qualquer aparelho. Guarde nos favoritos ou mande para você mesmo — sem ele, só o seu professor consegue recuperar o seu acesso.'
+          : 'This is how you get back into your course, from any device. Bookmark it or send it to yourself — without it, only your teacher can get you back in.'}
+      </div>
+
+      <div
+        style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 12, color: '#fff', background: 'rgba(0,0,0,.25)', border: '1px solid rgba(255,255,255,.15)', borderRadius: 8, padding: '.55rem .7rem', marginBottom: '.6rem', wordBreak: 'break-all' }}
+      >
+        {url}
+      </div>
+
+      <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap' }}>
+        <button
+          onClick={copy}
+          style={{ flex: '1 1 auto', padding: '.65rem 1rem', background: '#fff', border: 'none', borderRadius: 9, color: 'var(--ink)', fontSize: 13.5, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer' }}
+        >
+          {copied ? (isEN ? '✓ Link copiado' : '✓ Link copied') : (isEN ? '📋 Copiar link' : '📋 Copy link')}
+        </button>
+        <a
+          href={`/learn/${studentId}`}
+          style={{ flex: '1 1 auto', textAlign: 'center', padding: '.65rem 1rem', background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 9, color: '#fff', textDecoration: 'none', fontSize: 13.5, fontWeight: 600 }}
+        >
+          {isEN ? '📚 Começar o curso →' : '📚 Start my course →'}
+        </a>
+      </div>
+    </div>
+  )
 }

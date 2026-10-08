@@ -44,6 +44,10 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
   const [attempts, setAttempts] = useState<Attempt[]>([])
   const [dueCount, setDueCount] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
+  // "not found" and "could not load" must not look the same: for a student whose
+  // only credential is this link, a network hiccup reading as "you do not exist"
+  // is alarming and wrong.
+  const [loadFailed, setLoadFailed] = useState(false)
   // Only students who signed up have a session to end. Those reached through a
   // shared /learn/<id> link have nothing to log out of, so the button is hidden.
   const [signedIn, setSignedIn] = useState(false)
@@ -63,9 +67,13 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
 
   useEffect(() => {
     fetch(`/api/students/${studentId}`)
-      .then(r => r.json())
+      .then(async r => {
+        if (r.status === 404) return { student: null }
+        if (!r.ok) throw new Error(String(r.status))
+        return r.json()
+      })
       .then(data => { setStudent(data.student); setLoading(false) })
-      .catch(() => setLoading(false))
+      .catch(() => { setLoadFailed(true); setLoading(false) })
 
     fetch(`/api/student/attempts?studentId=${encodeURIComponent(studentId)}`)
       .then(r => r.json())
@@ -83,6 +91,24 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
       <div style={{ fontSize: 14, color: 'var(--ink3)' }}>{uiStrings('en-US').loading}</div>
     </div>
   )
+  if (loadFailed) {
+    const tf = uiStrings('en-US')
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--cream)', padding: '2rem' }}>
+        <div style={{ textAlign: 'center', maxWidth: 360 }}>
+          <div style={{ fontSize: 32, marginBottom: '.75rem' }}>📡</div>
+          <div style={{ fontSize: 14, color: 'var(--ink2)', lineHeight: 1.6, marginBottom: '1rem' }}>{tf.couldNotLoad}</div>
+          <button
+            onClick={() => window.location.reload()}
+            style={{ padding: '.7rem 1.4rem', borderRadius: 10, border: 'none', background: 'var(--ink)', color: '#fff', fontSize: 14, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+          >
+            {tf.tryAgain}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   if (!student) return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--cream)' }}>
       <div style={{ fontSize: 14, color: 'var(--ink3)' }}>{uiStrings('en-US').studentNotFound}</div>
@@ -141,6 +167,9 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
           </div>
         </div>
       </div>
+
+      {/* Access reminder — only for students who have no account to log in with */}
+      {student && !student.email && <SaveLinkNote studentId={studentId} t={t} />}
 
       {/* Review queue */}
       {dueCount !== null && (
@@ -272,6 +301,45 @@ function MyMistakes({ attempts, modules, t }: {
           )}
         </div>
       )}
+    </div>
+  )
+}
+
+/**
+ * A student created by the placement test has no password: this URL is their
+ * only way back. Students who signed up can log in at /entrar, so they do not
+ * see this.
+ */
+function SaveLinkNote({ studentId, t }: { studentId: string; t: UiStrings }) {
+  const [copied, setCopied] = useState(false)
+  const [url, setUrl] = useState('')
+
+  useEffect(() => { setUrl(`${window.location.origin}/learn/${studentId}`) }, [studentId])
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    } catch {
+      window.prompt(t.copyLink, url)
+    }
+  }
+
+  return (
+    <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>
+      <div style={{ background: 'var(--gold-light)', border: '1px solid #e8d48a', borderRadius: 12, padding: '.85rem 1rem', display: 'flex', alignItems: 'center', gap: '.85rem', flexWrap: 'wrap' }}>
+        <div style={{ flex: '1 1 260px' }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#7a5a0a', marginBottom: '.15rem' }}>🔑 {t.saveYourLink}</div>
+          <div style={{ fontSize: 12, color: '#9a6b0a', lineHeight: 1.5 }}>{t.saveYourLinkHint}</div>
+        </div>
+        <button
+          onClick={copy}
+          style={{ flexShrink: 0, padding: '.55rem .9rem', borderRadius: 9, border: '1px solid #e8d48a', background: '#fff', color: 'var(--ink)', fontSize: 12.5, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer' }}
+        >
+          {copied ? `✓ ${t.linkCopied}` : `📋 ${t.copyLink}`}
+        </button>
+      </div>
     </div>
   )
 }

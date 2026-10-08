@@ -74,6 +74,14 @@ export type UiStrings = {
   reviewDoneHint: string
   backToCourse: string
   reviewExplain: string
+
+  // Lembrete do link de acesso (aluno sem conta)
+  saveYourLink: string
+  saveYourLinkHint: string
+  copyLink: string
+  linkCopied: string
+  couldNotLoad: string
+  tryAgain: string
 }
 
 const EN: UiStrings = {
@@ -139,6 +147,13 @@ const EN: UiStrings = {
   reviewDoneHint: 'What you missed will come back sooner; what you got right, later.',
   backToCourse: 'Back to my course',
   reviewExplain: 'Get it right and it comes back later. Miss it and it comes back tomorrow.',
+
+  saveYourLink: 'Save this link',
+  saveYourLinkHint: 'This page is how you get back into your course. Bookmark it — without it, only your teacher can restore your access.',
+  copyLink: 'Copy link',
+  linkCopied: 'Link copied',
+  couldNotLoad: 'Could not load your course. Your link is fine — this is a connection problem.',
+  tryAgain: 'Try again',
 }
 
 const PT: UiStrings = {
@@ -204,6 +219,13 @@ const PT: UiStrings = {
   reviewDoneHint: 'O que você errou volta mais cedo; o que acertou, mais tarde.',
   backToCourse: 'Voltar para o curso',
   reviewExplain: 'Acertou, volta mais tarde. Errou, volta amanhã.',
+
+  saveYourLink: 'Salve este link',
+  saveYourLinkHint: 'Esta página é o seu acesso ao curso. Guarde nos favoritos — sem ela, só o seu professor consegue recuperar o seu acesso.',
+  copyLink: 'Copiar link',
+  linkCopied: 'Link copiado',
+  couldNotLoad: 'Não foi possível carregar seu curso. Seu link está certo — é um problema de conexão.',
+  tryAgain: 'Tentar de novo',
 }
 
 /** `lang` is the language being taught; the learner reads the other one. */
