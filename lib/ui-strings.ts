@@ -82,6 +82,22 @@ export type UiStrings = {
   linkCopied: string
   couldNotLoad: string
   tryAgain: string
+
+  // Prática (um item por vez)
+  practice: string
+  practiceStart: string
+  practiceEmpty: string
+  typeAnswer: string
+  verify: string
+  continueOn: string
+  correctFeedback: string
+  wrongFeedback: string
+  practiceDone: string
+  practiceScore: (right: number, total: number) => string
+  nextUnit: string
+  moduleFinished: string
+  practiceAgain: string
+  exitPractice: string
 }
 
 const EN: UiStrings = {
@@ -154,6 +170,21 @@ const EN: UiStrings = {
   linkCopied: 'Link copied',
   couldNotLoad: 'Could not load your course. Your link is fine — this is a connection problem.',
   tryAgain: 'Try again',
+
+  practice: 'Practice',
+  practiceStart: 'Practice this unit',
+  practiceEmpty: 'This unit has no exercises yet.',
+  typeAnswer: 'Type your answer',
+  verify: 'Check',
+  continueOn: 'Continue',
+  correctFeedback: 'Correct!',
+  wrongFeedback: 'Correct answer:',
+  practiceDone: 'Unit complete',
+  practiceScore: (right, total) => `${right} of ${total} correct`,
+  nextUnit: 'Next unit',
+  moduleFinished: 'You finished this module.',
+  practiceAgain: 'Practice again',
+  exitPractice: 'Back to my course',
 }
 
 const PT: UiStrings = {
@@ -226,6 +257,21 @@ const PT: UiStrings = {
   linkCopied: 'Link copiado',
   couldNotLoad: 'Não foi possível carregar seu curso. Seu link está certo — é um problema de conexão.',
   tryAgain: 'Tentar de novo',
+
+  practice: 'Praticar',
+  practiceStart: 'Praticar esta unit',
+  practiceEmpty: 'Esta unit ainda não tem exercícios.',
+  typeAnswer: 'Digite sua resposta',
+  verify: 'Conferir',
+  continueOn: 'Continuar',
+  correctFeedback: 'Acertou!',
+  wrongFeedback: 'Resposta certa:',
+  practiceDone: 'Unit concluída',
+  practiceScore: (right, total) => `${right} de ${total} certas`,
+  nextUnit: 'Próxima unit',
+  moduleFinished: 'Você terminou este módulo.',
+  practiceAgain: 'Praticar de novo',
+  exitPractice: 'Voltar para o curso',
 }
 
 /** `lang` is the language being taught; the learner reads the other one. */

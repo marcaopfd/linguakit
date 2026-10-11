@@ -12,11 +12,13 @@ interface Props {
   backHref: string
   progressKey: string
   studentId?: string   // when set, progress comes from the DB instead of localStorage
+  /** When set, each unit also offers the one-at-a-time drill. */
+  practiceBase?: string
   /** Language being taught; the chrome is shown in the learner's other language. */
   lang: string
 }
 
-export function ModulePageView({ mod, lessonBase, backHref, progressKey, studentId, lang }: Props) {
+export function ModulePageView({ mod, lessonBase, backHref, progressKey, studentId, lang, practiceBase }: Props) {
   const { done: progress } = useModuleProgress(mod.id, progressKey, studentId)
   const t = uiStrings(lang)
 
@@ -59,9 +61,17 @@ export function ModulePageView({ mod, lessonBase, backHref, progressKey, student
                   <div style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.3 }}>{unit.emoji} {unit.title}</div>
                   <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 1 }}>{unit.sub}</div>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
                   <div style={{ fontSize: 11, color: 'var(--ink3)' }}>{unit.duration}</div>
                   {isDone && <div style={{ fontSize: 11, color: 'var(--green)', fontWeight: 500 }}>✓ {t.done}</div>}
+                  {practiceBase && (
+                    <span
+                      onClick={e => { e.preventDefault(); e.stopPropagation(); window.location.href = `${practiceBase}/${mod.id}/${i}` }}
+                      style={{ fontSize: 11, fontWeight: 700, color: 'var(--ink)', background: 'var(--gold-light)', border: '1px solid #e8d48a', borderRadius: 6, padding: '.2rem .5rem', cursor: 'pointer', whiteSpace: 'nowrap' }}
+                    >
+                      ▶ {t.practice}
+                    </span>
+                  )}
                 </div>
               </div>
             </Link>

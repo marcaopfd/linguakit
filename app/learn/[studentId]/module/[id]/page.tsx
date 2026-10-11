@@ -29,6 +29,7 @@ export default async function LearnModulePage({
       backHref={`/learn/${studentId}`}
       progressKey={isEN ? 'lk_progress_en' : 'lk_progress'}
       studentId={studentId}
+      practiceBase={`/learn/${studentId}/praticar`}
       lang={isEN ? 'en-US' : 'pt-BR'}
     />
   )

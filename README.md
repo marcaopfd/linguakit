@@ -181,6 +181,21 @@ calculado em `lib/last-active.ts` a partir do registro mais recente de
 `StudentLesson` ou `ExerciseAttempt` — verde até 2 dias, âmbar até 7, vermelho
 depois. É o sinal mais acionável para saber quem está esfriando.
 
+## Prática (um item por vez)
+
+`/learn/[studentId]/praticar/[mod]/[unit]` é o laço de drill: uma questão por
+tela, resposta, feedback imediato, continuar — e no fim da unit um
+**Próxima unit →** que entra direto na seguinte, sem voltar ao menu. A tela de
+lição continua sendo o material de estudo; esta é a prática.
+
+`lib/drill.ts` achata os exercícios da unit numa lista só, **reusando as mesmas
+chaves de item da lição** (`c0-2`, `x1-3`). Isso importa: responder aqui ou na
+lição é o mesmo item para o registro de tentativas e para a fila de revisão,
+então nada é contado duas vezes nem re-enfileirado.
+
+Cada resposta vai para `/api/attempts` igual à lição, então a prática alimenta
+"Pontos fracos" e a revisão espaçada de graça.
+
 ## Revisão espaçada
 
 Um item errado numa lição entra na fila de revisão (`ReviewItem`) e volta em
