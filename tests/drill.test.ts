@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildDrill, isCorrect, nextUnitIndex } from '@/lib/drill'
+import { buildDrill, isCorrect, nextUnitIndex, spokenAnswer } from '@/lib/drill'
 import type { Unit } from '@/lib/curriculum'
 
 const unit = {
@@ -79,6 +79,77 @@ describe('isCorrect', () => {
 
   it('does not accept an index as an answer to a typed question', () => {
     expect(isCorrect(fill, 0)).toBe(false)
+  })
+
+  it('still holds typed answers to the letter by default', () => {
+    expect(isCorrect(translation, 'I am a doctor')).toBe(false)   // missing stop
+  })
+
+  describe('when the item is judged loosely', () => {
+    const dictation = { ...fill, expected: 'Até amanhã, tudo bem?', compare: 'loose' as const }
+
+    it('forgives accents, since the ear is what is being trained', () => {
+      expect(isCorrect(dictation, 'ate amanha, tudo bem?')).toBe(true)
+    })
+
+    it('forgives punctuation and extra spacing', () => {
+      expect(isCorrect(dictation, 'Até amanhã tudo bem')).toBe(true)
+      expect(isCorrect(dictation, '  até   amanhã  tudo bem  ')).toBe(true)
+    })
+
+    it('still rejects the wrong words', () => {
+      expect(isCorrect(dictation, 'até logo tudo bem')).toBe(false)
+      expect(isCorrect(dictation, '')).toBe(false)
+    })
+  })
+})
+
+describe('spokenAnswer', () => {
+  it('reads a gapped sentence back whole, which is the useful audio', () => {
+    expect(spokenAnswer('Eu ___ Sarah.', 'sou')).toBe('Eu sou Sarah.')
+    expect(spokenAnswer('Ela ___ brasileira.', 'é')).toBe('Ela é brasileira.')
+  })
+
+  it('falls back to the answer when there is no gap to fill', () => {
+    expect(spokenAnswer('I am a doctor.', 'Eu sou médico.')).toBe('Eu sou médico.')
+  })
+
+  it('fills every gap in a sentence that has more than one', () => {
+    expect(spokenAnswer('___ e ___', 'oi')).toBe('oi e oi')
+  })
+})
+
+describe('audio on the authored exercises', () => {
+  it('gives each one a spoken form, held back until the answer is out', () => {
+    for (const item of buildDrill(unit)) {
+      expect(item.audio?.text, item.key).toBeTruthy()
+      expect(item.audio?.afterAnswer, item.key).toBe(true)
+      expect(item.audio?.auto, item.key).toBeFalsy()
+    }
+  })
+
+  it('speaks the completed sentence for a gap, the answer otherwise', () => {
+    const items = buildDrill(unit)
+    expect(items.find(i => i.key === 'c1-0')!.audio!.text).toBe('Eu sou Sarah.')
+    expect(items.find(i => i.key === 'x0-0')!.audio!.text).toBe('I am a doctor.')
+  })
+})
+
+describe('ordering', () => {
+  it('climbs from recognition to production', () => {
+    // Multiple choice before fill in the blank before translation, whichever
+    // block they were authored in.
+    const stages = buildDrill(unit).map(i => i.stage!)
+    expect(stages).toEqual([...stages].sort((a, b) => a - b))
+  })
+
+  it('keeps authored order within one step', () => {
+    const mc = buildDrill(unit).filter(i => i.type === 'Multiple choice')
+    expect(mc.map(i => i.key)).toEqual(['c0-0', 'c0-1'])
+  })
+
+  it('leaves the generated activities out unless asked for them', () => {
+    expect(buildDrill(unit).every(i => /^[cx]/.test(i.key))).toBe(true)
   })
 })
 

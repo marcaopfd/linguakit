@@ -24,6 +24,8 @@ export default async function PracticePage({
   const unit = mod?.units[unitIndex]
   if (!mod || !unit) notFound()
 
+  const lang = isEN ? 'en-US' : 'pt-BR'
+
   return (
     <PracticeView
       studentId={studentId}
@@ -31,9 +33,11 @@ export default async function PracticePage({
       unitIndex={unitIndex}
       unitTitle={unit.title}
       moduleLabel={mod.label}
-      items={buildDrill(unit)}
+      // Built here, on the server: the generated activities shuffle, and a
+      // shuffle repeated in the browser would not match the server render.
+      items={buildDrill(unit, { lang, seed: `${mod.id}-${unitIndex}` })}
       nextUnit={nextUnitIndex(unitIndex, mod.units.length)}
-      lang={isEN ? 'en-US' : 'pt-BR'}
+      lang={lang}
     />
   )
 }

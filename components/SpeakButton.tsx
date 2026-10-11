@@ -13,10 +13,16 @@ import { cancelSpeech, loadVoices, pickVoice, speak, speechSupported } from '@/l
 export function useVoice(lang: string) {
   const [voice, setVoice] = useState<SpeechSynthesisVoice | null>(null)
   const [ready, setReady] = useState(false)
+  // Null until the client has looked: a screen whose question IS the audio must
+  // not fall back to showing the text during that first render, or it hands the
+  // answer over for a frame.
+  const [supported, setSupported] = useState<boolean | null>(null)
 
   useEffect(() => {
     let cancelled = false
-    if (!speechSupported()) return
+    const can = speechSupported()
+    setSupported(can)
+    if (!can) return
 
     loadVoices().then(voices => {
       if (cancelled) return
@@ -30,7 +36,7 @@ export function useVoice(lang: string) {
   // Stop audio when leaving the lesson; speechSynthesis outlives the component.
   useEffect(() => cancelSpeech, [])
 
-  return { voice, ready }
+  return { voice, ready, supported }
 }
 
 type Props = {

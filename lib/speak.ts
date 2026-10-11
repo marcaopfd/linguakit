@@ -1,5 +1,7 @@
 'use client'
 
+import { normaliseForSpeech } from './speech-text'
+
 /**
  * Text-to-speech through the browser's built-in Web Speech API.
  *
@@ -29,21 +31,10 @@ const PREFERRED: Record<string, string[]> = {
 }
 
 /**
- * Strips editorial asides that read badly out loud, e.g. the gloss in
- * "book (a ticket)" or "boa noite (ao chegar)". Safe on full sentences too.
+ * The text tidying lives in a non-client module so the server can use it too,
+ * and is re-exported here because this is where callers already look for it.
  */
-export function normaliseForSpeech(text: string): string {
-  return text.replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim()
-}
-
-/**
- * Vocabulary entries list synonyms as "olá / oi". Speaking the slash turns into
- * noise, so only the first variant is pronounced. Sentences never go through
- * this — a slash inside one is meaningful.
- */
-export function firstVariant(term: string): string {
-  return normaliseForSpeech(term.split('/')[0])
-}
+export { firstVariant, normaliseForSpeech } from './speech-text'
 
 export function speechSupported(): boolean {
   return typeof window !== 'undefined' && 'speechSynthesis' in window

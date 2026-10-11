@@ -98,6 +98,24 @@ export type UiStrings = {
   moduleFinished: string
   practiceAgain: string
   exitPractice: string
+
+  // Atividades geradas a partir da unidade
+  actListenChoose: string
+  actListenChooseHint: string
+  actSayIt: string
+  actSayItHint: string
+  actDialogueGap: string
+  actDialogueGapHint: string
+  actWordOrder: string
+  actWordOrderHint: string
+  actDictation: string
+  actDictationHint: string
+  playAudio: string
+  playAgain: string
+  hearAnswer: string
+  tapWordsInOrder: string
+  clearSentence: string
+  noAudioHere: string
 }
 
 const EN: UiStrings = {
@@ -185,6 +203,23 @@ const EN: UiStrings = {
   moduleFinished: 'You finished this module.',
   practiceAgain: 'Practice again',
   exitPractice: 'Back to my course',
+
+  actListenChoose: 'Listen and choose',
+  actListenChooseHint: 'Play the audio and pick what it means.',
+  actSayIt: 'Say it in Portuguese',
+  actSayItHint: 'Pick the Portuguese for this. Tap an option to hear it.',
+  actDialogueGap: 'The reply',
+  actDialogueGapHint: 'Listen to the line, then choose the reply that follows',
+  actWordOrder: 'Build the sentence',
+  actWordOrderHint: 'Listen, then tap the words in the right order.',
+  actDictation: 'Dictation',
+  actDictationHint: 'Listen and write what you hear. Accents and punctuation are not counted.',
+  playAudio: 'Play',
+  playAgain: 'Play again',
+  hearAnswer: 'Hear it',
+  tapWordsInOrder: 'Tap the words in order',
+  clearSentence: 'Start over',
+  noAudioHere: 'This device has no voice for Portuguese, so the text is shown instead.',
 }
 
 const PT: UiStrings = {
@@ -272,6 +307,23 @@ const PT: UiStrings = {
   moduleFinished: 'Você terminou este módulo.',
   practiceAgain: 'Praticar de novo',
   exitPractice: 'Voltar para o curso',
+
+  actListenChoose: 'Ouvir e escolher',
+  actListenChooseHint: 'Toque para ouvir e escolha o que significa.',
+  actSayIt: 'Como se diz em inglês',
+  actSayItHint: 'Escolha a frase em inglês. Toque numa opção para ouvir.',
+  actDialogueGap: 'A resposta',
+  actDialogueGapHint: 'Ouça a fala e escolha a resposta que vem depois',
+  actWordOrder: 'Montar a frase',
+  actWordOrderHint: 'Ouça e toque nas palavras na ordem certa.',
+  actDictation: 'Ditado',
+  actDictationHint: 'Ouça e escreva o que você ouviu. Acento e pontuação não contam.',
+  playAudio: 'Ouvir',
+  playAgain: 'Ouvir de novo',
+  hearAnswer: 'Ouvir',
+  tapWordsInOrder: 'Toque nas palavras na ordem',
+  clearSentence: 'Começar de novo',
+  noAudioHere: 'Este aparelho não tem voz em inglês, então o texto aparece no lugar.',
 }
 
 /** `lang` is the language being taught; the learner reads the other one. */
