@@ -450,6 +450,7 @@ function ExerciseCard({
                     return (
                       <button
                         key={oi}
+                        className={isRevealed && userAns === oi ? (oi === item.ans ? 'lk-pop' : 'lk-shake') : undefined}
                         onClick={() => {
                           setAnswers({ ...answers, [key]: oi })
                           setRevealed({ ...revealed, [key]: true })
@@ -473,7 +474,7 @@ function ExerciseCard({
                 </div>
               ) : (
                 <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
-                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder={t.typeYourAnswer} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? '#e8fdf0' : '#fdecea') : '#fff' }} />
+                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder={t.typeYourAnswer} className={isRevealed ? (correct ? 'lk-pop' : 'lk-shake') : undefined} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? '#e8fdf0' : '#fdecea') : '#fff' }} />
                   <button
                     onClick={() => {
                       setRevealed({ ...revealed, [key]: true })

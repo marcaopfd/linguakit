@@ -125,7 +125,7 @@ export function PracticeView({
 
   return (
     <Shell studentId={studentId} t={t} title={unitTitle} label={moduleLabel} progress={(index / items.length) * 100}>
-      <Card>
+      <Card animateKey={index}>
         <div style={{ fontSize: 10.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.5rem' }}>
           {item.type}
         </div>
@@ -146,6 +146,7 @@ export function PracticeView({
                   key={oi}
                   onClick={() => !checked && setChoice(oi)}
                   disabled={checked}
+                  className={checked && picked ? (right ? 'lk-pop' : 'lk-shake') : undefined}
                   style={{ textAlign: 'left', padding: '.85rem 1rem', borderRadius: 12, border: `1.5px solid ${border}`, background: bg, color, fontSize: 15.5, fontFamily: 'inherit', cursor: checked ? 'default' : 'pointer' }}
                 >
                   {opt}
@@ -160,15 +161,17 @@ export function PracticeView({
             onKeyDown={e => { if (e.key === 'Enter') (checked ? advance() : check()) }}
             placeholder={t.typeAnswer}
             disabled={checked}
+            className={checked ? (right ? 'lk-pop' : 'lk-shake') : undefined}
             autoFocus
             style={{ width: '100%', padding: '.85rem 1rem', fontSize: 16, borderRadius: 12, fontFamily: 'inherit', background: checked ? (right ? '#eaf7ee' : '#fdecea') : '#fff', border: `1.5px solid ${checked ? (right ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, outline: 'none' }}
           />
         )}
 
         {checked && (
-          <div style={{ marginTop: '1rem', padding: '.85rem 1rem', borderRadius: 12, background: right ? '#eaf7ee' : '#fdecea', border: `1px solid ${right ? '#b7e4c7' : '#f5c6c2'}` }}>
+          <div className="lk-rise" style={{ marginTop: '1rem', padding: '.85rem 1rem', borderRadius: 12, background: right ? '#eaf7ee' : '#fdecea', border: `1px solid ${right ? '#b7e4c7' : '#f5c6c2'}`, display: 'flex', alignItems: 'center', gap: '.6rem' }}>
+            {right ? <CorrectMark /> : <WrongMark />}
             <div style={{ fontSize: 14, fontWeight: 700, color: right ? '#1f6b2e' : 'var(--red)' }}>
-              {right ? `✓ ${t.correctFeedback}` : `✗ ${t.wrongFeedback} ${item.expected}`}
+              {right ? t.correctFeedback : `${t.wrongFeedback} ${item.expected}`}
             </div>
           </div>
         )}
@@ -185,15 +188,37 @@ export function PracticeView({
   )
 }
 
+/** A tick that draws itself, with a ring pulsing out behind it. */
+function CorrectMark() {
+  return (
+    <span style={{ position: 'relative', display: 'inline-flex', width: 22, height: 22, flexShrink: 0 }}>
+      <span className="lk-ring" style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: 'var(--green)' }} />
+      <svg className="lk-check" width="22" height="22" viewBox="0 0 24 24" fill="none" style={{ position: 'relative' }}>
+        <path d="M5 13l4.5 4.5L19 7" stroke="#1f6b2e" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  )
+}
+
+function WrongMark() {
+  return (
+    <svg className="lk-check" width="22" height="22" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+      <path d="M7 7l10 10M17 7L7 17" stroke="var(--red)" strokeWidth="2.6" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 const secondaryBtn: React.CSSProperties = {
   flex: 1, padding: '.75rem', borderRadius: 10, border: '1px solid var(--border)',
   background: 'var(--paper)', color: 'var(--ink2)', fontSize: 13.5, fontWeight: 600,
   fontFamily: 'inherit', cursor: 'pointer',
 }
 
-function Card({ children }: { children: React.ReactNode }) {
+function Card({ children, animateKey }: { children: React.ReactNode; animateKey?: string | number }) {
   return (
-    <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 16, padding: '1.5rem' }}>
+    // `key` restarts the entrance animation on each new question; without it
+    // React reuses the node and the card never moves again.
+    <div key={animateKey} className="lk-card" style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 16, padding: '1.5rem' }}>
       {children}
     </div>
   )

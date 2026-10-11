@@ -27,3 +27,63 @@ body {
 .font-display {
   font-family: 'Fraunces', serif;
 }
+
+/* ─── Feedback de exercício ───────────────────────────────────────────────
+   Movimento curto e legível: a resposta certa dá um pulo suave, a errada
+   treme. O objetivo é comunicar antes da leitura, não decorar.            */
+
+@keyframes lk-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes lk-shake {
+  0%, 100% { transform: translateX(0); }
+  15%      { transform: translateX(-7px); }
+  30%      { transform: translateX(6px); }
+  45%      { transform: translateX(-4px); }
+  60%      { transform: translateX(3px); }
+  80%      { transform: translateX(-1px); }
+}
+
+@keyframes lk-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lk-card-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* O ✓ se desenha em vez de aparecer pronto. */
+@keyframes lk-draw {
+  from { stroke-dashoffset: 36; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes lk-ring {
+  from { opacity: .55; transform: scale(.75); }
+  to   { opacity: 0;   transform: scale(1.9); }
+}
+
+.lk-pop   { animation: lk-pop .32s ease-out; }
+.lk-shake { animation: lk-shake .42s ease-in-out; }
+.lk-rise  { animation: lk-rise .26s ease-out both; }
+.lk-card  { animation: lk-card-in .28s ease-out both; }
+.lk-ring  { animation: lk-ring .6s ease-out forwards; }
+
+.lk-check path {
+  stroke-dasharray: 36;
+  animation: lk-draw .4s .08s ease-out both;
+}
+
+/* Quem pediu menos movimento no sistema recebe o estado final, sem o trajeto. */
+@media (prefers-reduced-motion: reduce) {
+  .lk-pop, .lk-shake, .lk-rise, .lk-card, .lk-ring, .lk-check path {
+    animation: none;
+  }
+  .lk-check path { stroke-dashoffset: 0; }
+  .lk-ring { opacity: 0; }
+}
