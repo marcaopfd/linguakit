@@ -513,11 +513,37 @@ function buildFallbackCode(result: ReturnType<typeof calculateResult>, name: str
  * lost the account with no warning.
  */
 function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [newsletter, setNewsletter] = useState(false)
+  const [error, setError] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [claimed, setClaimed] = useState(false)
   const [copied, setCopied] = useState(false)
   const [url, setUrl] = useState(`/learn/${studentId}`)
 
   // location is not available during the server render.
   useEffect(() => { setUrl(`${window.location.origin}/learn/${studentId}`) }, [studentId])
+
+  const ready = email.trim().length > 0 && password.length >= 8
+
+  async function claim(e: React.FormEvent) {
+    e.preventDefault()
+    if (!ready || saving) return
+    setSaving(true)
+    setError('')
+
+    const res = await fetch('/api/student/claim', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ studentId, email, password, newsletter }),
+    })
+    const data = await res.json().catch(() => ({}))
+
+    if (res.ok) setClaimed(true)
+    else setError(data.error ?? (isEN ? 'Não foi possível criar a conta.' : 'Could not create your account.'))
+    setSaving(false)
+  }
 
   async function copy() {
     try {
@@ -529,37 +555,114 @@ function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
     }
   }
 
+  const label = (pt: string, en: string) => (isEN ? pt : en)
+
+  if (claimed) {
+    return (
+      <div style={{ textAlign: 'left', background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.18)', borderRadius: 12, padding: '1rem' }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: '.3rem' }}>
+          {label('✅ Conta criada', '✅ Account created')}
+        </div>
+        <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', lineHeight: 1.55, marginBottom: '.85rem' }}>
+          {label(
+            'Agora você entra de qualquer aparelho com seu e-mail e senha, e estuda no seu ritmo.',
+            'You can now sign in from any device with your email and password, and study at your own pace.',
+          )}
+        </div>
+        <a
+          href={`/learn/${studentId}`}
+          style={{ display: 'block', textAlign: 'center', padding: '.7rem 1rem', background: '#fff', borderRadius: 9, color: 'var(--ink)', textDecoration: 'none', fontSize: 14, fontWeight: 700 }}
+        >
+          {label('📚 Começar o curso →', '📚 Start my course →')}
+        </a>
+      </div>
+    )
+  }
+
   return (
     <div style={{ textAlign: 'left', background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.18)', borderRadius: 12, padding: '1rem' }}>
       <div style={{ fontSize: 13, fontWeight: 700, marginBottom: '.3rem', color: '#fff' }}>
-        {isEN ? '🔑 Salve este link' : '🔑 Save this link'}
+        {label('🔑 Crie sua senha para estudar sozinha', '🔑 Create a password to study on your own')}
       </div>
-      <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', lineHeight: 1.55, marginBottom: '.75rem' }}>
-        {isEN
-          ? 'É ele que te devolve ao curso, de qualquer aparelho. Guarde nos favoritos ou mande para você mesmo — sem ele, só o seu professor consegue recuperar o seu acesso.'
-          : 'This is how you get back into your course, from any device. Bookmark it or send it to yourself — without it, only your teacher can get you back in.'}
-      </div>
-
-      <div
-        style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 12, color: '#fff', background: 'rgba(0,0,0,.25)', border: '1px solid rgba(255,255,255,.15)', borderRadius: 8, padding: '.55rem .7rem', marginBottom: '.6rem', wordBreak: 'break-all' }}
-      >
-        {url}
+      <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', lineHeight: 1.55, marginBottom: '.85rem' }}>
+        {label(
+          'Assim você volta ao curso de qualquer aparelho, sem depender de guardar um link. Seu resultado do teste fica salvo.',
+          'This lets you come back from any device without having to keep a link. Your test result stays with you.',
+        )}
       </div>
 
-      <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap' }}>
+      <form onSubmit={claim}>
+        <input
+          type="email" value={email} onChange={e => setEmail(e.target.value)}
+          placeholder={label('voce@exemplo.com', 'you@example.com')}
+          style={fieldStyle}
+        />
+        <input
+          type="password" value={password} onChange={e => setPassword(e.target.value)}
+          placeholder={label('Senha (mínimo 8 caracteres)', 'Password (at least 8 characters)')}
+          style={fieldStyle}
+        />
+
+        <label style={{ display: 'flex', gap: '.5rem', alignItems: 'flex-start', cursor: 'pointer', marginBottom: '.75rem' }}>
+          <input type="checkbox" checked={newsletter} onChange={e => setNewsletter(e.target.checked)} style={{ marginTop: 2, width: 15, height: 15, flexShrink: 0, cursor: 'pointer' }} />
+          <span style={{ fontSize: 11.5, color: 'rgba(255,255,255,.55)', lineHeight: 1.45 }}>
+            {label(
+              'Quero receber dicas de estudo por e-mail. Pode cancelar quando quiser.',
+              'Send me study tips by email. You can unsubscribe any time.',
+            )}
+          </span>
+        </label>
+
+        {error && (
+          <div style={{ fontSize: 12.5, color: '#ffb4ab', marginBottom: '.6rem', lineHeight: 1.45 }}>{error}</div>
+        )}
+
         <button
-          onClick={copy}
-          style={{ flex: '1 1 auto', padding: '.65rem 1rem', background: '#fff', border: 'none', borderRadius: 9, color: 'var(--ink)', fontSize: 13.5, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer' }}
+          type="submit"
+          disabled={!ready || saving}
+          style={{ width: '100%', padding: '.7rem 1rem', background: !ready || saving ? 'rgba(255,255,255,.2)' : '#fff', border: 'none', borderRadius: 9, color: !ready || saving ? 'rgba(255,255,255,.6)' : 'var(--ink)', fontSize: 14, fontWeight: 700, fontFamily: 'inherit', cursor: !ready || saving ? 'default' : 'pointer' }}
         >
-          {copied ? (isEN ? '✓ Link copiado' : '✓ Link copied') : (isEN ? '📋 Copiar link' : '📋 Copy link')}
+          {saving ? label('Criando...', 'Creating...') : label('Criar conta e começar →', 'Create account and start →')}
         </button>
-        <a
-          href={`/learn/${studentId}`}
-          style={{ flex: '1 1 auto', textAlign: 'center', padding: '.65rem 1rem', background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 9, color: '#fff', textDecoration: 'none', fontSize: 13.5, fontWeight: 600 }}
-        >
-          {isEN ? '📚 Começar o curso →' : '📚 Start my course →'}
-        </a>
-      </div>
+      </form>
+
+      <details style={{ marginTop: '.85rem' }}>
+        <summary style={{ fontSize: 12, color: 'rgba(255,255,255,.5)', cursor: 'pointer' }}>
+          {label('Prefiro só guardar o link', 'I would rather just keep the link')}
+        </summary>
+        <div style={{ marginTop: '.6rem' }}>
+          <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,.5)', lineHeight: 1.5, marginBottom: '.5rem' }}>
+            {label(
+              'Sem senha, este link é o seu único acesso — se perdê-lo, só o seu professor recupera.',
+              'Without a password this link is your only way in — lose it and only your teacher can get you back.',
+            )}
+          </div>
+          <div style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 11.5, color: '#fff', background: 'rgba(0,0,0,.25)', border: '1px solid rgba(255,255,255,.15)', borderRadius: 8, padding: '.5rem .65rem', marginBottom: '.5rem', wordBreak: 'break-all' }}>
+            {url}
+          </div>
+          <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap' }}>
+            <button onClick={copy} type="button" style={{ flex: '1 1 auto', padding: '.55rem .9rem', background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 8, color: '#fff', fontSize: 12.5, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}>
+              {copied ? label('✓ Link copiado', '✓ Link copied') : label('📋 Copiar link', '📋 Copy link')}
+            </button>
+            <a href={`/learn/${studentId}`} style={{ flex: '1 1 auto', textAlign: 'center', padding: '.55rem .9rem', background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 8, color: '#fff', textDecoration: 'none', fontSize: 12.5, fontWeight: 600 }}>
+              {label('📚 Começar sem conta', '📚 Start without an account')}
+            </a>
+          </div>
+        </div>
+      </details>
     </div>
   )
+}
+
+const fieldStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '.65rem .8rem',
+  marginBottom: '.6rem',
+  borderRadius: 9,
+  border: '1px solid rgba(255,255,255,.22)',
+  background: 'rgba(0,0,0,.22)',
+  color: '#fff',
+  fontSize: 14,
+  fontFamily: 'inherit',
+  outline: 'none',
 }

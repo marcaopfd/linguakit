@@ -70,6 +70,9 @@ export async function POST(req: NextRequest) {
     const student = await withDb(() => prisma.student.create({
       data: {
         name: name || 'Student',
+        // Also on the Student, not only on the TestResult: it is what the course
+        // screens read first, and leaving it null made every reader fall back.
+        course: course === 'en' ? 'en' : 'pt',
         testResult: {
           create: {
             level,
