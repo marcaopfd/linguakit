@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Fraunces, DM_Sans } from 'next/font/google'
 import './globals.css'
 
@@ -20,6 +20,21 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: 'LinguaKit — Brazilian Portuguese',
   description: 'Professional Brazilian Portuguese teaching platform by Marcos',
+  icons: {
+    icon: [{ url: '/icon-192.png', sizes: '192x192', type: 'image/png' }],
+    // iOS uses this one for the home-screen tile.
+    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
+  // iOS reads these when the learner adds the site to their home screen.
+  appleWebApp: {
+    capable: true,
+    title: 'LinguaKit',
+    statusBarStyle: 'black-translucent',
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#1a1814',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -30,7 +30,11 @@ export function proxy(req: NextRequest) {
   if (
     PUBLIC_PATHS.some(p => pathname.startsWith(p)) ||
     pathname.startsWith('/_next') ||
-    pathname.startsWith('/favicon')
+    pathname.startsWith('/favicon') ||
+    // Home-screen install assets: iOS fetches these without a session, and a
+    // redirect here silently gives the learner a generic icon.
+    pathname === '/manifest.webmanifest' ||
+    /^\/(apple-icon|icon-192|icon-512)\.png$/.test(pathname)
   ) {
     return NextResponse.next()
   }
