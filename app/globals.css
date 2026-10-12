@@ -98,3 +98,44 @@ body {
 @media (max-width: 420px) {
   .lk-pair-grid { grid-template-columns: 1fr; }
 }
+
+/* ---------- O mascote ---------- */
+
+/* Pivôs em coordenadas do viewBox: a orelha gira na base, o rabo na garupa. */
+.lk-dog-ear  { transform-box: view-box; transform-origin: 136px 82px; transition: transform .25s ease-out; }
+.lk-dog-tail { transform-box: view-box; transform-origin: 272px 240px; }
+.lk-dog      { transition: transform .25s ease-out; }
+
+@keyframes lk-wag {
+  0%, 100% { transform: rotate(-6deg); }
+  50%      { transform: rotate(-30deg); }
+}
+@keyframes lk-hop {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-9px); }
+  55%  { transform: translateY(0); }
+  72%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+@keyframes lk-tail-drop {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(46deg); }
+}
+
+/* Acertou: o rabo abana sem parar e o corpo dá um pulinho. */
+.lk-dog-happy .lk-dog-tail { animation: lk-wag .34s ease-in-out infinite; }
+.lk-dog-happy              { animation: lk-hop .5s ease-out; }
+.lk-dog-happy .lk-dog-ear  { transform: rotate(-21deg); }
+
+/* Errou: orelha cai, rabo desce e fica, o corpo encolhe um pouco. */
+.lk-dog-sad .lk-dog-tail { animation: lk-tail-drop .35s ease-out both; }
+.lk-dog-sad .lk-dog-ear  { transform: rotate(29deg); }
+.lk-dog-sad              { transform: translateY(5px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .lk-dog, .lk-dog-tail, .lk-dog-ear { animation: none; transition: none; }
+  /* As poses continuam, só não há movimento: a cara ainda diz o que aconteceu.
+     Sem a animação o rabo perderia a altura, que é metade do recado. */
+  .lk-dog-happy .lk-dog-tail { transform: rotate(-18deg); }
+  .lk-dog-sad   .lk-dog-tail { transform: rotate(46deg); }
+}

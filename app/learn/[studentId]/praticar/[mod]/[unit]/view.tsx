@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { Caramelo } from '@/components/Caramelo'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
 import { isCorrect, roundBounds, roundCount, roundOf, type DrillItem } from '@/lib/drill'
 import { speak } from '@/lib/speak'
@@ -237,10 +238,19 @@ export function PracticeView({
       round={round + 1} rounds={rounds}
     >
       <Card animateKey={index}>
-        <div style={{ fontSize: 10.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.5rem' }}>
-          {item.type}
+        {/* The mascot sits in the corner the type label leaves empty, so he
+            costs no height on a phone — which matters, he is always there. */}
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.75rem', marginBottom: '.85rem' }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 10.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.5rem' }}>
+              {item.type}
+            </div>
+            <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.45 }}>{item.instruction}</div>
+          </div>
+          <div style={{ flexShrink: 0, color: 'var(--ink)', marginTop: -2 }}>
+            <Caramelo mood={!checked ? 'idle' : right ? 'happy' : 'sad'} size={58} />
+          </div>
         </div>
-        <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginBottom: '.85rem', lineHeight: 1.45 }}>{item.instruction}</div>
 
         {revealSpokenText ? (
           <div style={{ marginBottom: '1.25rem' }}>
