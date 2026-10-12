@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
-import { isCorrect, type DrillItem } from '@/lib/drill'
+import { isCorrect, roundBounds, roundCount, roundOf, type DrillItem } from '@/lib/drill'
 import { speak } from '@/lib/speak'
 import { uiStrings } from '@/lib/ui-strings'
 
@@ -42,10 +42,19 @@ export function PracticeView({
   const [picked, setPicked] = useState<number[]>([])
   const [checked, setChecked] = useState(false)
   const [rightCount, setRightCount] = useState(0)
+  // Set when a round ends, so the learner gets a breather instead of the next
+  // question appearing as if nothing had happened.
+  const [resting, setResting] = useState(false)
+  const [roundRight, setRoundRight] = useState(0)
 
   const item = items[index]
   const finished = index >= items.length
   const ordering = item?.kind === 'order'
+
+  const rounds = roundCount(items.length)
+  const round = roundOf(index, items.length)
+  const bounds = roundBounds(round, items.length)
+  const roundLength = bounds.end - bounds.start
 
   const assembled = ordering && item.tokens
     ? picked.map(i => item.tokens![i]).join(' ')
@@ -69,7 +78,10 @@ export function PracticeView({
   const check = useCallback(() => {
     if (!item || checked || !canCheck) return
     setChecked(true)
-    if (right) setRightCount(c => c + 1)
+    if (right) {
+      setRightCount(c => c + 1)
+      setRoundRight(c => c + 1)
+    }
 
     // Hearing the right form at the moment of judgement is the whole point of
     // the audio on a written exercise.
@@ -100,17 +112,71 @@ export function PracticeView({
     setChoice(null)
     setTyped('')
     setPicked([])
-    setIndex(i => i + 1)
+    setIndex(i => {
+      const next = i + 1
+      // A boundary that is not the end of the unit earns a round screen.
+      if (next < items.length && next === roundBounds(roundOf(i, items.length), items.length).end) {
+        setResting(true)
+      }
+      return next
+    })
+  }, [items.length])
+
+  const nextRound = useCallback(() => {
+    setResting(false)
+    setRoundRight(0)
   }, [])
 
   function restart() {
-    setIndex(0); setChoice(null); setTyped(''); setPicked([]); setChecked(false); setRightCount(0)
+    setIndex(0); setChoice(null); setTyped(''); setPicked([])
+    setChecked(false); setRightCount(0); setRoundRight(0); setResting(false)
   }
 
   if (items.length === 0) {
     return (
-      <Shell studentId={studentId} t={t} title={unitTitle} label={moduleLabel} progress={0}>
+      <Shell studentId={studentId} t={t} title={unitTitle} label={moduleLabel} progress={0} round={1} rounds={1}>
         <Card><div style={{ fontSize: 14, color: 'var(--ink3)' }}>{t.practiceEmpty}</div></Card>
+      </Shell>
+    )
+  }
+
+  if (resting && !finished) {
+    const previous = roundOf(index - 1, items.length)
+    const { start, end } = roundBounds(previous, items.length)
+    const size = end - start
+    const pct = size ? Math.round((roundRight / size) * 100) : 0
+
+    return (
+      <Shell
+        studentId={studentId} t={t} title={unitTitle} label={moduleLabel}
+        progress={100} round={previous + 1} rounds={rounds}
+      >
+        <Card animateKey={`rest-${previous}`}>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.75rem' }}>
+              <Medal />
+            </div>
+            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 21, fontWeight: 700, marginBottom: '.2rem' }}>
+              {t.roundDone}
+            </div>
+            <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: '.2rem' }}>
+              {t.roundLabel(previous + 1, rounds)} · {t.practiceScore(roundRight, size)} · {pct}%
+            </div>
+            <div style={{ fontSize: 13, color: 'var(--ink3)', marginBottom: '1.25rem' }}>
+              {t.roundDoneHint}
+            </div>
+
+            <button
+              onClick={nextRound}
+              style={{ width: '100%', padding: '.9rem', background: 'var(--green)', color: '#fff', borderRadius: 12, border: 'none', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer', marginBottom: '.6rem' }}
+            >
+              {t.keepGoing} →
+            </button>
+            <Link href={`/learn/${studentId}`} style={{ ...secondaryBtn, display: 'block', textAlign: 'center', textDecoration: 'none' }}>
+              {t.takeABreak}
+            </Link>
+          </div>
+        </Card>
       </Shell>
     )
   }
@@ -118,7 +184,7 @@ export function PracticeView({
   if (finished) {
     const pct = Math.round((rightCount / items.length) * 100)
     return (
-      <Shell studentId={studentId} t={t} title={unitTitle} label={moduleLabel} progress={100}>
+      <Shell studentId={studentId} t={t} title={unitTitle} label={moduleLabel} progress={100} round={rounds} rounds={rounds}>
         <Card>
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontSize: 40, marginBottom: '.5rem' }}>{pct >= 80 ? '🎉' : '✅'}</div>
@@ -158,31 +224,38 @@ export function PracticeView({
   // Only reveal the text of a spoken question once we know this device cannot
   // speak at all. While that is still unknown, the player stands in its place.
   const revealSpokenText = audioIsQuestion && audio.supported === false
+  // Word order has audio but nothing written to hang a small speaker off, and
+  // its instruction says to listen — so it gets the big player too.
+  const wantsBigPlayer = Boolean(
+    item.audio && !item.audio.afterAnswer && (audioIsQuestion || !item.question),
+  )
 
   return (
-    <Shell studentId={studentId} t={t} title={unitTitle} label={moduleLabel} progress={(index / items.length) * 100}>
+    <Shell
+      studentId={studentId} t={t} title={unitTitle} label={moduleLabel}
+      progress={roundLength ? ((index - bounds.start) / roundLength) * 100 : 0}
+      round={round + 1} rounds={rounds}
+    >
       <Card animateKey={index}>
         <div style={{ fontSize: 10.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.5rem' }}>
           {item.type}
         </div>
         <div style={{ fontSize: 12.5, color: 'var(--ink3)', marginBottom: '.85rem', lineHeight: 1.45 }}>{item.instruction}</div>
 
-        {audioIsQuestion ? (
-          revealSpokenText ? (
-            <div style={{ marginBottom: '1.25rem' }}>
-              <div style={{ fontSize: 19, lineHeight: 1.45, fontWeight: 500 }}>{item.question}</div>
-              <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: '.5rem' }}>{t.noAudioHere}</div>
-            </div>
-          ) : (
-            <BigPlayer
-              text={item.audio!.text}
-              lang={lang}
-              voice={audio.voice}
-              ready={audio.ready}
-              label={t.playAudio}
-              again={t.playAgain}
-            />
-          )
+        {revealSpokenText ? (
+          <div style={{ marginBottom: '1.25rem' }}>
+            <div style={{ fontSize: 19, lineHeight: 1.45, fontWeight: 500 }}>{item.question}</div>
+            <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: '.5rem' }}>{t.noAudioHere}</div>
+          </div>
+        ) : wantsBigPlayer && audio.supported !== false ? (
+          <BigPlayer
+            text={item.audio!.text}
+            lang={lang}
+            voice={audio.voice}
+            ready={audio.ready}
+            label={t.playAudio}
+            again={t.playAgain}
+          />
         ) : item.question ? (
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.6rem', marginBottom: '1.25rem' }}>
             <div style={{ fontSize: 19, lineHeight: 1.45, fontWeight: 500, flex: 1 }}>{item.question}</div>
@@ -386,7 +459,10 @@ function TokenBoard({ tokens, picked, onPick, onUnpick, onClear, checked, right,
 }
 
 const chip: React.CSSProperties = {
-  padding: '.55rem .8rem',
+  // Tall enough to be a comfortable touch target on a phone: these chips are
+  // the whole interaction here, and they are tapped several times per question.
+  minHeight: 44,
+  padding: '.6rem .85rem',
   borderRadius: 10,
   border: '1.5px solid var(--border)',
   background: '#fff',
@@ -432,12 +508,35 @@ function Card({ children, animateKey }: { children: React.ReactNode; animateKey?
   )
 }
 
-function Shell({ studentId, t, title, label, progress, children }: {
+/** A ring that pulses out from behind a filled tick, for finishing a round. */
+function Medal() {
+  return (
+    <span style={{ position: 'relative', display: 'inline-flex', width: 56, height: 56 }}>
+      <span className="lk-ring" style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: 'var(--green)' }} />
+      <span
+        className="lk-pop"
+        style={{
+          position: 'relative', width: 56, height: 56, borderRadius: '50%',
+          background: '#eaf7ee', border: '2px solid var(--green)',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        }}
+      >
+        <svg className="lk-check" width="30" height="30" viewBox="0 0 24 24" fill="none">
+          <path d="M5 13l4.5 4.5L19 7" stroke="#1f6b2e" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </span>
+    </span>
+  )
+}
+
+function Shell({ studentId, t, title, label, progress, round, rounds, children }: {
   studentId: string
   t: ReturnType<typeof uiStrings>
   title: string
   label: string
   progress: number
+  round: number
+  rounds: number
   children: React.ReactNode
 }) {
   return (
@@ -449,9 +548,32 @@ function Shell({ studentId, t, title, label, progress, children }: {
           </Link>
           <span style={{ fontSize: 12, color: 'rgba(255,255,255,.5)' }}>{label} · {title}</span>
         </div>
-        <div style={{ height: 8, background: 'rgba(255,255,255,.15)', borderRadius: 4 }}>
-          <div style={{ height: 8, borderRadius: 4, background: 'var(--gold)', width: `${progress}%`, transition: 'width .3s' }} />
+
+        {/* The bar fills within the round; the dots say how far through the unit. */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '.7rem' }}>
+          <div style={{ flex: 1, height: 8, background: 'rgba(255,255,255,.15)', borderRadius: 4 }}>
+            <div style={{ height: 8, borderRadius: 4, background: 'var(--gold)', width: `${progress}%`, transition: 'width .3s' }} />
+          </div>
+          {rounds > 1 && (
+            <div style={{ display: 'flex', gap: '.25rem', flexShrink: 0 }} aria-hidden>
+              {Array.from({ length: rounds }, (_, i) => (
+                <span
+                  key={i}
+                  style={{
+                    width: 6, height: 6, borderRadius: '50%',
+                    background: i < round ? 'var(--gold)' : 'rgba(255,255,255,.25)',
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
+
+        {rounds > 1 && (
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,.45)', marginTop: '.45rem' }}>
+            {t.roundLabel(round, rounds)}
+          </div>
+        )}
       </div>
       <div style={{ padding: '1.5rem', maxWidth: 560, margin: '0 auto' }}>{children}</div>
     </div>

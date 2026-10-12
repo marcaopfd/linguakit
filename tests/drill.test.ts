@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { buildDrill, isCorrect, nextUnitIndex, spokenAnswer } from '@/lib/drill'
+import {
+  ROUND_SIZE, buildDrill, isCorrect, nextUnitIndex, roundBounds, roundCount, roundOf, spokenAnswer,
+} from '@/lib/drill'
 import type { Unit } from '@/lib/curriculum'
 
 const unit = {
@@ -150,6 +152,61 @@ describe('ordering', () => {
 
   it('leaves the generated activities out unless asked for them', () => {
     expect(buildDrill(unit).every(i => /^[cx]/.test(i.key))).toBe(true)
+  })
+})
+
+describe('rounds', () => {
+  it('splits a full unit into a handful of rounds', () => {
+    expect(roundCount(36)).toBe(3)
+    expect(roundCount(42)).toBe(4)
+  })
+
+  it('never leaves a stub round at the end', () => {
+    for (let total = 1; total <= 120; total++) {
+      const n = roundCount(total)
+      const sizes = Array.from({ length: n }, (_, r) => {
+        const { start, end } = roundBounds(r, total)
+        return end - start
+      })
+
+      expect(sizes.reduce((a, b) => a + b, 0), `total ${total}`).toBe(total)
+      for (const size of sizes) expect(size, `total ${total}`).toBeGreaterThan(0)
+
+      // Rounds stay within one question of each other, so none is a stub.
+      expect(Math.max(...sizes) - Math.min(...sizes), `total ${total}`).toBeLessThanOrEqual(1)
+      if (total > ROUND_SIZE) {
+        expect(Math.min(...sizes), `total ${total}`).toBeGreaterThan(ROUND_SIZE / 2)
+      }
+    }
+  })
+
+  it('keeps one round for a short unit instead of inventing a second', () => {
+    expect(roundCount(1)).toBe(1)
+    expect(roundCount(6)).toBe(1)
+    expect(roundBounds(0, 6)).toEqual({ start: 0, end: 6 })
+  })
+
+  it('places every index in exactly the round that contains it', () => {
+    for (const total of [1, 7, 12, 13, 36, 42, 97]) {
+      for (let i = 0; i < total; i++) {
+        const { start, end } = roundBounds(roundOf(i, total), total)
+        expect(i, `${i} of ${total}`).toBeGreaterThanOrEqual(start)
+        expect(i, `${i} of ${total}`).toBeLessThan(end)
+      }
+    }
+  })
+
+  it('reads a boundary as the end of the round before it', () => {
+    // What the drill relies on to know a round just finished.
+    const { end } = roundBounds(0, 36)
+    expect(end).toBe(12)
+    expect(roundOf(11, 36)).toBe(0)
+    expect(roundOf(12, 36)).toBe(1)
+  })
+
+  it('clamps a round number that ran past the last one', () => {
+    expect(roundBounds(99, 36)).toEqual(roundBounds(2, 36))
+    expect(roundOf(99, 36)).toBe(2)
   })
 })
 

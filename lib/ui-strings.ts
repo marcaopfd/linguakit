@@ -116,6 +116,13 @@ export type UiStrings = {
   tapWordsInOrder: string
   clearSentence: string
   noAudioHere: string
+
+  // Rodadas dentro de uma unidade
+  roundLabel: (n: number, total: number) => string
+  roundDone: string
+  roundDoneHint: string
+  keepGoing: string
+  takeABreak: string
 }
 
 const EN: UiStrings = {
@@ -220,6 +227,12 @@ const EN: UiStrings = {
   tapWordsInOrder: 'Tap the words in order',
   clearSentence: 'Start over',
   noAudioHere: 'This device has no voice for Portuguese, so the text is shown instead.',
+
+  roundLabel: (n, total) => `Round ${n} of ${total}`,
+  roundDone: 'Round complete',
+  roundDoneHint: 'The next one asks a little more of you.',
+  keepGoing: 'Keep going',
+  takeABreak: 'Stop here for now',
 }
 
 const PT: UiStrings = {
@@ -324,6 +337,12 @@ const PT: UiStrings = {
   tapWordsInOrder: 'Toque nas palavras na ordem',
   clearSentence: 'Começar de novo',
   noAudioHere: 'Este aparelho não tem voz em inglês, então o texto aparece no lugar.',
+
+  roundLabel: (n, total) => `Rodada ${n} de ${total}`,
+  roundDone: 'Rodada concluída',
+  roundDoneHint: 'A próxima pede um pouco mais de você.',
+  keepGoing: 'Continuar',
+  takeABreak: 'Parar por aqui',
 }
 
 /** `lang` is the language being taught; the learner reads the other one. */

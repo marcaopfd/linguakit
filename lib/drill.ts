@@ -141,6 +141,50 @@ export function isCorrect(item: DrillItem, given: string | number | null): boole
     : given.trim().toLowerCase() === item.expected.trim().toLowerCase()
 }
 
+/**
+ * How many questions a learner answers before being let off the hook.
+ *
+ * A unit holds between thirty and forty items once the generated activities are
+ * counted, which is too long to face as one block. Because the list is ordered
+ * by difficulty, cutting it into rounds also means each round is harder than
+ * the one before: the first is nearly all listening, the last is writing
+ * unaided.
+ */
+export const ROUND_SIZE = 12
+
+/**
+ * How many rounds to split a list of this length into — never none, and never
+ * so many that the last one is a stub. Rounding rather than dividing up is what
+ * avoids a final round of two questions: 42 items become four rounds of ten or
+ * eleven, not three of twelve and one of six.
+ */
+export function roundCount(total: number, size = ROUND_SIZE): number {
+  return Math.max(1, Math.round(total / size))
+}
+
+/** Where a round starts and ends, spreading any remainder across the rounds. */
+export function roundBounds(
+  round: number,
+  total: number,
+  size = ROUND_SIZE,
+): { start: number; end: number } {
+  const n = roundCount(total, size)
+  const at = Math.min(Math.max(round, 0), n - 1)
+  return {
+    start: Math.floor((at * total) / n),
+    end: Math.floor(((at + 1) * total) / n),
+  }
+}
+
+/** The round a given item index falls in. */
+export function roundOf(index: number, total: number, size = ROUND_SIZE): number {
+  const n = roundCount(total, size)
+  for (let r = 0; r < n; r++) {
+    if (index < Math.floor(((r + 1) * total) / n)) return r
+  }
+  return n - 1
+}
+
 /** Where the learner goes after finishing a unit. Null when the module ends. */
 export function nextUnitIndex(current: number, unitCount: number): number | null {
   const next = current + 1
