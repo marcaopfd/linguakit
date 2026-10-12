@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { levelTone } from '@/lib/levels'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { ModuleSummary } from '@/lib/curriculum-index'
@@ -166,7 +167,7 @@ function CourseCard({ flag, title, subtitle, href, moduleHref, modules, progress
                 return (
                   <Link key={mod.id} href={moduleHref(mod.id)} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '.65rem 1rem', display: 'flex', alignItems: 'center', gap: '.75rem' }}>
-                      <div style={{ width: 32, height: 32, borderRadius: 6, background: mod.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 13, fontWeight: 700, color: mod.accent, flexShrink: 0 }}>
+                      <div style={{ width: 32, height: 32, borderRadius: 6, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 13, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
                         {mod.label}
                       </div>
                       <div style={{ flex: 1 }}>
@@ -174,9 +175,9 @@ function CourseCard({ flag, title, subtitle, href, moduleHref, modules, progress
                         <div style={{ fontSize: 11, color: 'var(--ink3)' }}>{mod.units.length} units</div>
                       </div>
                       <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: 12, fontWeight: 600, color: mod.accent }}>{modPct}%</div>
+                        <div style={{ fontSize: 12, fontWeight: 600, color: levelTone(mod.id).ink }}>{modPct}%</div>
                         <div style={{ width: 48, height: 3, background: 'var(--border)', borderRadius: 2, marginTop: 3 }}>
-                          <div style={{ height: 3, borderRadius: 2, background: mod.bar, width: `${modPct}%` }} />
+                          <div style={{ height: 3, borderRadius: 2, background: levelTone(mod.id).bar, width: `${modPct}%` }} />
                         </div>
                       </div>
                     </div>

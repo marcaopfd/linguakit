@@ -244,7 +244,7 @@ function GrammarStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audio
           <SectionHeading icon="⚠️" label={t.commonMistakes} />
           {unit.commonMistakes.map((m, i) => (
             <div key={i} style={{ background: 'var(--bad-bg)', borderRadius: 8, padding: '.6rem .85rem' }}>
-              <div style={{ fontSize: 13, color: '#c0392b', fontWeight: 600, textDecoration: 'line-through', marginBottom: 2 }}>✗ {m.wrong}</div>
+              <div style={{ fontSize: 13, color: 'var(--red)', fontWeight: 600, textDecoration: 'line-through', marginBottom: 2 }}>✗ {m.wrong}</div>
               <div style={{ fontSize: 13, color: 'var(--ok-ink)', fontWeight: 600, marginBottom: 2 }}>✓ {m.correct}</div>
               {(m.note ?? m.en) && <div style={{ fontSize: 12, color: 'var(--ink2)' }}>{m.note ?? m.en}</div>}
             </div>
@@ -443,9 +443,9 @@ function ExerciseCard({
                   {item.opts.map((opt, oi) => {
                     let bg = 'var(--surface)', borderColor = 'var(--border)', color = 'var(--ink)'
                     if (userAns === oi) {
-                      bg = isRevealed ? (oi === item.ans ? '#e8fdf0' : 'var(--bad-bg)') : 'var(--ink)'
-                      borderColor = isRevealed ? (oi === item.ans ? 'var(--green)' : 'var(--red)') : 'var(--ink)'
-                      color = isRevealed ? (oi === item.ans ? 'var(--green)' : 'var(--red)') : 'var(--surface)'
+                      bg = isRevealed ? (oi === item.ans ? 'var(--ok-bg)' : 'var(--bad-bg)') : 'var(--panel)'
+                      borderColor = isRevealed ? (oi === item.ans ? 'var(--ok-border)' : 'var(--bad-border)') : 'var(--panel)'
+                      color = isRevealed ? (oi === item.ans ? 'var(--ok-ink)' : 'var(--bad-ink)') : 'var(--on-panel)'
                     }
                     return (
                       <button
@@ -474,7 +474,7 @@ function ExerciseCard({
                 </div>
               ) : (
                 <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
-                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder={t.typeYourAnswer} className={isRevealed ? (correct ? 'lk-pop' : 'lk-shake') : undefined} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? '#e8fdf0' : 'var(--bad-bg)') : 'var(--surface)' }} />
+                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder={t.typeYourAnswer} className={isRevealed ? (correct ? 'lk-pop' : 'lk-shake') : undefined} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? 'var(--ok-bg)' : 'var(--bad-bg)') : 'var(--surface)' }} />
                   <button
                     onClick={() => {
                       setRevealed({ ...revealed, [key]: true })
@@ -512,7 +512,7 @@ function CultureStep({ unit, t }: { unit: Unit; t: UiStrings }) {
         <div style={{ padding: '.85rem 1.1rem', fontSize: 14, color: 'var(--ink2)', lineHeight: 1.65 }}>{c.text}</div>
       </div>
       {unit.teacherTip && (
-        <div style={{ marginTop: '.75rem', background: '#edf7ed', border: '1px solid #b7e4c7', borderRadius: 8, padding: '.6rem .85rem' }}>
+        <div style={{ marginTop: '.75rem', background: 'var(--ok-bg)', border: '1px solid var(--ok-border)', borderRadius: 8, padding: '.6rem .85rem' }}>
           <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', color: 'var(--ok-ink)', marginBottom: 3 }}>📋 {t.teacherTip}</div>
           <div style={{ fontSize: 13, color: 'var(--ok-ink)', lineHeight: 1.5 }}>{unit.teacherTip}</div>
         </div>

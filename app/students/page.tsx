@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { levelTone } from '@/lib/levels'
 import Link from 'next/link'
 import { activityColor, lastActive } from '@/lib/last-active'
 
@@ -30,10 +31,6 @@ type Student = {
   }
 }
 
-const LEVEL_COLORS: Record<string, string> = {
-  A1: '#1a5c9e', A2: '#9a4f0a', B1: 'var(--ok-ink)',
-  B2: '#6b21a8', C1: 'var(--bad-ink)', C2: '#1a1814',
-}
 
 const SKILL_LABELS: Record<string, string> = {
   vocab: 'Vocabulary', grammar: 'Grammar', reading: 'Reading',
@@ -167,7 +164,7 @@ export default function StudentsPage() {
 function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id: string) => void }) {
   const r = s.testResult
   const course = s.course ?? r?.course ?? null
-  const levelColor = r ? (LEVEL_COLORS[r.level] ?? 'var(--ink)') : 'var(--ink3)'
+  const levelColor = r ? (levelTone(r.level).ink) : 'var(--ink3)'
   const [confirming, setConfirming] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [resetting, setResetting] = useState(false)

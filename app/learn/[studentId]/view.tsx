@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { levelTone } from '@/lib/levels'
 import { Icon } from '@/components/Icon'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -35,10 +36,6 @@ type Attempt = {
   answeredAt: string
 }
 
-const LEVEL_COLORS: Record<string, string> = {
-  A1: '#1a5c9e', A2: '#9a4f0a', B1: 'var(--ok-ink)',
-  B2: '#6b21a8', C1: 'var(--bad-ink)', C2: '#1a1814',
-}
 
 export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]; enModules: ModuleSummary[] }) {
   const { studentId } = useParams<{ studentId: string }>()
@@ -123,7 +120,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
   // The chrome follows the learner's own language: the opposite of the course.
   const t = uiStrings(isEN ? 'en-US' : 'pt-BR')
   const completedSet = new Set(student.lessons.map(l => `${l.moduleId}-${l.unitIndex}`))
-  const lvlColor = student.testResult ? (LEVEL_COLORS[student.testResult.level] ?? 'var(--ink)') : 'var(--ink)'
+  const lvlColor = student.testResult ? (levelTone(student.testResult.level).ink) : 'var(--ink)'
 
   const totalUnits = modules.reduce((s, m) => s + m.units.length, 0)
   const totalDone = student.lessons.length
@@ -227,7 +224,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
           return (
             <Link key={mod.id} href={`/learn/${studentId}/module/${mod.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem', transition: 'box-shadow .15s' }}>
-                <div style={{ width: 44, height: 44, borderRadius: 10, background: mod.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700, color: mod.accent, flexShrink: 0 }}>
+                <div style={{ width: 44, height: 44, borderRadius: 10, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
                   {mod.label}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -241,7 +238,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
                         key={i}
                         style={{
                           width: 7, height: 7, borderRadius: '50%', flexShrink: 0,
-                          background: completedSet.has(`${mod.id}-${i}`) ? mod.bar : 'var(--border)',
+                          background: completedSet.has(`${mod.id}-${i}`) ? levelTone(mod.id).bar : 'var(--border)',
                         }}
                       />
                     ))}
@@ -276,7 +273,7 @@ function MyMistakes({ attempts, modules, t }: {
 
   const wrong = attempts.filter(a => !a.correct)
   const pct = Math.round(((attempts.length - wrong.length) / attempts.length) * 100)
-  const accuracyColor = pct >= 80 ? 'var(--green)' : pct >= 60 ? '#9a4f0a' : 'var(--red)'
+  const accuracyColor = pct >= 80 ? 'var(--green)' : pct >= 60 ? 'var(--note-ink)' : 'var(--red)'
 
   const unitTitle = (moduleId: string, unitIndex: number) => {
     const mod = modules.find(m => m.id === moduleId)

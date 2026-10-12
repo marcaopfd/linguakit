@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { levelTone } from '@/lib/levels'
 import Link from 'next/link'
 import type { ModuleSummary } from '@/lib/curriculum-index'
 
@@ -55,7 +56,7 @@ export function EnHomeView({ modules }: { modules: ModuleSummary[] }) {
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = 'none'; (e.currentTarget as HTMLElement).style.transform = 'none' }}
               >
                 <div style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 10, background: mod.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, color: mod.accent, flexShrink: 0 }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 10, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
                     {mod.label}
                   </div>
                   <div style={{ flex: 1 }}>
@@ -63,10 +64,10 @@ export function EnHomeView({ modules }: { modules: ModuleSummary[] }) {
                     <div style={{ fontSize: 12, color: 'var(--ink3)', lineHeight: 1.4 }}>{mod.desc}</div>
                   </div>
                   <div style={{ textAlign: 'right', minWidth: 60 }}>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: mod.accent }}>{pct}%</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: levelTone(mod.id).ink }}>{pct}%</div>
                     <div style={{ fontSize: 11, color: 'var(--ink3)' }}>{done}/{mod.units.length}</div>
                     <div style={{ width: 60, height: 3, background: 'var(--border)', borderRadius: 2, marginTop: 4 }}>
-                      <div style={{ height: 3, borderRadius: 2, background: mod.bar, width: `${pct}%`, transition: 'width .6s' }} />
+                      <div style={{ height: 3, borderRadius: 2, background: levelTone(mod.id).bar, width: `${pct}%`, transition: 'width .6s' }} />
                     </div>
                   </div>
                 </div>

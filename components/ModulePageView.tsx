@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { levelTone } from '@/lib/levels'
 import { UnitPath } from '@/components/UnitPath'
 import type { ModuleSummary } from '@/lib/curriculum-index'
 import { useModuleProgress } from '@/lib/use-progress'
@@ -33,14 +34,14 @@ export function ModulePageView({ mod, lessonBase, backHref, progressKey, student
           ← {t.back}
         </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '.4rem' }}>
-          <div style={{ width: 40, height: 40, borderRadius: 8, background: mod.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 18, fontWeight: 700, color: mod.accent }}>
+          <div style={{ width: 40, height: 40, borderRadius: 8, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 18, fontWeight: 700, color: levelTone(mod.id).ink }}>
             {mod.label}
           </div>
           <h2 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 600 }}>{mod.emoji} {mod.name}</h2>
         </div>
         <p style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.5 }}>{mod.desc}</p>
         <div style={{ marginTop: '.85rem', height: 4, background: 'var(--border)', borderRadius: 2 }}>
-          <div style={{ height: 4, borderRadius: 2, background: mod.bar, width: `${pct}%`, transition: 'width .6s' }} />
+          <div style={{ height: 4, borderRadius: 2, background: levelTone(mod.id).bar, width: `${pct}%`, transition: 'width .6s' }} />
         </div>
         <div style={{ marginTop: '.3rem', fontSize: 12, color: 'var(--ink3)' }}>{t.unitsCompleted(done, mod.units.length)}</div>
       </div>
@@ -48,8 +49,8 @@ export function ModulePageView({ mod, lessonBase, backHref, progressKey, student
       <UnitPath
         units={mod.units}
         done={progress}
-        accent={mod.accent}
-        bar={mod.bar}
+        accent={levelTone(mod.id).ink}
+        bar={levelTone(mod.id).bar}
         lessonBase={lessonBase}
         practiceBase={practiceBase}
         modId={mod.id}

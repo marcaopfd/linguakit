@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 const COURSES = [
-  { id: 'pt' as const, flag: '🇧🇷', title: 'Português', sub: 'Para quem fala inglês', accent: '#1a5c9e' },
-  { id: 'en' as const, flag: '🇺🇸', title: 'Inglês', sub: 'Para quem fala português', accent: '#9a4f0a' },
+  { id: 'pt' as const, flag: '🇧🇷', title: 'Português', sub: 'Para quem fala inglês', accent: 'var(--lvl-a1-ink)' },
+  { id: 'en' as const, flag: '🇺🇸', title: 'Inglês', sub: 'Para quem fala português', accent: 'var(--lvl-a2-ink)' },
 ]
 
 export default function SignupPage() {

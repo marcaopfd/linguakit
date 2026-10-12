@@ -37,6 +37,15 @@
   --note-bg: #fdf3dc;
   --note-border: #e8d48a;
   --note-ink: #7a5a0a;
+
+  /* As seis cores de nível. Antes viviam no currículo, ao lado das lições.
+     O conteúdo guarda só qual é o nível; a cor é tema. */
+  --lvl-a1-bg: #e8f4fd;  --lvl-a1-ink: #1a5c9e;  --lvl-a1-bar: #5ba3d4;
+  --lvl-a2-bg: #fef3e2;  --lvl-a2-ink: #8f4909;  --lvl-a2-bar: #e8922a;
+  --lvl-b1-bg: #edf7ed;  --lvl-b1-ink: #1f6b2e;  --lvl-b1-bar: #4caf50;
+  --lvl-b2-bg: #f3ecfd;  --lvl-b2-ink: #6b21a8;  --lvl-b2-bar: #a855f7;
+  --lvl-c1-bg: #fff0f0;  --lvl-c1-ink: #9b1c1c;  --lvl-c1-bar: #ef4444;
+  --lvl-c2-bg: #fdf3dc;  --lvl-c2-ink: #6b4f0d;  --lvl-c2-bar: #c9a84c;
 }
 
 /* ─── Tema escuro ─────────────────────────────────────────────────────────
@@ -82,6 +91,15 @@
     --note-bg: #2f2714;
     --note-border: #5b4a1f;
     --note-ink: #f0d78d;
+
+    /* Mesmas matizes, invertidas: fundo profundo, tinta clara. Cada par foi
+       conferido acima de 4,5 de contraste. A barra atravessa os dois temas. */
+    --lvl-a1-bg: #142533;  --lvl-a1-ink: #8ec6f0;  --lvl-a1-bar: #5ba3d4;
+    --lvl-a2-bg: #33240f;  --lvl-a2-ink: #f0b571;  --lvl-a2-bar: #e8922a;
+    --lvl-b1-bg: #15291a;  --lvl-b1-ink: #8ed49a;  --lvl-b1-bar: #4caf50;
+    --lvl-b2-bg: #241733;  --lvl-b2-ink: #c79cf0;  --lvl-b2-bar: #a855f7;
+    --lvl-c1-bg: #331818;  --lvl-c1-ink: #f0a0a0;  --lvl-c1-bar: #ef4444;
+    --lvl-c2-bg: #2e2714;  --lvl-c2-ink: #e4ca7c;  --lvl-c2-bar: #c9a84c;
   }
 
   /* O navegador precisa saber, para desenhar campos e barras de rolagem. */

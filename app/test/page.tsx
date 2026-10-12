@@ -9,7 +9,7 @@ import { CoursePicker } from '@/components/CoursePicker'
 // ── Portuguese test (for English speakers) ───────────────────────────────────
 const SECTIONS_PT = [
   {
-    id: 'vocab', name: 'Vocabulary', emoji: '📖', color: '#e8f4fd', accent: '#1a5c9e',
+    id: 'vocab', name: 'Vocabulary', emoji: '📖', color: 'var(--lvl-a1-bg)', accent: 'var(--lvl-a1-ink)',
     desc: 'Choose the correct word or phrase.',
     questions: [
       { level: 'A1', text: 'What does "bom dia" mean?', opts: ['Good night', 'Good morning', 'Good afternoon', 'Goodbye'], ans: 1 },
@@ -21,7 +21,7 @@ const SECTIONS_PT = [
     ],
   },
   {
-    id: 'grammar', name: 'Grammar', emoji: '⚙️', color: '#edf7ed', accent: 'var(--ok-ink)',
+    id: 'grammar', name: 'Grammar', emoji: '⚙️', color: 'var(--lvl-b1-bg)', accent: 'var(--lvl-b1-ink)',
     desc: 'Choose the grammatically correct option.',
     questions: [
       { level: 'A1', text: 'Complete: "Eu ___ brasileira." (I am Brazilian)', opts: ['estou', 'sou', 'tenho', 'fico'], ans: 1 },
@@ -33,7 +33,7 @@ const SECTIONS_PT = [
     ],
   },
   {
-    id: 'reading', name: 'Reading', emoji: '📄', color: '#fef3e2', accent: '#9a4f0a',
+    id: 'reading', name: 'Reading', emoji: '📄', color: 'var(--lvl-a2-bg)', accent: 'var(--lvl-a2-ink)',
     desc: 'Read the text and answer the questions.',
     questions: [
       { level: 'A1', text: 'Read: "Oi! Meu nome é Ana. Sou de São Paulo. Tenho 28 anos."\n\nHow old is Ana?', opts: ['18', '25', '28', '30'], ans: 2 },
@@ -45,7 +45,7 @@ const SECTIONS_PT = [
     ],
   },
   {
-    id: 'listening', name: 'Comprehension', emoji: '💬', color: '#f3ecfd', accent: '#6b21a8',
+    id: 'listening', name: 'Comprehension', emoji: '💬', color: 'var(--lvl-b2-bg)', accent: 'var(--lvl-b2-ink)',
     desc: 'Read these dialogues and answer the questions.',
     questions: [
       { level: 'A1', text: 'Dialogue:\nA: "Boa tarde! Como vai?"\nB: "Tudo bem, obrigada!"\n\nWhat time of day is it probably?', opts: ['Morning', 'Afternoon', 'Night', 'Midnight'], ans: 1 },
@@ -57,7 +57,7 @@ const SECTIONS_PT = [
     ],
   },
   {
-    id: 'writing', name: 'Language Use', emoji: '✍️', color: '#fff0f0', accent: 'var(--bad-ink)',
+    id: 'writing', name: 'Language Use', emoji: '✍️', color: 'var(--lvl-c1-bg)', accent: 'var(--lvl-c1-ink)',
     desc: 'Choose the most natural or correct expression.',
     questions: [
       { level: 'A1', text: 'How do you politely ask "where is the pharmacy?" in Portuguese?', opts: ['Onde é a farmácia?', 'Onde fica a farmácia?', 'Farmácia onde?', 'Qual é farmácia?'], ans: 1 },
@@ -73,7 +73,7 @@ const SECTIONS_PT = [
 // ── English test (for Portuguese speakers) ───────────────────────────────────
 const SECTIONS_EN = [
   {
-    id: 'vocab', name: 'Vocabulário', emoji: '📖', color: '#e8f4fd', accent: '#1a5c9e',
+    id: 'vocab', name: 'Vocabulário', emoji: '📖', color: 'var(--lvl-a1-bg)', accent: 'var(--lvl-a1-ink)',
     desc: 'Escolha a palavra ou expressão correta.',
     questions: [
       { level: 'A1', text: 'O que significa "hungry"?', opts: ['Com fome', 'Com frio', 'Com pressa', 'Cansado'], ans: 0 },
@@ -85,7 +85,7 @@ const SECTIONS_EN = [
     ],
   },
   {
-    id: 'grammar', name: 'Gramática', emoji: '⚙️', color: '#edf7ed', accent: 'var(--ok-ink)',
+    id: 'grammar', name: 'Gramática', emoji: '⚙️', color: 'var(--lvl-b1-bg)', accent: 'var(--lvl-b1-ink)',
     desc: 'Escolha a opção gramaticalmente correta em inglês.',
     questions: [
       { level: 'A1', text: 'Complete: "She ___ a doctor." (Ela é médica.)', opts: ['am', 'is', 'are', 'be'], ans: 1 },
@@ -97,7 +97,7 @@ const SECTIONS_EN = [
     ],
   },
   {
-    id: 'reading', name: 'Leitura', emoji: '📄', color: '#fef3e2', accent: '#9a4f0a',
+    id: 'reading', name: 'Leitura', emoji: '📄', color: 'var(--lvl-a2-bg)', accent: 'var(--lvl-a2-ink)',
     desc: 'Leia o texto em inglês e responda às perguntas.',
     questions: [
       { level: 'A1', text: 'Read: "Hi! My name is Tom. I am from London. I am 25 years old."\n\nQuantos anos Tom tem?', opts: ['20', '25', '28', '30'], ans: 1 },
@@ -109,7 +109,7 @@ const SECTIONS_EN = [
     ],
   },
   {
-    id: 'listening', name: 'Compreensão', emoji: '💬', color: '#f3ecfd', accent: '#6b21a8',
+    id: 'listening', name: 'Compreensão', emoji: '💬', color: 'var(--lvl-b2-bg)', accent: 'var(--lvl-b2-ink)',
     desc: 'Leia os diálogos em inglês e responda.',
     questions: [
       { level: 'A1', text: 'Diálogo:\nA: "Good afternoon! How are you?"\nB: "Fine, thank you!"\n\nQue parte do dia é essa?', opts: ['Manhã', 'Tarde', 'Noite', 'Madrugada'], ans: 1 },
@@ -121,7 +121,7 @@ const SECTIONS_EN = [
     ],
   },
   {
-    id: 'writing', name: 'Uso do Inglês', emoji: '✍️', color: '#fff0f0', accent: 'var(--bad-ink)',
+    id: 'writing', name: 'Uso do Inglês', emoji: '✍️', color: 'var(--lvl-c1-bg)', accent: 'var(--lvl-c1-ink)',
     desc: 'Escolha a expressão mais natural ou correta em inglês.',
     questions: [
       { level: 'A1', text: 'Como se pergunta "onde fica a farmácia?" em inglês de forma educada?', opts: ['Where pharmacy?', 'Where is the pharmacy?', 'Pharmacy, where?', 'The pharmacy is where?'], ans: 1 },
@@ -136,21 +136,21 @@ const SECTIONS_EN = [
 
 // ── Level descriptions ────────────────────────────────────────────────────────
 const LEVELS_PT: Record<string, { name: string; desc: string; color: string }> = {
-  A1: { name: 'Complete Beginner', color: '#1a5c9e', desc: 'You\'re at the start of your Portuguese journey. Your first lessons will focus on greetings, numbers, family, and basic survival phrases.' },
-  A2: { name: 'Basic', color: '#9a4f0a', desc: 'You have the foundations. Now it\'s time to build real conversational ability — past tense, making plans, expressing opinions, and navigating daily life.' },
-  B1: { name: 'Intermediate', color: 'var(--ok-ink)', desc: 'You can hold a conversation! The focus now is on complex grammar (subjunctive, conditionals), more nuanced vocabulary, and Brazilian media.' },
-  B2: { name: 'Upper Intermediate', color: '#6b21a8', desc: 'You\'re near-fluent. Lessons focus on formal register, sophisticated argument, literature, advanced grammar, and cultural depth.' },
-  C1: { name: 'Advanced', color: 'var(--bad-ink)', desc: 'You operate at a high level. Focus on idiomatic expression, regional variation, register switching, and elegant Portuguese.' },
-  C2: { name: 'Proficient', color: '#1a1814', desc: 'Near-native mastery. You can access all of Brazilian culture — literature, comedy, formal discourse — in its original form.' },
+  A1: { name: 'Complete Beginner', color: 'var(--lvl-a1-ink)', desc: 'You\'re at the start of your Portuguese journey. Your first lessons will focus on greetings, numbers, family, and basic survival phrases.' },
+  A2: { name: 'Basic', color: 'var(--lvl-a2-ink)', desc: 'You have the foundations. Now it\'s time to build real conversational ability — past tense, making plans, expressing opinions, and navigating daily life.' },
+  B1: { name: 'Intermediate', color: 'var(--lvl-b1-ink)', desc: 'You can hold a conversation! The focus now is on complex grammar (subjunctive, conditionals), more nuanced vocabulary, and Brazilian media.' },
+  B2: { name: 'Upper Intermediate', color: 'var(--lvl-b2-ink)', desc: 'You\'re near-fluent. Lessons focus on formal register, sophisticated argument, literature, advanced grammar, and cultural depth.' },
+  C1: { name: 'Advanced', color: 'var(--lvl-c1-ink)', desc: 'You operate at a high level. Focus on idiomatic expression, regional variation, register switching, and elegant Portuguese.' },
+  C2: { name: 'Proficient', color: 'var(--lvl-c2-ink)', desc: 'Near-native mastery. You can access all of Brazilian culture — literature, comedy, formal discourse — in its original form.' },
 }
 
 const LEVELS_EN: Record<string, { name: string; desc: string; color: string }> = {
-  A1: { name: 'Iniciante', color: '#1a5c9e', desc: 'Você está no começo da sua jornada em inglês. Suas primeiras aulas vão focar em cumprimentos, números, família e frases essenciais de sobrevivência.' },
-  A2: { name: 'Básico', color: '#9a4f0a', desc: 'Você tem as bases. Agora é hora de construir habilidade conversacional real — passado, planos futuros, expressar opiniões e navegar o dia a dia em inglês.' },
-  B1: { name: 'Intermediário', color: 'var(--ok-ink)', desc: 'Você consegue se comunicar! O foco agora é em gramática complexa (condicionais, voz passiva), vocabulário mais rico e compreensão de mídia em inglês.' },
-  B2: { name: 'Intermediário Avançado', color: '#6b21a8', desc: 'Você está quase fluente. As aulas focam em registro formal, argumentação sofisticada, phrasal verbs e profundidade cultural do mundo anglófono.' },
-  C1: { name: 'Avançado', color: 'var(--bad-ink)', desc: 'Você opera em alto nível. Foco em expressões idiomáticas, variação regional, alternância de registro e inglês elegante.' },
-  C2: { name: 'Proficiente', color: '#1a1814', desc: 'Maestria quase nativa. Você consegue acessar toda a cultura anglófona — literatura, humor, discurso formal — em sua forma original.' },
+  A1: { name: 'Iniciante', color: 'var(--lvl-a1-ink)', desc: 'Você está no começo da sua jornada em inglês. Suas primeiras aulas vão focar em cumprimentos, números, família e frases essenciais de sobrevivência.' },
+  A2: { name: 'Básico', color: 'var(--lvl-a2-ink)', desc: 'Você tem as bases. Agora é hora de construir habilidade conversacional real — passado, planos futuros, expressar opiniões e navegar o dia a dia em inglês.' },
+  B1: { name: 'Intermediário', color: 'var(--lvl-b1-ink)', desc: 'Você consegue se comunicar! O foco agora é em gramática complexa (condicionais, voz passiva), vocabulário mais rico e compreensão de mídia em inglês.' },
+  B2: { name: 'Intermediário Avançado', color: 'var(--lvl-b2-ink)', desc: 'Você está quase fluente. As aulas focam em registro formal, argumentação sofisticada, phrasal verbs e profundidade cultural do mundo anglófono.' },
+  C1: { name: 'Avançado', color: 'var(--lvl-c1-ink)', desc: 'Você opera em alto nível. Foco em expressões idiomáticas, variação regional, alternância de registro e inglês elegante.' },
+  C2: { name: 'Proficiente', color: 'var(--lvl-c2-ink)', desc: 'Maestria quase nativa. Você consegue acessar toda a cultura anglófona — literatura, humor, discurso formal — em sua forma original.' },
 }
 
 type Screen = 'welcome' | 'test' | 'result'

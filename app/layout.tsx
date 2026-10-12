@@ -34,7 +34,12 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#1a1814',
+  // A barra do navegador e a do iOS pegam esta cor. Com um valor só, o tema
+  // escuro ganhava uma faixa que não combinava com nada da página.
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#1a1814' },
+    { media: '(prefers-color-scheme: dark)', color: '#14130f' },
+  ],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { levelTone } from '@/lib/levels'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import type { ModuleSummary } from '@/lib/curriculum-index'
@@ -32,10 +33,6 @@ type StudentDetail = {
   lessons: { moduleId: string; unitIndex: number; completedAt: string }[]
 }
 
-const LEVEL_COLORS: Record<string, string> = {
-  A1: '#1a5c9e', A2: '#9a4f0a', B1: 'var(--ok-ink)',
-  B2: '#6b21a8', C1: 'var(--bad-ink)', C2: '#1a1814',
-}
 
 export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleSummary[]; enModules: ModuleSummary[] }) {
   const { id } = useParams<{ id: string }>()
@@ -69,7 +66,7 @@ export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleS
   const isEN = (student.course ?? student.testResult?.course) === 'en'
   const modules = isEN ? enModules : ptModules
   const completedSet = new Set(student.lessons.map(l => `${l.moduleId}-${l.unitIndex}`))
-  const lvlColor = student.testResult ? (LEVEL_COLORS[student.testResult.level] ?? 'var(--ink)') : 'var(--ink3)'
+  const lvlColor = student.testResult ? (levelTone(student.testResult.level).ink) : 'var(--ink3)'
 
   const unitTitle = (moduleId: string, unitIndex: number) => {
     const mod = modules.find(m => m.id === moduleId)
@@ -144,7 +141,7 @@ export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleS
             <div key={mod.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
               {/* Module header */}
               <div style={{ padding: '.9rem 1.1rem', display: 'flex', alignItems: 'center', gap: '.85rem' }}>
-                <div style={{ width: 42, height: 42, borderRadius: 8, background: mod.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 15, fontWeight: 700, color: mod.accent, flexShrink: 0 }}>
+                <div style={{ width: 42, height: 42, borderRadius: 8, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 15, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
                   {mod.label}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -158,7 +155,7 @@ export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleS
                     </span>
                   </div>
                   <div style={{ height: 4, background: 'var(--border)', borderRadius: 2, marginBottom: '.2rem' }}>
-                    <div style={{ height: 4, borderRadius: 2, background: mod.bar, width: `${modPct}%`, transition: 'width .6s' }} />
+                    <div style={{ height: 4, borderRadius: 2, background: levelTone(mod.id).bar, width: `${modPct}%`, transition: 'width .6s' }} />
                   </div>
                   <div style={{ fontSize: 11, color: 'var(--ink3)' }}>{modDone}/{mod.units.length} units · {modPct}%</div>
                 </div>
