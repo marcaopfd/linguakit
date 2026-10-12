@@ -23,20 +23,7 @@ export function CoursePicker() {
       </div>
 
       <div style={{ flex: 1, padding: '1.5rem', maxWidth: 560, margin: '0 auto', width: '100%' }}>
-        <Course
-          href="/test?lang=en"
-          flag="🇺🇸"
-          title="Quero aprender inglês"
-          blurb="Faça o teste de nível: 30 questões, cerca de 10 minutos. No fim você descobre seu nível e começa o curso."
-          cta="Começar o teste →"
-        />
-        <Course
-          href="/test?lang=pt"
-          flag="🇧🇷"
-          title="I want to learn Portuguese"
-          blurb="Take the level test: 30 questions, about 10 minutes. You will find your level and start the course right after."
-          cta="Start the test →"
-        />
+        <CourseCards />
 
         <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: 13, color: 'var(--ink3)', lineHeight: 1.9 }}>
           <div>
@@ -68,6 +55,31 @@ export function CoursePicker() {
         </Link>
       </div>
     </div>
+  )
+}
+
+/**
+ * The two cards, on their own, so the landing page and the bare /test fork can
+ * each put them in their own surroundings without the copy drifting apart.
+ */
+export function CourseCards() {
+  return (
+    <>
+      <Course
+        href="/test?lang=en"
+        flag="🇺🇸"
+        title="Quero aprender inglês"
+        blurb="Faça o teste de nível: 30 questões, cerca de 10 minutos. No fim você descobre seu nível e começa o curso."
+        cta="Começar o teste →"
+      />
+      <Course
+        href="/test?lang=pt"
+        flag="🇧🇷"
+        title="I want to learn Portuguese"
+        blurb="Take the level test: 30 questions, about 10 minutes. You will find your level and start the course right after."
+        cta="Start the test →"
+      />
+    </>
   )
 }
 
