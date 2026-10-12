@@ -146,6 +146,12 @@ describe('the front door', () => {
     expect(picker).toMatch(/\/test\?lang=pt/)
   })
 
+  it('lets the link preview card through without a session', () => {
+    // Every platform that unfurls a link fetches this anonymously; behind the
+    // login it would silently become no preview at all.
+    expect(proxy).toMatch(/opengraph-image/)
+  })
+
   it('asks which course instead of assuming one, when the test is opened bare', () => {
     const test = read('app/test/page.tsx')
     expect(test).toMatch(/return <CoursePicker \/>/)

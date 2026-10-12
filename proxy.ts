@@ -42,7 +42,10 @@ export function proxy(req: NextRequest) {
     // Home-screen install assets: iOS fetches these without a session, and a
     // redirect here silently gives the learner a generic icon.
     pathname === '/manifest.webmanifest' ||
-    /^\/(apple-icon|icon-192|icon-512)\.png$/.test(pathname)
+    /^\/(apple-icon|icon-192|icon-512)\.png$/.test(pathname) ||
+    // The link preview card. WhatsApp and the rest fetch this with no session,
+    // and a redirect here means the link unfurls with no image at all.
+    pathname === '/opengraph-image'
   ) {
     return NextResponse.next()
   }
