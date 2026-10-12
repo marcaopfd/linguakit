@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { Caramelo } from '@/components/Caramelo'
 import { CoursePicker } from '@/components/CoursePicker'
 
 // ── Portuguese test (for English speakers) ───────────────────────────────────
@@ -224,7 +225,9 @@ function TestPageInner() {
   if (screen === 'welcome') {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem 1.5rem', textAlign: 'center', background: 'var(--cream)' }}>
-        <div style={{ fontSize: 48, marginBottom: '1rem' }}>{isEN ? '🇺🇸' : '🇧🇷'}</div>
+        <div style={{ marginBottom: '.75rem', color: 'var(--ink)' }}>
+          <Caramelo mood="idle" size={92} />
+        </div>
         <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 28, fontWeight: 700, marginBottom: '.3rem' }}>
           {isEN ? 'English Level Test' : 'Portuguese Level Test'}
         </h1>
@@ -236,12 +239,12 @@ function TestPageInner() {
             ['📝', '30 questões sobre vocabulário, gramática e compreensão de leitura'],
             ['⏱️', 'Leva cerca de 10–15 minutos — não tem pressa'],
             ['🎯', 'O teste identifica seu nível de A1 (iniciante) a C2 (avançado)'],
-            ['📤', 'Seu resultado é enviado automaticamente para o seu professor'],
+            ['📤', 'No fim você já começa o curso, na unidade certa para o seu nível'],
           ] : [
             ['📝', '30 questions across vocabulary, grammar, and reading comprehension'],
             ['⏱️', 'Takes about 10–15 minutes — take your time, no rush'],
             ['🎯', 'The test identifies your level from A1 (beginner) to C2 (advanced)'],
-            ['📤', 'Your result is sent automatically to your teacher'],
+            ['📤', 'You start the course right after, at the unit that fits your level'],
           ]).map(([icon, text]) => (
             <div key={text} style={{ display: 'flex', alignItems: 'flex-start', gap: '.6rem', marginBottom: '.6rem', fontSize: 13, color: 'var(--ink2)', lineHeight: 1.5 }}>
               <span style={{ flexShrink: 0, fontSize: 16 }}>{icon}</span>
@@ -353,7 +356,14 @@ function TestPageInner() {
       <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
         <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '2.5rem 1.5rem 2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 200, fontWeight: 700, color: 'rgba(255,255,255,.04)', pointerEvents: 'none', userSelect: 'none' }}>{result.level}</div>
-          <div style={{ fontSize: 13, color: 'rgba(255,255,255,.5)', marginBottom: '.5rem' }}>{studentName ? studentName + (isEN ? ' — resultado' : '\'s result') : (isEN ? 'Seu resultado' : 'Your result')}</div>
+          {/* Pleased at any level: finishing thirty questions in a language you
+              are still learning is the achievement, and a disappointed dog on
+              the screen where someone decides whether to carry on would be a
+              terrible thing to meet. */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.4rem', color: 'var(--cream)', position: 'relative' }}>
+            <Caramelo mood="happy" size={76} />
+          </div>
+          <div style={{ fontSize: 13, color: 'rgba(255,255,255,.5)', marginBottom: '.5rem', position: 'relative' }}>{studentName ? studentName + (isEN ? ' — resultado' : '\'s result') : (isEN ? 'Seu resultado' : 'Your result')}</div>
           <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 48, fontWeight: 700, marginBottom: '.25rem' }}>{result.level}</div>
           <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 20, fontWeight: 600, marginBottom: '.5rem' }}>{lvl.name}</div>
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,.5)' }}>{result.totalCorrect} / 30 {isEN ? 'corretas' : 'correct'} ({result.pct}%)</div>
