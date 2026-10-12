@@ -53,6 +53,20 @@ export function CoursePicker() {
           </div>
         </div>
       </div>
+
+      {/* The teacher's own way in. Deliberately quiet: the course is built to be
+          done alone, and lessons are the side of it, not the point. */}
+      <div style={{ padding: '0 1.5rem 1.75rem', textAlign: 'center' }}>
+        <Link
+          href="/painel"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '.35rem', minHeight: 44,
+            padding: '0 .5rem', fontSize: 12, color: 'var(--ink3)', textDecoration: 'none',
+          }}
+        >
+          <span aria-hidden>🔑</span> Espaço do professor
+        </Link>
+      </div>
     </div>
   )
 }
