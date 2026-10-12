@@ -3,6 +3,7 @@ import { MODULES } from '@/lib/curriculum'
 import { EN_MODULES } from '@/lib/curriculum-en'
 import { findLesson } from '@/lib/curriculum-index'
 import { LessonPageView } from '@/components/LessonPageView'
+import { accentTag } from '@/lib/accents'
 import { prisma, withDb } from '@/lib/db'
 
 /**
@@ -19,7 +20,7 @@ export default async function LearnLessonPage({
 
   const student = await withDb(() => prisma.student.findUnique({
     where: { id: studentId },
-    select: { course: true, testResult: { select: { course: true } } },
+    select: { course: true, accent: true, testResult: { select: { course: true } } },
   }))
   if (!student) notFound()
 
@@ -36,7 +37,7 @@ export default async function LearnLessonPage({
       pdfBase={isEN ? '/api/pdf/en' : '/api/pdf/pt'}
       progressKey={isEN ? 'lk_progress_en' : 'lk_progress'}
       studentId={studentId}
-      lang={isEN ? 'en-US' : 'pt-BR'}
+      lang={accentTag(student.course ?? student.testResult?.course, student.accent)}
     />
   )
 }

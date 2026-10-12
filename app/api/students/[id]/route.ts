@@ -14,6 +14,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
         name: true,
         email: true,
         course: true,
+        accent: true,
         createdAt: true,
         testResult: true,
         lessons: { orderBy: { completedAt: 'asc' } },

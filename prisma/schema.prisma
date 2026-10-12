@@ -19,6 +19,9 @@ model Student {
   /// Chosen at signup. Students created by the test carry it on testResult
   /// instead, so read it with `student.course ?? student.testResult?.course`.
   course    String?
+  /// Which accent the course is spoken in, as a BCP-47 tag — "en-IE" for
+  /// someone moving to Ireland. Null means the course default.
+  accent    String?
   /// Explicit newsletter consent, with the moment it was given.
   newsletter   Boolean   @default(false)
   newsletterAt DateTime?

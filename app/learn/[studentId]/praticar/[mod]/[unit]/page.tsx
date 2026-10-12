@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { MODULES } from '@/lib/curriculum'
 import { EN_MODULES } from '@/lib/curriculum-en'
 import { buildDrill, nextUnitIndex } from '@/lib/drill'
+import { accentTag } from '@/lib/accents'
 import { prisma, withDb } from '@/lib/db'
 import { PracticeView } from './view'
 
@@ -15,7 +16,7 @@ export default async function PracticePage({
 
   const student = await withDb(() => prisma.student.findUnique({
     where: { id: studentId },
-    select: { course: true, testResult: { select: { course: true } } },
+    select: { course: true, accent: true, testResult: { select: { course: true } } },
   }))
   if (!student) notFound()
 
@@ -24,7 +25,7 @@ export default async function PracticePage({
   const unit = mod?.units[unitIndex]
   if (!mod || !unit) notFound()
 
-  const lang = isEN ? 'en-US' : 'pt-BR'
+  const lang = accentTag(student.course ?? student.testResult?.course, student.accent)
 
   return (
     <PracticeView

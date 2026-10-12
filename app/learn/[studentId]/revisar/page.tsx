@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { accentTag } from '@/lib/accents'
 import { prisma, withDb } from '@/lib/db'
 import { ReviewView } from './view'
 
@@ -7,7 +8,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ student
 
   const student = await withDb(() => prisma.student.findUnique({
     where: { id: studentId },
-    select: { course: true, testResult: { select: { course: true } } },
+    select: { course: true, accent: true, testResult: { select: { course: true } } },
   }))
   if (!student) notFound()
 
@@ -20,5 +21,5 @@ export default async function ReviewPage({ params }: { params: Promise<{ student
     take: 20,
   }))
 
-  return <ReviewView studentId={studentId} items={items} lang={isEN ? 'en-US' : 'pt-BR'} />
+  return <ReviewView studentId={studentId} items={items} lang={accentTag(student.course ?? student.testResult?.course, student.accent)} />
 }

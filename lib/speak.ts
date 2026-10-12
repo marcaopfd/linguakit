@@ -26,8 +26,14 @@ const NOVELTY_VOICES = new Set([
 
 /** Known-good voices per language, best first. Missing ones are skipped. */
 const PREFERRED: Record<string, string[]> = {
-  'pt-BR': ['Luciana', 'Google português do Brasil', 'Microsoft Francisca', 'Joana'],
+  'pt-BR': ['Luciana', 'Google português do Brasil', 'Microsoft Francisca', 'Fernanda'],
+  // Joana is the Portugal voice on macOS, not a Brazilian one.
+  'pt-PT': ['Joana', 'Catarina', 'Google português', 'Microsoft Helia'],
   'en-US': ['Samantha', 'Google US English', 'Microsoft Aria', 'Alex', 'Ava'],
+  'en-IE': ['Moira', 'Microsoft Emily'],
+  'en-GB': ['Daniel', 'Kate', 'Serena', 'Google UK English Female', 'Microsoft Libby'],
+  'en-AU': ['Karen', 'Catherine', 'Matilda', 'Microsoft Natasha'],
+  'en-CA': ['Microsoft Clara', 'Microsoft Liam'],
 }
 
 /**

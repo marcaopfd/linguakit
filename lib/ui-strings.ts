@@ -123,6 +123,12 @@ export type UiStrings = {
   roundDoneHint: string
   keepGoing: string
   takeABreak: string
+
+  // Sotaque do curso
+  accentTitle: string
+  accentHint: string
+  accentMissing: (places: string) => string
+  accentNotSaved: string
 }
 
 const EN: UiStrings = {
@@ -233,6 +239,11 @@ const EN: UiStrings = {
   roundDoneHint: 'The next one asks a little more of you.',
   keepGoing: 'Keep going',
   takeABreak: 'Stop here for now',
+
+  accentTitle: 'Which Portuguese do you want to hear?',
+  accentHint: 'Pick where you are headed. Every word, example and dialogue is then read in that accent.',
+  accentMissing: places => `Not on this device: ${places}. Another phone or computer may have them.`,
+  accentNotSaved: 'The accent played, but could not be saved. It will reset when you come back.',
 }
 
 const PT: UiStrings = {
@@ -343,6 +354,11 @@ const PT: UiStrings = {
   roundDoneHint: 'A próxima pede um pouco mais de você.',
   keepGoing: 'Continuar',
   takeABreak: 'Parar por aqui',
+
+  accentTitle: 'Qual inglês você quer ouvir?',
+  accentHint: 'Escolha para onde você vai. Todas as palavras, exemplos e diálogos passam a ser falados nesse sotaque.',
+  accentMissing: places => `Neste aparelho não tem: ${places}. Outro celular ou computador pode ter.`,
+  accentNotSaved: 'O sotaque tocou, mas não deu para salvar. Ele volta ao normal quando você voltar.',
 }
 
 /** `lang` is the language being taught; the learner reads the other one. */

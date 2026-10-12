@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { AccentPicker } from '@/components/AccentPicker'
 import type { ModuleSummary } from '@/lib/curriculum-index'
 import { uiStrings, type UiStrings } from '@/lib/ui-strings'
 
@@ -11,6 +12,7 @@ type StudentData = {
   name: string
   email?: string | null
   course?: string | null
+  accent?: string | null
   testResult?: {
     level: string
     levelName: string
@@ -200,6 +202,18 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
       <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>
         <MyMistakes attempts={attempts} modules={modules} t={t} />
       </div>
+
+      {/* Course accent */}
+      {student && (
+        <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>
+          <AccentPicker
+            studentId={studentId}
+            course={student.course ?? student.testResult?.course}
+            current={student.accent}
+            t={t}
+          />
+        </div>
+      )}
 
       {/* Module list */}
       <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '.75rem', maxWidth: 620, margin: '0 auto' }}>
