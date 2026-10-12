@@ -25,9 +25,9 @@ export default function HomePage() {
   return (
     <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       {/* Hero */}
-      <header style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '3rem 1.5rem 2.75rem' }}>
+      <header style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '3rem 1.5rem 2.75rem' }}>
         <div style={{ maxWidth: 580, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem', color: 'var(--cream)' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem', color: 'var(--on-panel)' }}>
             <Caramelo mood="happy" size={88} />
           </div>
           <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 34, fontWeight: 700, lineHeight: 1.15, marginBottom: '.7rem' }}>
@@ -85,7 +85,7 @@ export default function HomePage() {
         </p>
         <Link
           href="/test?lang=en"
-          style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '.85rem 1.5rem', borderRadius: 12, background: 'var(--green)', color: '#fff', fontSize: 15.5, fontWeight: 700, textDecoration: 'none' }}
+          style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '.85rem 1.5rem', borderRadius: 12, background: 'var(--green)', color: 'var(--on-panel)', fontSize: 15.5, fontWeight: 700, textDecoration: 'none' }}
         >
           Fazer o teste de inglês →
         </Link>
@@ -125,7 +125,7 @@ export default function HomePage() {
 
 function Figure({ number, label }: { number: string; label: string }) {
   return (
-    <div style={{ flex: 1, background: '#fff', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem .5rem' }}>
+    <div style={{ flex: 1, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem .5rem' }}>
       <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 23, fontWeight: 700, lineHeight: 1.1 }}>
         {number}
       </div>

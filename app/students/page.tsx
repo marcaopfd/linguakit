@@ -31,8 +31,8 @@ type Student = {
 }
 
 const LEVEL_COLORS: Record<string, string> = {
-  A1: '#1a5c9e', A2: '#9a4f0a', B1: '#1f6b2e',
-  B2: '#6b21a8', C1: '#9b1c1c', C2: '#1a1814',
+  A1: '#1a5c9e', A2: '#9a4f0a', B1: 'var(--ok-ink)',
+  B2: '#6b21a8', C1: 'var(--bad-ink)', C2: '#1a1814',
 }
 
 const SKILL_LABELS: Record<string, string> = {
@@ -86,7 +86,7 @@ export default function StudentsPage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       {/* Header */}
-      <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '2rem 1.5rem 1.5rem' }}>
+      <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '2rem 1.5rem 1.5rem' }}>
         <Link href="/painel" style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none', marginBottom: '1rem', width: 'fit-content' }}>
           ← Home
         </Link>
@@ -101,7 +101,7 @@ export default function StudentsPage() {
           <button
             onClick={() => fetchStudents(true)}
             disabled={refreshing}
-            style={{ marginTop: '.25rem', padding: '.4rem .85rem', border: '1px solid rgba(255,255,255,.25)', borderRadius: 8, background: 'rgba(255,255,255,.1)', color: '#fff', fontSize: 13, cursor: refreshing ? 'default' : 'pointer', fontFamily: 'inherit', opacity: refreshing ? 0.6 : 1 }}
+            style={{ marginTop: '.25rem', padding: '.4rem .85rem', border: '1px solid rgba(255,255,255,.25)', borderRadius: 8, background: 'rgba(255,255,255,.1)', color: 'var(--on-panel)', fontSize: 13, cursor: refreshing ? 'default' : 'pointer', fontFamily: 'inherit', opacity: refreshing ? 0.6 : 1 }}
           >
             {refreshing ? '⏳' : '↺'} Refresh
           </button>
@@ -110,18 +110,18 @@ export default function StudentsPage() {
 
       {/* Share test links */}
       <div style={{ background: 'var(--gold-light)', borderBottom: '1px solid #e8d48a', padding: '.75rem 1.5rem', display: 'flex', alignItems: 'center', gap: '.75rem', flexWrap: 'wrap' }}>
-        <span style={{ fontSize: 13, color: '#7a5a0a', flex: 1 }}>Share the placement test:</span>
+        <span style={{ fontSize: 13, color: 'var(--note-ink)', flex: 1 }}>Share the placement test:</span>
         <a
           href="/test"
           target="_blank"
-          style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.35rem .75rem', background: '#fff', border: '1px solid #e8d48a', borderRadius: 8 }}
+          style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.35rem .75rem', background: 'var(--surface)', border: '1px solid #e8d48a', borderRadius: 8 }}
         >
           🇧🇷 Português →
         </a>
         <a
           href="/test?lang=en"
           target="_blank"
-          style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.35rem .75rem', background: '#fff', border: '1px solid #e8d48a', borderRadius: 8 }}
+          style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.35rem .75rem', background: 'var(--surface)', border: '1px solid #e8d48a', borderRadius: 8 }}
         >
           🇺🇸 English →
         </a>
@@ -135,14 +135,14 @@ export default function StudentsPage() {
         <a
           href="/cadastro"
           target="_blank"
-          style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.35rem .75rem', background: '#fff', border: '1px solid #cfe0f2', borderRadius: 8 }}
+          style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.35rem .75rem', background: 'var(--surface)', border: '1px solid #cfe0f2', borderRadius: 8 }}
         >
           🔗 Link do cadastro →
         </a>
         <button
           onClick={copySubscribers}
           disabled={subscribers.length === 0}
-          style={{ fontSize: 13, fontWeight: 600, color: subscribers.length ? 'var(--ink)' : 'var(--ink3)', padding: '.35rem .75rem', background: '#fff', border: '1px solid #cfe0f2', borderRadius: 8, fontFamily: 'inherit', cursor: subscribers.length ? 'pointer' : 'default' }}
+          style={{ fontSize: 13, fontWeight: 600, color: subscribers.length ? 'var(--ink)' : 'var(--ink3)', padding: '.35rem .75rem', background: 'var(--surface)', border: '1px solid #cfe0f2', borderRadius: 8, fontFamily: 'inherit', cursor: subscribers.length ? 'pointer' : 'default' }}
         >
           {copied ? '✓ Copiado' : '✉️ Copiar e-mails'}
         </button>
@@ -214,10 +214,10 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
   }
 
   return (
-    <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 14, marginBottom: '.75rem', overflow: 'hidden' }}>
+    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, marginBottom: '.75rem', overflow: 'hidden' }}>
       {/* Card header */}
       <div style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <div style={{ width: 40, height: 40, borderRadius: '50%', background: r ? levelColor : 'var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 14, fontWeight: 700, color: '#fff', flexShrink: 0 }}>
+        <div style={{ width: 40, height: 40, borderRadius: '50%', background: r ? levelColor : 'var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 14, fontWeight: 700, color: 'var(--on-panel)', flexShrink: 0 }}>
           {s.name.charAt(0).toUpperCase()}
         </div>
         <div style={{ flex: 1 }}>
@@ -229,7 +229,7 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
               </span>
             )}
             {s.newsletter && (
-              <span title={s.newsletterAt ? `Aceitou em ${new Date(s.newsletterAt).toLocaleDateString('pt-BR')}` : undefined} style={{ fontSize: 11, padding: '.15rem .45rem', borderRadius: 5, background: '#eaf7ee', color: '#1f6b2e', fontWeight: 600 }}>
+              <span title={s.newsletterAt ? `Aceitou em ${new Date(s.newsletterAt).toLocaleDateString('pt-BR')}` : undefined} style={{ fontSize: 11, padding: '.15rem .45rem', borderRadius: 5, background: 'var(--ok-bg)', color: 'var(--ok-ink)', fontWeight: 600 }}>
                 ✉️ newsletter
               </span>
             )}
@@ -268,7 +268,7 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
               <button onClick={() => setConfirming(false)} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: '1px solid var(--border)', background: 'var(--paper)', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink3)' }}>
                 Cancelar
               </button>
-              <button onClick={handleDelete} disabled={deleting} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: 'none', background: 'var(--red)', color: '#fff', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600 }}>
+              <button onClick={handleDelete} disabled={deleting} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: 'none', background: 'var(--red)', color: 'var(--on-panel)', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600 }}>
                 {deleting ? '...' : 'Confirmar'}
               </button>
             </div>
@@ -280,7 +280,7 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
                     <button onClick={() => setConfirmingReset(false)} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: '1px solid var(--border)', background: 'var(--paper)', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink3)' }}>
                       Cancelar
                     </button>
-                    <button onClick={handleReset} disabled={resetting} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: 'none', background: 'var(--ink)', color: '#fff', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600 }}>
+                    <button onClick={handleReset} disabled={resetting} style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, border: 'none', background: 'var(--panel)', color: 'var(--on-panel)', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600 }}>
                       {resetting ? '...' : 'Gerar senha'}
                     </button>
                   </>
@@ -299,7 +299,7 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
       </div>
 
       {resetError && (
-        <div style={{ borderTop: '1px solid var(--border)', padding: '.6rem 1.25rem', background: '#fdecea', fontSize: 12.5, color: 'var(--red)' }}>
+        <div style={{ borderTop: '1px solid var(--border)', padding: '.6rem 1.25rem', background: 'var(--bad-bg)', fontSize: 12.5, color: 'var(--red)' }}>
           {resetError}
         </div>
       )}
@@ -310,10 +310,10 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
             Senha temporária de <strong>{s.name}</strong>. Ela aparece <strong>uma única vez</strong> — copie e envie ao aluno agora.
           </div>
           <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-            <code style={{ fontSize: 15, fontWeight: 700, letterSpacing: '.5px', background: '#fff', border: '1px solid #cfe0f2', borderRadius: 8, padding: '.4rem .7rem', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace' }}>
+            <code style={{ fontSize: 15, fontWeight: 700, letterSpacing: '.5px', background: 'var(--surface)', border: '1px solid #cfe0f2', borderRadius: 8, padding: '.4rem .7rem', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace' }}>
               {tempPassword}
             </code>
-            <button onClick={copyPassword} style={{ fontSize: 12, fontWeight: 600, padding: '.4rem .7rem', borderRadius: 8, border: '1px solid #cfe0f2', background: '#fff', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink)' }}>
+            <button onClick={copyPassword} style={{ fontSize: 12, fontWeight: 600, padding: '.4rem .7rem', borderRadius: 8, border: '1px solid #cfe0f2', background: 'var(--surface)', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink)' }}>
               {copiedPassword ? '✓ Copiada' : '📋 Copiar'}
             </button>
             <button onClick={() => setTempPassword('')} style={{ fontSize: 12, padding: '.4rem .7rem', borderRadius: 8, border: 'none', background: 'none', cursor: 'pointer', fontFamily: 'inherit', color: 'var(--ink3)' }}>
@@ -347,16 +347,16 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
                 ↓ {SKILL_LABELS[w] ?? w}
               </span>
             ))}
-            <span style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, background: 'var(--gold-light)', color: '#7a5a0a', fontWeight: 500 }}>
+            <span style={{ fontSize: 11, padding: '.2rem .5rem', borderRadius: 5, background: 'var(--gold-light)', color: 'var(--note-ink)', fontWeight: 500 }}>
               🎯 {r.recommendation.replace('Module', 'Mod.')}
             </span>
           </div>
           {/* Actions */}
           <div style={{ display: 'flex', gap: '.5rem' }}>
-            <Link href={`/students/${s.id}`} style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.3rem .7rem', border: '1px solid var(--border)', borderRadius: 7, background: '#fff', display: 'inline-flex', alignItems: 'center', gap: '.3rem' }}>
+            <Link href={`/students/${s.id}`} style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', padding: '.3rem .7rem', border: '1px solid var(--border)', borderRadius: 7, background: 'var(--surface)', display: 'inline-flex', alignItems: 'center', gap: '.3rem' }}>
               📊 Ver progresso
             </Link>
-            <Link href={`/learn/${s.id}`} target="_blank" style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink3)', textDecoration: 'none', padding: '.3rem .7rem', border: '1px solid var(--border)', borderRadius: 7, background: '#fff', display: 'inline-flex', alignItems: 'center', gap: '.3rem' }}>
+            <Link href={`/learn/${s.id}`} target="_blank" style={{ fontSize: 12, fontWeight: 600, color: 'var(--ink3)', textDecoration: 'none', padding: '.3rem .7rem', border: '1px solid var(--border)', borderRadius: 7, background: 'var(--surface)', display: 'inline-flex', alignItems: 'center', gap: '.3rem' }}>
               🔗 Link do curso
             </Link>
           </div>

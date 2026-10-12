@@ -12,7 +12,7 @@ import { Icon } from '@/components/Icon'
 export function CoursePicker() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '2.25rem 1.5rem 2rem', textAlign: 'center' }}>
+      <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '2.25rem 1.5rem 2rem', textAlign: 'center' }}>
         <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 27, fontWeight: 700, marginBottom: '.4rem' }}>
           LinguaKit
         </div>
@@ -96,7 +96,7 @@ function Course({ href, flag, title, blurb, cta }: {
       href={href}
       style={{
         display: 'block', textDecoration: 'none', color: 'inherit',
-        background: '#fff', border: '1px solid var(--border)', borderRadius: 16,
+        background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16,
         padding: '1.4rem 1.5rem', marginBottom: '.85rem',
       }}
     >
@@ -107,7 +107,7 @@ function Course({ href, flag, title, blurb, cta }: {
       <div style={{ fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.6, marginBottom: '.9rem' }}>
         {blurb}
       </div>
-      <div style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '.55rem 1rem', borderRadius: 11, background: 'var(--green)', color: '#fff', fontSize: 14.5, fontWeight: 700 }}>
+      <div style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '.55rem 1rem', borderRadius: 11, background: 'var(--green)', color: 'var(--on-panel)', fontSize: 14.5, fontWeight: 700 }}>
         {cta}
       </div>
     </Link>

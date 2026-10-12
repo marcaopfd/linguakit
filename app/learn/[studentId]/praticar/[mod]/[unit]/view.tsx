@@ -173,7 +173,7 @@ export function PracticeView({
 
             <button
               onClick={nextRound}
-              style={{ width: '100%', padding: '.9rem', background: 'var(--green)', color: '#fff', borderRadius: 12, border: 'none', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer', marginBottom: '.6rem' }}
+              style={{ width: '100%', padding: '.9rem', background: 'var(--green)', color: 'var(--on-panel)', borderRadius: 12, border: 'none', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer', marginBottom: '.6rem' }}
             >
               {t.keepGoing} →
             </button>
@@ -205,12 +205,12 @@ export function PracticeView({
             {nextUnit !== null ? (
               <Link
                 href={`/learn/${studentId}/praticar/${moduleId}/${nextUnit}`}
-                style={{ display: 'block', padding: '.9rem', background: 'var(--green)', color: '#fff', borderRadius: 12, textDecoration: 'none', fontSize: 15, fontWeight: 700, marginBottom: '.6rem' }}
+                style={{ display: 'block', padding: '.9rem', background: 'var(--green)', color: 'var(--on-panel)', borderRadius: 12, textDecoration: 'none', fontSize: 15, fontWeight: 700, marginBottom: '.6rem' }}
               >
                 {t.nextUnit} →
               </Link>
             ) : (
-              <div style={{ fontSize: 13.5, color: 'var(--green)', fontWeight: 600, marginBottom: '.85rem' }}>
+              <div style={{ fontSize: 13.5, color: 'var(--ok-ink)', fontWeight: 600, marginBottom: '.85rem' }}>
                 <Icon name="flag" size={15} style={{ display: 'inline-block', verticalAlign: '-2px', marginRight: '.3rem' }} /> {t.moduleFinished}
               </div>
             )}
@@ -297,9 +297,9 @@ export function PracticeView({
             {item.options.map((opt, oi) => {
               const pickedOpt = choice === oi
               const isAnswer = oi === item.answerIndex
-              let border = 'var(--border)', bg = '#fff', color = 'var(--ink)'
-              if (checked && isAnswer) { border = 'var(--green)'; bg = '#eaf7ee'; color = '#1f6b2e' }
-              else if (checked && pickedOpt) { border = 'var(--red)'; bg = '#fdecea'; color = 'var(--red)' }
+              let border = 'var(--border)', bg = 'var(--surface)', color = 'var(--ink)'
+              if (checked && isAnswer) { border = 'var(--green)'; bg = 'var(--ok-bg)'; color = 'var(--ok-ink)' }
+              else if (checked && pickedOpt) { border = 'var(--red)'; bg = 'var(--bad-bg)'; color = 'var(--red)' }
               else if (pickedOpt) { border = 'var(--ink)'; bg = 'var(--paper)' }
               return (
                 <div
@@ -335,14 +335,14 @@ export function PracticeView({
             disabled={checked}
             className={checked ? (right ? 'lk-pop' : 'lk-shake') : undefined}
             autoFocus
-            style={{ width: '100%', padding: '.85rem 1rem', fontSize: 16, borderRadius: 12, fontFamily: 'inherit', background: checked ? (right ? '#eaf7ee' : '#fdecea') : '#fff', border: `1.5px solid ${checked ? (right ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, outline: 'none' }}
+            style={{ width: '100%', padding: '.85rem 1rem', fontSize: 16, borderRadius: 12, fontFamily: 'inherit', background: checked ? (right ? 'var(--ok-bg)' : 'var(--bad-bg)') : 'var(--surface)', border: `1.5px solid ${checked ? (right ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, outline: 'none' }}
           />
         )}
 
         {checked && (
-          <div className="lk-rise" style={{ marginTop: '1rem', padding: '.85rem 1rem', borderRadius: 12, background: right ? '#eaf7ee' : '#fdecea', border: `1px solid ${right ? '#b7e4c7' : '#f5c6c2'}`, display: 'flex', alignItems: 'center', gap: '.6rem' }}>
+          <div className="lk-rise" style={{ marginTop: '1rem', padding: '.85rem 1rem', borderRadius: 12, background: right ? 'var(--ok-bg)' : 'var(--bad-bg)', border: `1px solid ${right ? 'var(--ok-border)' : 'var(--bad-border)'}`, display: 'flex', alignItems: 'center', gap: '.6rem' }}>
             {right ? <CorrectMark /> : <WrongMark />}
-            <div style={{ fontSize: 14, fontWeight: 700, color: right ? '#1f6b2e' : 'var(--red)', flex: 1 }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: right ? 'var(--ok-ink)' : 'var(--red)', flex: 1 }}>
               {right ? t.correctFeedback : `${t.wrongFeedback} ${item.expected}`}
             </div>
             {item.audio && (
@@ -354,7 +354,7 @@ export function PracticeView({
         <button
           onClick={checked ? advance : check}
           disabled={!checked && !canCheck}
-          style={{ width: '100%', marginTop: '1.1rem', padding: '.9rem', borderRadius: 12, border: 'none', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', color: '#fff', background: !checked && !canCheck ? 'var(--border)' : checked ? 'var(--ink)' : 'var(--green)', cursor: !checked && !canCheck ? 'default' : 'pointer' }}
+          style={{ width: '100%', marginTop: '1.1rem', padding: '.9rem', borderRadius: 12, border: 'none', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', color: 'var(--on-panel)', background: !checked && !canCheck ? 'var(--border)' : checked ? 'var(--panel)' : 'var(--green)', cursor: !checked && !canCheck ? 'default' : 'pointer' }}
         >
           {checked ? t.continueOn : t.verify}
         </button>
@@ -397,8 +397,8 @@ function BigPlayer({ text, lang, voice, ready, label, again }: {
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '.45rem',
           padding: '1.4rem 2.2rem', borderRadius: 18, cursor: ready ? 'pointer' : 'wait',
           border: `1.5px solid ${speaking ? 'var(--ink)' : 'var(--border)'}`,
-          background: speaking ? 'var(--ink)' : 'var(--paper)',
-          color: speaking ? '#fff' : 'var(--ink2)',
+          background: speaking ? 'var(--panel)' : 'var(--paper)',
+          color: speaking ? 'var(--surface)' : 'var(--ink2)',
           fontFamily: 'inherit', transition: 'background .15s, color .15s, border-color .15s',
         }}
       >
@@ -429,7 +429,7 @@ function TokenBoard({ tokens, picked, onPick, onUnpick, onClear, checked, right,
         style={{
           minHeight: 62, display: 'flex', flexWrap: 'wrap', gap: '.4rem', alignItems: 'center',
           padding: '.7rem', borderRadius: 12, marginBottom: '.85rem',
-          background: checked ? (right ? '#eaf7ee' : '#fdecea') : 'var(--paper)',
+          background: checked ? (right ? 'var(--ok-bg)' : 'var(--bad-bg)') : 'var(--paper)',
           border: `1.5px dashed ${checked ? (right ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`,
         }}
       >
@@ -441,7 +441,7 @@ function TokenBoard({ tokens, picked, onPick, onUnpick, onClear, checked, right,
               key={`${tokenIndex}-${at}`}
               onClick={() => onUnpick(at)}
               disabled={checked}
-              style={{ ...chip, background: '#fff', borderColor: 'var(--ink)', cursor: checked ? 'default' : 'pointer' }}
+              style={{ ...chip, background: 'var(--surface)', borderColor: 'var(--panel)', cursor: checked ? 'default' : 'pointer' }}
             >
               {tokens[tokenIndex]}
             </button>
@@ -486,7 +486,7 @@ const chip: React.CSSProperties = {
   padding: '.6rem .85rem',
   borderRadius: 10,
   border: '1.5px solid var(--border)',
-  background: '#fff',
+  background: 'var(--surface)',
   color: 'var(--ink)',
   fontSize: 15,
   fontFamily: 'inherit',
@@ -523,7 +523,7 @@ function Card({ children, animateKey }: { children: React.ReactNode; animateKey?
   return (
     // `key` restarts the entrance animation on each new question; without it
     // React reuses the node and the card never moves again.
-    <div key={animateKey} className="lk-card" style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 16, padding: '1.5rem' }}>
+    <div key={animateKey} className="lk-card" style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '1.5rem' }}>
       {children}
     </div>
   )
@@ -541,7 +541,7 @@ function Shell({ studentId, t, title, label, progress, round, rounds, children }
 }) {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
-      <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '1.25rem 1.5rem 1.1rem' }}>
+      <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '1.25rem 1.5rem 1.1rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '.7rem' }}>
           <Link href={`/learn/${studentId}`} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none' }}>
             ← {t.exitPractice}

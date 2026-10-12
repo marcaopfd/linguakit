@@ -34,7 +34,7 @@ export function DashboardView({ ptModules, enModules }: { ptModules: ModuleSumma
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       {/* Hero */}
-      <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '3rem 2rem 2rem', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+      <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '3rem 2rem 2rem', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
         <div>
           <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 32, fontWeight: 600, letterSpacing: '-.5px', marginBottom: '.3rem' }}>LinguaKit</h1>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,.5)' }}>Dashboard do Professor · by Marcos</p>
@@ -48,9 +48,9 @@ export function DashboardView({ ptModules, enModules }: { ptModules: ModuleSumma
       </div>
 
       {/* Tab bar */}
-      <div style={{ background: '#fff', borderBottom: '1px solid var(--border)', display: 'flex' }}>
+      <div style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)', display: 'flex' }}>
         {(['courses', 'students'] as const).map(tab => (
-          <button key={tab} onClick={() => setActiveTab(tab)} style={{ flex: 1, padding: '.85rem', fontSize: 14, fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', borderBottom: activeTab === tab ? '2px solid var(--ink)' : '2px solid transparent', color: activeTab === tab ? 'var(--ink)' : 'var(--ink3)' }}>
+          <button key={tab} onClick={() => setActiveTab(tab)} style={{ flex: 1, padding: '.85rem', fontSize: 14, fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', borderBottom: activeTab === tab ? '2px solid var(--ink)' : '2px solid transparent', color: activeTab === tab ? 'var(--panel)' : 'var(--ink3)' }}>
             {tab === 'courses' ? '📚 Cursos' : '👥 Alunos'}
           </button>
         ))}
@@ -91,7 +91,7 @@ export function DashboardView({ ptModules, enModules }: { ptModules: ModuleSumma
         </div>
       ) : (
         <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-          <Link href="/students" style={{ display: 'inline-block', background: 'var(--ink)', color: 'var(--cream)', padding: '.9rem 1.75rem', borderRadius: 10, textDecoration: 'none', fontWeight: 600, fontSize: 15 }}>
+          <Link href="/students" style={{ display: 'inline-block', background: 'var(--panel)', color: 'var(--on-panel)', padding: '.9rem 1.75rem', borderRadius: 10, textDecoration: 'none', fontWeight: 600, fontSize: 15 }}>
             Abrir painel de alunos →
           </Link>
           <Link href="/test" style={{ display: 'inline-block', color: 'var(--ink3)', padding: '.5rem', textDecoration: 'none', fontSize: 13 }}>
@@ -123,7 +123,7 @@ function CourseCard({ flag, title, subtitle, href, moduleHref, modules, progress
   const pct = total > 0 ? Math.round((done / total) * 100) : 0
 
   return (
-    <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 16, overflow: 'hidden' }}>
+    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, overflow: 'hidden' }}>
       {/* Card header — click to expand or go to course */}
       <div style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <div style={{ fontSize: 36, flexShrink: 0 }}>{flag}</div>
@@ -140,7 +140,7 @@ function CourseCard({ flag, title, subtitle, href, moduleHref, modules, progress
         <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem', alignItems: 'flex-end' }}>
           <Link
             href={href}
-            style={{ padding: '.4rem .85rem', background: accentColor, color: '#fff', borderRadius: 8, textDecoration: 'none', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}
+            style={{ padding: '.4rem .85rem', background: accentColor, color: 'var(--on-panel)', borderRadius: 8, textDecoration: 'none', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}
           >
             Abrir →
           </Link>
@@ -165,7 +165,7 @@ function CourseCard({ flag, title, subtitle, href, moduleHref, modules, progress
                 const modPct = Math.round((modDone / mod.units.length) * 100)
                 return (
                   <Link key={mod.id} href={moduleHref(mod.id)} style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 10, padding: '.65rem 1rem', display: 'flex', alignItems: 'center', gap: '.75rem' }}>
+                    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '.65rem 1rem', display: 'flex', alignItems: 'center', gap: '.75rem' }}>
                       <div style={{ width: 32, height: 32, borderRadius: 6, background: mod.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 13, fontWeight: 700, color: mod.accent, flexShrink: 0 }}>
                         {mod.label}
                       </div>

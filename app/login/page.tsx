@@ -37,7 +37,7 @@ function LoginForm() {
           <p style={{ fontSize: 13, color: 'var(--ink3)' }}>Teacher access</p>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 16, padding: '1.75rem' }}>
+        <form onSubmit={handleSubmit} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '1.75rem' }}>
           <label style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: '.4rem' }}>Password</label>
           <input
             type="password"
@@ -45,13 +45,13 @@ function LoginForm() {
             onChange={e => setPassword(e.target.value)}
             placeholder="Enter password"
             autoFocus
-            style={{ width: '100%', border: `1.5px solid ${error ? 'var(--red)' : 'var(--border)'}`, borderRadius: 10, padding: '.75rem .9rem', fontSize: 15, fontFamily: 'inherit', background: '#fff', outline: 'none', marginBottom: '.75rem' }}
+            style={{ width: '100%', border: `1.5px solid ${error ? 'var(--red)' : 'var(--border)'}`, borderRadius: 10, padding: '.75rem .9rem', fontSize: 15, fontFamily: 'inherit', background: 'var(--surface)', outline: 'none', marginBottom: '.75rem' }}
           />
           {error && <div style={{ fontSize: 13, color: 'var(--red)', marginBottom: '.75rem' }}>{error}</div>}
           <button
             type="submit"
             disabled={loading || !password}
-            style={{ width: '100%', background: loading || !password ? 'var(--border)' : 'var(--ink)', color: '#fff', border: 'none', borderRadius: 10, padding: '.85rem', fontSize: 15, fontWeight: 600, cursor: loading || !password ? 'default' : 'pointer', fontFamily: 'inherit' }}
+            style={{ width: '100%', background: loading || !password ? 'var(--border)' : 'var(--panel)', color: 'var(--on-panel)', border: 'none', borderRadius: 10, padding: '.85rem', fontSize: 15, fontWeight: 600, cursor: loading || !password ? 'default' : 'pointer', fontFamily: 'inherit' }}
           >
             {loading ? 'Entering...' : 'Enter →'}
           </button>

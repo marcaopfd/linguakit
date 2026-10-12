@@ -81,7 +81,7 @@ export function AccentPicker({ studentId, course, current, t }: {
   const missing = options.filter(o => !available.includes(o.tag))
 
   return (
-    <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem 1.1rem', marginBottom: '1.25rem' }}>
+    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem 1.1rem', marginBottom: '1.25rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13.5, fontWeight: 700, marginBottom: '.2rem' }}>
         <Icon name="headphones" size={16} /> {t.accentTitle}
       </div>
@@ -102,8 +102,8 @@ export function AccentPicker({ studentId, course, current, t }: {
                 display: 'inline-flex', alignItems: 'center', gap: '.4rem',
                 minHeight: 44, padding: '.5rem .8rem', borderRadius: 10,
                 border: `1.5px solid ${picked ? 'var(--ink)' : 'var(--border)'}`,
-                background: picked ? 'var(--ink)' : '#fff',
-                color: picked ? '#fff' : 'var(--ink2)',
+                background: picked ? 'var(--panel)' : 'var(--surface)',
+                color: picked ? 'var(--surface)' : 'var(--ink2)',
                 fontSize: 13.5, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer',
               }}
             >

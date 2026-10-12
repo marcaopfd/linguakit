@@ -54,7 +54,7 @@ export default function SignupPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 16, padding: '1.5rem' }}>
+        <form onSubmit={handleSubmit} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '1.5rem' }}>
           <Field label="Nome">
             <input value={name} onChange={e => setName(e.target.value)} placeholder="Como você quer ser chamado" autoFocus style={inputStyle()} />
           </Field>
@@ -79,7 +79,7 @@ export default function SignupPage() {
                     onClick={() => setCourse(c.id)}
                     style={{
                       flex: 1, padding: '.85rem .6rem', borderRadius: 12, cursor: 'pointer', fontFamily: 'inherit',
-                      textAlign: 'center', background: active ? '#fff' : 'var(--paper)',
+                      textAlign: 'center', background: active ? 'var(--surface)' : 'var(--paper)',
                       border: `1.5px solid ${active ? c.accent : 'var(--border)'}`,
                       boxShadow: active ? `0 0 0 3px ${c.accent}22` : 'none',
                     }}
@@ -101,7 +101,7 @@ export default function SignupPage() {
           </label>
 
           {error && (
-            <div style={{ fontSize: 13, color: 'var(--red)', marginBottom: '.85rem', background: '#fdecea', border: '1px solid #f5c6c2', borderRadius: 8, padding: '.6rem .8rem' }}>
+            <div style={{ fontSize: 13, color: 'var(--red)', marginBottom: '.85rem', background: 'var(--bad-bg)', border: '1px solid #f5c6c2', borderRadius: 8, padding: '.6rem .8rem' }}>
               {error}
             </div>
           )}
@@ -111,7 +111,7 @@ export default function SignupPage() {
             disabled={!ready || loading}
             style={{
               width: '100%', padding: '.9rem', borderRadius: 10, border: 'none', fontSize: 15, fontWeight: 600,
-              fontFamily: 'inherit', color: '#fff', background: !ready || loading ? 'var(--border)' : 'var(--ink)',
+              fontFamily: 'inherit', color: 'var(--on-panel)', background: !ready || loading ? 'var(--border)' : 'var(--panel)',
               cursor: !ready || loading ? 'default' : 'pointer',
             }}
           >
@@ -135,7 +135,7 @@ const labelStyle: React.CSSProperties = { display: 'block', fontSize: 13, fontWe
 function inputStyle(invalid = false): React.CSSProperties {
   return {
     width: '100%', border: `1.5px solid ${invalid ? 'var(--red)' : 'var(--border)'}`, borderRadius: 10,
-    padding: '.7rem .85rem', fontSize: 15, fontFamily: 'inherit', background: '#fff', outline: 'none',
+    padding: '.7rem .85rem', fontSize: 15, fontFamily: 'inherit', background: 'var(--surface)', outline: 'none',
   }
 }
 

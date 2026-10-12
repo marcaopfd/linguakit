@@ -28,7 +28,7 @@ export function ModulePageView({ mod, lessonBase, backHref, progressKey, student
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
-      <div style={{ background: '#fff', borderBottom: '1px solid var(--border)', padding: '1.5rem 1.5rem 1rem' }}>
+      <div style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border)', padding: '1.5rem 1.5rem 1rem' }}>
         <Link href={backHref} style={{ minHeight: 44, display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'var(--ink3)', textDecoration: 'none', marginBottom: '.85rem', width: 'fit-content' }}>
           ← {t.back}
         </Link>

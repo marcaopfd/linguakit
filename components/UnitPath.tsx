@@ -102,8 +102,8 @@ export function UnitPath({ units, done, accent, bar, lessonBase, practiceBase, m
                   position: 'relative',
                   width: diameter, height: diameter, borderRadius: '50%',
                   border: `2.5px solid ${isDone ? bar : isCurrent ? accent : 'var(--border)'}`,
-                  background: isDone ? bar : '#fff',
-                  color: isDone ? '#fff' : isCurrent ? accent : 'var(--ink3)',
+                  background: isDone ? bar : 'var(--surface)',
+                  color: isDone ? 'var(--surface)' : isCurrent ? accent : 'var(--ink3)',
                   fontSize: isCurrent ? 20 : 17, fontWeight: 700, fontFamily: 'inherit',
                   cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                   boxShadow: isCurrent ? '0 3px 0 rgba(0,0,0,.12)' : 'none',
@@ -183,7 +183,7 @@ function UnitSheet({ unit, index, isDone, lessonHref, practiceHref, onClose, t }
         className="lk-rise"
         style={{
           position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 41,
-          background: '#fff', borderTop: '1px solid var(--border)',
+          background: 'var(--surface)', borderTop: '1px solid var(--border)',
           borderRadius: '18px 18px 0 0', padding: '1.25rem 1.5rem 1.75rem',
           maxWidth: 560, margin: '0 auto',
         }}
@@ -201,7 +201,7 @@ function UnitSheet({ unit, index, isDone, lessonHref, practiceHref, onClose, t }
         {practiceHref && (
           <Link
             href={practiceHref}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 50, borderRadius: 12, background: 'var(--green)', color: '#fff', fontSize: 15, fontWeight: 700, textDecoration: 'none', marginBottom: '.55rem' }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 50, borderRadius: 12, background: 'var(--green)', color: 'var(--on-panel)', fontSize: 15, fontWeight: 700, textDecoration: 'none', marginBottom: '.55rem' }}
           >
             {t.practiceStart} →
           </Link>

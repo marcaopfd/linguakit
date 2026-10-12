@@ -5,7 +5,10 @@
   --paper: #f3f0e8;
   --ink: #1a1814;
   --ink2: #3d3a34;
-  --ink3: #8a8578;
+  /* Escolhido pelo contraste: #8a8578 dava 3,68 sobre o creme, abaixo do
+     mínimo de 4,5 para texto pequeno. Este dá 5,1. São 117 usos, então é a
+     linha que mais muda a legibilidade do app inteiro. */
+  --ink3: #6f6a5d;
   --green: #2d6a4f;
   --green-light: #d8f3dc;
   --gold: #c9a84c;
@@ -13,7 +16,84 @@
   --border: #e2ddd4;
   --red: #c0392b;
   --red-light: #fdecea;
+
+  /* Card and input backgrounds. Was #fff in a hundred places, which is the
+     one value that cannot survive a dark theme. */
+  --surface: #ffffff;
+
+  /* The dark decorative panels — hero bars, primary buttons — and the text on
+     them. Separate from --ink because --ink is also the text colour, and a
+     theme that inverts text would otherwise turn these light on light. */
+  --panel: #1a1814;
+  --on-panel: #faf8f3;
+
+  /* Right, wrong, and the one note that warns. */
+  --ok-bg: #eaf7ee;
+  --ok-border: #b7e4c7;
+  --ok-ink: #1f6b2e;
+  --bad-bg: #fdecea;
+  --bad-border: #f5c6c2;
+  --bad-ink: #9b1c1c;
+  --note-bg: #fdf3dc;
+  --note-border: #e8d48a;
+  --note-ink: #7a5a0a;
 }
+
+/* ─── Tema escuro ─────────────────────────────────────────────────────────
+   Segue a preferência do sistema. Guardado por :root:not([data-theme="light"])
+   para que uma escolha explícita de tema claro, se um dia existir, ganhe.
+
+   --panel continua escuro nos dois temas: ele é o painel decorativo, não o
+   oposto do fundo. No claro ele contrasta com a página; no escuro ele fica um
+   degrau acima dela, e o texto em cima segue claro nos dois casos.
+
+   As paletas de nível e de módulo não entram aqui. Elas trazem fundo e texto
+   cravados juntos no conteúdo, então continuam legíveis — ilhas claras numa
+   página escura, que é feio de propósito até alguém decidir redesenhá-las. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cream: #14130f;
+    --paper: #1e1c16;
+    --surface: #1c1a15;
+    --ink: #f1eee5;
+    --ink2: #cbc6b8;
+    --ink3: #918b7d;
+    --border: #322f27;
+
+    --panel: #26231c;
+    --on-panel: #f1eee5;
+
+    /* Escolhido pelo contraste, não pelo gosto: com texto claro em cima,
+       #4f9d75 dava 2,82 e o mínimo para este tamanho de texto é 4,5.
+       Este dá 5,1 e continua destacando do fundo da página. */
+    --green: #2f7050;
+    --green-light: #1d3627;
+    --gold: #d6b964;
+    --gold-light: #332b16;
+    --red: #e07264;
+    --red-light: #3a201d;
+
+    --ok-bg: #16301f;
+    --ok-border: #2c5a3c;
+    --ok-ink: #a9e7bf;
+    --bad-bg: #351c1a;
+    --bad-border: #6b342d;
+    --bad-ink: #f0a79c;
+    --note-bg: #2f2714;
+    --note-border: #5b4a1f;
+    --note-ink: #f0d78d;
+  }
+
+  /* O navegador precisa saber, para desenhar campos e barras de rolagem. */
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+}
+
+/* Um botão desligado deve parecer desligado, não desaparecer. Todos escrevem
+   a cor no style inline, pensando no estado ligado, e no estado desligado isso
+   deixava "Conferir" em creme sobre cinza-claro: razão de contraste 1,27, ou
+   seja, invisível. O !important é o que vence o inline, e a regra é simples o
+   bastante para não ter exceção: rótulo de botão desligado é texto apagado. */
+button:disabled { color: var(--ink3) !important; }
 
 * { box-sizing: border-box; }
 

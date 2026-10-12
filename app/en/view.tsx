@@ -20,7 +20,7 @@ export function EnHomeView({ modules }: { modules: ModuleSummary[] }) {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
-      <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '3rem 2rem 2.5rem', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '3rem 2rem 2.5rem', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', right: -20, top: -20, fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 160, fontWeight: 700, color: 'rgba(255,255,255,.04)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>EN</div>
         <Link href="/painel" style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'rgba(255,255,255,.45)', textDecoration: 'none', marginBottom: '1.25rem', width: 'fit-content' }}>
           ← Dashboard
@@ -50,7 +50,7 @@ export function EnHomeView({ modules }: { modules: ModuleSummary[] }) {
           return (
             <Link key={mod.id} href={`/en/module/${mod.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div
-                style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden', cursor: 'pointer', transition: 'box-shadow .15s, transform .15s' }}
+                style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden', cursor: 'pointer', transition: 'box-shadow .15s, transform .15s' }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 24px rgba(0,0,0,.08)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)' }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = 'none'; (e.currentTarget as HTMLElement).style.transform = 'none' }}
               >

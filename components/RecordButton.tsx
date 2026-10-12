@@ -155,7 +155,7 @@ export function RecordButton({ labels, onError }: Props) {
           flexShrink: 0, width: 22, height: 22, borderRadius: '50%',
           border: `1px solid ${recording ? 'var(--red)' : 'var(--border)'}`,
           background: recording ? 'var(--red)' : 'var(--paper)',
-          color: recording ? '#fff' : 'var(--ink3)',
+          color: recording ? 'var(--surface)' : 'var(--ink3)',
           fontSize: 10, fontFamily: 'inherit', cursor: busy ? 'default' : 'pointer',
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
           lineHeight: 1, opacity: busy ? 0.5 : 1,

@@ -36,8 +36,8 @@ type Attempt = {
 }
 
 const LEVEL_COLORS: Record<string, string> = {
-  A1: '#1a5c9e', A2: '#9a4f0a', B1: '#1f6b2e',
-  B2: '#6b21a8', C1: '#9b1c1c', C2: '#1a1814',
+  A1: '#1a5c9e', A2: '#9a4f0a', B1: 'var(--ok-ink)',
+  B2: '#6b21a8', C1: 'var(--bad-ink)', C2: '#1a1814',
 }
 
 export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]; enModules: ModuleSummary[] }) {
@@ -103,7 +103,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
           <div style={{ fontSize: 14, color: 'var(--ink2)', lineHeight: 1.6, marginBottom: '1rem' }}>{tf.couldNotLoad}</div>
           <button
             onClick={() => window.location.reload()}
-            style={{ padding: '.7rem 1.4rem', borderRadius: 10, border: 'none', background: 'var(--ink)', color: '#fff', fontSize: 14, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+            style={{ padding: '.7rem 1.4rem', borderRadius: 10, border: 'none', background: 'var(--panel)', color: 'var(--on-panel)', fontSize: 14, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
           >
             {tf.tryAgain}
           </button>
@@ -132,7 +132,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       {/* Header */}
-      <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '2rem 1.5rem 1.75rem' }}>
+      <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '2rem 1.5rem 1.75rem' }}>
         <div style={{ fontSize: 12, color: 'rgba(255,255,255,.4)', marginBottom: '.35rem', textTransform: 'uppercase', letterSpacing: '.07em' }}>
           {isEN ? '🇺🇸' : '🇧🇷'} {t.courseLabel} · LinguaKit
         </div>
@@ -179,7 +179,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
         <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>
           {dueCount > 0 ? (
             <Link href={`/learn/${studentId}/revisar`} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div style={{ background: 'var(--ink)', color: 'var(--cream)', borderRadius: 14, padding: '1.1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', borderRadius: 14, padding: '1.1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <div style={{ flexShrink: 0, color: 'var(--ink2)' }}><Icon name="repeat" size={26} /></div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 17, fontWeight: 700 }}>{t.review}</div>
@@ -191,7 +191,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
               </div>
             </Link>
           ) : (
-            <div style={{ background: '#fff', border: '1px dashed var(--border)', borderRadius: 14, padding: '1rem 1.25rem' }}>
+            <div style={{ background: 'var(--surface)', border: '1px dashed var(--border)', borderRadius: 14, padding: '1rem 1.25rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13.5, fontWeight: 600, marginBottom: '.2rem' }}><Icon name="repeat" size={15} /> {t.reviewNothingDue}</div>
               <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.5 }}>{t.reviewNothingDueHint}</div>
             </div>
@@ -226,7 +226,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
           const pct = Math.round((done / mod.units.length) * 100)
           return (
             <Link key={mod.id} href={`/learn/${studentId}/module/${mod.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 14, padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem', transition: 'box-shadow .15s' }}>
+              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem', transition: 'box-shadow .15s' }}>
                 <div style={{ width: 44, height: 44, borderRadius: 10, background: mod.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700, color: mod.accent, flexShrink: 0 }}>
                   {mod.label}
                 </div>
@@ -267,7 +267,7 @@ function MyMistakes({ attempts, modules, t }: {
 
   if (attempts.length === 0) {
     return (
-      <div style={{ background: '#fff', border: '1px dashed var(--border)', borderRadius: 14, padding: '1.25rem', textAlign: 'center' }}>
+      <div style={{ background: 'var(--surface)', border: '1px dashed var(--border)', borderRadius: 14, padding: '1.25rem', textAlign: 'center' }}>
         <div style={{ fontSize: 14, fontWeight: 600, marginBottom: '.3rem' }}>{t.noMistakesYet}</div>
         <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.5 }}>{t.noMistakesHint}</div>
       </div>
@@ -287,7 +287,7 @@ function MyMistakes({ attempts, modules, t }: {
   const visible = showAll ? wrong : wrong.slice(0, 5)
 
   return (
-    <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
+    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
       <div style={{ padding: '1rem 1.25rem', borderBottom: wrong.length ? '1px solid var(--border)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
         <div>
           <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 17, fontWeight: 700, display: 'flex', alignItems: 'center', gap: '.45rem' }}><Icon name="target" size={17} /> {t.yourMistakes}</div>
@@ -313,7 +313,7 @@ function MyMistakes({ attempts, modules, t }: {
                 <span style={{ color: 'var(--red)' }}>
                   {t.youAnswered}: {a.answer || <em style={{ color: 'var(--ink3)' }}>{t.blank}</em>}
                 </span>
-                <span style={{ color: 'var(--green)', fontWeight: 600 }}>{t.correctAnswer}: {a.expected}</span>
+                <span style={{ color: 'var(--ok-ink)', fontWeight: 600 }}>{t.correctAnswer}: {a.expected}</span>
               </div>
             </div>
           ))}
@@ -356,12 +356,12 @@ function SaveLinkNote({ studentId, t }: { studentId: string; t: UiStrings }) {
     <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>
       <div style={{ background: 'var(--gold-light)', border: '1px solid #e8d48a', borderRadius: 12, padding: '.85rem 1rem', display: 'flex', alignItems: 'center', gap: '.85rem', flexWrap: 'wrap' }}>
         <div style={{ flex: '1 1 260px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, fontWeight: 700, color: '#7a5a0a', marginBottom: '.15rem' }}><Icon name="key" size={14} /> {t.saveYourLink}</div>
-          <div style={{ fontSize: 12, color: '#9a6b0a', lineHeight: 1.5 }}>{t.saveYourLinkHint}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, fontWeight: 700, color: 'var(--note-ink)', marginBottom: '.15rem' }}><Icon name="key" size={14} /> {t.saveYourLink}</div>
+          <div style={{ fontSize: 12, color: 'var(--note-ink)', lineHeight: 1.5 }}>{t.saveYourLinkHint}</div>
         </div>
         <button
           onClick={copy}
-          style={{ flexShrink: 0, minHeight: 44, padding: '.55rem .9rem', borderRadius: 9, border: '1px solid #e8d48a', background: '#fff', color: 'var(--ink)', fontSize: 12.5, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer' }}
+          style={{ flexShrink: 0, minHeight: 44, padding: '.55rem .9rem', borderRadius: 9, border: '1px solid #e8d48a', background: 'var(--surface)', color: 'var(--ink)', fontSize: 12.5, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer' }}
         >
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.35rem' }}>
             {copied ? '✓' : <Icon name="copy" size={14} />} {copied ? t.linkCopied : t.copyLink}

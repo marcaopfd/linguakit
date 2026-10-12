@@ -21,7 +21,7 @@ const SECTIONS_PT = [
     ],
   },
   {
-    id: 'grammar', name: 'Grammar', emoji: '⚙️', color: '#edf7ed', accent: '#1f6b2e',
+    id: 'grammar', name: 'Grammar', emoji: '⚙️', color: '#edf7ed', accent: 'var(--ok-ink)',
     desc: 'Choose the grammatically correct option.',
     questions: [
       { level: 'A1', text: 'Complete: "Eu ___ brasileira." (I am Brazilian)', opts: ['estou', 'sou', 'tenho', 'fico'], ans: 1 },
@@ -57,7 +57,7 @@ const SECTIONS_PT = [
     ],
   },
   {
-    id: 'writing', name: 'Language Use', emoji: '✍️', color: '#fff0f0', accent: '#9b1c1c',
+    id: 'writing', name: 'Language Use', emoji: '✍️', color: '#fff0f0', accent: 'var(--bad-ink)',
     desc: 'Choose the most natural or correct expression.',
     questions: [
       { level: 'A1', text: 'How do you politely ask "where is the pharmacy?" in Portuguese?', opts: ['Onde é a farmácia?', 'Onde fica a farmácia?', 'Farmácia onde?', 'Qual é farmácia?'], ans: 1 },
@@ -85,7 +85,7 @@ const SECTIONS_EN = [
     ],
   },
   {
-    id: 'grammar', name: 'Gramática', emoji: '⚙️', color: '#edf7ed', accent: '#1f6b2e',
+    id: 'grammar', name: 'Gramática', emoji: '⚙️', color: '#edf7ed', accent: 'var(--ok-ink)',
     desc: 'Escolha a opção gramaticalmente correta em inglês.',
     questions: [
       { level: 'A1', text: 'Complete: "She ___ a doctor." (Ela é médica.)', opts: ['am', 'is', 'are', 'be'], ans: 1 },
@@ -121,7 +121,7 @@ const SECTIONS_EN = [
     ],
   },
   {
-    id: 'writing', name: 'Uso do Inglês', emoji: '✍️', color: '#fff0f0', accent: '#9b1c1c',
+    id: 'writing', name: 'Uso do Inglês', emoji: '✍️', color: '#fff0f0', accent: 'var(--bad-ink)',
     desc: 'Escolha a expressão mais natural ou correta em inglês.',
     questions: [
       { level: 'A1', text: 'Como se pergunta "onde fica a farmácia?" em inglês de forma educada?', opts: ['Where pharmacy?', 'Where is the pharmacy?', 'Pharmacy, where?', 'The pharmacy is where?'], ans: 1 },
@@ -138,18 +138,18 @@ const SECTIONS_EN = [
 const LEVELS_PT: Record<string, { name: string; desc: string; color: string }> = {
   A1: { name: 'Complete Beginner', color: '#1a5c9e', desc: 'You\'re at the start of your Portuguese journey. Your first lessons will focus on greetings, numbers, family, and basic survival phrases.' },
   A2: { name: 'Basic', color: '#9a4f0a', desc: 'You have the foundations. Now it\'s time to build real conversational ability — past tense, making plans, expressing opinions, and navigating daily life.' },
-  B1: { name: 'Intermediate', color: '#1f6b2e', desc: 'You can hold a conversation! The focus now is on complex grammar (subjunctive, conditionals), more nuanced vocabulary, and Brazilian media.' },
+  B1: { name: 'Intermediate', color: 'var(--ok-ink)', desc: 'You can hold a conversation! The focus now is on complex grammar (subjunctive, conditionals), more nuanced vocabulary, and Brazilian media.' },
   B2: { name: 'Upper Intermediate', color: '#6b21a8', desc: 'You\'re near-fluent. Lessons focus on formal register, sophisticated argument, literature, advanced grammar, and cultural depth.' },
-  C1: { name: 'Advanced', color: '#9b1c1c', desc: 'You operate at a high level. Focus on idiomatic expression, regional variation, register switching, and elegant Portuguese.' },
+  C1: { name: 'Advanced', color: 'var(--bad-ink)', desc: 'You operate at a high level. Focus on idiomatic expression, regional variation, register switching, and elegant Portuguese.' },
   C2: { name: 'Proficient', color: '#1a1814', desc: 'Near-native mastery. You can access all of Brazilian culture — literature, comedy, formal discourse — in its original form.' },
 }
 
 const LEVELS_EN: Record<string, { name: string; desc: string; color: string }> = {
   A1: { name: 'Iniciante', color: '#1a5c9e', desc: 'Você está no começo da sua jornada em inglês. Suas primeiras aulas vão focar em cumprimentos, números, família e frases essenciais de sobrevivência.' },
   A2: { name: 'Básico', color: '#9a4f0a', desc: 'Você tem as bases. Agora é hora de construir habilidade conversacional real — passado, planos futuros, expressar opiniões e navegar o dia a dia em inglês.' },
-  B1: { name: 'Intermediário', color: '#1f6b2e', desc: 'Você consegue se comunicar! O foco agora é em gramática complexa (condicionais, voz passiva), vocabulário mais rico e compreensão de mídia em inglês.' },
+  B1: { name: 'Intermediário', color: 'var(--ok-ink)', desc: 'Você consegue se comunicar! O foco agora é em gramática complexa (condicionais, voz passiva), vocabulário mais rico e compreensão de mídia em inglês.' },
   B2: { name: 'Intermediário Avançado', color: '#6b21a8', desc: 'Você está quase fluente. As aulas focam em registro formal, argumentação sofisticada, phrasal verbs e profundidade cultural do mundo anglófono.' },
-  C1: { name: 'Avançado', color: '#9b1c1c', desc: 'Você opera em alto nível. Foco em expressões idiomáticas, variação regional, alternância de registro e inglês elegante.' },
+  C1: { name: 'Avançado', color: 'var(--bad-ink)', desc: 'Você opera em alto nível. Foco em expressões idiomáticas, variação regional, alternância de registro e inglês elegante.' },
   C2: { name: 'Proficiente', color: '#1a1814', desc: 'Maestria quase nativa. Você consegue acessar toda a cultura anglófona — literatura, humor, discurso formal — em sua forma original.' },
 }
 
@@ -234,7 +234,7 @@ function TestPageInner() {
         </h1>
         <p style={{ fontSize: 14, color: 'var(--ink3)', marginBottom: '2rem' }}>LinguaKit · by Marcos</p>
 
-        <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 16, padding: '1.5rem', maxWidth: 420, width: '100%', textAlign: 'left', marginBottom: '1.5rem' }}>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '1.5rem', maxWidth: 420, width: '100%', textAlign: 'left', marginBottom: '1.5rem' }}>
           <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: '.75rem' }}>{isEN ? 'O que esperar' : 'What to expect'}</h3>
           {(isEN ? [
             ['pencil', '30 questões sobre vocabulário, gramática e compreensão de leitura'],
@@ -264,13 +264,13 @@ function TestPageInner() {
             value={studentName}
             onChange={e => setStudentName(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && studentName && startTest()}
-            style={{ width: '100%', border: '1.5px solid var(--border)', borderRadius: 10, padding: '.7rem .9rem', fontSize: 15, fontFamily: 'inherit', background: '#fff', outline: 'none' }}
+            style={{ width: '100%', border: '1.5px solid var(--border)', borderRadius: 10, padding: '.7rem .9rem', fontSize: 15, fontFamily: 'inherit', background: 'var(--surface)', outline: 'none' }}
           />
         </div>
         <button
           onClick={startTest}
           disabled={!studentName}
-          style={{ width: '100%', maxWidth: 420, background: studentName ? 'var(--ink)' : 'var(--border)', color: 'var(--cream)', border: 'none', borderRadius: 12, padding: '.9rem', fontSize: 16, fontWeight: 600, cursor: studentName ? 'pointer' : 'default', fontFamily: 'inherit' }}
+          style={{ width: '100%', maxWidth: 420, background: studentName ? 'var(--panel)' : 'var(--border)', color: 'var(--on-panel)', border: 'none', borderRadius: 12, padding: '.9rem', fontSize: 16, fontWeight: 600, cursor: studentName ? 'pointer' : 'default', fontFamily: 'inherit' }}
         >
           {isEN ? 'Começar o teste →' : 'Start the test →'}
         </button>
@@ -285,11 +285,11 @@ function TestPageInner() {
 
     return (
       <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
-        <div style={{ position: 'sticky', top: 0, background: '#fff', borderBottom: '1px solid var(--border)', padding: '.85rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10 }}>
+        <div style={{ position: 'sticky', top: 0, background: 'var(--surface)', borderBottom: '1px solid var(--border)', padding: '.85rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10 }}>
           <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700 }}>{isEN ? '🇺🇸' : '🇧🇷'} LinguaKit</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
             <div style={{ width: 120, height: 4, background: 'var(--border)', borderRadius: 2 }}>
-              <div style={{ height: 4, background: 'var(--ink)', borderRadius: 2, width: `${pct}%`, transition: 'width .4s' }} />
+              <div style={{ height: 4, background: 'var(--panel)', borderRadius: 2, width: `${pct}%`, transition: 'width .4s' }} />
             </div>
             <span style={{ fontSize: 12, color: 'var(--ink3)' }}>{totalAnswered} / 30</span>
           </div>
@@ -307,14 +307,14 @@ function TestPageInner() {
             const selected = answers[sec.id][qi]
             const globalNum = currentSection * 6 + qi + 1
             return (
-              <div key={qi} style={{ background: '#fff', border: `1px solid ${selected !== null ? 'var(--green)' : 'var(--border)'}`, borderRadius: 14, padding: '1.1rem', marginBottom: '.75rem', transition: 'border-color .15s' }}>
+              <div key={qi} style={{ background: 'var(--surface)', border: `1px solid ${selected !== null ? 'var(--green)' : 'var(--border)'}`, borderRadius: 14, padding: '1.1rem', marginBottom: '.75rem', transition: 'border-color .15s' }}>
                 <div style={{ fontSize: 11, color: 'var(--ink3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '.4rem' }}>
                   {isEN ? 'Questão' : 'Question'} {globalNum} · {q.level}
                 </div>
                 <div style={{ fontSize: 15, fontWeight: 500, lineHeight: 1.5, marginBottom: '.85rem', whiteSpace: 'pre-line' }}>{q.text}</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
                   {q.opts.map((opt, oi) => (
-                    <button key={oi} onClick={() => selectAnswer(qi, oi)} style={{ width: '100%', textAlign: 'left', padding: '.65rem .9rem', border: `1.5px solid ${selected === oi ? 'var(--ink)' : 'var(--border)'}`, borderRadius: 8, fontSize: 14, background: selected === oi ? 'var(--ink)' : '#fff', color: selected === oi ? '#fff' : 'var(--ink)', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .12s', lineHeight: 1.4 }}>
+                    <button key={oi} onClick={() => selectAnswer(qi, oi)} style={{ width: '100%', textAlign: 'left', padding: '.65rem .9rem', border: `1.5px solid ${selected === oi ? 'var(--ink)' : 'var(--border)'}`, borderRadius: 8, fontSize: 14, background: selected === oi ? 'var(--panel)' : 'var(--surface)', color: selected === oi ? 'var(--on-panel)' : 'var(--ink)', cursor: 'pointer', fontFamily: 'inherit', transition: 'all .12s', lineHeight: 1.4 }}>
                       {opt}
                     </button>
                   ))}
@@ -324,13 +324,13 @@ function TestPageInner() {
           })}
         </div>
 
-        <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: '#fff', borderTop: '1px solid var(--border)', padding: '.85rem 1.5rem', display: 'flex', gap: '.6rem' }}>
+        <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: 'var(--surface)', borderTop: '1px solid var(--border)', padding: '.85rem 1.5rem', display: 'flex', gap: '.6rem' }}>
           {currentSection > 0 && (
             <button onClick={prevSection} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: '1.5px solid var(--border)', background: 'var(--paper)', color: 'var(--ink)' }}>
               ← {isEN ? 'Voltar' : 'Back'}
             </button>
           )}
-          <button onClick={nextSection} style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: isLast ? 'var(--green)' : 'var(--ink)', color: '#fff' }}>
+          <button onClick={nextSection} style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: isLast ? 'var(--green)' : 'var(--panel)', color: 'var(--on-panel)' }}>
             {isLast ? (isEN ? 'Ver meu resultado →' : 'See my result →') : (isEN ? 'Próxima seção →' : 'Next section →')}
           </button>
         </div>
@@ -355,13 +355,13 @@ function TestPageInner() {
 
     return (
       <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
-        <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '2.5rem 1.5rem 2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '2.5rem 1.5rem 2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 200, fontWeight: 700, color: 'rgba(255,255,255,.04)', pointerEvents: 'none', userSelect: 'none' }}>{result.level}</div>
           {/* Pleased at any level: finishing thirty questions in a language you
               are still learning is the achievement, and a disappointed dog on
               the screen where someone decides whether to carry on would be a
               terrible thing to meet. */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.4rem', color: 'var(--cream)', position: 'relative' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.4rem', color: 'var(--on-panel)', position: 'relative' }}>
             <Caramelo mood="happy" size={76} />
           </div>
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,.5)', marginBottom: '.5rem', position: 'relative' }}>{studentName ? studentName + (isEN ? ' — resultado' : '\'s result') : (isEN ? 'Seu resultado' : 'Your result')}</div>
@@ -378,7 +378,7 @@ function TestPageInner() {
                 const p = result.skillPcts[sec.id]
                 const correct = result.sectionScores[sec.id]
                 return (
-                  <div key={sec.id} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 10, padding: '.75rem' }}>
+                  <div key={sec.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '.75rem' }}>
                     <div style={{ fontSize: 12, fontWeight: 600, marginBottom: '.3rem' }}>{sec.emoji} {sec.name}</div>
                     <div style={{ height: 5, background: 'var(--border)', borderRadius: 3, marginBottom: '.25rem' }}>
                       <div style={{ height: 5, borderRadius: 3, background: 'var(--green)', width: `${p}%`, transition: 'width .8s .2s' }} />
@@ -394,11 +394,11 @@ function TestPageInner() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}><Icon name="check" size={14} /> {isEN ? 'Pontos fortes' : 'Strengths'}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
               {result.strengths.length === 0 ? (
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.5rem', fontSize: 13, lineHeight: 1.5, padding: '.5rem .7rem', borderRadius: 8, background: 'var(--green-light)', color: 'var(--green)' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.5rem', fontSize: 13, lineHeight: 1.5, padding: '.5rem .7rem', borderRadius: 8, background: 'var(--green-light)', color: 'var(--ok-ink)' }}>
                   <span style={{ fontWeight: 700 }}>✓</span> {isEN ? 'Você demonstrou esforço em todas as áreas — continue!' : 'You showed effort across all areas — keep going!'}
                 </div>
               ) : result.strengths.slice(0, 3).map(id => (
-                <div key={id} style={{ display: 'flex', alignItems: 'flex-start', gap: '.5rem', fontSize: 13, lineHeight: 1.5, padding: '.5rem .7rem', borderRadius: 8, background: 'var(--green-light)', color: 'var(--green)' }}>
+                <div key={id} style={{ display: 'flex', alignItems: 'flex-start', gap: '.5rem', fontSize: 13, lineHeight: 1.5, padding: '.5rem .7rem', borderRadius: 8, background: 'var(--green-light)', color: 'var(--ok-ink)' }}>
                   <span style={{ fontWeight: 700 }}>✓</span> {skillLabels[id]} — {result.skillPcts[id]}% {isEN ? 'correto' : 'correct'}
                 </div>
               ))}
@@ -423,19 +423,19 @@ function TestPageInner() {
           <div style={{ marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}><Icon name="target" size={14} /> {isEN ? 'Ponto de partida recomendado' : 'Recommended starting point'}</div>
             <div style={{ background: 'var(--gold-light)', border: '1px solid #e8d48a', borderRadius: 12, padding: '1rem 1.1rem' }}>
-              <div style={{ fontSize: 11, fontWeight: 600, color: '#7a5a0a', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '.4rem' }}>{isEN ? 'Comece aqui' : 'Start here'}</div>
+              <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--note-ink)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '.4rem' }}>{isEN ? 'Comece aqui' : 'Start here'}</div>
               <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 20, fontWeight: 700, color: 'var(--ink)', marginBottom: '.25rem' }}>{modNames[result.level]}</div>
-              <div style={{ fontSize: 13, color: '#6b4f0d', lineHeight: 1.55 }}>{lvl.desc}</div>
+              <div style={{ fontSize: 13, color: 'var(--note-ink)', lineHeight: 1.55 }}>{lvl.desc}</div>
             </div>
           </div>
 
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}><Icon name="flag" size={14} /> {isEN ? 'Seu curso' : 'Your course'}</div>
-            <div style={{ background: 'var(--ink)', borderRadius: 14, padding: '1.1rem', color: 'var(--cream)' }}>
+            <div style={{ background: 'var(--panel)', borderRadius: 14, padding: '1.1rem', color: 'var(--on-panel)' }}>
               {saveStatus === 'saving' && <div style={{ textAlign: 'center', padding: '.5rem 0', fontSize: 13, color: 'rgba(255,255,255,.6)' }}>⏳ {isEN ? 'Salvando seu resultado...' : 'Saving your result...'}</div>}
               {saveStatus === 'ok' && (
                 <div style={{ textAlign: 'center', padding: '.5rem 0' }}>
-                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.5rem', color: 'var(--cream)' }}><Icon name="check" size={34} strokeWidth={1.7} /></div>
+                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.5rem', color: 'var(--on-panel)' }}><Icon name="check" size={34} strokeWidth={1.7} /></div>
                   <div style={{ fontSize: 15, fontWeight: 600, marginBottom: '.3rem' }}>{isEN ? 'Seu curso está pronto' : 'Your course is ready'}</div>
                   <div style={{ fontSize: 13, color: 'rgba(255,255,255,.55)', lineHeight: 1.6, marginBottom: savedStudentId ? '1rem' : 0 }}>
                     {isEN
@@ -588,7 +588,7 @@ function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
   if (claimed) {
     return (
       <div style={{ textAlign: 'left', background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.18)', borderRadius: 12, padding: '1rem' }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: '.3rem' }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--on-panel)', marginBottom: '.3rem' }}>
           {label('✅ Conta criada', '✅ Account created')}
         </div>
         <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', lineHeight: 1.55, marginBottom: '.85rem' }}>
@@ -599,7 +599,7 @@ function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
         </div>
         <a
           href={`/learn/${studentId}`}
-          style={{ display: 'block', textAlign: 'center', padding: '.7rem 1rem', background: '#fff', borderRadius: 9, color: 'var(--ink)', textDecoration: 'none', fontSize: 14, fontWeight: 700 }}
+          style={{ display: 'block', textAlign: 'center', padding: '.7rem 1rem', background: 'var(--surface)', borderRadius: 9, color: 'var(--ink)', textDecoration: 'none', fontSize: 14, fontWeight: 700 }}
         >
           {label('📚 Começar o curso →', '📚 Start my course →')}
         </a>
@@ -609,7 +609,7 @@ function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
 
   return (
     <div style={{ textAlign: 'left', background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.18)', borderRadius: 12, padding: '1rem' }}>
-      <div style={{ fontSize: 13, fontWeight: 700, marginBottom: '.3rem', color: '#fff' }}>
+      <div style={{ fontSize: 13, fontWeight: 700, marginBottom: '.3rem', color: 'var(--on-panel)' }}>
         {label('🔑 Crie sua senha para estudar sozinha', '🔑 Create a password to study on your own')}
       </div>
       <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', lineHeight: 1.55, marginBottom: '.85rem' }}>
@@ -648,7 +648,7 @@ function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
         <button
           type="submit"
           disabled={!ready || saving}
-          style={{ width: '100%', padding: '.7rem 1rem', background: !ready || saving ? 'rgba(255,255,255,.2)' : '#fff', border: 'none', borderRadius: 9, color: !ready || saving ? 'rgba(255,255,255,.6)' : 'var(--ink)', fontSize: 14, fontWeight: 700, fontFamily: 'inherit', cursor: !ready || saving ? 'default' : 'pointer' }}
+          style={{ width: '100%', padding: '.7rem 1rem', background: !ready || saving ? 'rgba(255,255,255,.2)' : 'var(--surface)', border: 'none', borderRadius: 9, color: !ready || saving ? 'rgba(255,255,255,.6)' : 'var(--panel)', fontSize: 14, fontWeight: 700, fontFamily: 'inherit', cursor: !ready || saving ? 'default' : 'pointer' }}
         >
           {saving ? label('Criando...', 'Creating...') : label('Criar conta e começar →', 'Create account and start →')}
         </button>
@@ -665,14 +665,14 @@ function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
               'Without a password this link is your only way in — lose it and only your teacher can get you back.',
             )}
           </div>
-          <div style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 11.5, color: '#fff', background: 'rgba(0,0,0,.25)', border: '1px solid rgba(255,255,255,.15)', borderRadius: 8, padding: '.5rem .65rem', marginBottom: '.5rem', wordBreak: 'break-all' }}>
+          <div style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 11.5, color: 'var(--on-panel)', background: 'rgba(0,0,0,.25)', border: '1px solid rgba(255,255,255,.15)', borderRadius: 8, padding: '.5rem .65rem', marginBottom: '.5rem', wordBreak: 'break-all' }}>
             {url}
           </div>
           <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap' }}>
-            <button onClick={copy} type="button" style={{ flex: '1 1 auto', padding: '.55rem .9rem', background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 8, color: '#fff', fontSize: 12.5, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}>
+            <button onClick={copy} type="button" style={{ flex: '1 1 auto', padding: '.55rem .9rem', background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 8, color: 'var(--on-panel)', fontSize: 12.5, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}>
               {copied ? label('✓ Link copiado', '✓ Link copied') : label('📋 Copiar link', '📋 Copy link')}
             </button>
-            <a href={`/learn/${studentId}`} style={{ flex: '1 1 auto', textAlign: 'center', padding: '.55rem .9rem', background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 8, color: '#fff', textDecoration: 'none', fontSize: 12.5, fontWeight: 600 }}>
+            <a href={`/learn/${studentId}`} style={{ flex: '1 1 auto', textAlign: 'center', padding: '.55rem .9rem', background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 8, color: 'var(--on-panel)', textDecoration: 'none', fontSize: 12.5, fontWeight: 600 }}>
               {label('📚 Começar sem conta', '📚 Start without an account')}
             </a>
           </div>
@@ -689,7 +689,7 @@ const fieldStyle: React.CSSProperties = {
   borderRadius: 9,
   border: '1px solid rgba(255,255,255,.22)',
   background: 'rgba(0,0,0,.22)',
-  color: '#fff',
+  color: 'var(--on-panel)',
   fontSize: 14,
   fontFamily: 'inherit',
   outline: 'none',

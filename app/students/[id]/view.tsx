@@ -33,8 +33,8 @@ type StudentDetail = {
 }
 
 const LEVEL_COLORS: Record<string, string> = {
-  A1: '#1a5c9e', A2: '#9a4f0a', B1: '#1f6b2e',
-  B2: '#6b21a8', C1: '#9b1c1c', C2: '#1a1814',
+  A1: '#1a5c9e', A2: '#9a4f0a', B1: 'var(--ok-ink)',
+  B2: '#6b21a8', C1: 'var(--bad-ink)', C2: '#1a1814',
 }
 
 export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleSummary[]; enModules: ModuleSummary[] }) {
@@ -84,7 +84,7 @@ export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleS
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       {/* Header */}
-      <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '2rem 1.5rem 1.5rem' }}>
+      <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '2rem 1.5rem 1.5rem' }}>
         <Link href="/students" style={{ display: 'inline-flex', alignItems: 'center', gap: '.35rem', fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none', marginBottom: '1rem' }}>
           ← Alunos
         </Link>
@@ -110,7 +110,7 @@ export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleS
               )}
             </div>
           </div>
-          <Link href={`/learn/${student.id}`} target="_blank" style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '.4rem', padding: '.5rem 1rem', background: 'rgba(255,255,255,.1)', border: '1px solid rgba(255,255,255,.2)', borderRadius: 10, color: '#fff', textDecoration: 'none', fontSize: 13, fontWeight: 600 }}>
+          <Link href={`/learn/${student.id}`} target="_blank" style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '.4rem', padding: '.5rem 1rem', background: 'rgba(255,255,255,.1)', border: '1px solid rgba(255,255,255,.2)', borderRadius: 10, color: 'var(--on-panel)', textDecoration: 'none', fontSize: 13, fontWeight: 600 }}>
             🔗 Curso do aluno
           </Link>
         </div>
@@ -141,7 +141,7 @@ export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleS
             modDone === mod.units.length ? 'complete' : modDone > 0 ? 'in-progress' : 'not-started'
 
           return (
-            <div key={mod.id} style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
+            <div key={mod.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
               {/* Module header */}
               <div style={{ padding: '.9rem 1.1rem', display: 'flex', alignItems: 'center', gap: '.85rem' }}>
                 <div style={{ width: 42, height: 42, borderRadius: 8, background: mod.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 15, fontWeight: 700, color: mod.accent, flexShrink: 0 }}>
@@ -152,7 +152,7 @@ export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleS
                     <span style={{ fontSize: 14, fontWeight: 600 }}>{mod.emoji} {mod.name}</span>
                     <span style={{ fontSize: 11, padding: '.1rem .4rem', borderRadius: 5, fontWeight: 600,
                       background: status === 'complete' ? 'var(--green-light)' : status === 'in-progress' ? 'var(--gold-light)' : 'var(--border)',
-                      color: status === 'complete' ? 'var(--green)' : status === 'in-progress' ? '#7a5a0a' : 'var(--ink3)'
+                      color: status === 'complete' ? 'var(--green)' : status === 'in-progress' ? 'var(--note-ink)' : 'var(--ink3)'
                     }}>
                       {status === 'complete' ? '✓ Completo' : status === 'in-progress' ? '⏳ Em progresso' : '· Não iniciado'}
                     </span>
@@ -169,7 +169,7 @@ export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleS
                 {mod.units.map((unit, i) => {
                   const done = completedSet.has(`${mod.id}-${i}`)
                   return (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '.4rem', padding: '.4rem .6rem', borderRadius: 7, background: done ? 'var(--green-light)' : '#fff', border: `1px solid ${done ? 'var(--green)' : 'var(--border)'}` }}>
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '.4rem', padding: '.4rem .6rem', borderRadius: 7, background: done ? 'var(--green-light)' : 'var(--surface)', border: `1px solid ${done ? 'var(--green)' : 'var(--border)'}` }}>
                       <span style={{ fontSize: 13, flexShrink: 0, color: done ? 'var(--green)' : 'var(--border)' }}>
                         {done ? '✓' : '○'}
                       </span>
@@ -193,7 +193,7 @@ function WeakSpots({ attempts, unitTitle }: { attempts: Attempt[]; unitTitle: (m
 
   if (attempts.length === 0) {
     return (
-      <div style={{ background: '#fff', border: '1px dashed var(--border)', borderRadius: 12, padding: '1.25rem', textAlign: 'center' }}>
+      <div style={{ background: 'var(--surface)', border: '1px dashed var(--border)', borderRadius: 12, padding: '1.25rem', textAlign: 'center' }}>
         <div style={{ fontSize: 13, fontWeight: 600, marginBottom: '.3rem' }}>Nenhum exercício respondido ainda</div>
         <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.5 }}>
           Assim que o aluno responder os exercícios de uma lição, os erros dele aparecem aqui.
@@ -218,7 +218,7 @@ function WeakSpots({ attempts, unitTitle }: { attempts: Attempt[]; unitTitle: (m
   const visible = showAll ? wrong : wrong.slice(0, 8)
 
   return (
-    <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
       <div style={{ padding: '.9rem 1.1rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
         <div>
           <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700 }}>🎯 Pontos fracos</div>
@@ -263,7 +263,7 @@ function WeakSpots({ attempts, unitTitle }: { attempts: Attempt[]; unitTitle: (m
                 <div style={{ fontSize: 13, marginBottom: '.3rem', lineHeight: 1.4 }}>{a.question}</div>
                 <div style={{ display: 'flex', gap: '.75rem', flexWrap: 'wrap', fontSize: 12.5 }}>
                   <span style={{ color: 'var(--red)' }}>✗ {a.answer || <em style={{ color: 'var(--ink3)' }}>em branco</em>}</span>
-                  <span style={{ color: 'var(--green)' }}>✓ {a.expected}</span>
+                  <span style={{ color: 'var(--ok-ink)' }}>✓ {a.expected}</span>
                 </div>
               </div>
             ))}

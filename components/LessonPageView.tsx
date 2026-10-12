@@ -60,7 +60,7 @@ export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, prog
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       {/* Top bar */}
-      <div style={{ position: 'sticky', top: 0, background: '#fff', borderBottom: '1px solid var(--border)', padding: '.85rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10 }}>
+      <div style={{ position: 'sticky', top: 0, background: 'var(--surface)', borderBottom: '1px solid var(--border)', padding: '.85rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10 }}>
         <Link href={`${moduleBase}/${modId}`} style={{ display: 'flex', alignItems: 'center', gap: '.4rem', minHeight: 44, paddingRight: '.5rem', fontSize: 13, color: 'var(--ink3)', textDecoration: 'none' }}>
           ← {t.back}
         </Link>
@@ -81,7 +81,7 @@ export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, prog
 
       <div style={{ maxWidth: 620, margin: '0 auto', padding: '1.5rem 1.5rem 5rem' }}>
         {/* Hero card */}
-        <div style={{ background: 'var(--ink)', color: 'var(--cream)', borderRadius: 16, padding: '1.5rem', marginBottom: '1.25rem', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', borderRadius: 16, padding: '1.5rem', marginBottom: '1.25rem', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: 56, opacity: .2, pointerEvents: 'none' }}>{unit.emoji}</div>
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,.45)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: '.5rem' }}>
             {mod.label} · {mod.name} · {t.unit} {unitIndex + 1}
@@ -97,7 +97,7 @@ export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, prog
             <button
               key={s}
               onClick={() => setStep(i)}
-              style={{ minHeight: 44, padding: '.35rem .85rem', borderRadius: 22, fontSize: 12.5, fontWeight: 600, border: '1.5px solid', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit', background: step === i ? 'var(--ink)' : '#fff', color: step === i ? '#fff' : 'var(--ink3)', borderColor: step === i ? 'var(--ink)' : 'var(--border)' }}
+              style={{ minHeight: 44, padding: '.35rem .85rem', borderRadius: 22, fontSize: 12.5, fontWeight: 600, border: '1.5px solid', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit', background: step === i ? 'var(--panel)' : 'var(--surface)', color: step === i ? 'var(--on-panel)' : 'var(--ink3)', borderColor: step === i ? 'var(--ink)' : 'var(--border)' }}
             >
               {s}
             </button>
@@ -130,13 +130,13 @@ export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, prog
             </button>
           )}
           {step < steps.length - 1 ? (
-            <button onClick={() => setStep(s => s + 1)} style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: 'var(--ink)', color: '#fff' }}>
+            <button onClick={() => setStep(s => s + 1)} style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: 'var(--panel)', color: 'var(--on-panel)' }}>
               {steps[step + 1]} →
             </button>
           ) : (
             <button
               onClick={() => { markDone(unitIndex); router.push(`${moduleBase}/${modId}`) }}
-              style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: 'var(--green)', color: '#fff' }}
+              style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: 'var(--green)', color: 'var(--on-panel)' }}
             >
               {isDone ? `✓ ${t.completed}` : `${t.markAsDone} ✓`}
             </button>
@@ -163,7 +163,7 @@ function ObjectivesStep({ unit, t }: { unit: Unit; t: UiStrings }) {
       <SectionHeading icon="🎯" label={t.learningObjectives} />
       <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
         {unit.objectives.map((obj, i) => (
-          <div key={i} style={{ background: 'var(--green-light)', borderRadius: 8, padding: '.6rem .85rem', fontSize: 13, color: 'var(--green)', display: 'flex', alignItems: 'flex-start', gap: '.5rem', lineHeight: 1.4 }}>
+          <div key={i} style={{ background: 'var(--green-light)', borderRadius: 8, padding: '.6rem .85rem', fontSize: 13, color: 'var(--ok-ink)', display: 'flex', alignItems: 'flex-start', gap: '.5rem', lineHeight: 1.4 }}>
             <span style={{ fontWeight: 700, flexShrink: 0, marginTop: 1 }}>✓</span>
             {obj}
           </div>
@@ -195,7 +195,7 @@ function VocabStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audio: 
       <SectionHeading icon="📖" label={t.steps.vocabulary} />
       <div className="lk-pair-grid">
         {items.map(({ v, extra }, i) => (
-          <div key={i} style={{ background: '#fff', border: `1px ${extra ? 'dashed' : 'solid'} var(--border)`, borderRadius: 10, padding: '.75rem' }}>
+          <div key={i} style={{ background: 'var(--surface)', border: `1px ${extra ? 'dashed' : 'solid'} var(--border)`, borderRadius: 10, padding: '.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem' }}>
               <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 600, color: 'var(--ink)', flex: 1 }}>{v.pt}</div>
               <SpeakButton text={firstVariant(v.pt)} lang={lang} voice={audio.voice} ready={audio.ready} listen={t.listen} />
@@ -219,13 +219,13 @@ function GrammarStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audio
   return (
     <div>
       <SectionHeading icon="⚙️" label={t.steps.grammar} />
-      <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
-        <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '.85rem 1.1rem' }}>
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+        <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '.85rem 1.1rem' }}>
           <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 600, marginBottom: '.2rem' }}>{g.title}</div>
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,.6)', lineHeight: 1.5 }}>{g.explain}</div>
         </div>
         <div style={{ padding: '.85rem 1.1rem' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 13, background: 'var(--paper)', border: '1px solid var(--border)', borderRadius: 6, padding: '.5rem .75rem', marginBottom: '.75rem', color: 'var(--green)' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 13, background: 'var(--paper)', border: '1px solid var(--border)', borderRadius: 6, padding: '.5rem .75rem', marginBottom: '.75rem', color: 'var(--ok-ink)' }}>
             {g.structure}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
@@ -243,9 +243,9 @@ function GrammarStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audio
         <div style={{ marginTop: '.75rem', display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
           <SectionHeading icon="⚠️" label={t.commonMistakes} />
           {unit.commonMistakes.map((m, i) => (
-            <div key={i} style={{ background: '#fdecea', borderRadius: 8, padding: '.6rem .85rem' }}>
+            <div key={i} style={{ background: 'var(--bad-bg)', borderRadius: 8, padding: '.6rem .85rem' }}>
               <div style={{ fontSize: 13, color: '#c0392b', fontWeight: 600, textDecoration: 'line-through', marginBottom: 2 }}>✗ {m.wrong}</div>
-              <div style={{ fontSize: 13, color: 'var(--green)', fontWeight: 600, marginBottom: 2 }}>✓ {m.correct}</div>
+              <div style={{ fontSize: 13, color: 'var(--ok-ink)', fontWeight: 600, marginBottom: 2 }}>✓ {m.correct}</div>
               {(m.note ?? m.en) && <div style={{ fontSize: 12, color: 'var(--ink2)' }}>{m.note ?? m.en}</div>}
             </div>
           ))}
@@ -302,14 +302,14 @@ function DialogueStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audi
         <div style={{ display: 'flex', gap: '.5rem', marginBottom: '.75rem' }}>
           <button
             onClick={playAll}
-            style={{ padding: '.45rem .85rem', borderRadius: 8, border: '1px solid var(--border)', background: playingAll ? 'var(--ink)' : '#fff', color: playingAll ? '#fff' : 'var(--ink)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+            style={{ padding: '.45rem .85rem', borderRadius: 8, border: '1px solid var(--border)', background: playingAll ? 'var(--panel)' : 'var(--surface)', color: playingAll ? 'var(--on-panel)' : 'var(--ink)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
           >
             {playingAll ? `■ ${t.stop}` : `▶ ${t.playDialogue}`}
           </button>
           <button
             onClick={() => setSlow(v => !v)}
             aria-pressed={slow}
-            style={{ padding: '.45rem .75rem', borderRadius: 8, border: `1px solid ${slow ? 'var(--ink)' : 'var(--border)'}`, background: slow ? 'var(--paper)' : '#fff', color: slow ? 'var(--ink)' : 'var(--ink3)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+            style={{ padding: '.45rem .75rem', borderRadius: 8, border: `1px solid ${slow ? 'var(--ink)' : 'var(--border)'}`, background: slow ? 'var(--paper)' : 'var(--surface)', color: slow ? 'var(--panel)' : 'var(--ink3)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
           >
             🐢 {t.slow}
           </button>
@@ -321,14 +321,14 @@ function DialogueStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audi
         </div>
       )}
       {micError && (
-        <div style={{ fontSize: 12, color: 'var(--red)', background: '#fdecea', border: '1px solid #f5c6c2', borderRadius: 8, padding: '.5rem .7rem', marginBottom: '.65rem' }}>
+        <div style={{ fontSize: 12, color: 'var(--red)', background: 'var(--bad-bg)', border: '1px solid #f5c6c2', borderRadius: 8, padding: '.5rem .7rem', marginBottom: '.65rem' }}>
           {micError}
         </div>
       )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
         {d.lines.map((line, i) => (
           <div key={i} style={{ display: 'flex', gap: '.65rem', alignItems: 'flex-start', background: current === i ? 'var(--gold-light)' : 'transparent', borderRadius: 8, padding: current === i ? '.4rem' : '.4rem', margin: current === i ? '-.4rem' : '-.4rem', transition: 'background .2s' }}>
-            <div style={{ width: 28, height: 28, borderRadius: '50%', fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: 'var(--font-fraunces), Fraunces, serif', background: line.sp === 'a' ? 'var(--ink)' : 'var(--gold)', color: line.sp === 'a' ? 'var(--cream)' : 'var(--ink)' }}>
+            <div style={{ width: 28, height: 28, borderRadius: '50%', fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: 'var(--font-fraunces), Fraunces, serif', background: line.sp === 'a' ? 'var(--panel)' : 'var(--gold)', color: line.sp === 'a' ? 'var(--cream)' : 'var(--ink)' }}>
               {line.sp === 'a' ? 'S' : 'M'}
             </div>
             <div style={{ flex: 1 }}>
@@ -424,7 +424,7 @@ function ExerciseCard({
   t: UiStrings
 }) {
   return (
-    <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem 1.1rem', marginBottom: '.6rem' }}>
+    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem 1.1rem', marginBottom: '.6rem' }}>
       <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.35rem' }}>{ex.type}</div>
       <div style={{ fontSize: 13, color: 'var(--ink2)', marginBottom: '.75rem', lineHeight: 1.4 }}>{ex.instruction}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
@@ -441,11 +441,11 @@ function ExerciseCard({
               {item.opts ? (
                 <div style={{ display: 'flex', gap: '.4rem', flexWrap: 'wrap' }}>
                   {item.opts.map((opt, oi) => {
-                    let bg = '#fff', borderColor = 'var(--border)', color = 'var(--ink)'
+                    let bg = 'var(--surface)', borderColor = 'var(--border)', color = 'var(--ink)'
                     if (userAns === oi) {
-                      bg = isRevealed ? (oi === item.ans ? '#e8fdf0' : '#fdecea') : 'var(--ink)'
+                      bg = isRevealed ? (oi === item.ans ? '#e8fdf0' : 'var(--bad-bg)') : 'var(--ink)'
                       borderColor = isRevealed ? (oi === item.ans ? 'var(--green)' : 'var(--red)') : 'var(--ink)'
-                      color = isRevealed ? (oi === item.ans ? 'var(--green)' : 'var(--red)') : '#fff'
+                      color = isRevealed ? (oi === item.ans ? 'var(--green)' : 'var(--red)') : 'var(--surface)'
                     }
                     return (
                       <button
@@ -474,7 +474,7 @@ function ExerciseCard({
                 </div>
               ) : (
                 <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
-                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder={t.typeYourAnswer} className={isRevealed ? (correct ? 'lk-pop' : 'lk-shake') : undefined} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? '#e8fdf0' : '#fdecea') : '#fff' }} />
+                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder={t.typeYourAnswer} className={isRevealed ? (correct ? 'lk-pop' : 'lk-shake') : undefined} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? '#e8fdf0' : 'var(--bad-bg)') : 'var(--surface)' }} />
                   <button
                     onClick={() => {
                       setRevealed({ ...revealed, [key]: true })
@@ -489,7 +489,7 @@ function ExerciseCard({
                     }}
                     style={{ padding: '.4rem .8rem', border: '1.5px solid var(--border)', borderRadius: 6, fontSize: 13, cursor: 'pointer', fontFamily: 'inherit', background: 'var(--paper)' }}
                   >{t.check}</button>
-                  {isRevealed && !correct && <span style={{ fontSize: 12, color: 'var(--green)' }}>&rarr; {item.ans}</span>}
+                  {isRevealed && !correct && <span style={{ fontSize: 12, color: 'var(--ok-ink)' }}>&rarr; {item.ans}</span>}
                 </div>
               )}
             </div>
@@ -505,7 +505,7 @@ function CultureStep({ unit, t }: { unit: Unit; t: UiStrings }) {
   return (
     <div>
       <SectionHeading icon="🌍" label={t.culturalNote} />
-      <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
         <div style={{ background: 'var(--gold-light)', borderBottom: '1px solid #e8d48a', padding: '.85rem 1.1rem' }}>
           <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700, color: 'var(--ink)' }}>{c.title}</div>
         </div>
@@ -513,8 +513,8 @@ function CultureStep({ unit, t }: { unit: Unit; t: UiStrings }) {
       </div>
       {unit.teacherTip && (
         <div style={{ marginTop: '.75rem', background: '#edf7ed', border: '1px solid #b7e4c7', borderRadius: 8, padding: '.6rem .85rem' }}>
-          <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', color: 'var(--green)', marginBottom: 3 }}>📋 {t.teacherTip}</div>
-          <div style={{ fontSize: 13, color: '#1f6b2e', lineHeight: 1.5 }}>{unit.teacherTip}</div>
+          <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', color: 'var(--ok-ink)', marginBottom: 3 }}>📋 {t.teacherTip}</div>
+          <div style={{ fontSize: 13, color: 'var(--ok-ink)', lineHeight: 1.5 }}>{unit.teacherTip}</div>
         </div>
       )}
     </div>
