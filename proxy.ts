@@ -8,6 +8,13 @@ import { NextRequest, NextResponse } from 'next/server'
  * /api/results receives a placement-test submission), the route handler does
  * the real per-method check with `requireTeacher` from lib/auth.
  */
+/**
+ * Matched exactly, not as a prefix: "/" as a prefix would open the whole site.
+ */
+const PUBLIC_EXACT = [
+  '/',               // the front door: which course did you come for
+]
+
 const PUBLIC_PATHS = [
   '/test',           // placement test — shared publicly with students
   '/login',
@@ -28,6 +35,7 @@ export function proxy(req: NextRequest) {
 
   // Always allow public paths and static assets
   if (
+    PUBLIC_EXACT.includes(pathname) ||
     PUBLIC_PATHS.some(p => pathname.startsWith(p)) ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon') ||

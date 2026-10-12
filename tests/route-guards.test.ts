@@ -114,3 +114,40 @@ describe('the public student route does not leak columns', () => {
     ).toBe(false)
   })
 })
+
+describe('the front door', () => {
+  const proxy = read('proxy.ts')
+
+  it('lets the public reach the root', () => {
+    // The teacher dashboard used to live at "/", so anyone handed the site
+    // address met a login form for an account they do not have.
+    expect(proxy).toMatch(/PUBLIC_EXACT\.includes\(pathname\)/)
+  })
+
+  it('opens the root by exact match, never as a prefix', () => {
+    // "/" in the prefix list would make every page on the site public.
+    const prefixes = proxy.slice(proxy.indexOf('const PUBLIC_PATHS'), proxy.indexOf('export function proxy'))
+    expect(prefixes).not.toMatch(/^\s*'\/',/m)
+  })
+
+  it('keeps the teacher dashboard behind the login', () => {
+    expect(read('app/painel/page.tsx')).toMatch(/DashboardView/)
+    const allowed = proxy.slice(proxy.indexOf('const PUBLIC_EXACT'), proxy.indexOf('export function proxy'))
+    expect(allowed).not.toMatch(/painel/)
+  })
+
+  it('serves the course choice at the root, not one of the two courses', () => {
+    expect(read('app/page.tsx')).toMatch(/CoursePicker/)
+  })
+
+  it('offers both courses from the picker', () => {
+    const picker = read('components/CoursePicker.tsx')
+    expect(picker).toMatch(/\/test\?lang=en/)
+    expect(picker).toMatch(/\/test\?lang=pt/)
+  })
+
+  it('asks which course instead of assuming one, when the test is opened bare', () => {
+    const test = read('app/test/page.tsx')
+    expect(test).toMatch(/return <CoursePicker \/>/)
+  })
+})

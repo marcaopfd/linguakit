@@ -1,8 +1,10 @@
-import { MODULES } from '@/lib/curriculum'
-import { EN_MODULES } from '@/lib/curriculum-en'
-import { toCourseIndex } from '@/lib/curriculum-index'
-import { DashboardView } from './view'
+import { CoursePicker } from '@/components/CoursePicker'
 
-export default function DashboardPage() {
-  return <DashboardView ptModules={toCourseIndex(MODULES)} enModules={toCourseIndex(EN_MODULES)} />
+/**
+ * The public front door. The teacher dashboard used to live here, which meant
+ * anyone handed the site address landed on a login form for an account they do
+ * not have; it now sits at /painel.
+ */
+export default function HomePage() {
+  return <CoursePicker />
 }

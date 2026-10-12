@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { CoursePicker } from '@/components/CoursePicker'
 
 // ── Portuguese test (for English speakers) ───────────────────────────────────
 const SECTIONS_PT = [
@@ -451,10 +452,24 @@ function TestPageInner() {
   return null
 }
 
+/**
+ * Picks the course before the test mounts.
+ *
+ * The branch lives here rather than inside TestPageInner because that component
+ * calls seven hooks after this point; returning early from inside it would
+ * change the hook count between /test and /test?lang=en and throw on a
+ * client-side navigation between them.
+ */
+function TestGate() {
+  const chosen = useSearchParams().get('lang')
+  if (chosen !== 'en' && chosen !== 'pt') return <CoursePicker />
+  return <TestPageInner />
+}
+
 export default function TestPage() {
   return (
     <Suspense>
-      <TestPageInner />
+      <TestGate />
     </Suspense>
   )
 }

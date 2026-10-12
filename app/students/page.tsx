@@ -87,7 +87,7 @@ export default function StudentsPage() {
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       {/* Header */}
       <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '2rem 1.5rem 1.5rem' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none', marginBottom: '1rem', width: 'fit-content' }}>
+        <Link href="/painel" style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none', marginBottom: '1rem', width: 'fit-content' }}>
           ← Home
         </Link>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>

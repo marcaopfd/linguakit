@@ -22,7 +22,7 @@ export function EnHomeView({ modules }: { modules: ModuleSummary[] }) {
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '3rem 2rem 2.5rem', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', right: -20, top: -20, fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 160, fontWeight: 700, color: 'rgba(255,255,255,.04)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>EN</div>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'rgba(255,255,255,.45)', textDecoration: 'none', marginBottom: '1.25rem', width: 'fit-content' }}>
+        <Link href="/painel" style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'rgba(255,255,255,.45)', textDecoration: 'none', marginBottom: '1.25rem', width: 'fit-content' }}>
           ← Dashboard
         </Link>
         <span style={{ fontSize: 28, display: 'block', marginBottom: '.75rem' }}>🇺🇸</span>
