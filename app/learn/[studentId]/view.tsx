@@ -294,7 +294,7 @@ function MyMistakes({ attempts, modules, t }: {
           {wrong.length > 5 && (
             <button
               onClick={() => setShowAll(v => !v)}
-              style={{ marginTop: '.1rem', width: '100%', padding: '.6rem', borderRadius: 9, border: '1px dashed var(--border)', background: 'var(--paper)', color: 'var(--ink2)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+              style={{ marginTop: '.1rem', width: '100%', minHeight: 44, padding: '.6rem', borderRadius: 9, border: '1px dashed var(--border)', background: 'var(--paper)', color: 'var(--ink2)', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
             >
               {showAll ? t.showLess : t.seeAll(wrong.length)}
             </button>
@@ -335,7 +335,7 @@ function SaveLinkNote({ studentId, t }: { studentId: string; t: UiStrings }) {
         </div>
         <button
           onClick={copy}
-          style={{ flexShrink: 0, padding: '.55rem .9rem', borderRadius: 9, border: '1px solid #e8d48a', background: '#fff', color: 'var(--ink)', fontSize: 12.5, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer' }}
+          style={{ flexShrink: 0, minHeight: 44, padding: '.55rem .9rem', borderRadius: 9, border: '1px solid #e8d48a', background: '#fff', color: 'var(--ink)', fontSize: 12.5, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer' }}
         >
           {copied ? `✓ ${t.linkCopied}` : `📋 ${t.copyLink}`}
         </button>

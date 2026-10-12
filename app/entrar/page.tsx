@@ -77,7 +77,7 @@ export default function StudentLoginPage() {
         </form>
 
         <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--ink3)', marginTop: '1.1rem' }}>
-          Ainda não tem conta? <Link href="/cadastro" style={{ color: 'var(--ink)', fontWeight: 600 }}>Cadastre-se</Link>
+          Ainda não tem conta? <Link href="/cadastro" style={{ color: 'var(--ink)', fontWeight: 600, display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>Cadastre-se</Link>
         </p>
       </div>
     </div>

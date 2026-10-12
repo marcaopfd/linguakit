@@ -49,7 +49,7 @@ export function ReviewView({ studentId, items, lang }: { studentId: string; item
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '1.5rem 1.5rem 1.25rem' }}>
-        <Link href={`/learn/${studentId}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '.35rem', fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none', marginBottom: '.75rem' }}>
+        <Link href={`/learn/${studentId}`} style={{ minHeight: 44, display: 'inline-flex', alignItems: 'center', gap: '.35rem', fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none', marginBottom: '.75rem' }}>
           ← {t.backToCourse}
         </Link>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '1rem' }}>

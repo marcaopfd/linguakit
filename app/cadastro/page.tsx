@@ -120,10 +120,10 @@ export default function SignupPage() {
         </form>
 
         <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--ink3)', marginTop: '1.1rem' }}>
-          Já tem conta? <Link href="/entrar" style={{ color: 'var(--ink)', fontWeight: 600 }}>Entrar</Link>
+          Já tem conta? <Link href="/entrar" style={{ color: 'var(--ink)', fontWeight: 600, display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>Entrar</Link>
         </p>
         <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--ink3)', marginTop: '.5rem' }}>
-          Não sabe seu nível? <Link href="/test" style={{ color: 'var(--ink3)', textDecoration: 'underline' }}>Faça o teste de nivelamento</Link>
+          Não sabe seu nível? <Link href="/test" style={{ color: 'var(--ink3)', textDecoration: 'underline', display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>Faça o teste de nivelamento</Link>
         </p>
       </div>
     </div>

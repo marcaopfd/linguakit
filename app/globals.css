@@ -87,3 +87,14 @@ body {
   .lk-check path { stroke-dashoffset: 0; }
   .lk-ring { opacity: 0; }
 }
+
+/* Two vocabulary cards side by side need about 170px each to hold a term and
+   its example without the words breaking up. Below that they stack. */
+.lk-pair-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem;
+}
+@media (max-width: 420px) {
+  .lk-pair-grid { grid-template-columns: 1fr; }
+}

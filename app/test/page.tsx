@@ -321,7 +321,7 @@ function TestPageInner() {
 
         <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: '#fff', borderTop: '1px solid var(--border)', padding: '.85rem 1.5rem', display: 'flex', gap: '.6rem' }}>
           {currentSection > 0 && (
-            <button onClick={prevSection} style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: '1.5px solid var(--border)', background: 'var(--paper)', color: 'var(--ink)' }}>
+            <button onClick={prevSection} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: '1.5px solid var(--border)', background: 'var(--paper)', color: 'var(--ink)' }}>
               ← {isEN ? 'Voltar' : 'Back'}
             </button>
           )}

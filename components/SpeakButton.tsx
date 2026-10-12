@@ -76,32 +76,48 @@ export function SpeakButton({ text, lang, voice, ready, rate, label, listen, siz
 
   const dim = size === 'md' ? 28 : 22
   return (
+    // The button is the touch target and the span is what you see. A 22px dot
+    // is the right size next to a vocabulary word and far too small for a
+    // thumb, and this is the most-tapped control in the whole app.
     <button
       onClick={handleClick}
       aria-label={label ?? `${listen}: ${text}`}
       title={label ?? listen}
       style={{
         flexShrink: 0,
-        width: label ? 'auto' : dim,
-        height: dim,
-        padding: label ? '0 .6rem' : 0,
-        borderRadius: label ? 7 : '50%',
-        border: '1px solid var(--border)',
-        background: speaking ? 'var(--ink)' : 'var(--paper)',
-        color: speaking ? '#fff' : 'var(--ink3)',
-        fontSize: size === 'md' ? 13 : 11,
-        fontFamily: 'inherit',
-        fontWeight: 600,
+        minWidth: 44,
+        minHeight: 44,
+        padding: 0,
+        border: 'none',
+        background: 'none',
         cursor: 'pointer',
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '.3rem',
-        lineHeight: 1,
-        transition: 'background .15s, color .15s',
+        fontFamily: 'inherit',
       }}
     >
-      {speaking ? '■' : '▶'}{label && <span>{label}</span>}
+      <span
+        style={{
+          width: label ? 'auto' : dim,
+          height: dim,
+          padding: label ? '0 .6rem' : 0,
+          borderRadius: label ? 7 : '50%',
+          border: '1px solid var(--border)',
+          background: speaking ? 'var(--ink)' : 'var(--paper)',
+          color: speaking ? '#fff' : 'var(--ink3)',
+          fontSize: size === 'md' ? 13 : 11,
+          fontWeight: 600,
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '.3rem',
+          lineHeight: 1,
+          transition: 'background .15s, color .15s',
+        }}
+      >
+        {speaking ? '■' : '▶'}{label && <span>{label}</span>}
+      </span>
     </button>
   )
 }

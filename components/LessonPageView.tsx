@@ -61,7 +61,7 @@ export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, prog
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       {/* Top bar */}
       <div style={{ position: 'sticky', top: 0, background: '#fff', borderBottom: '1px solid var(--border)', padding: '.85rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10 }}>
-        <Link href={`${moduleBase}/${modId}`} style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'var(--ink3)', textDecoration: 'none' }}>
+        <Link href={`${moduleBase}/${modId}`} style={{ display: 'flex', alignItems: 'center', gap: '.4rem', minHeight: 44, paddingRight: '.5rem', fontSize: 13, color: 'var(--ink3)', textDecoration: 'none' }}>
           ← {t.back}
         </Link>
         <div style={{ fontSize: 12, color: 'var(--ink3)', textAlign: 'center' }}>
@@ -71,7 +71,7 @@ export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, prog
           <a
             href={`${pdfBase}/${modId}/${unitIndex}`}
             download
-            style={{ fontSize: 12, color: 'var(--ink3)', textDecoration: 'none', border: '1px solid var(--border)', borderRadius: 6, padding: '.2rem .55rem', background: 'var(--paper)' }}
+            style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 12, color: 'var(--ink3)', textDecoration: 'none', border: '1px solid var(--border)', borderRadius: 8, padding: '.4rem .7rem', background: 'var(--paper)' }}
           >
             ↓ PDF
           </a>
@@ -97,7 +97,7 @@ export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, prog
             <button
               key={s}
               onClick={() => setStep(i)}
-              style={{ padding: '.35rem .75rem', borderRadius: 20, fontSize: 12, fontWeight: 600, border: '1.5px solid', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit', background: step === i ? 'var(--ink)' : '#fff', color: step === i ? '#fff' : 'var(--ink3)', borderColor: step === i ? 'var(--ink)' : 'var(--border)' }}
+              style={{ minHeight: 44, padding: '.35rem .85rem', borderRadius: 22, fontSize: 12.5, fontWeight: 600, border: '1.5px solid', cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit', background: step === i ? 'var(--ink)' : '#fff', color: step === i ? '#fff' : 'var(--ink3)', borderColor: step === i ? 'var(--ink)' : 'var(--border)' }}
             >
               {s}
             </button>
@@ -193,7 +193,7 @@ function VocabStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audio: 
   return (
     <div>
       <SectionHeading icon="📖" label={t.steps.vocabulary} />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.5rem' }}>
+      <div className="lk-pair-grid">
         {items.map(({ v, extra }, i) => (
           <div key={i} style={{ background: '#fff', border: `1px ${extra ? 'dashed' : 'solid'} var(--border)`, borderRadius: 10, padding: '.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem' }}>

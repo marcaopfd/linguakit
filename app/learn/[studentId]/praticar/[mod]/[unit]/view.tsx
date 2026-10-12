@@ -289,17 +289,22 @@ export function PracticeView({
                 <div
                   key={oi}
                   className={checked && pickedOpt ? (right ? 'lk-pop' : 'lk-shake') : undefined}
-                  style={{ display: 'flex', alignItems: 'center', gap: '.5rem', padding: '.85rem 1rem', borderRadius: 12, border: `1.5px solid ${border}`, background: bg }}
+                  // The padding lives on the button, not here: a row that looks
+                  // tappable everywhere but only answers on the text line is
+                  // worse than a small button, because it looks fine.
+                  style={{ display: 'flex', alignItems: 'center', borderRadius: 12, border: `1.5px solid ${border}`, background: bg, overflow: 'hidden' }}
                 >
                   <button
                     onClick={() => !checked && setChoice(oi)}
                     disabled={checked}
-                    style={{ flex: 1, textAlign: 'left', padding: 0, border: 'none', background: 'none', color, fontSize: 15.5, fontFamily: 'inherit', cursor: checked ? 'default' : 'pointer' }}
+                    style={{ flex: 1, textAlign: 'left', minHeight: 48, padding: '.85rem 1rem', border: 'none', background: 'none', color, fontSize: 15.5, fontFamily: 'inherit', cursor: checked ? 'default' : 'pointer' }}
                   >
                     {opt}
                   </button>
                   {item.optionsSpeak && (
-                    <SpeakButton text={opt} lang={lang} voice={audio.voice} ready={audio.ready} listen={t.playAudio} />
+                    <span style={{ paddingRight: '.5rem', display: 'inline-flex' }}>
+                      <SpeakButton text={opt} lang={lang} voice={audio.voice} ready={audio.ready} listen={t.playAudio} />
+                    </span>
                   )}
                 </div>
               )
@@ -543,7 +548,7 @@ function Shell({ studentId, t, title, label, progress, round, rounds, children }
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       <div style={{ background: 'var(--ink)', color: 'var(--cream)', padding: '1.25rem 1.5rem 1.1rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '.7rem' }}>
-          <Link href={`/learn/${studentId}`} style={{ fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none' }}>
+          <Link href={`/learn/${studentId}`} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none' }}>
             ← {t.exitPractice}
           </Link>
           <span style={{ fontSize: 12, color: 'rgba(255,255,255,.5)' }}>{label} · {title}</span>
