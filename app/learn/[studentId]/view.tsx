@@ -230,9 +230,20 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
                   {mod.label}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 15, fontWeight: 600, marginBottom: '.25rem' }}>{mod.emoji} {mod.name}</div>
-                  <div style={{ height: 4, background: 'var(--border)', borderRadius: 2, marginBottom: '.2rem' }}>
-                    <div style={{ height: 4, borderRadius: 2, background: mod.bar, width: `${pct}%`, transition: 'width .6s' }} />
+                  <div style={{ fontSize: 15, fontWeight: 600, marginBottom: '.4rem' }}>{mod.emoji} {mod.name}</div>
+                  {/* One dot per unit rather than a bar: the same number, but you
+                      can see how far the module goes and exactly where you are
+                      in it. */}
+                  <div style={{ display: 'flex', gap: 3, marginBottom: '.3rem', flexWrap: 'wrap' }}>
+                    {mod.units.map((_, i) => (
+                      <span
+                        key={i}
+                        style={{
+                          width: 7, height: 7, borderRadius: '50%', flexShrink: 0,
+                          background: completedSet.has(`${mod.id}-${i}`) ? mod.bar : 'var(--border)',
+                        }}
+                      />
+                    ))}
                   </div>
                   <div style={{ fontSize: 11, color: 'var(--ink3)' }}>{done}/{mod.units.length} units · {pct}%</div>
                 </div>

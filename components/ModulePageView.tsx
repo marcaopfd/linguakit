@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { UnitPath } from '@/components/UnitPath'
 import type { ModuleSummary } from '@/lib/curriculum-index'
 import { useModuleProgress } from '@/lib/use-progress'
 import { uiStrings } from '@/lib/ui-strings'
@@ -44,40 +45,16 @@ export function ModulePageView({ mod, lessonBase, backHref, progressKey, student
         <div style={{ marginTop: '.3rem', fontSize: 12, color: 'var(--ink3)' }}>{t.unitsCompleted(done, mod.units.length)}</div>
       </div>
 
-      <div style={{ padding: '1rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
-        {mod.units.map((unit, i) => {
-          const isDone = progress.includes(i)
-          return (
-            <Link key={i} href={`${lessonBase}/${mod.id}/${i}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div
-                style={{ border: `1px solid ${isDone ? '#b7e4c7' : 'var(--border)'}`, borderRadius: 12, padding: '.9rem 1.1rem', display: 'flex', alignItems: 'center', gap: '.85rem', cursor: 'pointer', background: isDone ? '#f8fdf9' : '#fff', transition: 'all .15s' }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = isDone ? '#b7e4c7' : 'var(--ink3)'; (e.currentTarget as HTMLElement).style.background = isDone ? '#f8fdf9' : 'var(--paper)' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = isDone ? '#b7e4c7' : 'var(--border)'; (e.currentTarget as HTMLElement).style.background = isDone ? '#f8fdf9' : '#fff' }}
-              >
-                <div style={{ width: 28, height: 28, borderRadius: '50%', background: isDone ? 'var(--green)' : 'var(--paper)', border: `1.5px solid ${isDone ? 'var(--green)' : 'var(--border)'}`, fontSize: 12, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDone ? '#fff' : 'var(--ink3)', flexShrink: 0 }}>
-                  {isDone ? '✓' : i + 1}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.3 }}>{unit.emoji} {unit.title}</div>
-                  <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 1 }}>{unit.sub}</div>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
-                  <div style={{ fontSize: 11, color: 'var(--ink3)' }}>{unit.duration}</div>
-                  {isDone && <div style={{ fontSize: 11, color: 'var(--green)', fontWeight: 500 }}>✓ {t.done}</div>}
-                  {practiceBase && (
-                    <span
-                      onClick={e => { e.preventDefault(); e.stopPropagation(); window.location.href = `${practiceBase}/${mod.id}/${i}` }}
-                      style={{ fontSize: 11, fontWeight: 700, color: 'var(--ink)', background: 'var(--gold-light)', border: '1px solid #e8d48a', borderRadius: 6, padding: '.2rem .5rem', cursor: 'pointer', whiteSpace: 'nowrap' }}
-                    >
-                      ▶ {t.practice}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </Link>
-          )
-        })}
-      </div>
+      <UnitPath
+        units={mod.units}
+        done={progress}
+        accent={mod.accent}
+        bar={mod.bar}
+        lessonBase={lessonBase}
+        practiceBase={practiceBase}
+        modId={mod.id}
+        t={t}
+      />
     </div>
   )
 }
