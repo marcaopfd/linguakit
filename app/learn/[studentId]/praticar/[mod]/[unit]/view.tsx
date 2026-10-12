@@ -154,8 +154,11 @@ export function PracticeView({
       >
         <Card animateKey={`rest-${previous}`}>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.75rem' }}>
-              <Medal />
+            {/* Happy when the round went well, neutral when it did not — never
+                sad. Finishing is the achievement; the score is in the line
+                below, and it does not need a dog scolding alongside it. */}
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.5rem', color: 'var(--ink)' }}>
+              <Caramelo mood={pct >= 60 ? 'happy' : 'idle'} size={92} />
             </div>
             <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 21, fontWeight: 700, marginBottom: '.2rem' }}>
               {t.roundDone}
@@ -188,7 +191,9 @@ export function PracticeView({
       <Shell studentId={studentId} t={t} title={unitTitle} label={moduleLabel} progress={100} round={rounds} rounds={rounds}>
         <Card>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 40, marginBottom: '.5rem' }}>{pct >= 80 ? '🎉' : '✅'}</div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.5rem', color: 'var(--ink)' }}>
+              <Caramelo mood={pct >= 60 ? 'happy' : 'idle'} size={110} />
+            </div>
             <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 21, fontWeight: 700, marginBottom: '.25rem' }}>
               {t.practiceDone}
             </div>
@@ -520,27 +525,6 @@ function Card({ children, animateKey }: { children: React.ReactNode; animateKey?
     <div key={animateKey} className="lk-card" style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 16, padding: '1.5rem' }}>
       {children}
     </div>
-  )
-}
-
-/** A ring that pulses out from behind a filled tick, for finishing a round. */
-function Medal() {
-  return (
-    <span style={{ position: 'relative', display: 'inline-flex', width: 56, height: 56 }}>
-      <span className="lk-ring" style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: 'var(--green)' }} />
-      <span
-        className="lk-pop"
-        style={{
-          position: 'relative', width: 56, height: 56, borderRadius: '50%',
-          background: '#eaf7ee', border: '2px solid var(--green)',
-          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-        }}
-      >
-        <svg className="lk-check" width="30" height="30" viewBox="0 0 24 24" fill="none">
-          <path d="M5 13l4.5 4.5L19 7" stroke="#1f6b2e" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </span>
-    </span>
   )
 }
 
