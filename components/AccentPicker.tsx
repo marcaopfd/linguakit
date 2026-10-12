@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
+import { Icon } from '@/components/Icon'
 import { ACCENTS, accentTag, courseLang, type Accent } from '@/lib/accents'
 import { loadVoices, speak, speechSupported } from '@/lib/speak'
 import type { UiStrings } from '@/lib/ui-strings'
@@ -81,7 +82,9 @@ export function AccentPicker({ studentId, course, current, t }: {
 
   return (
     <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 12, padding: '1rem 1.1rem', marginBottom: '1.25rem' }}>
-      <div style={{ fontSize: 13.5, fontWeight: 700, marginBottom: '.2rem' }}>🎧 {t.accentTitle}</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13.5, fontWeight: 700, marginBottom: '.2rem' }}>
+        <Icon name="headphones" size={16} /> {t.accentTitle}
+      </div>
       <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.5, marginBottom: '.75rem' }}>
         {t.accentHint}
       </div>

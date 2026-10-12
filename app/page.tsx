@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Icon } from '@/components/Icon'
 import { Caramelo } from '@/components/Caramelo'
 import { CourseCards } from '@/components/CoursePicker'
 
@@ -115,7 +116,7 @@ export default function HomePage() {
           href="/painel"
           style={{ display: 'inline-flex', alignItems: 'center', gap: '.35rem', minHeight: 44, padding: '0 .5rem', marginTop: '.75rem', fontSize: 12, color: 'var(--ink3)', textDecoration: 'none' }}
         >
-          <span aria-hidden>🔑</span> Espaço do professor
+          <Icon name="key" size={14} /> Espaço do professor
         </Link>
       </footer>
     </div>

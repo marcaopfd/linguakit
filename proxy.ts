@@ -30,13 +30,22 @@ const PUBLIC_PATHS = [
   '/api/students',   // GET is public (student portal); DELETE is teacher-only
 ]
 
+/**
+ * A prefix only opens its own subtree. Plain `startsWith` would let a future
+ * route called "/learners-admin" through on the back of "/learn", which is the
+ * sort of hole nobody notices until it is being used.
+ */
+function isUnder(pathname: string, prefix: string): boolean {
+  return pathname === prefix || pathname.startsWith(prefix + '/')
+}
+
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
 
   // Always allow public paths and static assets
   if (
     PUBLIC_EXACT.includes(pathname) ||
-    PUBLIC_PATHS.some(p => pathname.startsWith(p)) ||
+    PUBLIC_PATHS.some(p => isUnder(pathname, p)) ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon') ||
     // Home-screen install assets: iOS fetches these without a session, and a

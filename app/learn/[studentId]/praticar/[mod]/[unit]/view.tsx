@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
+import { Icon } from '@/components/Icon'
 import Link from 'next/link'
 import { Caramelo } from '@/components/Caramelo'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
@@ -210,7 +211,7 @@ export function PracticeView({
               </Link>
             ) : (
               <div style={{ fontSize: 13.5, color: 'var(--green)', fontWeight: 600, marginBottom: '.85rem' }}>
-                🏁 {t.moduleFinished}
+                <Icon name="flag" size={15} style={{ display: 'inline-block', verticalAlign: '-2px', marginRight: '.3rem' }} /> {t.moduleFinished}
               </div>
             )}
 
@@ -401,7 +402,7 @@ function BigPlayer({ text, lang, voice, ready, label, again }: {
           fontFamily: 'inherit', transition: 'background .15s, color .15s, border-color .15s',
         }}
       >
-        <span style={{ fontSize: 30, lineHeight: 1 }}>{speaking ? '🔈' : '🔊'}</span>
+        <Icon name="speaker" size={30} strokeWidth={1.7} />
         <span style={{ fontSize: 12.5, fontWeight: 600 }}>{played ? again : label}</span>
       </button>
     </div>

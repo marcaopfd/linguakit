@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { Icon } from '@/components/Icon'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { AccentPicker } from '@/components/AccentPicker'
@@ -179,7 +180,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
           {dueCount > 0 ? (
             <Link href={`/learn/${studentId}/revisar`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div style={{ background: 'var(--ink)', color: 'var(--cream)', borderRadius: 14, padding: '1.1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ fontSize: 28, flexShrink: 0 }}>🔁</div>
+                <div style={{ flexShrink: 0, color: 'var(--ink2)' }}><Icon name="repeat" size={26} /></div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 17, fontWeight: 700 }}>{t.review}</div>
                   <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', marginTop: 1 }}>{t.reviewDue(dueCount)}</div>
@@ -191,7 +192,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
             </Link>
           ) : (
             <div style={{ background: '#fff', border: '1px dashed var(--border)', borderRadius: 14, padding: '1rem 1.25rem' }}>
-              <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: '.2rem' }}>🔁 {t.reviewNothingDue}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13.5, fontWeight: 600, marginBottom: '.2rem' }}><Icon name="repeat" size={15} /> {t.reviewNothingDue}</div>
               <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.5 }}>{t.reviewNothingDueHint}</div>
             </div>
           )}
@@ -289,7 +290,7 @@ function MyMistakes({ attempts, modules, t }: {
     <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
       <div style={{ padding: '1rem 1.25rem', borderBottom: wrong.length ? '1px solid var(--border)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
         <div>
-          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 17, fontWeight: 700 }}>🎯 {t.yourMistakes}</div>
+          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 17, fontWeight: 700, display: 'flex', alignItems: 'center', gap: '.45rem' }}><Icon name="target" size={17} /> {t.yourMistakes}</div>
           <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 2 }}>
             {t.answeredCount(attempts.length)} · {t.mistakeCount(wrong.length)}
           </div>
@@ -355,14 +356,16 @@ function SaveLinkNote({ studentId, t }: { studentId: string; t: UiStrings }) {
     <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>
       <div style={{ background: 'var(--gold-light)', border: '1px solid #e8d48a', borderRadius: 12, padding: '.85rem 1rem', display: 'flex', alignItems: 'center', gap: '.85rem', flexWrap: 'wrap' }}>
         <div style={{ flex: '1 1 260px' }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#7a5a0a', marginBottom: '.15rem' }}>🔑 {t.saveYourLink}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, fontWeight: 700, color: '#7a5a0a', marginBottom: '.15rem' }}><Icon name="key" size={14} /> {t.saveYourLink}</div>
           <div style={{ fontSize: 12, color: '#9a6b0a', lineHeight: 1.5 }}>{t.saveYourLinkHint}</div>
         </div>
         <button
           onClick={copy}
           style={{ flexShrink: 0, minHeight: 44, padding: '.55rem .9rem', borderRadius: 9, border: '1px solid #e8d48a', background: '#fff', color: 'var(--ink)', fontSize: 12.5, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer' }}
         >
-          {copied ? `✓ ${t.linkCopied}` : `📋 ${t.copyLink}`}
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.35rem' }}>
+            {copied ? '✓' : <Icon name="copy" size={14} />} {copied ? t.linkCopied : t.copyLink}
+          </span>
         </button>
       </div>
     </div>

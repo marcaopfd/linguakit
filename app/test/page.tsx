@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, Suspense } from 'react'
+import { Icon, type IconName } from '@/components/Icon'
 import { useSearchParams } from 'next/navigation'
 import { Caramelo } from '@/components/Caramelo'
 import { CoursePicker } from '@/components/CoursePicker'
@@ -236,18 +237,18 @@ function TestPageInner() {
         <div style={{ background: '#fff', border: '1px solid var(--border)', borderRadius: 16, padding: '1.5rem', maxWidth: 420, width: '100%', textAlign: 'left', marginBottom: '1.5rem' }}>
           <h3 style={{ fontSize: 14, fontWeight: 600, marginBottom: '.75rem' }}>{isEN ? 'O que esperar' : 'What to expect'}</h3>
           {(isEN ? [
-            ['📝', '30 questões sobre vocabulário, gramática e compreensão de leitura'],
-            ['⏱️', 'Leva cerca de 10–15 minutos — não tem pressa'],
-            ['🎯', 'O teste identifica seu nível de A1 (iniciante) a C2 (avançado)'],
-            ['📤', 'No fim você já começa o curso, na unidade certa para o seu nível'],
+            ['pencil', '30 questões sobre vocabulário, gramática e compreensão de leitura'],
+            ['clock', 'Leva cerca de 10–15 minutos — não tem pressa'],
+            ['target', 'O teste identifica seu nível de A1 (iniciante) a C2 (avançado)'],
+            ['flag', 'No fim você já começa o curso, na unidade certa para o seu nível'],
           ] : [
-            ['📝', '30 questions across vocabulary, grammar, and reading comprehension'],
-            ['⏱️', 'Takes about 10–15 minutes — take your time, no rush'],
-            ['🎯', 'The test identifies your level from A1 (beginner) to C2 (advanced)'],
-            ['📤', 'You start the course right after, at the unit that fits your level'],
+            ['pencil', '30 questions across vocabulary, grammar, and reading comprehension'],
+            ['clock', 'Takes about 10–15 minutes — take your time, no rush'],
+            ['target', 'The test identifies your level from A1 (beginner) to C2 (advanced)'],
+            ['flag', 'You start the course right after, at the unit that fits your level'],
           ]).map(([icon, text]) => (
             <div key={text} style={{ display: 'flex', alignItems: 'flex-start', gap: '.6rem', marginBottom: '.6rem', fontSize: 13, color: 'var(--ink2)', lineHeight: 1.5 }}>
-              <span style={{ flexShrink: 0, fontSize: 16 }}>{icon}</span>
+              <span style={{ flexShrink: 0, color: 'var(--ink3)', marginTop: 1 }}><Icon name={icon as IconName} size={16} /></span>
               <span>{text}</span>
             </div>
           ))}
@@ -371,7 +372,7 @@ function TestPageInner() {
 
         <div style={{ maxWidth: 560, margin: '0 auto', padding: '1.5rem 1.5rem 3rem' }}>
           <div style={{ marginBottom: '1.25rem' }}>
-            <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}>📊 {isEN ? 'Detalhamento por área' : 'Skills breakdown'}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}><Icon name="chart" size={14} /> {isEN ? 'Detalhamento por área' : 'Skills breakdown'}</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '.5rem' }}>
               {SECTIONS.map(sec => {
                 const p = result.skillPcts[sec.id]
@@ -390,7 +391,7 @@ function TestPageInner() {
           </div>
 
           <div style={{ marginBottom: '1.25rem' }}>
-            <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}>✅ {isEN ? 'Pontos fortes' : 'Strengths'}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}><Icon name="check" size={14} /> {isEN ? 'Pontos fortes' : 'Strengths'}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
               {result.strengths.length === 0 ? (
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.5rem', fontSize: 13, lineHeight: 1.5, padding: '.5rem .7rem', borderRadius: 8, background: 'var(--green-light)', color: 'var(--green)' }}>
@@ -405,7 +406,7 @@ function TestPageInner() {
           </div>
 
           <div style={{ marginBottom: '1.25rem' }}>
-            <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}>📌 {isEN ? 'Áreas para focar' : 'Areas to focus on'}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}><Icon name="pin" size={14} /> {isEN ? 'Áreas para focar' : 'Areas to focus on'}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '.4rem' }}>
               {result.weaknesses.length === 0 ? (
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.5rem', fontSize: 13, lineHeight: 1.5, padding: '.5rem .7rem', borderRadius: 8, background: 'var(--red-light)', color: 'var(--red)' }}>
@@ -420,7 +421,7 @@ function TestPageInner() {
           </div>
 
           <div style={{ marginBottom: '1.25rem' }}>
-            <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}>🎯 {isEN ? 'Ponto de partida recomendado' : 'Recommended starting point'}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}><Icon name="target" size={14} /> {isEN ? 'Ponto de partida recomendado' : 'Recommended starting point'}</div>
             <div style={{ background: 'var(--gold-light)', border: '1px solid #e8d48a', borderRadius: 12, padding: '1rem 1.1rem' }}>
               <div style={{ fontSize: 11, fontWeight: 600, color: '#7a5a0a', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '.4rem' }}>{isEN ? 'Comece aqui' : 'Start here'}</div>
               <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 20, fontWeight: 700, color: 'var(--ink)', marginBottom: '.25rem' }}>{modNames[result.level]}</div>
@@ -429,15 +430,17 @@ function TestPageInner() {
           </div>
 
           <div>
-            <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}>📤 {isEN ? 'Notificação do professor' : 'Teacher notification'}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}><Icon name="flag" size={14} /> {isEN ? 'Seu curso' : 'Your course'}</div>
             <div style={{ background: 'var(--ink)', borderRadius: 14, padding: '1.1rem', color: 'var(--cream)' }}>
               {saveStatus === 'saving' && <div style={{ textAlign: 'center', padding: '.5rem 0', fontSize: 13, color: 'rgba(255,255,255,.6)' }}>⏳ {isEN ? 'Salvando seu resultado...' : 'Saving your result...'}</div>}
               {saveStatus === 'ok' && (
                 <div style={{ textAlign: 'center', padding: '.5rem 0' }}>
-                  <div style={{ fontSize: 36, marginBottom: '.5rem' }}>✅</div>
-                  <div style={{ fontSize: 15, fontWeight: 600, marginBottom: '.3rem' }}>{isEN ? 'Resultado salvo!' : 'Result saved!'}</div>
+                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.5rem', color: 'var(--cream)' }}><Icon name="check" size={34} strokeWidth={1.7} /></div>
+                  <div style={{ fontSize: 15, fontWeight: 600, marginBottom: '.3rem' }}>{isEN ? 'Seu curso está pronto' : 'Your course is ready'}</div>
                   <div style={{ fontSize: 13, color: 'rgba(255,255,255,.55)', lineHeight: 1.6, marginBottom: savedStudentId ? '1rem' : 0 }}>
-                    {isEN ? 'Seu professor já pode ver seu resultado. Ele entrará em contato para agendar sua primeira aula.' : 'Your teacher can already see your result. They\'ll be in touch to schedule your first lesson.'}
+                    {isEN
+                      ? 'Comece agora, pela unidade certa para o seu nível. Você estuda no seu ritmo, sem esperar ninguém.'
+                      : 'Start now, at the unit that fits your level. You go at your own pace, with nobody to wait for.'}
                   </div>
                   {savedStudentId && <CourseLink studentId={savedStudentId} isEN={isEN} />}
                 </div>

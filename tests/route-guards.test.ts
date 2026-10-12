@@ -146,6 +146,14 @@ describe('the front door', () => {
     expect(picker).toMatch(/\/test\?lang=pt/)
   })
 
+  it('opens a prefix only for its own subtree', () => {
+    // Plain startsWith would make "/learners-admin" public on the back of
+    // "/learn", and nobody would notice until someone did.
+    expect(proxy).toMatch(/function isUnder/)
+    expect(proxy).toMatch(/pathname === prefix \|\| pathname\.startsWith\(prefix \+ '\/'\)/)
+    expect(proxy).not.toMatch(/PUBLIC_PATHS\.some\(p => pathname\.startsWith\(p\)\)/)
+  })
+
   it('lets the link preview card through without a session', () => {
     // Every platform that unfurls a link fetches this anonymously; behind the
     // login it would silently become no preview at all.
