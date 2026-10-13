@@ -476,7 +476,7 @@ function ExerciseCard({
                 </div>
               ) : (
                 <div style={{ display: 'flex', gap: '.5rem', alignItems: 'center' }}>
-                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder={t.typeYourAnswer} className={isRevealed ? (correct ? 'lk-pop' : 'lk-shake') : undefined} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? 'var(--ok-bg)' : 'var(--bad-bg)') : 'var(--surface)' }} />
+                  <input type="text" value={(userAns as string) ?? ''} onChange={e => setAnswers({ ...answers, [key]: e.target.value })} placeholder={t.typeYourAnswer} aria-label={t.typeYourAnswer} className={isRevealed ? (correct ? 'lk-pop' : 'lk-shake') : undefined} style={{ flex: 1, padding: '.4rem .7rem', border: `1.5px solid ${isRevealed ? (correct ? 'var(--green)' : 'var(--red)') : 'var(--border)'}`, borderRadius: 6, fontSize: 14, fontFamily: 'inherit', background: isRevealed ? (correct ? 'var(--ok-bg)' : 'var(--bad-bg)') : 'var(--surface)' }} />
                   <button
                     onClick={() => {
                       setRevealed({ ...revealed, [key]: true })

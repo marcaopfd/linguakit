@@ -332,6 +332,9 @@ export function PracticeView({
             onChange={e => !checked && setTyped(e.target.value)}
             onKeyDown={e => { if (e.key === 'Enter') (checked ? advance() : check()) }}
             placeholder={t.typeAnswer}
+            // No visible label here by design — the question is above it — so
+            // the accessible name has to be spelled out.
+            aria-label={t.typeAnswer}
             disabled={checked}
             className={checked ? (right ? 'lk-pop' : 'lk-shake') : undefined}
             autoFocus

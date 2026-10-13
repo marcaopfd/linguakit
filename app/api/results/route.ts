@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma, withDb } from '@/lib/db'
+import { callerKey, noteAccountCreated, tooManyAccounts } from '@/lib/rate-limit'
 import { requireTeacher } from '@/lib/auth'
 
 export async function GET(req: NextRequest) {
@@ -67,6 +68,14 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const { name, level, levelName, totalCorrect, pct, sectionScores, skillPcts, strengths, weaknesses, course } = body
 
+    const key = callerKey(req, 'create-account')
+    if (tooManyAccounts(key)) {
+      return NextResponse.json(
+        { error: 'Muitos cadastros deste aparelho. Tente de novo mais tarde.' },
+        { status: 429 },
+      )
+    }
+
     const student = await withDb(() => prisma.student.create({
       data: {
         name: name || 'Student',
@@ -94,6 +103,7 @@ export async function POST(req: NextRequest) {
       include: { testResult: true },
     }))
 
+    noteAccountCreated(key)
     return NextResponse.json({ ok: true, studentId: student.id })
   } catch (err) {
     return NextResponse.json({ error: 'Could not save result' }, { status: 500 })

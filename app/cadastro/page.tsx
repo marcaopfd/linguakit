@@ -141,12 +141,16 @@ function inputStyle(invalid = false): React.CSSProperties {
 
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: '1rem' }}>
-      <label style={labelStyle}>
+    // The label wraps the field rather than sitting beside it: a <label> that
+    // is merely adjacent is not announced with the input and does not focus it
+    // when tapped. The text carries its own weight so the input does not
+    // inherit it.
+    <label style={{ display: 'block', marginBottom: '1rem' }}>
+      <span style={labelStyle}>
         {label}
         {hint && <span style={{ fontWeight: 400, color: 'var(--ink3)', marginLeft: '.4rem' }}>· {hint}</span>}
-      </label>
+      </span>
       {children}
-    </div>
+    </label>
   )
 }

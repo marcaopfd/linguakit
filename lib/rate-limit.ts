@@ -69,3 +69,45 @@ export function noteSuccess(key: string): void {
 }
 
 export const LOCKOUT_MINUTES = WINDOW_MS / 60000
+
+/* ── Account creation ───────────────────────────────────────────────────────
+   The opposite of the login case: here it is the successes that are counted.
+   Without a ceiling, a loop submitting the placement test fills the student
+   table, and every invented row is in the way of someone looking for a real
+   one. */
+
+const CREATE_WINDOW_MS = 60 * 60 * 1000
+const MAX_CREATES = 5
+
+const creations = new Map<string, number[]>()
+
+/**
+ * True when this caller has created too many accounts in the last hour.
+ *
+ * The ceiling is deliberately generous: a household or a classroom shares one
+ * address, and turning away a real learner is worse than a table that grows.
+ */
+export function tooManyAccounts(key: string): boolean {
+  const now = Date.now()
+  const recent = (creations.get(key) ?? []).filter(t => t > now - CREATE_WINDOW_MS)
+
+  if (recent.length === 0) creations.delete(key)
+  else creations.set(key, recent)
+
+  if (creations.size > 500) {
+    for (const [k, times] of creations) {
+      if (!times.some(t => t > now - CREATE_WINDOW_MS)) creations.delete(k)
+    }
+  }
+  return recent.length >= MAX_CREATES
+}
+
+/** Call once an account has actually been created. */
+export function noteAccountCreated(key: string): void {
+  const now = Date.now()
+  const recent = (creations.get(key) ?? []).filter(t => t > now - CREATE_WINDOW_MS)
+  recent.push(now)
+  creations.set(key, recent)
+}
+
+export const MAX_ACCOUNTS_PER_HOUR = MAX_CREATES

@@ -38,7 +38,8 @@ function LoginForm() {
         </div>
 
         <form onSubmit={handleSubmit} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '1.75rem' }}>
-          <label style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: '.4rem' }}>Password</label>
+          <label style={{ display: 'block' }}>
+          <span style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: '.4rem' }}>Password</span>
           <input
             type="password"
             value={password}
@@ -47,6 +48,7 @@ function LoginForm() {
             autoFocus
             style={{ width: '100%', border: `1.5px solid ${error ? 'var(--red)' : 'var(--border)'}`, borderRadius: 10, padding: '.75rem .9rem', fontSize: 15, fontFamily: 'inherit', background: 'var(--surface)', outline: 'none', marginBottom: '.75rem' }}
           />
+          </label>
           {error && <div style={{ fontSize: 13, color: 'var(--red)', marginBottom: '.75rem' }}>{error}</div>}
           <button
             type="submit"

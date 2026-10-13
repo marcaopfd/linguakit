@@ -42,19 +42,23 @@ export default function StudentLoginPage() {
         </div>
 
         <form onSubmit={handleSubmit} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '1.6rem' }}>
-          <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: '.4rem' }}>E-mail</label>
+          <label style={{ display: 'block' }}>
+          <span style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: '.4rem' }}>E-mail</span>
           <input
             type="email" value={email} onChange={e => setEmail(e.target.value)}
             placeholder="voce@exemplo.com" autoFocus
             style={{ width: '100%', border: '1.5px solid var(--border)', borderRadius: 10, padding: '.7rem .85rem', fontSize: 15, fontFamily: 'inherit', background: 'var(--surface)', outline: 'none', marginBottom: '.9rem' }}
           />
 
-          <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: '.4rem' }}>Senha</label>
+          </label>
+          <label style={{ display: 'block' }}>
+          <span style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: '.4rem' }}>Senha</span>
           <input
             type="password" value={password} onChange={e => setPassword(e.target.value)}
             placeholder="••••••••"
             style={{ width: '100%', border: `1.5px solid ${error ? 'var(--red)' : 'var(--border)'}`, borderRadius: 10, padding: '.7rem .85rem', fontSize: 15, fontFamily: 'inherit', background: 'var(--surface)', outline: 'none', marginBottom: '.9rem' }}
           />
+          </label>
 
           {error && (
             <div style={{ fontSize: 13, color: 'var(--red)', marginBottom: '.85rem', background: 'var(--bad-bg)', border: '1px solid #f5c6c2', borderRadius: 8, padding: '.6rem .8rem' }}>

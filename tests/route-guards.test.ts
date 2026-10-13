@@ -145,7 +145,8 @@ describe('the front door', () => {
 
   it('keeps the teacher dashboard behind the login', () => {
     expect(read('app/painel/page.tsx')).toMatch(/DashboardView/)
-    const allowed = proxy.slice(proxy.indexOf('const PUBLIC_EXACT'), proxy.indexOf('export function proxy'))
+    // Only the two public lists; PROTECTED_PREFIXES names it on purpose.
+    const allowed = proxy.slice(proxy.indexOf('const PUBLIC_EXACT'), proxy.indexOf('const PROTECTED_PREFIXES'))
     expect(allowed).not.toMatch(/painel/)
   })
 
@@ -219,5 +220,55 @@ describe('what the scan found', () => {
 
   it('says the page is in the language the learner reads', () => {
     expect(read('app/layout.tsx')).toMatch(/<html lang="pt-BR"/)
+  })
+})
+
+describe('every page route is accounted for', () => {
+  const proxy = read('proxy.ts')
+
+  /** Route paths from the app directory, e.g. "/students/[id]". */
+  function pageRoutes(): string[] {
+    const out: string[] = []
+    const walk = (dir: string, route: string) => {
+      for (const entry of readdirSync(join(root, dir), { withFileTypes: true })) {
+        if (entry.isDirectory()) {
+          // Route groups and private folders do not appear in the URL.
+          const seg = entry.name.startsWith('(') || entry.name.startsWith('_') ? '' : `/${entry.name}`
+          walk(`${dir}/${entry.name}`, route + seg)
+        } else if (entry.name === 'page.tsx') {
+          out.push(route || '/')
+        }
+      }
+    }
+    walk('app', '')
+    return out
+  }
+
+  function listed(name: string): string[] {
+    const block = proxy.slice(proxy.indexOf(`const ${name}`))
+    const body = block.slice(block.indexOf('['), block.indexOf(']'))
+    return [...body.matchAll(/'([^']+)'/g)].map(m => m[1])
+  }
+
+  it('leaves no page both unprotected and unlisted', () => {
+    // Unknown paths now fall through to the 404 instead of the login, which is
+    // only safe while every teacher page is named in the proxy. A new one that
+    // is neither public nor protected would be served to anyone, and this is
+    // what notices.
+    const open = [...listed('PUBLIC_EXACT'), ...listed('PUBLIC_PATHS')]
+    const guarded = listed('PROTECTED_PREFIXES')
+
+    const under = (route: string, prefix: string) =>
+      route === prefix || route.startsWith(prefix + '/')
+
+    const orphans = pageRoutes().filter(
+      route => !open.some(p => under(route, p)) && !guarded.some(p => under(route, p)),
+    )
+    expect(orphans, 'neither public nor protected — add it to one of the proxy lists').toEqual([])
+  })
+
+  it('still sends a teacher page to the login', () => {
+    expect(listed('PROTECTED_PREFIXES')).toContain('/painel')
+    expect(listed('PROTECTED_PREFIXES')).toContain('/students')
   })
 })

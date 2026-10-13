@@ -255,9 +255,10 @@ function TestPageInner() {
         </div>
 
         <div style={{ maxWidth: 420, width: '100%', marginBottom: '1rem' }}>
-          <label style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: '.4rem' }}>
+          <label style={{ display: 'block' }}>
+          <span style={{ display: 'block', fontSize: 13, fontWeight: 500, marginBottom: '.4rem' }}>
             {isEN ? 'Seu primeiro nome' : 'Your first name'}
-          </label>
+          </span>
           <input
             type="text"
             placeholder={isEN ? 'ex: Carlos' : 'e.g. Sarah'}
@@ -266,6 +267,7 @@ function TestPageInner() {
             onKeyDown={e => e.key === 'Enter' && studentName && startTest()}
             style={{ width: '100%', border: '1.5px solid var(--border)', borderRadius: 10, padding: '.7rem .9rem', fontSize: 15, fontFamily: 'inherit', background: 'var(--surface)', outline: 'none' }}
           />
+          </label>
         </div>
         <button
           onClick={startTest}

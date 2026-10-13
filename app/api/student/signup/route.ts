@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Prisma } from '@prisma/client'
 import { prisma, withDb } from '@/lib/db'
+import { callerKey, noteAccountCreated, tooManyAccounts } from '@/lib/rate-limit'
 import { hashPassword, isValidEmail, normaliseEmail, setStudentCookie } from '@/lib/student-auth'
 
 export async function POST(req: NextRequest) {
@@ -21,6 +22,14 @@ export async function POST(req: NextRequest) {
     }
 
     const optedIn = newsletter === true
+    const key = callerKey(req, 'create-account')
+    if (tooManyAccounts(key)) {
+      return NextResponse.json(
+        { error: 'Muitos cadastros deste aparelho. Tente de novo mais tarde.' },
+        { status: 429 },
+      )
+    }
+
     const student = await withDb(() => prisma.student.create({
       data: {
         name: name.trim(),
@@ -31,6 +40,8 @@ export async function POST(req: NextRequest) {
         newsletterAt: optedIn ? new Date() : null,
       },
     }))
+
+    noteAccountCreated(key)
 
     const res = NextResponse.json({ ok: true, studentId: student.id })
     if (!setStudentCookie(res, student.id)) {

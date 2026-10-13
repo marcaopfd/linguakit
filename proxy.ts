@@ -41,6 +41,26 @@ function isUnder(pathname: string, prefix: string): boolean {
   return pathname === prefix || pathname.startsWith(prefix + '/')
 }
 
+/**
+ * The teacher's half of the site. Everything here needs the session.
+ *
+ * Listing it explicitly is what lets an unknown path fall through to the real
+ * 404 instead of the login form: before this, a visitor who mistyped the
+ * address was shown "Teacher access" and a password box, which is a confusing
+ * thing to meet and tells a stranger there is something to log into.
+ *
+ * The risk of a list is forgetting to add to it, so a test walks app/ and
+ * fails if a page route is neither public nor named here.
+ */
+const PROTECTED_PREFIXES = [
+  '/painel',
+  '/students',
+  '/pt',
+  '/en',
+  '/lesson',
+  '/module',
+]
+
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
 
@@ -58,6 +78,12 @@ export function proxy(req: NextRequest) {
     // and a redirect here means the link unfurls with no image at all.
     pathname === '/opengraph-image'
   ) {
+    return NextResponse.next()
+  }
+
+  // Anything that is not a teacher area is left to Next, which answers with
+  // the app's own 404 rather than a password prompt.
+  if (!PROTECTED_PREFIXES.some(p => isUnder(pathname, p))) {
     return NextResponse.next()
   }
 
