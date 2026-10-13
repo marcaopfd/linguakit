@@ -272,3 +272,29 @@ describe('every page route is accounted for', () => {
     expect(listed('PROTECTED_PREFIXES')).toContain('/students')
   })
 })
+
+describe('the student portal answers honestly', () => {
+  const page = read('app/learn/[studentId]/page.tsx')
+
+  it('is a 404 when the learner does not exist', () => {
+    // It used to render fine and let the client say "not found" inside a 200,
+    // which every crawler and link checker reads as a real page.
+    expect(stripComments(page)).toMatch(/notFound\(\)/)
+    expect(stripComments(page)).toMatch(/prisma\.student\.findUnique/)
+  })
+
+  it('does not turn a database outage into a missing learner', () => {
+    // For someone whose link is their only way in, "you do not exist" and "we
+    // could not reach the database" are very different sentences.
+    const src = stripComments(page)
+    expect(src).toMatch(/catch/)
+    expect(src).toMatch(/'digest' in err/)
+  })
+
+  it('re-throws the notFound signal instead of swallowing it', () => {
+    // notFound() works by throwing, so a catch around the lookup would eat it.
+    const src = stripComments(page)
+    const catchBlock = src.slice(src.indexOf('catch'))
+    expect(catchBlock).toMatch(/throw err/)
+  })
+})
