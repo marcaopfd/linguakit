@@ -20,6 +20,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const attempts = await withDb(() => prisma.exerciseAttempt.findMany({
+      take: 500,
       where: { studentId },
       select: {
         moduleId: true,
@@ -35,6 +36,6 @@ export async function GET(req: NextRequest) {
     }))
     return NextResponse.json({ attempts })
   } catch (err) {
-    return NextResponse.json({ error: 'Database error', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Database error' }, { status: 500 })
   }
 }

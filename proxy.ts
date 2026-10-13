@@ -13,6 +13,8 @@ import { NextRequest, NextResponse } from 'next/server'
  */
 const PUBLIC_EXACT = [
   '/',               // the front door: which course did you come for
+  '/robots.txt',     // must be reachable, or crawlers assume nothing is barred
+  '/sitemap.xml',
 ]
 
 const PUBLIC_PATHS = [

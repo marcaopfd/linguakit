@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true })
   } catch (err) {
-    return NextResponse.json({ error: 'Could not save answer', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Could not save answer' }, { status: 500 })
   }
 }
 
@@ -88,6 +88,6 @@ export async function GET(req: NextRequest) {
     }))
     return NextResponse.json({ attempts })
   } catch (err) {
-    return NextResponse.json({ error: 'Database error', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Database error' }, { status: 500 })
   }
 }

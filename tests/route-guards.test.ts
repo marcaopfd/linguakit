@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs'
+import { readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { describe, expect, it } from 'vitest'
 
@@ -8,6 +8,19 @@ const read = (p: string) => readFileSync(join(root, p), 'utf8')
 /** Comments explain these rules, so they must not be mistaken for code. */
 const stripComments = (src: string) =>
   src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '')
+
+function apiRoutes(): string[] {
+  const out: string[] = []
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(join(root, dir), { withFileTypes: true })) {
+      const rel = `${dir}/${entry.name}`
+      if (entry.isDirectory()) walk(rel)
+      else if (entry.name === 'route.ts') out.push(rel)
+    }
+  }
+  walk('app/api')
+  return out
+}
 
 const STUDENT_DELETE_ROUTE = 'app/api/students/[id]/route.ts'
 
@@ -163,5 +176,48 @@ describe('the front door', () => {
   it('asks which course instead of assuming one, when the test is opened bare', () => {
     const test = read('app/test/page.tsx')
     expect(test).toMatch(/return <CoursePicker \/>/)
+  })
+})
+
+describe('what the scan found', () => {
+  it('keeps the course PDFs behind a teacher or a real student', () => {
+    // They used to answer anyone who guessed the URL, which is the whole
+    // curriculum given away to someone who never made an account.
+    for (const course of ['pt', 'en']) {
+      const route = read(`app/api/pdf/${course}/[mod]/[unit]/route.ts`)
+      expect(stripComments(route), course).toMatch(/mayReadCourse\(req\)/)
+    }
+    expect(stripComments(read('lib/auth.ts'))).toMatch(/export async function mayReadCourse/)
+  })
+
+  it('never hands the raw internal error back to the caller', () => {
+    // A Prisma connection error carries the database host in its message.
+    for (const file of apiRoutes()) {
+      expect(read(file), file).not.toMatch(/details: String\((?:err|error)\)/)
+    }
+  })
+
+  it('slows down a wrong password on both logins', () => {
+    for (const route of ['app/api/login/route.ts', 'app/api/student/login/route.ts']) {
+      const src = stripComments(read(route))
+      expect(src, route).toMatch(/isLockedOut\(/)
+      expect(src, route).toMatch(/noteFailure\(/)
+    }
+  })
+
+  it('tells crawlers to stay out of the learner pages', () => {
+    // The link to a learner page is that learner's only credential.
+    expect(read('app/robots.ts')).toMatch(/disallow[\s\S]*\/learn\//)
+    expect(read('app/learn/layout.tsx')).toMatch(/index: false/)
+  })
+
+  it('leaves robots.txt reachable, or the rules are never read', () => {
+    const proxy = read('proxy.ts')
+    const exact = proxy.slice(proxy.indexOf('const PUBLIC_EXACT'), proxy.indexOf('const PUBLIC_PATHS'))
+    expect(exact).toMatch(/'\/robots\.txt'/)
+  })
+
+  it('says the page is in the language the learner reads', () => {
+    expect(read('app/layout.tsx')).toMatch(/<html lang="pt-BR"/)
   })
 })

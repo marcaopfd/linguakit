@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, accent })
   } catch (err) {
     return NextResponse.json(
-      { error: 'Could not save the accent', details: String(err) },
+      { error: 'Could not save the accent' },
       { status: 500 },
     )
   }

@@ -69,7 +69,9 @@ export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, prog
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem' }}>
           <a
-            href={`${pdfBase}/${modId}/${unitIndex}`}
+            // The learner's id rides along so the route can tell a student
+            // from a stranger; a teacher is recognised by their session.
+            href={`${pdfBase}/${modId}/${unitIndex}${studentId ? `?s=${studentId}` : ''}`}
             download
             style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 12, color: 'var(--ink3)', textDecoration: 'none', border: '1px solid var(--border)', borderRadius: 8, padding: '.4rem .7rem', background: 'var(--paper)' }}
           >

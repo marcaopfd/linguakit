@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ due, dueCount: due.length, total })
   } catch (err) {
-    return NextResponse.json({ error: 'Database error', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Database error' }, { status: 500 })
   }
 }
 
@@ -65,6 +65,6 @@ export async function POST(req: NextRequest) {
     }))
     return NextResponse.json({ ok: true, retired: false, box: schedule.box })
   } catch (err) {
-    return NextResponse.json({ error: 'Could not save review', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Could not save review' }, { status: 500 })
   }
 }

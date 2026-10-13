@@ -47,6 +47,6 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
     return NextResponse.json({ ok: true, password, email: student.email })
   } catch (err) {
-    return NextResponse.json({ error: 'Não foi possível resetar a senha.', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Não foi possível resetar a senha.' }, { status: 500 })
   }
 }

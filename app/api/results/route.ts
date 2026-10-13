@@ -58,7 +58,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ students: formatted })
   } catch (err) {
-    return NextResponse.json({ error: 'Database error', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Database error' }, { status: 500 })
   }
 }
 
@@ -96,6 +96,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true, studentId: student.id })
   } catch (err) {
-    return NextResponse.json({ error: 'Could not save result', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Could not save result' }, { status: 500 })
   }
 }

@@ -61,6 +61,6 @@ export async function POST(req: NextRequest) {
     if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
       return NextResponse.json({ error: 'Já existe uma conta com esse e-mail.' }, { status: 409 })
     }
-    return NextResponse.json({ error: 'Não foi possível criar a conta.', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Não foi possível criar a conta.' }, { status: 500 })
   }
 }

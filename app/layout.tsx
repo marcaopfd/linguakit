@@ -44,7 +44,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
+    <html lang="pt-BR" className={`${fraunces.variable} ${dmSans.variable}`}>
       <body style={{ fontFamily: 'var(--font-dm-sans), DM Sans, sans-serif' }}>
         {children}
       </body>

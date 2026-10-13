@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { mayReadCourse } from '@/lib/auth'
 import { renderToStream, DocumentProps } from '@react-pdf/renderer'
 import { createElement, JSXElementConstructor, ReactElement } from 'react'
 import { EN_MODULES } from '@/lib/curriculum-en'
@@ -7,9 +8,13 @@ import { UnitPDF } from '@/lib/pdf-template'
 export const runtime = 'nodejs'
 
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ mod: string; unit: string }> },
 ) {
+  if (!(await mayReadCourse(req))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { mod: modId, unit: unitIndexStr } = await params
   const unitIndex = parseInt(unitIndexStr)
 

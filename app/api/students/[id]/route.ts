@@ -23,7 +23,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
     if (!student) return NextResponse.json({ error: 'Not found' }, { status: 404 })
     return NextResponse.json({ student })
   } catch (err) {
-    return NextResponse.json({ error: 'Database error', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Database error' }, { status: 500 })
   }
 }
 
@@ -44,6 +44,6 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     await withDb(() => prisma.student.delete({ where: { id } }))
     return NextResponse.json({ ok: true })
   } catch (err) {
-    return NextResponse.json({ error: 'Could not delete student', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Could not delete student' }, { status: 500 })
   }
 }

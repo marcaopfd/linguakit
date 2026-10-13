@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true })
   } catch (err) {
-    return NextResponse.json({ error: 'Could not save progress', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Could not save progress' }, { status: 500 })
   }
 }
 
@@ -26,9 +26,10 @@ export async function GET(req: NextRequest) {
   if (!studentId) return NextResponse.json({ error: 'Missing studentId' }, { status: 400 })
 
   try {
-    const lessons = await withDb(() => prisma.studentLesson.findMany({ where: { studentId } }))
+    const lessons = await withDb(() => prisma.studentLesson.findMany({
+      take: 500, where: { studentId } }))
     return NextResponse.json({ lessons })
   } catch (err) {
-    return NextResponse.json({ error: 'Database error', details: String(err) }, { status: 500 })
+    return NextResponse.json({ error: 'Database error' }, { status: 500 })
   }
 }
