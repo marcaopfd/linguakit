@@ -237,3 +237,15 @@ body {
   .lk-dog-happy .lk-dog-tail { transform: rotate(-18deg); }
   .lk-dog-sad   .lk-dog-tail { transform: rotate(46deg); }
 }
+
+/* ---------- FAQ ---------- */
+
+/* Safari ainda desenha o seu próprio triângulo ao lado do nosso marcador. */
+details > summary::-webkit-details-marker { display: none; }
+
+/* Dois sinais, um visível de cada vez. Tentei antes trocar o caractere por
+   ::after e depois girar o "+" com transform; nenhum dos dois pegou, e
+   alternar display não tem como falhar. */
+.lk-faq-open { display: none; }
+details[open] .lk-faq-open { display: inline; }
+details[open] .lk-faq-closed { display: none; }
