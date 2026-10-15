@@ -31,6 +31,7 @@ export default async function LearnModulePage({
       progressKey={isEN ? 'lk_progress_en' : 'lk_progress'}
       studentId={studentId}
       practiceBase={`/learn/${studentId}/praticar`}
+      liveBase={`/learn/${studentId}/conversa`}
       lang={accentTag(student.course ?? student.testResult?.course, student.accent)}
     />
   )

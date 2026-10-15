@@ -129,6 +129,18 @@ export type UiStrings = {
   accentHint: string
   accentMissing: (places: string) => string
   accentNotSaved: string
+
+  // Prática ao vivo (conversa)
+  liveTitle: string
+  liveSub: string
+  liveStart: string
+  liveYouAre: string
+  liveYourTurn: string
+  liveWrong: string
+  liveGenderHint: (right: string, wrong: string) => string
+  liveDone: string
+  liveDoneHint: (right: number, total: number) => string
+  liveAgain: string
 }
 
 const EN: UiStrings = {
@@ -244,6 +256,17 @@ const EN: UiStrings = {
   accentHint: 'Pick where you are headed. Every word, example and dialogue is then read in that accent.',
   accentMissing: places => `Not on this device: ${places}. Another phone or computer may have them.`,
   accentNotSaved: 'The accent played, but could not be saved. It will reset when you come back.',
+
+  liveTitle: 'Live practice',
+  liveSub: 'A real situation. You take one side and choose what you say.',
+  liveStart: 'Join the conversation',
+  liveYouAre: 'You are',
+  liveYourTurn: 'What do you say?',
+  liveWrong: 'Not that one.',
+  liveGenderHint: (right, wrong) => `Gender: it is “${right}”, not “${wrong}”.`,
+  liveDone: 'Conversation finished',
+  liveDoneHint: (right, total) => `${right} of ${total} right first time.`,
+  liveAgain: 'Have it again',
 }
 
 const PT: UiStrings = {
@@ -359,6 +382,17 @@ const PT: UiStrings = {
   accentHint: 'Escolha para onde você vai. Todas as palavras, exemplos e diálogos passam a ser falados nesse sotaque.',
   accentMissing: places => `Neste aparelho não tem: ${places}. Outro celular ou computador pode ter.`,
   accentNotSaved: 'O sotaque tocou, mas não deu para salvar. Ele volta ao normal quando você voltar.',
+
+  liveTitle: 'Prática ao vivo',
+  liveSub: 'Uma situação real. Você assume um lado e escolhe o que diz.',
+  liveStart: 'Entrar na conversa',
+  liveYouAre: 'Você é',
+  liveYourTurn: 'O que você diz?',
+  liveWrong: 'Não é essa.',
+  liveGenderHint: (right, wrong) => `Atenção: é “${right}”, não “${wrong}”.`,
+  liveDone: 'Conversa concluída',
+  liveDoneHint: (right, total) => `${right} de ${total} de primeira.`,
+  liveAgain: 'Conversar de novo',
 }
 
 /** `lang` is the language being taught; the learner reads the other one. */

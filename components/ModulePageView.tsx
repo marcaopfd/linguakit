@@ -16,11 +16,13 @@ interface Props {
   studentId?: string   // when set, progress comes from the DB instead of localStorage
   /** When set, each unit also offers the one-at-a-time drill. */
   practiceBase?: string
+  /** When set, each unit also offers the roleplay. */
+  liveBase?: string
   /** Language being taught; the chrome is shown in the learner's other language. */
   lang: string
 }
 
-export function ModulePageView({ mod, lessonBase, backHref, progressKey, studentId, lang, practiceBase }: Props) {
+export function ModulePageView({ mod, lessonBase, backHref, progressKey, studentId, lang, practiceBase, liveBase }: Props) {
   const { done: progress } = useModuleProgress(mod.id, progressKey, studentId)
   const t = uiStrings(lang)
 
@@ -53,6 +55,7 @@ export function ModulePageView({ mod, lessonBase, backHref, progressKey, student
         bar={levelTone(mod.id).bar}
         lessonBase={lessonBase}
         practiceBase={practiceBase}
+        liveBase={liveBase}
         modId={mod.id}
         t={t}
       />

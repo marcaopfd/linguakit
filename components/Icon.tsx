@@ -91,6 +91,12 @@ const PATHS: Record<string, React.ReactNode> = {
       <path d="M20 5.5A1.5 1.5 0 0018.5 4H14a3 3 0 00-3 3v12a2.5 2.5 0 012.5-2.5H20V5.5z" />
     </>
   ),
+  chat: (
+    <>
+      <path d="M4 6.5A2.5 2.5 0 016.5 4h11A2.5 2.5 0 0120 6.5v7a2.5 2.5 0 01-2.5 2.5H9l-4 4v-4h-.5A.5.5 0 014 15.5v-9z" />
+      <path d="M8.5 9.5h7M8.5 12.5h4" />
+    </>
+  ),
   trash: (
     <>
       <path d="M4 7h16" />

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Caramelo } from '@/components/Caramelo'
+import { Icon } from '@/components/Icon'
 import type { UiStrings } from '@/lib/ui-strings'
 
 type PathUnit = {
@@ -34,13 +35,14 @@ function swing(index: number): number {
   return SWING[index % SWING.length]
 }
 
-export function UnitPath({ units, done, accent, bar, lessonBase, practiceBase, modId, t }: {
+export function UnitPath({ units, done, accent, bar, lessonBase, practiceBase, liveBase, modId, t }: {
   units: PathUnit[]
   done: number[]
   accent: string
   bar: string
   lessonBase: string
   practiceBase?: string
+  liveBase?: string
   modId: string
   t: UiStrings
 }) {
@@ -155,6 +157,7 @@ export function UnitPath({ units, done, accent, bar, lessonBase, practiceBase, m
           isDone={doneSet.has(open)}
           lessonHref={`${lessonBase}/${modId}/${open}`}
           practiceHref={practiceBase ? `${practiceBase}/${modId}/${open}` : undefined}
+          liveHref={liveBase ? `${liveBase}/${modId}/${open}` : undefined}
           onClose={() => setOpen(null)}
           t={t}
         />
@@ -164,12 +167,13 @@ export function UnitPath({ units, done, accent, bar, lessonBase, practiceBase, m
 }
 
 /** Tapping a node opens this rather than navigating: a unit has two ways in. */
-function UnitSheet({ unit, index, isDone, lessonHref, practiceHref, onClose, t }: {
+function UnitSheet({ unit, index, isDone, lessonHref, practiceHref, liveHref, onClose, t }: {
   unit: PathUnit
   index: number
   isDone: boolean
   lessonHref: string
   practiceHref?: string
+  liveHref?: string
   onClose: () => void
   t: UiStrings
 }) {
@@ -204,6 +208,17 @@ function UnitSheet({ unit, index, isDone, lessonHref, practiceHref, onClose, t }
             style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 50, borderRadius: 12, background: 'var(--green)', color: 'var(--on-panel)', fontSize: 15, fontWeight: 700, textDecoration: 'none', marginBottom: '.55rem' }}
           >
             {t.practiceStart} →
+          </Link>
+        )}
+        {liveHref && (
+          <Link
+            href={liveHref}
+            style={{ display: 'block', minHeight: 50, borderRadius: 12, border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--ink)', textDecoration: 'none', padding: '.6rem .9rem', marginBottom: '.55rem' }}
+          >
+            <span style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 14.5, fontWeight: 700 }}>
+              <Icon name="chat" size={16} /> {t.liveTitle}
+            </span>
+            <span style={{ display: 'block', fontSize: 12, color: 'var(--ink3)', lineHeight: 1.4 }}>{t.liveSub}</span>
           </Link>
         )}
         <Link
