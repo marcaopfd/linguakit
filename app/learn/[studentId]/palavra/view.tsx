@@ -110,13 +110,26 @@ export function DailyWordView({
     setBusy(true)
     setNote(null)
 
-    const scored = await scoreAction(course, typed)
-    const next = [...guesses, typed]
-    setGuesses(next)
-    setMarks(m => [...m, scored])
+    // Emptied before the round trip, not after: scoring happens on the server,
+    // and anyone who starts the next word while the last one is still in the
+    // air would otherwise watch those letters disappear when the reply lands.
+    const guess = typed
     setTyped('')
-    persist(next, scored.every(s => s === 'right'))
-    setBusy(false)
+
+    try {
+      const scored = await scoreAction(course, guess)
+      const next = [...guesses, guess]
+      setGuesses(next)
+      setMarks(m => [...m, scored])
+      persist(next, scored.every(s => s === 'right'))
+    } catch {
+      // The guess was never counted, so it is handed back rather than lost —
+      // unless the next word is already being typed over it.
+      setTyped(v => (v.length > 0 ? v : guess))
+      setNote(t.wordNoReply)
+    } finally {
+      setBusy(false)
+    }
   }, [typed, guesses, over, busy, scoreAction, course, persist, t])
 
   const press = useCallback((key: string) => {
