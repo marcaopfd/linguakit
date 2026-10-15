@@ -201,6 +201,32 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
         <MyMistakes attempts={attempts} modules={modules} t={t} />
       </div>
 
+      {/* Word of the day */}
+      <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>
+        <Link
+          href={`/learn/${studentId}/palavra`}
+          style={{ display: 'flex', alignItems: 'center', gap: '.85rem', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '1rem 1.25rem', textDecoration: 'none', color: 'inherit' }}
+        >
+          <div style={{ display: 'flex', gap: 3, flexShrink: 0 }} aria-hidden>
+            {['ok', 'note', 'plain'].map((kind, i) => (
+              <span
+                key={i}
+                style={{
+                  width: 16, height: 20, borderRadius: 3,
+                  background: kind === 'ok' ? 'var(--ok-bg)' : kind === 'note' ? 'var(--note-bg)' : 'var(--paper)',
+                  border: `1px solid ${kind === 'ok' ? 'var(--ok-border)' : kind === 'note' ? 'var(--note-border)' : 'var(--border)'}`,
+                }}
+              />
+            ))}
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 14.5, fontWeight: 700 }}>{t.wordTitle}</div>
+            <div style={{ fontSize: 12, color: 'var(--ink3)', lineHeight: 1.4 }}>{t.wordSub}</div>
+          </div>
+          <div style={{ fontSize: 20, color: 'var(--ink3)', flexShrink: 0 }}>›</div>
+        </Link>
+      </div>
+
       {/* Course accent */}
       {student && (
         <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>

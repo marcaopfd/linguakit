@@ -141,6 +141,21 @@ export type UiStrings = {
   liveDone: string
   liveDoneHint: (right: number, total: number) => string
   liveAgain: string
+
+  // Palavra do dia
+  wordTitle: string
+  wordSub: string
+  wordBands: { easy: string; medium: string; hard: string }
+  wordToday: (band: string) => string
+  wordTooShort: string
+  wordWon: (tries: number) => string
+  wordLost: string
+  wordAnswerWas: string
+  wordNextIn: string
+  wordStreak: (days: number) => string
+  wordComeBack: string
+  wordEnter: string
+  wordDelete: string
 }
 
 const EN: UiStrings = {
@@ -267,6 +282,20 @@ const EN: UiStrings = {
   liveDone: 'Conversation finished',
   liveDoneHint: (right, total) => `${right} of ${total} right first time.`,
   liveAgain: 'Have it again',
+
+  wordTitle: 'Word of the day',
+  wordSub: 'Five letters, six tries. The same word for everyone, today only.',
+  wordBands: { easy: 'easy', medium: 'medium', hard: 'hard' },
+  wordToday: band => `Today's word is ${band}. Accents are shown, never typed.`,
+  wordTooShort: 'Five letters.',
+  wordWon: tries => (tries === 1 ? 'First try!' : `Got it in ${tries}.`),
+  wordLost: 'Out of tries.',
+  wordAnswerWas: 'The word was',
+  wordNextIn: 'New word in',
+  wordStreak: days => (days === 1 ? '1 day in a row' : `${days} days in a row`),
+  wordComeBack: 'Come back tomorrow for the next one.',
+  wordEnter: 'Enter',
+  wordDelete: 'Delete',
 }
 
 const PT: UiStrings = {
@@ -393,6 +422,20 @@ const PT: UiStrings = {
   liveDone: 'Conversa concluída',
   liveDoneHint: (right, total) => `${right} de ${total} de primeira.`,
   liveAgain: 'Conversar de novo',
+
+  wordTitle: 'Palavra do dia',
+  wordSub: 'Cinco letras, seis tentativas. A mesma palavra para todo mundo, só hoje.',
+  wordBands: { easy: 'fácil', medium: 'média', hard: 'difícil' },
+  wordToday: band => `A palavra de hoje é ${band}. Acentos aparecem, mas não precisam ser digitados.`,
+  wordTooShort: 'São cinco letras.',
+  wordWon: tries => (tries === 1 ? 'De primeira!' : `Acertou em ${tries}.`),
+  wordLost: 'Acabaram as tentativas.',
+  wordAnswerWas: 'A palavra era',
+  wordNextIn: 'Palavra nova em',
+  wordStreak: days => (days === 1 ? '1 dia seguido' : `${days} dias seguidos`),
+  wordComeBack: 'Volte amanhã para a próxima.',
+  wordEnter: 'Enviar',
+  wordDelete: 'Apagar',
 }
 
 /** `lang` is the language being taught; the learner reads the other one. */
