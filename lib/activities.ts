@@ -302,13 +302,113 @@ function dictation(unit: Unit, ctx: Ctx, limit: number): DrillItem[] {
   return out
 }
 
+
+/**
+ * Which of these is right? Grammar, from the mistakes the unit already warns
+ * about — the ones a learner of this language really makes, written down by
+ * someone who has heard them a hundred times.
+ *
+ * The wrong options are other units' flavours of wrong from the same list, so
+ * every candidate is a mistake somebody has actually made.
+ */
+function fixMistake(unit: Unit, ctx: Ctx, limit: number): DrillItem[] {
+  const slips = (unit.commonMistakes ?? []).filter(m => m.correct?.trim() && m.wrong?.trim())
+  if (!slips.length) return []
+
+  const wrongPool = slips.map(m => m.wrong)
+  const out: DrillItem[] = []
+
+  for (const slip of shuffled(slips, ctx.rng)) {
+    if (out.length >= limit) break
+
+    const choice = withDistractors(
+      slip.correct,
+      wrongPool.filter(w => !sameText(w, slip.correct)),
+      ctx.rng,
+      2,
+    )
+    if (!choice) continue
+
+    out.push({
+      key: `gm${out.length}`,
+      type: ctx.t.actFixMistake,
+      instruction: ctx.t.actFixMistakeHint,
+      // The note explains why, so it waits: printed above the options it names
+      // the wrong one and the question answers itself.
+      why: slip.note?.trim() || undefined,
+      question: '',
+      options: choice.options,
+      answerIndex: choice.answerIndex,
+      expected: choice.options[choice.answerIndex],
+      optionsSpeak: true,
+      // Hearing the right one at the end is the correction that sticks.
+      audio: { text: slip.correct, afterAnswer: true },
+      stage: 5,
+    })
+  }
+  return out
+}
+
+/**
+ * Read it in your own language, write it in the other one. Writing proper:
+ * no words handed over, no options to pick from, nothing to recognise.
+ *
+ * Short sentences only, and judged loosely — the exercise is to produce the
+ * sentence, not to place the accents, which dictation already asks for.
+ */
+function writeIt(unit: Unit, ctx: Ctx, limit: number): DrillItem[] {
+  const pairs = [
+    ...(unit.vocabulary ?? []).map(v => ({ target: v.ex, own: v.exEn })),
+    ...(unit.grammar?.examples ?? []).map(g => ({ target: g.pt, own: g.en })),
+  ].filter(p => p.target && p.own && speakable(p.target, 2, 6))
+
+  const out: DrillItem[] = []
+  const used = new Set<string>()
+
+  for (const pair of shuffled(pairs, ctx.rng)) {
+    if (out.length >= limit) break
+    const clean = normaliseForSpeech(pair.target)
+    const key = clean.toLowerCase()
+    if (used.has(key)) continue
+    used.add(key)
+
+    out.push({
+      key: `gt${out.length}`,
+      type: ctx.t.actWriteIt,
+      instruction: ctx.t.actWriteItHint,
+      question: pair.own,
+      expected: clean,
+      compare: 'loose',
+      // Nothing is given away by the question, but the answer is, so it waits.
+      audio: { text: clean, afterAnswer: true },
+      stage: 8,
+    })
+  }
+  return out
+}
+
 /** How many of each to build per unit. */
+/*
+ * Split on purpose between what the learner does, not just what the unit
+ * holds: listening was two thirds of the practice and a whole round could go
+ * by without a word being written or a form being chosen.
+ *
+ *   listening  listenChoose 5 + dialogueGap 2
+ *   grammar    fixMistake 3 + wordOrder 3
+ *   writing    dictation 3 + writeIt 3
+ *   choosing   sayIt 3
+ *
+ * A unit that cannot fill a slot — no common mistakes written down, a dialogue
+ * too short to cut up — simply yields fewer of that kind.
+ */
 export const ACTIVITY_LIMITS = {
-  listenChoose: 6,
-  sayIt: 4,
+  listenChoose: 5,
+  sayIt: 3,
   dialogueGap: 2,
+  fixMistake: 3,
   wordOrder: 3,
   dictation: 3,
+  writeIt: 3,
 } as const
 
 /**
@@ -326,7 +426,9 @@ export function generatedActivities(
     ...listenAndChoose(unit, ctx, ACTIVITY_LIMITS.listenChoose),
     ...sayIt(unit, ctx, ACTIVITY_LIMITS.sayIt),
     ...dialogueGap(unit, ctx, ACTIVITY_LIMITS.dialogueGap),
+    ...fixMistake(unit, ctx, ACTIVITY_LIMITS.fixMistake),
     ...wordOrder(unit, ctx, ACTIVITY_LIMITS.wordOrder),
     ...dictation(unit, ctx, ACTIVITY_LIMITS.dictation),
+    ...writeIt(unit, ctx, ACTIVITY_LIMITS.writeIt),
   ]
 }

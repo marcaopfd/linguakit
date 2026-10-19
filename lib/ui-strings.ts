@@ -110,6 +110,14 @@ export type UiStrings = {
   actWordOrderHint: string
   actDictation: string
   actDictationHint: string
+  actFixMistake: string
+  actFixMistakeHint: string
+  actWriteIt: string
+  actWriteItHint: string
+  /** The three kinds of authored exercise the units carry. */
+  exFill: string
+  exChoice: string
+  exTranslate: string
   playAudio: string
   playAgain: string
   hearAnswer: string
@@ -151,6 +159,11 @@ export type UiStrings = {
   wordNoReply: string
   wordUnknown: string
   wordMeaning: string
+
+  // Som automático
+  autoAudio: string
+  autoAudioOn: string
+  autoAudioOff: string
   wordWon: (tries: number) => string
   wordLost: string
   wordAnswerWas: string
@@ -257,6 +270,13 @@ const EN: UiStrings = {
   actWordOrderHint: 'Listen, then tap the words in the right order.',
   actDictation: 'Dictation',
   actDictationHint: 'Listen and write what you hear. Accents and punctuation are not counted.',
+  actFixMistake: 'Which one is right',
+  actFixMistakeHint: 'One of these is the mistake learners make. Choose the correct Portuguese.',
+  actWriteIt: 'Write it in Portuguese',
+  actWriteItHint: 'Write this sentence in Portuguese. Accents and punctuation are not counted.',
+  exFill: 'Fill in the blank',
+  exChoice: 'Multiple choice',
+  exTranslate: 'Translation',
   playAudio: 'Play',
   playAgain: 'Play again',
   hearAnswer: 'Hear it',
@@ -294,6 +314,9 @@ const EN: UiStrings = {
   wordNoReply: 'That did not go through. Press enter again.',
   wordUnknown: 'That word is not in the dictionary.',
   wordMeaning: 'What it means',
+  autoAudio: 'Whether the sound starts on its own when a question appears',
+  autoAudioOn: 'auto',
+  autoAudioOff: 'tap',
   wordWon: tries => (tries === 1 ? 'First try!' : `Got it in ${tries}.`),
   wordLost: 'Out of tries.',
   wordAnswerWas: 'The word was',
@@ -400,6 +423,13 @@ const PT: UiStrings = {
   actWordOrderHint: 'Ouça e toque nas palavras na ordem certa.',
   actDictation: 'Ditado',
   actDictationHint: 'Ouça e escreva o que você ouviu. Acento e pontuação não contam.',
+  actFixMistake: 'Qual está certo',
+  actFixMistakeHint: 'Uma destas é o erro que todo aluno comete. Escolha o inglês correto.',
+  actWriteIt: 'Escreva em inglês',
+  actWriteItHint: 'Escreva esta frase em inglês. Acento e pontuação não contam.',
+  exFill: 'Complete a frase',
+  exChoice: 'Escolha a alternativa',
+  exTranslate: 'Tradução',
   playAudio: 'Ouvir',
   playAgain: 'Ouvir de novo',
   hearAnswer: 'Ouvir',
@@ -437,6 +467,9 @@ const PT: UiStrings = {
   wordNoReply: 'Não foi dessa vez. Aperte enviar de novo.',
   wordUnknown: 'Essa palavra não está no dicionário.',
   wordMeaning: 'O que quer dizer',
+  autoAudio: 'Se o som começa sozinho quando aparece uma pergunta',
+  autoAudioOn: 'auto',
+  autoAudioOff: 'toque',
   wordWon: tries => (tries === 1 ? 'De primeira!' : `Acertou em ${tries}.`),
   wordLost: 'Acabaram as tentativas.',
   wordAnswerWas: 'A palavra era',

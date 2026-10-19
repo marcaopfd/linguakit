@@ -11766,11 +11766,11 @@ export const MODULES: Module[] = [
             "instruction": "Literary comprehension.",
             "items": [
               {
-                "q": "\"Quando ela chegou, ele já tinha saído.\" — What happened first?",
+                "q": "\"Quando ela chegou, ele já tinha saído.\" — O que aconteceu primeiro?",
                 "opts": [
-                  "She arrived first",
-                  "He left first",
-                  "They left together"
+                  "Ela chegou primeiro",
+                  "Ele saiu primeiro",
+                  "Os dois saíram juntos"
                 ],
                 "ans": 1
               }
@@ -13273,20 +13273,20 @@ export const MODULES: Module[] = [
             "instruction": "Choose the correct idiomatic meaning.",
             "items": [
               {
-                "q": "\"Dar com os burros n'água\" means:",
+                "q": "\"Dar com os burros n'água\" quer dizer:",
                 "opts": [
-                  "To succeed",
-                  "To fail completely",
-                  "To work hard"
+                  "Ter sucesso",
+                  "Fracassar completamente",
+                  "Trabalhar muito"
                 ],
                 "ans": 1
               },
               {
-                "q": "\"Fazer vista grossa\" means:",
+                "q": "\"Fazer vista grossa\" quer dizer:",
                 "opts": [
-                  "To look carefully",
-                  "To turn a blind eye",
-                  "To see poorly"
+                  "Olhar com atenção",
+                  "Fingir que não viu",
+                  "Enxergar mal"
                 ],
                 "ans": 1
               }
@@ -13578,11 +13578,11 @@ export const MODULES: Module[] = [
             "instruction": "What does the speaker really mean?",
             "items": [
               {
-                "q": "\"Que solução criativa...\" (said slowly, with raised eyebrow)",
+                "q": "\"Que solução criativa...\" (dito devagar, com a sobrancelha erguida)",
                 "opts": [
-                  "They genuinely admire the solution",
-                  "They think the solution is terrible",
-                  "They are asking a question"
+                  "Está elogiando de verdade",
+                  "Está achando a solução péssima",
+                  "Está fazendo uma pergunta"
                 ],
                 "ans": 1
               }
@@ -14179,11 +14179,11 @@ export const MODULES: Module[] = [
             "instruction": "What does the speaker really mean?",
             "items": [
               {
-                "q": "\"Tomara que ele fique mais uma hora!\" (said after a very boring visitor)",
+                "q": "\"Tomara que ele fique mais uma hora!\" (dito depois de uma visita chatíssima)",
                 "opts": [
-                  "They want the visitor to stay longer",
-                  "They're being sarcastic — they want him to leave",
-                  "They genuinely enjoy his company"
+                  "Quer que a visita fique mais tempo",
+                  "É ironia — quer que ele vá embora",
+                  "Gosta mesmo da companhia dele"
                 ],
                 "ans": 1
               }
@@ -15077,11 +15077,11 @@ export const MODULES: Module[] = [
             "instruction": "Sociolinguistic knowledge.",
             "items": [
               {
-                "q": "What is diglossia?",
+                "q": "O que é diglossia?",
                 "opts": [
-                  "Speaking two unrelated languages",
-                  "Having two varieties of the same language for different contexts",
-                  "A speech disorder"
+                  "Falar duas línguas sem parentesco entre si",
+                  "Ter duas variedades da mesma língua para contextos diferentes",
+                  "Um distúrbio da fala"
                 ],
                 "ans": 1
               }

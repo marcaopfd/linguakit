@@ -1,6 +1,9 @@
+import { readFileSync } from 'fs'
+import { join } from 'path'
 import { describe, expect, it } from 'vitest'
 import { ACTIVITY_LIMITS, generatedActivities } from '@/lib/activities'
 import { MODULES } from '@/lib/curriculum'
+import { buildDrill, roundBounds, roundCount } from '@/lib/drill'
 import { EN_MODULES } from '@/lib/curriculum-en'
 import type { Unit } from '@/lib/curriculum'
 
@@ -88,7 +91,7 @@ describe('generatedActivities', () => {
 
   it('cannot collide with the keys the lesson screen uses', () => {
     for (const item of items) {
-      expect(item.key).toMatch(/^g[lsdow]\d+$/)
+      expect(item.key).toMatch(/^g[lsdowmt]\d+$/)
     }
   })
 })
@@ -238,5 +241,68 @@ describe('against the real curriculum', () => {
         })
       }
     }
+  })
+})
+
+describe('what the practice asks, and in which language', () => {
+  const curriculum = readFileSync(join(__dirname, '..', 'lib/curriculum.ts'), 'utf8')
+
+  it('asks about Portuguese in Portuguese once the learner can read it', () => {
+    // A question in English whose three options are also in English is a quiz
+    // about Portuguese that never touches it — confusing, and practice of
+    // nothing. These six were the ones in the course; the English wording of
+    // each must not come back.
+    for (const gone of [
+      'What happened first?',
+      'They left together',
+      '"Dar com os burros n\'água\\" means:',
+      '"Fazer vista grossa\\" means:',
+      'They think the solution is terrible',
+      'They genuinely enjoy his company',
+      'What is diglossia?',
+      'A speech disorder',
+    ]) {
+      expect(curriculum, gone).not.toContain(gone)
+    }
+  })
+
+  it('still asks those six things, in Portuguese', () => {
+    for (const asked of [
+      'O que aconteceu primeiro?',
+      'Fracassar completamente',
+      'Fingir que não viu',
+      'Está achando a solução péssima',
+      'É ironia — quer que ele vá embora',
+      'O que é diglossia?',
+    ]) {
+      expect(curriculum, asked).toContain(asked)
+    }
+  })
+})
+
+describe('the mix of a round', () => {
+  it('gives every round some of everything, not one round of listening', () => {
+    for (const mod of MODULES.slice(0, 3)) {
+      const unit = mod.units[0]
+      const items = buildDrill(unit, { lang: 'pt-BR', seed: `${mod.id}-0` })
+      const rounds = roundCount(items.length)
+      if (rounds < 2) continue
+
+      for (let r = 0; r < rounds; r++) {
+        const { start, end } = roundBounds(r, items.length)
+        const kinds = new Set(items.slice(start, end).map(i => i.type))
+        // Four kinds in a round of ten or eleven is a mix; one or two is the
+        // old behaviour, where a round could be nothing but audio.
+        expect(kinds.size, `${mod.id} round ${r + 1}`).toBeGreaterThanOrEqual(4)
+      }
+    }
+  })
+
+  it('asks the learner to write, choose and listen in the same unit', () => {
+    const items = buildDrill(MODULES[0].units[0], { lang: 'pt-BR', seed: 'a1-0' })
+    // Typing with nothing handed over, hearing, and picking a form.
+    expect(items.some(i => !i.options && !i.tokens && i.audio?.afterAnswer)).toBe(true)
+    expect(items.some(i => i.audio?.isQuestion)).toBe(true)
+    expect(items.some(i => i.options?.length)).toBe(true)
   })
 })

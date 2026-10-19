@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Icon } from '@/components/Icon'
 import Link from 'next/link'
 import { Caramelo } from '@/components/Caramelo'
+import { AutoAudioToggle, useAutoSpeak } from '@/components/AutoAudio'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
 import { isCorrect, roundBounds, roundCount, roundOf, type DrillItem } from '@/lib/drill'
 import { speak } from '@/lib/speak'
@@ -37,6 +38,7 @@ export function PracticeView({
 }: Props) {
   const t = uiStrings(lang)
   const audio = useVoice(lang)
+  const autoSpeak = useAutoSpeak()
 
   const [index, setIndex] = useState(0)
   const [choice, setChoice] = useState<number | null>(null)
@@ -70,12 +72,13 @@ export function PracticeView({
       ? picked.length > 0
       : typed.trim().length > 0
 
-  // Items whose question is the sound play on their own. The click that brought
-  // the learner here counts as the gesture browsers want before audio.
+  // Items whose question is the sound can play on their own, but only if the
+  // learner asked for that: audio arriving before the question has been read
+  // talks over it. Off by default; the play button is always there.
   useEffect(() => {
-    if (!item?.audio?.auto || !audio.ready) return
+    if (!item?.audio?.auto || !audio.ready || !autoSpeak.auto) return
     speak(item.audio.text, lang, audio.voice)
-  }, [item?.key, item?.audio?.auto, item?.audio?.text, audio.ready, audio.voice, lang])
+  }, [item?.key, item?.audio?.auto, item?.audio?.text, audio.ready, audio.voice, lang, autoSpeak.auto])
 
   const check = useCallback(() => {
     if (!item || checked || !canCheck) return
@@ -242,6 +245,14 @@ export function PracticeView({
       studentId={studentId} t={t} title={unitTitle} label={moduleLabel}
       progress={roundLength ? ((index - bounds.start) / roundLength) * 100 : 0}
       round={round + 1} rounds={rounds}
+      aside={audio.supported === false ? null : (
+        <AutoAudioToggle
+          auto={autoSpeak.auto}
+          onChange={autoSpeak.setAuto}
+          label={t.autoAudio}
+          state={autoSpeak.auto ? t.autoAudioOn : t.autoAudioOff}
+        />
+      )}
     >
       <Card animateKey={index}>
         {/* The mascot sits in the corner the type label leaves empty, so he
@@ -351,6 +362,12 @@ export function PracticeView({
             {item.audio && (
               <SpeakButton text={item.audio.text} lang={lang} voice={audio.voice} ready={audio.ready} listen={t.hearAnswer} />
             )}
+          </div>
+        )}
+
+        {checked && item.why && (
+          <div className="lk-rise" style={{ marginTop: '.6rem', padding: '.75rem .9rem', borderRadius: 12, background: 'var(--paper)', border: '1px solid var(--border)', fontSize: 13, color: 'var(--ink2)', lineHeight: 1.55 }}>
+            {item.why}
           </div>
         )}
 
@@ -532,7 +549,7 @@ function Card({ children, animateKey }: { children: React.ReactNode; animateKey?
   )
 }
 
-function Shell({ studentId, t, title, label, progress, round, rounds, children }: {
+function Shell({ studentId, t, title, label, progress, round, rounds, aside, children }: {
   studentId: string
   t: ReturnType<typeof uiStrings>
   title: string
@@ -540,16 +557,26 @@ function Shell({ studentId, t, title, label, progress, round, rounds, children }
   progress: number
   round: number
   rounds: number
+  /** The sound switch, when this device can speak at all. */
+  aside?: React.ReactNode
   children: React.ReactNode
 }) {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '1.25rem 1.5rem 1.1rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '.7rem' }}>
-          <Link href={`/learn/${studentId}`} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none' }}>
+          <Link href={`/learn/${studentId}`} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>
             ← {t.exitPractice}
           </Link>
-          <span style={{ fontSize: 12, color: 'rgba(255,255,255,.5)' }}>{label} · {title}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem', minWidth: 0 }}>
+            {aside}
+            <span style={{
+              fontSize: 12, color: 'rgba(255,255,255,.5)',
+              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            }}>
+              {label} · {title}
+            </span>
+          </div>
         </div>
 
         {/* The bar fills within the round; the dots say how far through the unit. */}

@@ -1,5 +1,6 @@
 import type { Exercise, Unit } from './curriculum'
 import { generatedActivities } from './activities'
+import { uiStrings } from './ui-strings'
 
 /**
  * Flattens a unit's exercises into a single list to be answered one at a time.
@@ -42,6 +43,12 @@ export type DrillItem = {
   /** Loose judging ignores accents and punctuation. Default is exact. */
   compare?: 'exact' | 'loose'
 
+  /**
+   * The reason, shown only once the answer is in. An explanation printed above
+   * the question can name the wrong option and answer it for the learner.
+   */
+  why?: string
+
   /** Difficulty step, used to order the unit from recognition to production. */
   stage?: number
 }
@@ -66,7 +73,25 @@ function stageFor(type: string): number {
   return 5 // fill in the blank, and anything added later
 }
 
-function fromBlocks(blocks: Exercise[], prefix: 'c' | 'x'): DrillItem[] {
+/**
+ * The authored exercises name themselves in English in both courses — the
+ * units were written that way — so a Brazilian met "FILL IN THE BLANK" above
+ * an instruction in Portuguese. There are only three kinds, and the learner
+ * should read all three in their own language.
+ */
+function labelFor(type: string, t: ReturnType<typeof uiStrings>): string {
+  const name = type.toLowerCase()
+  if (name.includes('fill in the blank')) return t.exFill
+  if (name.includes('multiple choice')) return t.exChoice
+  if (name.includes('translation')) return t.exTranslate
+  return type
+}
+
+function fromBlocks(
+  blocks: Exercise[],
+  prefix: 'c' | 'x',
+  t?: ReturnType<typeof uiStrings>,
+): DrillItem[] {
   return blocks.flatMap((block, bi) =>
     block.items.map((item, ii) => {
       const multipleChoice = Array.isArray(item.opts) && typeof item.ans === 'number'
@@ -76,7 +101,7 @@ function fromBlocks(blocks: Exercise[], prefix: 'c' | 'x'): DrillItem[] {
 
       return {
         key: `${prefix}${bi}-${ii}`,
-        type: block.type,
+        type: t ? labelFor(block.type, t) : block.type,
         instruction: block.instruction,
         question: item.q,
         options: multipleChoice ? item.opts : undefined,
@@ -100,18 +125,54 @@ export function buildDrill(
   unit: Unit,
   opts?: { lang: string; seed: string },
 ): DrillItem[] {
+  const t = opts ? uiStrings(opts.lang) : undefined
   const authored = [
-    ...fromBlocks(unit.exercises ?? [], 'c'),
-    ...fromBlocks(unit.extraExercises ?? [], 'x'),
+    ...fromBlocks(unit.exercises ?? [], 'c', t),
+    ...fromBlocks(unit.extraExercises ?? [], 'x', t),
   ]
 
   const generated = opts ? generatedActivities(unit, opts.lang, opts.seed) : []
 
   // Stable: items of equal stage keep the order they were built in.
-  return [...authored, ...generated]
+  const climbing = [...authored, ...generated]
     .map((item, i) => ({ item, i }))
     .sort((a, b) => (a.item.stage ?? 5) - (b.item.stage ?? 5) || a.i - b.i)
     .map(({ item }) => item)
+
+  return dealIntoRounds(climbing)
+}
+
+/**
+ * Spreads the climb across the rounds instead of stacking it.
+ *
+ * Sorted by stage and left there, the first round of a unit was every
+ * listening question it had and the last was every written answer — so a
+ * learner with ten minutes got one corner of the unit and could reasonably
+ * conclude the whole course was multiple-choice listening. Dealt out round by
+ * round, each round still climbs from recognising to writing, and each one has
+ * some of everything in it.
+ *
+ * The buckets are sized by `roundBounds`, so the dealt order lines up exactly
+ * with the slices the practice screen takes.
+ */
+function dealIntoRounds(items: DrillItem[]): DrillItem[] {
+  const rounds = roundCount(items.length)
+  if (rounds < 2) return items
+
+  const room = Array.from({ length: rounds }, (_, r) => {
+    const { start, end } = roundBounds(r, items.length)
+    return end - start
+  })
+  const buckets: DrillItem[][] = room.map(() => [])
+
+  let at = 0
+  for (const item of items) {
+    let looked = 0
+    while (buckets[at].length >= room[at] && looked++ < rounds) at = (at + 1) % rounds
+    buckets[at].push(item)
+    at = (at + 1) % rounds
+  }
+  return buckets.flat()
 }
 
 /**

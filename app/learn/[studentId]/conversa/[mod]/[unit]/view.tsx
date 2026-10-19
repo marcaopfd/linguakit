@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Caramelo } from '@/components/Caramelo'
+import { AutoAudioToggle, useAutoSpeak } from '@/components/AutoAudio'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
 import { differingWord } from '@/lib/gender'
 import type { Roleplay } from '@/lib/roleplay'
@@ -37,6 +38,7 @@ export function RoleplayView({
   const t = uiStrings(lang)
   const audio = useVoice(lang)
 
+  const autoSpeak = useAutoSpeak()
   const [turnIndex, setTurnIndex] = useState(0)
   const [said, setSaid] = useState<Said[]>([])
   const [wrongPick, setWrongPick] = useState<number | null>(null)
@@ -47,14 +49,17 @@ export function RoleplayView({
   const turn = roleplay.turns[turnIndex]
   const finished = turnIndex >= roleplay.turns.length
 
-  // The other person speaks the moment it is their turn, as they would.
+  // The other person speaks the moment it is their turn, as they would — but
+  // only with the sound switch on. What they said is written in the thread
+  // either way, with a player on every line, so the conversation still works
+  // in a quiet room.
   useEffect(() => {
     if (!turn) return
     setSaid(prev => [...prev, ...turn.cues.map(c => ({ from: 'them' as const, text: c.text, translation: c.translation }))])
-    if (turn.cues.length && audio.ready) {
+    if (turn.cues.length && audio.ready && autoSpeak.auto) {
       speak(turn.cues.map(c => c.text).join('. '), lang, audio.voice)
     }
-  }, [turnIndex, audio.ready])
+  }, [turnIndex, audio.ready, autoSpeak.auto])
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -94,10 +99,25 @@ export function RoleplayView({
     <div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', flexDirection: 'column' }}>
       <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '1.1rem 1.25rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '.5rem' }}>
-          <Link href={`/learn/${studentId}`} style={{ minHeight: 44, display: 'inline-flex', alignItems: 'center', fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none' }}>
+          <Link href={`/learn/${studentId}`} style={{ minHeight: 44, display: 'inline-flex', alignItems: 'center', fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none', whiteSpace: 'nowrap', flexShrink: 0 }}>
             ← {t.exitPractice}
           </Link>
-          <span style={{ fontSize: 12, color: 'rgba(255,255,255,.5)' }}>{moduleLabel} · {unitTitle}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem', minWidth: 0 }}>
+            {audio.supported !== false && (
+              <AutoAudioToggle
+                auto={autoSpeak.auto}
+                onChange={autoSpeak.setAuto}
+                label={t.autoAudio}
+                state={autoSpeak.auto ? t.autoAudioOn : t.autoAudioOff}
+              />
+            )}
+            <span style={{
+              fontSize: 12, color: 'rgba(255,255,255,.5)',
+              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            }}>
+              {moduleLabel} · {unitTitle}
+            </span>
+          </div>
         </div>
         <div style={{ fontSize: 13.5, lineHeight: 1.5 }}>{roleplay.scene}</div>
       </div>
