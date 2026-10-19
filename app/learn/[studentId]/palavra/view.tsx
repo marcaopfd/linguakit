@@ -3,8 +3,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { Caramelo } from '@/components/Caramelo'
+import { PageLang, uiLangTag } from '@/components/PageLang'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
-import { MAX_TRIES, WORD_LENGTH, type Band, type Mark, plain, scoreGuess } from '@/lib/daily-word'
+import { MAX_TRIES, WORD_LENGTH, type Band, type GuessResult, type Mark, plain } from '@/lib/daily-word'
 import { uiStrings } from '@/lib/ui-strings'
 
 const ROWS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'] as const
@@ -29,20 +30,26 @@ type Saved = {
  * somewhere to keep it.
  */
 export function DailyWordView({
-  studentId, dayKey, band, scoreAction, revealAction, lang, course,
+  studentId, dayKey, band, scoreAction, revealAction, lang, speakLang, course,
 }: {
   studentId: string
   dayKey: string
   band: Band
-  /** Scores a guess on the server, so the answer never crosses over. */
-  scoreAction: (course: string, guess: string) => Promise<Mark[]>
-  /** Fetched only once the game is over. */
-  revealAction: (course: string) => Promise<string>
+  /**
+   * Scores a guess on the server, so the answer never crosses over — and says
+   * when the guess is five letters but not a word, which costs no try.
+   */
+  scoreAction: (course: string, guess: string) => Promise<GuessResult>
+  /** Fetched only once the game is over: the word and what it means. */
+  revealAction: (course: string, readIn: string) => Promise<{ word: string; meaning: string | null }>
+  /** The learner's own language, which decides the interface. */
   lang: string
+  /** The language the answer is spoken in: the one the word is written in. */
+  speakLang: string
   course: 'en' | 'pt'
 }) {
   const t = uiStrings(lang)
-  const audio = useVoice(lang)
+  const audio = useVoice(speakLang)
 
   const storageKey = `lk_word_${course}`
 
@@ -53,6 +60,7 @@ export function DailyWordView({
   const [note, setNote] = useState<string | null>(null)
   const [loaded, setLoaded] = useState(false)
   const [answer, setAnswer] = useState<string | null>(null)
+  const [meaning, setMeaning] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
 
   const won = marks.length > 0 && marks[marks.length - 1].every(m => m === 'right')
@@ -66,7 +74,8 @@ export function DailyWordView({
 
     if (saved?.day === dayKey) {
       setGuesses(saved.guesses)
-      Promise.all(saved.guesses.map(g => scoreAction(course, g))).then(setMarks)
+      Promise.all(saved.guesses.map(g => scoreAction(course, g)))
+        .then(results => setMarks(results.map(r => (r.ok ? r.marks : []))))
     }
     setStreak(saved?.streak ?? 0)
     setLoaded(true)
@@ -74,8 +83,11 @@ export function DailyWordView({
 
   // Asked for only when the game is over, so nothing left to spoil.
   useEffect(() => {
-    if (over && !answer) revealAction(course).then(setAnswer).catch(() => {})
-  }, [over, answer, course, revealAction])
+    if (!over || answer) return
+    revealAction(course, uiLangTag(lang))
+      .then(({ word, meaning: what }) => { setAnswer(word); setMeaning(what) })
+      .catch(() => {})
+  }, [over, answer, course, revealAction, lang])
 
   const persist = useCallback((next: string[], justWon: boolean) => {
     let saved: Saved | null = null
@@ -118,10 +130,19 @@ export function DailyWordView({
 
     try {
       const scored = await scoreAction(course, guess)
+
+      // Five letters that are not a word cost nothing: the guess goes back on
+      // the board so one letter can be changed, rather than being wiped.
+      if (!scored.ok) {
+        setTyped(v => (v.length > 0 ? v : guess))
+        setNote(t.wordUnknown)
+        return
+      }
+
       const next = [...guesses, guess]
       setGuesses(next)
-      setMarks(m => [...m, scored])
-      persist(next, scored.every(s => s === 'right'))
+      setMarks(m => [...m, scored.marks])
+      persist(next, scored.marks.every(m => m === 'right'))
     } catch {
       // The guess was never counted, so it is handed back rather than lost —
       // unless the next word is already being typed over it.
@@ -167,6 +188,7 @@ export function DailyWordView({
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', flexDirection: 'column' }}>
+      <PageLang tag={uiLangTag(lang)} />
       <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '1rem 1.25rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
           <Link href={`/learn/${studentId}`} style={{ minHeight: 44, display: 'inline-flex', alignItems: 'center', fontSize: 13, color: 'rgba(255,255,255,.5)', textDecoration: 'none' }}>
@@ -224,7 +246,18 @@ export function DailyWordView({
             {answer && (
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '.4rem', fontSize: 14, color: 'var(--ink3)', marginBottom: '.5rem' }}>
                 {t.wordAnswerWas} <strong style={{ color: 'var(--ink)' }}>{answer}</strong>
-                <SpeakButton text={answer} lang={lang} voice={audio.voice} ready={audio.ready} listen={t.listen} />
+                <SpeakButton text={answer} lang={speakLang} voice={audio.voice} ready={audio.ready} listen={t.listen} />
+              </div>
+            )}
+            {meaning && (
+              <div style={{
+                background: 'var(--paper)', border: '1px solid var(--border)', borderRadius: 12,
+                padding: '.7rem .85rem', margin: '.1rem 0 .7rem', textAlign: 'left',
+              }}>
+                <div style={{ fontSize: 10.5, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--ink3)', marginBottom: '.2rem' }}>
+                  {t.wordMeaning}
+                </div>
+                <div style={{ fontSize: 13.5, color: 'var(--ink)', lineHeight: 1.5 }}>{meaning}</div>
               </div>
             )}
             <div style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.5 }}>
@@ -263,6 +296,7 @@ function Tile({ letter, mark, filled }: { letter: string; mark?: Mark; filled?: 
 
   return (
     <div
+      translate="no"
       style={{
         width: 52, height: 52, borderRadius: 10,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -297,6 +331,7 @@ function Key({ label, mark, wide, aria, onPress }: {
     <button
       onClick={onPress}
       aria-label={aria ?? label}
+      translate="no"
       style={{
         minWidth: wide ? 56 : 30, flex: wide ? '0 0 auto' : '1 1 0',
         minHeight: 48, borderRadius: 8, padding: 0,

@@ -150,4 +150,14 @@ export function scoreGuess(guess: string, answer: string): Mark[] {
   return marks
 }
 
+/**
+ * What comes back from a guess.
+ *
+ * A guess of five letters that is not a word is not a wrong guess — it is not
+ * a guess at all, so it is told apart here and costs no try.
+ */
+export type GuessResult =
+  | { ok: true; marks: Mark[] }
+  | { ok: false; reason: 'unknown-word' }
+
 export const MAX_TRIES = 6

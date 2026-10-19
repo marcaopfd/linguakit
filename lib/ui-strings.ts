@@ -149,6 +149,8 @@ export type UiStrings = {
   wordToday: (band: string) => string
   wordTooShort: string
   wordNoReply: string
+  wordUnknown: string
+  wordMeaning: string
   wordWon: (tries: number) => string
   wordLost: string
   wordAnswerWas: string
@@ -290,6 +292,8 @@ const EN: UiStrings = {
   wordToday: band => `Today's word is ${band}. Accents are shown, never typed.`,
   wordTooShort: 'Five letters.',
   wordNoReply: 'That did not go through. Press enter again.',
+  wordUnknown: 'That word is not in the dictionary.',
+  wordMeaning: 'What it means',
   wordWon: tries => (tries === 1 ? 'First try!' : `Got it in ${tries}.`),
   wordLost: 'Out of tries.',
   wordAnswerWas: 'The word was',
@@ -431,6 +435,8 @@ const PT: UiStrings = {
   wordToday: band => `A palavra de hoje é ${band}. Acentos aparecem, mas não precisam ser digitados.`,
   wordTooShort: 'São cinco letras.',
   wordNoReply: 'Não foi dessa vez. Aperte enviar de novo.',
+  wordUnknown: 'Essa palavra não está no dicionário.',
+  wordMeaning: 'O que quer dizer',
   wordWon: tries => (tries === 1 ? 'De primeira!' : `Acertou em ${tries}.`),
   wordLost: 'Acabaram as tentativas.',
   wordAnswerWas: 'A palavra era',

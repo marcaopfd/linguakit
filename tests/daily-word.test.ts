@@ -1,8 +1,17 @@
+import { readFileSync } from 'fs'
+import { join } from 'path'
 import { describe, expect, it } from 'vitest'
 import {
   BANDS, MAX_TRIES, WORD_LENGTH, bandOfTheDay, dayKey, dayNumber, daysBeforeRepeat,
   msUntilNextWord, plain, poolSize, scoreGuess, wordOfTheDay,
 } from '@/lib/daily-word'
+import { DICTIONARY_SIZE, isRealWord } from '@/lib/word-dictionary-pt'
+import { PT_EASY, PT_HARD, PT_MEDIUM } from '@/lib/word-list-pt'
+import { PT_MEANINGS, meaningOf } from '@/lib/word-meanings-pt'
+
+/** Comments explain these rules, so they must not be mistaken for code. */
+const stripComments = (src: string) =>
+  src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '')
 
 describe('scoreGuess', () => {
   it('marks the easy case', () => {
@@ -129,5 +138,73 @@ describe('the day itself', () => {
 describe('the rules', () => {
   it('gives six tries, as the game everybody knows does', () => {
     expect(MAX_TRIES).toBe(6)
+  })
+})
+
+describe('whose language the word is in', () => {
+  const src = stripComments(
+    readFileSync(join(__dirname, '..', 'app/learn/[studentId]/palavra/page.tsx'), 'utf8'))
+
+  it('is Portuguese for both courses, not the course being studied', () => {
+    expect(src).toMatch(/course="pt"/)
+    // The old behaviour picked the list from the course. If that ever comes
+    // back it should be a decision, not a line that crept in.
+    expect(src).not.toMatch(/course=\{.*isEN/)
+  })
+
+  it('speaks the answer in the language the answer is written in', () => {
+    // The interface follows the learner; the voice follows the word. Reading
+    // "salvo" with an American voice is the bug this guards.
+    expect(src).toMatch(/speakLang=\{accentTag\('pt'/)
+  })
+})
+
+describe('the dictionary of allowed guesses', () => {
+  it('takes real words, including the inflected ones a lemma list misses', () => {
+    for (const word of ['certo', 'junto', 'sonho', 'vazio', 'amiga', 'antes', 'salvo'])
+      expect(isRealWord(word), word).toBe(true)
+  })
+
+  it('turns down what is not a word', () => {
+    for (const junk of ['zzzzz', 'abcde', 'qwert', 'aaaaa', 'xpton'])
+      expect(isRealWord(junk), junk).toBe(false)
+  })
+
+  it('accepts every answer it could ever be asked about', () => {
+    // The day the game rejects its own word is the day it looks broken.
+    for (const word of [...PT_EASY, ...PT_MEDIUM, ...PT_HARD])
+      expect(isRealWord(plain(word)), word).toBe(true)
+  })
+
+  it('holds enough words to be worth consulting', () => {
+    expect(DICTIONARY_SIZE).toBeGreaterThan(8000)
+  })
+
+  it('stays on the server, where twelve thousand words belong', () => {
+    const view = readFileSync(join(__dirname, '..', 'app/learn/[studentId]/palavra/view.tsx'), 'utf8')
+    expect(view).toContain("'use client'")
+    expect(view).not.toMatch(/word-dictionary|word-meanings/)
+  })
+})
+
+describe('what the word means', () => {
+  it('has a line for every answer, in both languages', () => {
+    for (const word of [...PT_EASY, ...PT_MEDIUM, ...PT_HARD]) {
+      const entry = PT_MEANINGS[word]
+      expect(entry, `${word} has no meaning`).toBeTruthy()
+      expect(entry.pt.length, `${word} pt`).toBeGreaterThan(8)
+      expect(entry.en.length, `${word} en`).toBeGreaterThan(2)
+    }
+  })
+
+  it('carries no meaning for a word that is not an answer', () => {
+    const answers = new Set<string>([...PT_EASY, ...PT_MEDIUM, ...PT_HARD])
+    for (const word of Object.keys(PT_MEANINGS)) expect(answers.has(word), word).toBe(true)
+  })
+
+  it('gives the meaning in the language the learner reads', () => {
+    expect(meaningOf('salvo', 'pt')).toMatch(/perigo/)
+    expect(meaningOf('salvo', 'en')).toMatch(/Safe/)
+    expect(meaningOf('naoexiste', 'pt')).toBeNull()
   })
 })

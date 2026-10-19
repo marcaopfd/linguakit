@@ -22,17 +22,30 @@ export default async function DailyWordPage({
   if (!student) notFound()
 
   const course = student.course ?? student.testResult?.course
-  const isEN = course === 'en'
 
+  /*
+   * The word is Portuguese for everybody, whichever course they are on.
+   *
+   * It does not follow the course the way the lessons do: one word a day for
+   * the whole site means a Brazilian and the American they are studying with
+   * are stuck on the same five letters, which is the part people talk about.
+   * `wordOfTheDay` still takes a course and the English list is still there,
+   * so this is one argument away from being a choice if it should be.
+   *
+   * The interface stays in the learner's own language — that is `lang`, which
+   * `uiStrings` flips. `speakLang` is separate because the answer is read
+   * aloud, and a Portuguese word in an American voice is no use to anyone.
+   */
   return (
     <DailyWordView
       studentId={studentId}
       dayKey={dayKey()}
       band={bandOfTheDay()}
-      course={isEN ? 'en' : 'pt'}
+      course="pt"
       scoreAction={scoreGuessAction}
       revealAction={revealAnswerAction}
       lang={accentTag(course, student.accent)}
+      speakLang={accentTag('pt', student.accent)}
     />
   )
 }
