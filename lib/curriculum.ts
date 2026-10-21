@@ -7799,9 +7799,9 @@ export const MODULES: Module[] = [
                 "opts": [
                   "Eu morei no Rio",
                   "Eu morava no Rio",
-                  "Eu vivia no Rio — both b and c correct"
+                  "Eu tenho morado no Rio"
                 ],
-                "ans": 2
+                "ans": 1
               },
               {
                 "q": "Yesterday I went to the market (completed action)",
@@ -9150,10 +9150,10 @@ export const MODULES: Module[] = [
               {
                 "q": "Talvez nós ___ para a praia no fim de semana.",
                 "opts": [
-                  "vamos",
-                  "fomos",
-                  "iremos",
-                  "vamos"
+                  "viajamos",
+                  "viajaremos",
+                  "viajemos",
+                  "viajávamos"
                 ],
                 "ans": 2
               },
@@ -9318,15 +9318,15 @@ export const MODULES: Module[] = [
             "instruction": "Complete with the correct connector.",
             "items": [
               {
-                "q": "It's expensive. ___ (However), it's worth it.",
+                "q": "É caro. ___ (However), vale a pena.",
                 "ans": "No entanto"
               },
               {
-                "q": "I'm tired. ___ (Therefore), I'm going to sleep.",
+                "q": "Estou cansado. ___ (Therefore), vou dormir.",
                 "ans": "Portanto"
               },
               {
-                "q": "___ (Despite) the rain, we went to the beach.",
+                "q": "___ (Despite) a chuva, fomos à praia.",
                 "ans": "Apesar da"
               }
             ]
@@ -12951,22 +12951,22 @@ export const MODULES: Module[] = [
             "instruction": "B2 final review.",
             "items": [
               {
-                "q": "\"Despite the challenges\" (literary) →",
+                "q": "\"Despite the challenges\", em registro formal →",
                 "opts": [
                   "Apesar dos desafios",
-                  "Malgrado os desafios",
-                  "Não obstante os desafios — all are correct"
+                  "Mesmo com os desafios",
+                  "Não obstante os desafios"
                 ],
                 "ans": 2
               },
               {
                 "q": "\"As time passes\" →",
                 "opts": [
-                  "Enquanto o tempo passa",
                   "À medida que o tempo passa",
-                  "Conforme o tempo passa — b and c both correct"
+                  "À medida de o tempo passa",
+                  "À medida o tempo passa"
                 ],
-                "ans": 3
+                "ans": 0
               }
             ]
           }
@@ -14782,8 +14782,8 @@ export const MODULES: Module[] = [
                 "ans": "saíra"
               },
               {
-                "q": "\"Eles tinham chegado.\" → Eles ___.",
-                "ans": "chegaram — chegaram is pretérito perfeito; literary pluperfect is: chegaram"
+                "q": "\"Nós tínhamos chegado.\" → Nós ___.",
+                "ans": "chegáramos"
               },
               {
                 "q": "\"Ele tinha feito tudo.\" → Ele ___ tudo.",
@@ -15382,7 +15382,7 @@ export const MODULES: Module[] = [
                 "opts": [
                   "Ela chegou",
                   "Ela chegara",
-                  "Ela tinha chegado — both b and c correct in different registers"
+                  "Ela tinha chegado"
                 ],
                 "ans": 1
               },
