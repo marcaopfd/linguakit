@@ -52,8 +52,14 @@ describe('as trilhas', () => {
 
   it('só abre o módulo que tem lição escrita', () => {
     const viagem = trilhaPorId('viagem')!
-    // Enquanto as lições não existem, o cartão não leva a uma tela vazia.
-    expect(caminhoDoModulo('abc', viagem, viagem.modulos[0])).toBeNull()
+    // A Viagem está escrita: os oito módulos abrem.
+    for (const m of viagem.modulos) {
+      expect(caminhoDoModulo('abc', viagem, m), m.id).toBe(`/learn/abc/trilha/viagem/${m.id}`)
+    }
+
+    // Morar Fora ainda não: o cartão não leva a uma tela vazia.
+    const morar = trilhaPorId('morar-fora')!
+    expect(caminhoDoModulo('abc', morar, morar.modulos[0])).toBeNull()
 
     const geral = trilhaPorId('geral')!
     const niveis = toCourseIndex(EN_MODULES)

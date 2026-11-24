@@ -138,3 +138,86 @@ describe('a simulação da barganha', () => {
     expect(saida!.estrategia).toMatch(/embora/i)
   })
 })
+
+describe('a Trilha Viagem, inteira', () => {
+  const viagem = TRILHAS.find(t => t.id === 'viagem')!
+
+  it('tem os oito módulos escritos, nenhum vazio', () => {
+    expect(viagem.modulos).toHaveLength(8)
+    for (const m of viagem.modulos) {
+      expect(m.licoes.length, `${m.id} sem lição`).toBeGreaterThanOrEqual(2)
+    }
+  })
+
+  it('dá a cada módulo pelo menos vinte minutos de aula', () => {
+    for (const m of viagem.modulos) {
+      const minutos = m.licoes.reduce((n, l) => n + l.minutos, 0)
+      expect(minutos, m.id).toBeGreaterThanOrEqual(20)
+    }
+  })
+
+  it('põe uma simulação nos módulos em que há alguém do outro lado', () => {
+    // Táxi, hotel, restaurante e barganha: quatro conversas em que a outra
+    // pessoa quer algo diferente do que o aluno quer.
+    const comSimulacao = viagem.modulos.filter(m =>
+      m.licoes.some(l => l.blocos.some(b => b.tipo === 'simulacao')))
+    expect(comSimulacao.map(m => m.id).sort())
+      .toEqual(['viagem-2', 'viagem-3', 'viagem-4', 'viagem-6'])
+  })
+
+  it('não repete a mesma frase em dois módulos', () => {
+    // Uma frase repetida é uma lição a menos: o aluno já sabe aquilo.
+    const vistas = new Map<string, string>()
+    for (const m of viagem.modulos) {
+      for (const l of m.licoes) {
+        for (const b of l.blocos) {
+          if (b.tipo !== 'frases') continue
+          for (const f of b.frases) {
+            const chave = f.en.toLowerCase().replace(/[^a-z ]/g, '').trim()
+            const antes = vistas.get(chave)
+            // "Keep the change" cabe no táxi e na conta do restaurante.
+            if (antes && antes !== m.id) {
+              expect(['keep the change'], `"${f.en}" repete em ${antes} e ${m.id}`).toContain(chave)
+            }
+            vistas.set(chave, m.id)
+          }
+        }
+      }
+    }
+  })
+})
+
+describe('todas as simulações', () => {
+  it('nunca dá três estrelas a quem joga mal', () => {
+    // A folga da terceira estrela era fixa em 20, maior do que a negociação
+    // inteira do restaurante: jogando mal, três estrelas.
+    for (const sim of SIMULACOES) {
+      const pior = sim.turnos.map(t => Math.min(...t.opcoes.map(o => o.corta)))
+      expect(estrelas(sim, precoApos(sim, pior)), sim.id).toBe(1)
+    }
+  })
+
+  it('dá três estrelas a quem joga tudo certo', () => {
+    for (const sim of SIMULACOES) {
+      const melhor = sim.turnos.map(t => Math.max(...t.opcoes.map(o => o.corta)))
+      expect(estrelas(sim, precoApos(sim, melhor)), sim.id).toBe(3)
+    }
+  })
+
+  it('deixa a meta alcançável e o mínimo abaixo dela', () => {
+    for (const sim of SIMULACOES) {
+      expect(sim.precoMinimo, sim.id).toBeLessThanOrEqual(sim.meta)
+      expect(sim.meta, sim.id).toBeLessThan(sim.precoInicial)
+      const melhor = sim.turnos.map(t => Math.max(...t.opcoes.map(o => o.corta)))
+      expect(precoApos(sim, melhor), sim.id).toBeLessThanOrEqual(sim.meta)
+    }
+  })
+
+  it('tem personagem, papel e missão em português', () => {
+    for (const sim of SIMULACOES) {
+      expect(sim.personagem.trim(), sim.id).not.toBe('')
+      expect(sim.papel.trim(), sim.id).not.toBe('')
+      expect(sim.missao.length, sim.id).toBeGreaterThan(30)
+    }
+  })
+})
