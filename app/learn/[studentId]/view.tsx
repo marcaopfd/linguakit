@@ -6,6 +6,8 @@ import { Icon } from '@/components/Icon'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { AccentPicker } from '@/components/AccentPicker'
+import { NavInferior } from '@/components/NavInferior'
+import { TrilhasHome } from '@/components/TrilhasHome'
 import type { ModuleSummary } from '@/lib/curriculum-index'
 import { uiStrings, type UiStrings } from '@/lib/ui-strings'
 
@@ -51,6 +53,13 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
   // Only students who signed up have a session to end. Those reached through a
   // shared /learn/<id> link have nothing to log out of, so the button is hidden.
   const [signedIn, setSignedIn] = useState(false)
+  // Qual trilha a barra de baixo abre. Lida aqui também porque a barra fica
+  // fora do componente das trilhas.
+  const [trilhaAtiva, setTrilhaAtiva] = useState('geral')
+
+  useEffect(() => {
+    try { setTrilhaAtiva(localStorage.getItem('lk_trilha') || 'geral') } catch { /* janela anônima */ }
+  }, [])
 
   useEffect(() => {
     fetch('/api/student/me')
@@ -168,6 +177,11 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
         </div>
       </div>
 
+      {/* As trilhas, só no curso de inglês: é lá que elas existem. */}
+      {isEN && (
+        <TrilhasHome studentId={studentId} niveis={modules} lessons={student.lessons} t={t} />
+      )}
+
       {/* Access reminder — only for students who have no account to log in with */}
       {student && !student.email && <SaveLinkNote studentId={studentId} t={t} />}
 
@@ -277,6 +291,9 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
           )
         })}
       </div>
+
+      {/* A barra de baixo existe onde há trilha para onde ir. */}
+      {isEN && <NavInferior studentId={studentId} trilha={trilhaAtiva} t={t} />}
     </div>
   )
 }

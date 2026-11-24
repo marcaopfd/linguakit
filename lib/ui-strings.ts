@@ -118,6 +118,26 @@ export type UiStrings = {
   exFill: string
   exChoice: string
   exTranslate: string
+
+  // Trilhas (só no curso de inglês)
+  trilhaPergunta: string
+  trilhaPerguntaSub: string
+  trilhaSua: string
+  trilhaTrocar: string
+  trilhaExplorar: string
+  trilhaEmBreve: string
+  trilhaGeralCartao: string
+  trilhaGeralSub: string
+  trilhaComecar: string
+  trilhaContinuar: string
+  trilhaModulos: (n: number) => string
+  trilhaFeitos: (feitos: number, total: number) => string
+  trilhaEscrevendo: string
+  trilhaVoltar: string
+  navInicio: string
+  navTrilha: string
+  navRevisao: string
+  navPalavra: string
   playAudio: string
   playAgain: string
   hearAnswer: string
@@ -277,6 +297,24 @@ const EN: UiStrings = {
   exFill: 'Fill in the blank',
   exChoice: 'Multiple choice',
   exTranslate: 'Translation',
+  trilhaPergunta: 'Why are you learning?',
+  trilhaPerguntaSub: 'Pick where to start. You can change this whenever you like.',
+  trilhaSua: 'Your track',
+  trilhaTrocar: 'Change',
+  trilhaExplorar: 'Explore other areas',
+  trilhaEmBreve: 'coming soon',
+  trilhaGeralCartao: 'General course — keep moving up your level',
+  trilhaGeralSub: 'The whole course, A1 to C2.',
+  trilhaComecar: 'Start',
+  trilhaContinuar: 'Continue',
+  trilhaModulos: n => `${n} modules`,
+  trilhaFeitos: (feitos, total) => `${feitos} of ${total} modules done`,
+  trilhaEscrevendo: 'The lessons in this module are being written.',
+  trilhaVoltar: 'Back to my course',
+  navInicio: 'Home',
+  navTrilha: 'Track',
+  navRevisao: 'Review',
+  navPalavra: 'Word',
   playAudio: 'Play',
   playAgain: 'Play again',
   hearAnswer: 'Hear it',
@@ -430,6 +468,24 @@ const PT: UiStrings = {
   exFill: 'Complete a frase',
   exChoice: 'Escolha a alternativa',
   exTranslate: 'Tradução',
+  trilhaPergunta: 'Por que você está aprendendo inglês?',
+  trilhaPerguntaSub: 'Escolha por onde começar. Dá para trocar quando quiser, e nada se perde.',
+  trilhaSua: 'Sua trilha',
+  trilhaTrocar: 'Trocar',
+  trilhaExplorar: 'Explore outras áreas',
+  trilhaEmBreve: 'em breve',
+  trilhaGeralCartao: 'Inglês Geral — continue evoluindo no seu nível',
+  trilhaGeralSub: 'O curso inteiro, do A1 ao C2.',
+  trilhaComecar: 'Começar',
+  trilhaContinuar: 'Continuar',
+  trilhaModulos: n => `${n} módulos`,
+  trilhaFeitos: (feitos, total) => `${feitos} de ${total} módulos prontos`,
+  trilhaEscrevendo: 'As lições deste módulo estão sendo escritas.',
+  trilhaVoltar: 'Voltar para o curso',
+  navInicio: 'Início',
+  navTrilha: 'Trilha',
+  navRevisao: 'Revisão',
+  navPalavra: 'Palavra',
   playAudio: 'Ouvir',
   playAgain: 'Ouvir de novo',
   hearAnswer: 'Ouvir',

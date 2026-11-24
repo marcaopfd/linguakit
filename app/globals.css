@@ -249,3 +249,15 @@ details > summary::-webkit-details-marker { display: none; }
 .lk-faq-open { display: none; }
 details[open] .lk-faq-open { display: inline; }
 details[open] .lk-faq-closed { display: none; }
+
+/* As outras trilhas: duas colunas no celular, três a partir do tablet. Cartão
+   quadrado numa fileira que rola seria menos cartão visível, e o ponto desta
+   fileira é justamente mostrar que há mais coisa aqui dentro. */
+.lk-trilhas-fileira {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .6rem;
+}
+@media (min-width: 640px) {
+  .lk-trilhas-fileira { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
