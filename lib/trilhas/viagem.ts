@@ -1,4 +1,5 @@
 import type { ModuloTrilha } from './tipos'
+import { LICOES_BARGANHA } from './viagem-6-barganha'
 
 /**
  * Inglês de Viagem — oito módulos, na ordem em que a viagem acontece.
@@ -45,7 +46,7 @@ export const MODULOS_VIAGEM: ModuloTrilha[] = [
     id: 'viagem-6', numero: 6, emoji: '🤝',
     nome: 'Barganha e negociação',
     consegue: 'Você consegue pedir desconto, justificar, fazer uma contraproposta e sair sem fechar — tudo com educação.',
-    licoes: [],
+    licoes: LICOES_BARGANHA,
   },
   {
     id: 'viagem-7', numero: 7, emoji: '🗺️',

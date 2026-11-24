@@ -36,9 +36,11 @@ export type DrillItem = {
   optionsSpeak?: boolean
 
   /** How the learner answers. Absent means choice or typing, as `options` says. */
-  kind?: 'order'
+  kind?: 'order' | 'pares'
   /** For `kind: 'order'`: the words, already scrambled. */
   tokens?: string[]
+  /** For `kind: 'pares'`: o que casa com o quê, já embaralhado na tela. */
+  pares?: { a: string; b: string }[]
 
   /** Loose judging ignores accents and punctuation. Default is exact. */
   compare?: 'exact' | 'loose'
