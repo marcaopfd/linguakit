@@ -33,7 +33,7 @@ function LoginForm() {
       <div style={{ width: '100%', maxWidth: 360 }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div style={{ fontSize: 40, marginBottom: '.75rem' }}>🇧🇷</div>
-          <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 26, fontWeight: 700, marginBottom: '.25rem' }}>LinguaKit</h1>
+          <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 26, fontWeight: 700, marginBottom: '.25rem' }}>LinguaKit</h1>
           <p style={{ fontSize: 13, color: 'var(--ink3)' }}>Teacher access</p>
         </div>
 

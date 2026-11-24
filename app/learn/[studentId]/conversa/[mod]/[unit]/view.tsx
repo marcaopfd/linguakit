@@ -167,13 +167,13 @@ export function RoleplayView({
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.5rem', color: 'var(--ink)' }}>
               <Caramelo mood="happy" size={84} />
             </div>
-            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 20, fontWeight: 700, marginBottom: '.25rem' }}>
+            <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 700, marginBottom: '.25rem' }}>
               {t.liveDone}
             </div>
             <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: '1.1rem' }}>
               {t.liveDoneHint(firstTry, roleplay.turns.length)}
             </div>
-            <button onClick={restart} style={{ width: '100%', minHeight: 48, borderRadius: 12, border: 'none', background: 'var(--green)', color: 'var(--on-panel)', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer', marginBottom: '.55rem' }}>
+            <button onClick={restart} style={{ width: '100%', minHeight: 48, borderRadius: 12, border: 'none', background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer', marginBottom: '.55rem' }}>
               {t.liveAgain}
             </button>
             <Link href={`/learn/${studentId}/praticar/${moduleId}/${unitIndex}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 48, borderRadius: 12, border: '1px solid var(--border)', background: 'var(--paper)', color: 'var(--ink2)', fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>

@@ -87,11 +87,11 @@ export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleS
         </Link>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
           <div>
-            <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 26, fontWeight: 700, marginBottom: '.4rem' }}>{student.name}</h1>
+            <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 26, fontWeight: 700, marginBottom: '.4rem' }}>{student.name}</h1>
             <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem', flexWrap: 'wrap' }}>
               {student.testResult ? (
                 <>
-                  <span style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 18, fontWeight: 700, color: lvlColor, background: 'rgba(255,255,255,.12)', borderRadius: 8, padding: '.1rem .6rem' }}>
+                  <span style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 18, fontWeight: 700, color: lvlColor, background: 'rgba(255,255,255,.12)', borderRadius: 8, padding: '.1rem .6rem' }}>
                     {student.testResult.level}
                   </span>
                   <span style={{ fontSize: 13, color: 'rgba(255,255,255,.55)' }}>{student.testResult.levelName}</span>
@@ -141,7 +141,7 @@ export function StudentDetailView({ ptModules, enModules }: { ptModules: ModuleS
             <div key={mod.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
               {/* Module header */}
               <div style={{ padding: '.9rem 1.1rem', display: 'flex', alignItems: 'center', gap: '.85rem' }}>
-                <div style={{ width: 42, height: 42, borderRadius: 8, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 15, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
+                <div style={{ width: 42, height: 42, borderRadius: 8, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 15, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
                   {mod.label}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -218,13 +218,13 @@ function WeakSpots({ attempts, unitTitle }: { attempts: Attempt[]; unitTitle: (m
     <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
       <div style={{ padding: '.9rem 1.1rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
         <div>
-          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700 }}>🎯 Pontos fracos</div>
+          <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 16, fontWeight: 700 }}>🎯 Pontos fracos</div>
           <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 1 }}>
             {attempts.length} exercício{attempts.length !== 1 ? 's' : ''} respondido{attempts.length !== 1 ? 's' : ''} · {wrong.length} erro{wrong.length !== 1 ? 's' : ''}
           </div>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, color: accuracyColor }}>{pct}%</div>
+          <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 700, color: accuracyColor }}>{pct}%</div>
           <div style={{ fontSize: 11, color: 'var(--ink3)' }}>de acerto</div>
         </div>
       </div>

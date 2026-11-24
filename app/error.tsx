@@ -20,7 +20,7 @@ export default function Error({ retry }: { error: Error & { digest?: string }; r
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem', color: 'var(--ink)' }}>
           <Caramelo mood="sad" size={104} />
         </div>
-        <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 25, fontWeight: 700, marginBottom: '.5rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 25, fontWeight: 700, marginBottom: '.5rem' }}>
           Algo deu errado aqui
         </h1>
         <p style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.6, marginBottom: '.25rem' }}>
@@ -32,7 +32,7 @@ export default function Error({ retry }: { error: Error & { digest?: string }; r
 
         <button
           onClick={() => retry()}
-          style={{ width: '100%', minHeight: 48, borderRadius: 12, border: 'none', background: 'var(--green)', color: 'var(--on-panel)', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer', marginBottom: '.6rem' }}
+          style={{ width: '100%', minHeight: 48, borderRadius: 12, border: 'none', background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer', marginBottom: '.6rem' }}
         >
           Tentar de novo · Try again
         </button>

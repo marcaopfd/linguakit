@@ -1,19 +1,26 @@
 import type { Metadata, Viewport } from 'next'
-import { Fraunces, DM_Sans } from 'next/font/google'
+import { Bricolage_Grotesque, Inter } from 'next/font/google'
 import './globals.css'
 
-const fraunces = Fraunces({
+/*
+ * Duas fontes, cada uma com um trabalho.
+ *
+ * A Bricolage Grotesque tem a personalidade que as referências pedem: larga,
+ * firme, um pouco estranha nas curvas — serve para o título e para o número
+ * grande, onde se quer que a pessoa olhe. A Inter é a que se lê sem reparar,
+ * que é exatamente o que uma interface precisa.
+ */
+const display = Bricolage_Grotesque({
   subsets: ['latin'],
-  variable: '--font-fraunces',
-  weight: ['300', '600', '700'],
-  style: ['normal', 'italic'],
+  variable: '--font-display',
+  weight: ['600', '700', '800'],
   display: 'swap',
 })
 
-const dmSans = DM_Sans({
+const ui = Inter({
   subsets: ['latin'],
-  variable: '--font-dm-sans',
-  weight: ['300', '400', '500', '600'],
+  variable: '--font-ui',
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
 
@@ -37,15 +44,15 @@ export const viewport: Viewport = {
   // A barra do navegador e a do iOS pegam esta cor. Com um valor só, o tema
   // escuro ganhava uma faixa que não combinava com nada da página.
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#1a1814' },
-    { media: '(prefers-color-scheme: dark)', color: '#14130f' },
+    { media: '(prefers-color-scheme: light)', color: '#12150f' },
+    { media: '(prefers-color-scheme: dark)', color: '#0e100c' },
   ],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${fraunces.variable} ${dmSans.variable}`}>
-      <body style={{ fontFamily: 'var(--font-dm-sans), DM Sans, sans-serif' }}>
+    <html lang="pt-BR" className={`${display.variable} ${ui.variable}`}>
+      <body style={{ fontFamily: 'var(--font-ui), Inter, system-ui, sans-serif' }}>
         {children}
       </body>
     </html>

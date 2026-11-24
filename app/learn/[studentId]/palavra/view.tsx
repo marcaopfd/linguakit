@@ -198,7 +198,7 @@ export function DailyWordView({
             <span style={{ fontSize: 12, color: 'var(--gold)', fontWeight: 600 }}>{t.wordStreak(streak)}</span>
           )}
         </div>
-        <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 20, fontWeight: 700, marginTop: '.3rem' }}>
+        <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 700, marginTop: '.3rem' }}>
           {t.wordTitle}
         </div>
         <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.55)', lineHeight: 1.45, marginTop: '.15rem' }}>

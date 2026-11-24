@@ -37,7 +37,7 @@ export function DashboardView({ ptModules, enModules }: { ptModules: ModuleSumma
       {/* Hero */}
       <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '3rem 2rem 2rem', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
         <div>
-          <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 32, fontWeight: 600, letterSpacing: '-.5px', marginBottom: '.3rem' }}>LinguaKit</h1>
+          <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 32, fontWeight: 600, letterSpacing: '-.5px', marginBottom: '.3rem' }}>LinguaKit</h1>
           <p style={{ fontSize: 14, color: 'rgba(255,255,255,.5)' }}>Dashboard do Professor · by Marcos</p>
         </div>
         <button
@@ -167,7 +167,7 @@ function CourseCard({ flag, title, subtitle, href, moduleHref, modules, progress
                 return (
                   <Link key={mod.id} href={moduleHref(mod.id)} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '.65rem 1rem', display: 'flex', alignItems: 'center', gap: '.75rem' }}>
-                      <div style={{ width: 32, height: 32, borderRadius: 6, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 13, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
+                      <div style={{ width: 32, height: 32, borderRadius: 6, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 13, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
                         {mod.label}
                       </div>
                       <div style={{ flex: 1 }}>

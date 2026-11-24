@@ -14,18 +14,19 @@ export const alt = 'LinguaKit — inglês e português, do zero ao avançado'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-const INK = '#1a1814'
-const CREAM = '#faf8f3'
+const INK = '#12150f'
+const CREAM = '#f2f4e9'
+const LIME = '#cbf24d'
 
 /**
- * Fraunces is the site's heading face. Fetched at build time with a fallback:
- * if Google is unreachable the card still renders, just in the default face,
- * which is far better than failing the build over a typeface.
+ * Bricolage Grotesque is the site's heading face. Fetched at build time with a
+ * fallback: if Google is unreachable the card still renders, just in the
+ * default face, which is far better than failing the build over a typeface.
  */
-async function fraunces(): Promise<ArrayBuffer | null> {
+async function display(): Promise<ArrayBuffer | null> {
   try {
     const css = await fetch(
-      'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&display=swap',
+      'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&display=swap',
       { headers: { 'User-Agent': 'Mozilla/5.0' } },
     ).then(r => r.text())
 
@@ -38,7 +39,7 @@ async function fraunces(): Promise<ArrayBuffer | null> {
 }
 
 export default async function Image() {
-  const font = await fraunces()
+  const font = await display()
 
   return new ImageResponse(
     (
@@ -90,7 +91,7 @@ export default async function Image() {
             fontWeight: 700,
             lineHeight: 1.1,
             marginTop: 38,
-            fontFamily: font ? 'Fraunces' : undefined,
+            fontFamily: font ? 'Bricolage Grotesque' : undefined,
           }}
         >
           Inglês e português
@@ -108,7 +109,7 @@ export default async function Image() {
     {
       ...size,
       fonts: font
-        ? [{ name: 'Fraunces', data: font, style: 'normal' as const, weight: 700 as const }]
+        ? [{ name: 'Bricolage Grotesque', data: font, style: 'normal' as const, weight: 700 as const }]
         : undefined,
     },
   )

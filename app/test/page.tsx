@@ -229,7 +229,7 @@ function TestPageInner() {
         <div style={{ marginBottom: '.75rem', color: 'var(--ink)' }}>
           <Caramelo mood="idle" size={92} />
         </div>
-        <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 28, fontWeight: 700, marginBottom: '.3rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 28, fontWeight: 700, marginBottom: '.3rem' }}>
           {isEN ? 'English Level Test' : 'Portuguese Level Test'}
         </h1>
         <p style={{ fontSize: 14, color: 'var(--ink3)', marginBottom: '2rem' }}>LinguaKit · by Marcos</p>
@@ -288,7 +288,7 @@ function TestPageInner() {
     return (
       <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
         <div style={{ position: 'sticky', top: 0, background: 'var(--surface)', borderBottom: '1px solid var(--border)', padding: '.85rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 10 }}>
-          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700 }}>{isEN ? '🇺🇸' : '🇧🇷'} LinguaKit</div>
+          <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 16, fontWeight: 700 }}>{isEN ? '🇺🇸' : '🇧🇷'} LinguaKit</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
             <div style={{ width: 120, height: 4, background: 'var(--border)', borderRadius: 2 }}>
               <div style={{ height: 4, background: 'var(--panel)', borderRadius: 2, width: `${pct}%`, transition: 'width .4s' }} />
@@ -299,7 +299,7 @@ function TestPageInner() {
 
         <div style={{ maxWidth: 600, margin: '0 auto', padding: '1.5rem 1.5rem 6rem' }}>
           <div style={{ background: 'var(--paper)', borderRadius: 12, padding: '.85rem 1.1rem', marginBottom: '1.1rem', display: 'flex', alignItems: 'center', gap: '.75rem' }}>
-            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 13, fontWeight: 700, padding: '.2rem .6rem', borderRadius: 6, background: sec.color, color: sec.accent, flexShrink: 0 }}>
+            <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 13, fontWeight: 700, padding: '.2rem .6rem', borderRadius: 6, background: sec.color, color: sec.accent, flexShrink: 0 }}>
               {sec.emoji} {sec.name}
             </div>
             <p style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.5 }}>{sec.desc} ({currentSection + 1} of 5)</p>
@@ -332,7 +332,7 @@ function TestPageInner() {
               ← {isEN ? 'Voltar' : 'Back'}
             </button>
           )}
-          <button onClick={nextSection} style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: isLast ? 'var(--green)' : 'var(--panel)', color: 'var(--on-panel)' }}>
+          <button onClick={nextSection} style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: isLast ? 'var(--accent)' : 'var(--panel)', color: isLast ? 'var(--on-accent)' : 'var(--on-panel)' }}>
             {isLast ? (isEN ? 'Ver meu resultado →' : 'See my result →') : (isEN ? 'Próxima seção →' : 'Next section →')}
           </button>
         </div>
@@ -358,7 +358,7 @@ function TestPageInner() {
     return (
       <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
         <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '2.5rem 1.5rem 2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 200, fontWeight: 700, color: 'rgba(255,255,255,.04)', pointerEvents: 'none', userSelect: 'none' }}>{result.level}</div>
+          <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 200, fontWeight: 700, color: 'rgba(255,255,255,.04)', pointerEvents: 'none', userSelect: 'none' }}>{result.level}</div>
           {/* Pleased at any level: finishing thirty questions in a language you
               are still learning is the achievement, and a disappointed dog on
               the screen where someone decides whether to carry on would be a
@@ -367,8 +367,8 @@ function TestPageInner() {
             <Caramelo mood="happy" size={76} />
           </div>
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,.5)', marginBottom: '.5rem', position: 'relative' }}>{studentName ? studentName + (isEN ? ' — resultado' : '\'s result') : (isEN ? 'Seu resultado' : 'Your result')}</div>
-          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 48, fontWeight: 700, marginBottom: '.25rem' }}>{result.level}</div>
-          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 20, fontWeight: 600, marginBottom: '.5rem' }}>{lvl.name}</div>
+          <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 48, fontWeight: 700, marginBottom: '.25rem' }}>{result.level}</div>
+          <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 600, marginBottom: '.5rem' }}>{lvl.name}</div>
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,.5)' }}>{result.totalCorrect} / 30 {isEN ? 'corretas' : 'correct'} ({result.pct}%)</div>
         </div>
 
@@ -426,7 +426,7 @@ function TestPageInner() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.6rem' }}><Icon name="target" size={14} /> {isEN ? 'Ponto de partida recomendado' : 'Recommended starting point'}</div>
             <div style={{ background: 'var(--gold-light)', border: '1px solid #e8d48a', borderRadius: 12, padding: '1rem 1.1rem' }}>
               <div style={{ fontSize: 11, fontWeight: 600, color: 'var(--note-ink)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '.4rem' }}>{isEN ? 'Comece aqui' : 'Start here'}</div>
-              <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 20, fontWeight: 700, color: 'var(--ink)', marginBottom: '.25rem' }}>{modNames[result.level]}</div>
+              <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--ink)', marginBottom: '.25rem' }}>{modNames[result.level]}</div>
               <div style={{ fontSize: 13, color: 'var(--note-ink)', lineHeight: 1.55 }}>{lvl.desc}</div>
             </div>
           </div>

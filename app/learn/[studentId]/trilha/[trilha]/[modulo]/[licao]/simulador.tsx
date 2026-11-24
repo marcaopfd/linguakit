@@ -59,7 +59,7 @@ export function Simulador({ simulacaoId, lang, audio, onSeguir }: {
         <div style={{ fontSize: 26, letterSpacing: '.1em', marginTop: '.2rem' }}>
           {'★'.repeat(nota)}<span style={{ color: 'var(--border)' }}>{'★'.repeat(3 - nota)}</span>
         </div>
-        <h3 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 21, fontWeight: 700, marginTop: '.4rem' }}>
+        <h3 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 21, fontWeight: 700, marginTop: '.4rem' }}>
           Você pagou {final} {sim.moeda}
         </h3>
         <p style={{ fontSize: 13.5, color: 'var(--ink3)', marginTop: '.2rem' }}>
@@ -105,7 +105,7 @@ export function Simulador({ simulacaoId, lang, audio, onSeguir }: {
           </div>
           <div style={{ flexShrink: 0, textAlign: 'right' }}>
             <div style={{ fontSize: 10.5, textTransform: 'uppercase', letterSpacing: '.07em', color: 'var(--ink3)' }}>na mesa</div>
-            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 20, fontWeight: 700 }}>{preco}</div>
+            <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 700 }}>{preco}</div>
           </div>
         </div>
         <div style={{ marginTop: '.6rem', fontSize: 12.5, color: 'var(--ink2)', background: 'var(--paper)', borderRadius: 10, padding: '.55rem .7rem' }}>

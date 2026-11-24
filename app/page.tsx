@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Caramelo } from '@/components/Caramelo'
+import { Rabisco } from '@/components/Rabisco'
 import { CourseCards } from '@/components/CoursePicker'
 import { Icon } from '@/components/Icon'
 import { ProductPreview } from '@/components/ProductPreview'
@@ -31,27 +32,32 @@ export default function HomePage() {
   return (
     <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       {/* 1 — What this is */}
-      <header style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '2.75rem 1.5rem 2.5rem' }}>
-        <div style={{ maxWidth: 580, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem', color: 'var(--on-panel)' }}>
+      <header style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '2.75rem 1.5rem 2.5rem', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ maxWidth: 580, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
+          {/* O traço passa por trás do mascote, como nas referências. */}
+          <div style={{ position: 'absolute', top: -52, left: '50%', transform: 'translateX(-50%)' }}>
+            <Rabisco largura={250} />
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem', color: 'var(--on-panel)', position: 'relative' }}>
             <Caramelo mood="happy" size={84} />
           </div>
 
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '.35rem', padding: '.3rem .7rem', borderRadius: 999, border: '1px solid rgba(255,255,255,.22)', fontSize: 11.5, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: 'rgba(255,255,255,.75)', marginBottom: '.9rem' }}>
+          <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '.35rem', padding: '.35rem .8rem', borderRadius: 999, background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 11.5, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', marginBottom: '.9rem' }}>
             Gratuito
           </div>
 
           {/* Scales with the screen instead of breaking where a <br /> happened
               to be: forced at 375px it fell into three ragged lines. */}
-          <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 'clamp(26px, 7.6vw, 34px)', fontWeight: 700, lineHeight: 1.18, marginBottom: '.75rem', textWrap: 'balance' }}>
+          <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 'clamp(28px, 8.2vw, 38px)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '.75rem', textWrap: 'balance', position: 'relative' }}>
             Aprenda inglês sozinho, do zero ao avançado
           </h1>
-          <p style={{ fontSize: 15.5, color: 'rgba(255,255,255,.65)', lineHeight: 1.6, maxWidth: 450, margin: '0 auto' }}>
+          <p style={{ position: 'relative', fontSize: 15.5, color: 'rgba(242,244,233,.72)', lineHeight: 1.6, maxWidth: 450, margin: '0 auto' }}>
             Um teste de dez minutos diz exatamente onde você começa. Depois são
             50 unidades no seu ritmo, com tudo falado em voz alta — no sotaque
             do lugar para onde você vai.
           </p>
-          <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,.4)', lineHeight: 1.5, marginTop: '.7rem' }}>
+          <p style={{ position: 'relative', fontSize: 13.5, color: 'rgba(242,244,233,.58)', lineHeight: 1.5, marginTop: '.7rem' }}>
             Também ensinamos português para quem fala inglês.
           </p>
         </div>
@@ -64,7 +70,7 @@ export default function HomePage() {
 
       {/* 3 — What it actually looks like */}
       <section style={{ maxWidth: 560, margin: '0 auto', padding: '2.5rem 1.5rem 0' }}>
-        <h2 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 21, fontWeight: 700, textAlign: 'center', marginBottom: '.4rem' }}>
+        <h2 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 21, fontWeight: 700, textAlign: 'center', marginBottom: '.4rem' }}>
           Uma pergunta por vez
         </h2>
         <p style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.6, textAlign: 'center', maxWidth: 420, margin: '0 auto 1.5rem' }}>
@@ -109,7 +115,7 @@ export default function HomePage() {
 
       {/* 5 — The doubts that stop someone */}
       <section style={{ maxWidth: 560, margin: '0 auto', padding: '2.25rem 1.5rem 0' }}>
-        <h2 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 21, fontWeight: 700, marginBottom: '1rem' }}>
+        <h2 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 21, fontWeight: 700, marginBottom: '1rem' }}>
           Perguntas honestas
         </h2>
         <Faq q="Quanto custa?" a="Nada. O curso inteiro é gratuito: as 50 unidades, os exercícios, o áudio e a revisão." />
@@ -122,7 +128,7 @@ export default function HomePage() {
 
       {/* 6 — The ask */}
       <section style={{ maxWidth: 560, margin: '0 auto', padding: '2.5rem 1.5rem 0', textAlign: 'center' }}>
-        <h2 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, marginBottom: '.5rem' }}>
+        <h2 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 700, marginBottom: '.5rem' }}>
           Comece pelo teste
         </h2>
         <p style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.6, marginBottom: '1.1rem', maxWidth: 400, margin: '0 auto 1.1rem' }}>
@@ -131,7 +137,7 @@ export default function HomePage() {
         </p>
         <Link
           href="/test?lang=en"
-          style={{ display: 'inline-flex', alignItems: 'center', minHeight: 50, padding: '.9rem 1.6rem', borderRadius: 12, background: 'var(--green)', color: 'var(--on-panel)', fontSize: 15.5, fontWeight: 700, textDecoration: 'none' }}
+          style={{ display: 'inline-flex', alignItems: 'center', minHeight: 50, padding: '.9rem 1.6rem', borderRadius: 12, background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 15.5, fontWeight: 700, textDecoration: 'none' }}
         >
           Fazer o teste de inglês →
         </Link>
@@ -171,7 +177,7 @@ export default function HomePage() {
 function Figure({ number, label }: { number: string; label: string }) {
   return (
     <div style={{ flex: 1, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '.9rem .4rem' }}>
-      <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, lineHeight: 1.1 }}>
+      <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 700, lineHeight: 1.1 }}>
         {number}
       </div>
       <div style={{ fontSize: 11, color: 'var(--ink3)', marginTop: '.25rem', lineHeight: 1.35 }}>{label}</div>
@@ -186,7 +192,7 @@ function Point({ icon, title, body }: { icon: 'speaker' | 'headphones' | 'repeat
         <Icon name={icon} size={19} />
       </div>
       <div>
-        <h3 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 17, fontWeight: 700, marginBottom: '.3rem' }}>
+        <h3 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 17, fontWeight: 700, marginBottom: '.3rem' }}>
           {title}
         </h3>
         <p style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.65 }}>{body}</p>

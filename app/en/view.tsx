@@ -22,12 +22,12 @@ export function EnHomeView({ modules }: { modules: ModuleSummary[] }) {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)' }}>
       <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '3rem 2rem 2.5rem', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', right: -20, top: -20, fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 160, fontWeight: 700, color: 'rgba(255,255,255,.04)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>EN</div>
+        <div style={{ position: 'absolute', right: -20, top: -20, fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 160, fontWeight: 700, color: 'rgba(255,255,255,.04)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>EN</div>
         <Link href="/painel" style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, color: 'rgba(255,255,255,.45)', textDecoration: 'none', marginBottom: '1.25rem', width: 'fit-content' }}>
           ← Dashboard
         </Link>
         <span style={{ fontSize: 28, display: 'block', marginBottom: '.75rem' }}>🇺🇸</span>
-        <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 32, fontWeight: 600, letterSpacing: '-.5px', marginBottom: '.3rem' }}>English Course</h1>
+        <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 32, fontWeight: 600, letterSpacing: '-.5px', marginBottom: '.3rem' }}>English Course</h1>
         <p style={{ fontSize: 14, color: 'rgba(255,255,255,.55)', lineHeight: 1.6, maxWidth: 340 }}>
           Inglês para falantes de português · A1 → C2 · {totalUnits} units
         </p>
@@ -56,7 +56,7 @@ export function EnHomeView({ modules }: { modules: ModuleSummary[] }) {
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = 'none'; (e.currentTarget as HTMLElement).style.transform = 'none' }}
               >
                 <div style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 10, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 10, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
                     {mod.label}
                   </div>
                   <div style={{ flex: 1 }}>

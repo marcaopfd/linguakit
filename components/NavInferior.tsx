@@ -56,7 +56,16 @@ export function NavInferior({ studentId, trilha, t }: {
               fontWeight: aba.ativa ? 600 : 500,
             }}
           >
-            <Icon name={aba.icone} size={20} strokeWidth={aba.ativa ? 2.1 : 1.8} />
+            <span
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                width: 46, height: 30, borderRadius: 999,
+                background: aba.ativa ? 'var(--accent)' : 'transparent',
+                color: aba.ativa ? 'var(--on-accent)' : 'inherit',
+              }}
+            >
+              <Icon name={aba.icone} size={19} strokeWidth={aba.ativa ? 2.1 : 1.8} />
+            </span>
             <span style={{ fontSize: 11 }}>{aba.rotulo}</span>
           </Link>
         ))}

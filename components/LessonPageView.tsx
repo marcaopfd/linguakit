@@ -88,7 +88,7 @@ export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, prog
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,.45)', textTransform: 'uppercase', letterSpacing: '.08em', marginBottom: '.5rem' }}>
             {mod.label} · {mod.name} · {t.unit} {unitIndex + 1}
           </div>
-          <h2 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 600, marginBottom: '.35rem' }}>{unit.title}</h2>
+          <h2 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 600, marginBottom: '.35rem' }}>{unit.title}</h2>
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,.6)', lineHeight: 1.55 }}>{unit.sub} · {unit.duration}</p>
           {isDone && <div style={{ marginTop: '.75rem', display: 'inline-flex', alignItems: 'center', gap: '.35rem', fontSize: 12, color: 'var(--green-light)', background: 'rgba(45,106,79,.3)', borderRadius: 6, padding: '.2rem .6rem' }}>✓ {t.completed}</div>}
         </div>
@@ -138,7 +138,7 @@ export function LessonPageView({ unit, mod, unitIndex, moduleBase, pdfBase, prog
           ) : (
             <button
               onClick={() => { markDone(unitIndex); router.push(`${moduleBase}/${modId}`) }}
-              style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: 'var(--green)', color: 'var(--on-panel)' }}
+              style={{ flex: 1, padding: '.8rem', borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit', border: 'none', background: 'var(--accent)', color: 'var(--on-accent)' }}
             >
               {isDone ? `✓ ${t.completed}` : `${t.markAsDone} ✓`}
             </button>
@@ -199,7 +199,7 @@ function VocabStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audio: 
         {items.map(({ v, extra }, i) => (
           <div key={i} style={{ background: 'var(--surface)', border: `1px ${extra ? 'dashed' : 'solid'} var(--border)`, borderRadius: 10, padding: '.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem' }}>
-              <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 600, color: 'var(--ink)', flex: 1 }}>{v.pt}</div>
+              <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 16, fontWeight: 600, color: 'var(--ink)', flex: 1 }}>{v.pt}</div>
               <SpeakButton text={firstVariant(v.pt)} lang={lang} voice={audio.voice} ready={audio.ready} listen={t.listen} />
             </div>
             <div style={{ fontSize: 12, color: 'var(--ink3)', margin: '.15rem 0 .4rem' }}>{v.en}</div>
@@ -223,7 +223,7 @@ function GrammarStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audio
       <SectionHeading icon="⚙️" label={t.steps.grammar} />
       <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
         <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '.85rem 1.1rem' }}>
-          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 600, marginBottom: '.2rem' }}>{g.title}</div>
+          <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 16, fontWeight: 600, marginBottom: '.2rem' }}>{g.title}</div>
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,.6)', lineHeight: 1.5 }}>{g.explain}</div>
         </div>
         <div style={{ padding: '.85rem 1.1rem' }}>
@@ -330,7 +330,7 @@ function DialogueStep({ unit, lang, audio, t }: { unit: Unit; lang: string; audi
       <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
         {d.lines.map((line, i) => (
           <div key={i} style={{ display: 'flex', gap: '.65rem', alignItems: 'flex-start', background: current === i ? 'var(--gold-light)' : 'transparent', borderRadius: 8, padding: current === i ? '.4rem' : '.4rem', margin: current === i ? '-.4rem' : '-.4rem', transition: 'background .2s' }}>
-            <div style={{ width: 28, height: 28, borderRadius: '50%', fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: 'var(--font-fraunces), Fraunces, serif', background: line.sp === 'a' ? 'var(--panel)' : 'var(--gold)', color: line.sp === 'a' ? 'var(--cream)' : 'var(--ink)' }}>
+            <div style={{ width: 28, height: 28, borderRadius: '50%', fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', background: line.sp === 'a' ? 'var(--panel)' : 'var(--gold)', color: line.sp === 'a' ? 'var(--cream)' : 'var(--ink)' }}>
               {line.sp === 'a' ? 'S' : 'M'}
             </div>
             <div style={{ flex: 1 }}>
@@ -509,7 +509,7 @@ function CultureStep({ unit, t }: { unit: Unit; t: UiStrings }) {
       <SectionHeading icon="🌍" label={t.culturalNote} />
       <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
         <div style={{ background: 'var(--gold-light)', borderBottom: '1px solid #e8d48a', padding: '.85rem 1.1rem' }}>
-          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700, color: 'var(--ink)' }}>{c.title}</div>
+          <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 16, fontWeight: 700, color: 'var(--ink)' }}>{c.title}</div>
         </div>
         <div style={{ padding: '.85rem 1.1rem', fontSize: 14, color: 'var(--ink2)', lineHeight: 1.65 }}>{c.text}</div>
       </div>

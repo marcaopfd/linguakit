@@ -39,7 +39,7 @@ export function MapaDaTrilha({ studentId, trilha, niveis, lessons }: {
           ← {t.trilhaVoltar}
         </Link>
         <div style={{ fontSize: 30, marginTop: '.2rem' }}>{trilha.emoji}</div>
-        <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 25, fontWeight: 700, marginTop: '.25rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 25, fontWeight: 700, marginTop: '.25rem' }}>
           {trilha.nome}
         </h1>
         <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,.6)', lineHeight: 1.5, marginTop: '.3rem' }}>
@@ -64,9 +64,9 @@ export function MapaDaTrilha({ studentId, trilha, niveis, lessons }: {
                     width: 38, height: 38, borderRadius: '50%',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: 15, fontWeight: 700,
-                    background: pronto ? tom.bar : 'var(--surface)',
-                    color: pronto ? 'var(--on-panel)' : 'var(--ink3)',
-                    border: `2px solid ${pronto ? tom.bar : 'var(--border)'}`,
+                    background: pronto ? 'var(--accent)' : 'var(--surface)',
+                    color: pronto ? 'var(--on-accent)' : 'var(--ink3)',
+                    border: `2px solid ${pronto ? 'var(--accent)' : 'var(--border)'}`,
                   }}
                 >
                   {pronto ? '✓' : mod.numero}
@@ -93,7 +93,7 @@ export function MapaDaTrilha({ studentId, trilha, niveis, lessons }: {
                 {total > 0 ? (
                   <div style={{ marginTop: '.6rem' }}>
                     <div style={{ height: 5, background: 'var(--paper)', borderRadius: 3 }}>
-                      <div style={{ height: 5, borderRadius: 3, background: tom.bar, width: `${Math.round((feitas / total) * 100)}%`, transition: 'width .4s' }} />
+                      <div style={{ height: 5, borderRadius: 3, background: 'var(--accent-dim)', width: `${Math.round((feitas / total) * 100)}%`, transition: 'width .4s' }} />
                     </div>
                     <div style={{ fontSize: 11.5, color: 'var(--ink3)', marginTop: '.3rem' }}>{feitas}/{total}</div>
                   </div>

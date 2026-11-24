@@ -143,7 +143,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
           {isEN ? '🇺🇸' : '🇧🇷'} {t.courseLabel} · LinguaKit
         </div>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
-          <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 26, fontWeight: 700, marginBottom: '.5rem' }}>
+          <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 26, fontWeight: 700, marginBottom: '.5rem' }}>
             {t.hello}, {student.name} 👋
           </h1>
           {signedIn && (
@@ -157,7 +157,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
         </div>
         {student.testResult && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 18, fontWeight: 700, color: lvlColor, background: 'rgba(255,255,255,.12)', borderRadius: 8, padding: '.15rem .65rem' }}>
+            <span style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 18, fontWeight: 700, color: lvlColor, background: 'rgba(255,255,255,.12)', borderRadius: 8, padding: '.15rem .65rem' }}>
               {student.testResult.level}
             </span>
             <span style={{ fontSize: 13, color: 'rgba(255,255,255,.55)' }}>
@@ -193,7 +193,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
               <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', borderRadius: 14, padding: '1.1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <div style={{ flexShrink: 0, color: 'var(--ink2)' }}><Icon name="repeat" size={26} /></div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 17, fontWeight: 700 }}>{t.review}</div>
+                  <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 17, fontWeight: 700 }}>{t.review}</div>
                   <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', marginTop: 1 }}>{t.reviewDue(dueCount)}</div>
                 </div>
                 <span style={{ flexShrink: 0, background: 'rgba(255,255,255,.12)', border: '1px solid rgba(255,255,255,.25)', borderRadius: 9, padding: '.5rem .9rem', fontSize: 13, fontWeight: 600 }}>
@@ -264,7 +264,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
           return (
             <Link key={mod.id} href={`/learn/${studentId}/module/${mod.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem', transition: 'box-shadow .15s' }}>
-                <div style={{ width: 44, height: 44, borderRadius: 10, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 16, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
+                <div style={{ width: 44, height: 44, borderRadius: 10, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 16, fontWeight: 700, color: levelTone(mod.id).ink, flexShrink: 0 }}>
                   {mod.label}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -330,13 +330,13 @@ function MyMistakes({ attempts, modules, t }: {
     <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden' }}>
       <div style={{ padding: '1rem 1.25rem', borderBottom: wrong.length ? '1px solid var(--border)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
         <div>
-          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 17, fontWeight: 700, display: 'flex', alignItems: 'center', gap: '.45rem' }}><Icon name="target" size={17} /> {t.yourMistakes}</div>
+          <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 17, fontWeight: 700, display: 'flex', alignItems: 'center', gap: '.45rem' }}><Icon name="target" size={17} /> {t.yourMistakes}</div>
           <div style={{ fontSize: 12, color: 'var(--ink3)', marginTop: 2 }}>
             {t.answeredCount(attempts.length)} · {t.mistakeCount(wrong.length)}
           </div>
         </div>
         <div style={{ textAlign: 'right', flexShrink: 0 }}>
-          <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 24, fontWeight: 700, color: accuracyColor }}>{pct}%</div>
+          <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 24, fontWeight: 700, color: accuracyColor }}>{pct}%</div>
           <div style={{ fontSize: 11, color: 'var(--ink3)' }}>{t.accuracy}</div>
         </div>
       </div>

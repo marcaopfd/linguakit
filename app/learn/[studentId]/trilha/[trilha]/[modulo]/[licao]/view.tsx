@@ -9,7 +9,6 @@ import { Icon } from '@/components/Icon'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
 import type { DrillItem } from '@/lib/drill'
 import { isCorrect } from '@/lib/drill'
-import { levelTone } from '@/lib/levels'
 import { speak } from '@/lib/speak'
 import type { Bloco, Licao, ModuloTrilha, Trilha } from '@/lib/trilhas'
 import { Simulador } from './simulador'
@@ -39,7 +38,6 @@ export function PlayerDaLicao({ studentId, trilha, modulo, licao, posicao, ultim
   const audio = useVoice(lang)
   const autoSpeak = useAutoSpeak()
   const router = useRouter()
-  const tom = levelTone(trilha.tom)
 
   // Cada bloco é uma tela, menos a prática: lá cada item é a sua.
   const telas = useMemo(() => achatar(licao.blocos), [licao])
@@ -90,7 +88,7 @@ export function PlayerDaLicao({ studentId, trilha, modulo, licao, posicao, ultim
             ✕
           </Link>
           <div style={{ flex: 1, height: 6, background: 'rgba(255,255,255,.15)', borderRadius: 3 }}>
-            <div style={{ height: 6, borderRadius: 3, background: tom.bar, width: `${((at + 1) / telas.length) * 100}%`, transition: 'width .35s' }} />
+            <div style={{ height: 6, borderRadius: 3, background: 'var(--accent)', width: `${((at + 1) / telas.length) * 100}%`, transition: 'width .35s' }} />
           </div>
           {audio.supported !== false && (
             <AutoAudioToggle auto={autoSpeak.auto} onChange={autoSpeak.setAuto} label={t.autoAudio} state={autoSpeak.auto ? t.autoAudioOn : t.autoAudioOff} />
@@ -127,7 +125,7 @@ export function PlayerDaLicao({ studentId, trilha, modulo, licao, posicao, ultim
 
         {tela.tipo === 'resumo' && (
           <Resumo
-            licao={licao} acertos={acertos} erros={erros} tom={tom}
+            licao={licao} acertos={acertos} erros={erros}
             ultima={ultima} onConcluir={concluir}
           />
         )}
@@ -211,11 +209,10 @@ function Frases({ frases, lang, audio, t, onSeguir }: {
   )
 }
 
-function Resumo({ licao, acertos, erros, tom, ultima, onConcluir }: {
+function Resumo({ licao, acertos, erros, ultima, onConcluir }: {
   licao: Licao
   acertos: number
   erros: string[]
-  tom: { bg: string; ink: string; bar: string }
   ultima: boolean
   onConcluir: () => void
 }) {
@@ -225,13 +222,13 @@ function Resumo({ licao, acertos, erros, tom, ultima, onConcluir }: {
       <div style={{ display: 'flex', justifyContent: 'center', color: 'var(--ink)' }}>
         <Caramelo mood="happy" size={72} />
       </div>
-      <h2 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, marginTop: '.3rem' }}>
+      <h2 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 700, marginTop: '.3rem' }}>
         Lição concluída
       </h2>
       <p style={{ fontSize: 14, color: 'var(--ink2)', lineHeight: 1.55, marginTop: '.4rem' }}>{licao.consegue}</p>
 
       {total > 0 && (
-        <div style={{ marginTop: '1rem', display: 'inline-flex', gap: '.5rem', alignItems: 'center', background: tom.bg, color: tom.ink, borderRadius: 999, padding: '.45rem 1rem', fontSize: 13.5, fontWeight: 700 }}>
+        <div style={{ marginTop: '1rem', display: 'inline-flex', gap: '.5rem', alignItems: 'center', background: 'var(--accent)', color: 'var(--on-accent)', borderRadius: 999, padding: '.45rem 1rem', fontSize: 13.5, fontWeight: 700 }}>
           <Icon name="target" size={15} /> {acertos} de {total}
         </div>
       )}
@@ -263,7 +260,8 @@ export function botaoPrincipal(desativado = false): React.CSSProperties {
     width: '100%', marginTop: '1.25rem', minHeight: 52, padding: '.9rem',
     borderRadius: 12, border: 'none',
     fontSize: 15.5, fontWeight: 700, fontFamily: 'inherit',
-    color: 'var(--on-panel)', background: desativado ? 'var(--border)' : 'var(--green)',
+    color: desativado ? 'var(--ink3)' : 'var(--on-accent)',
+    background: desativado ? 'var(--border)' : 'var(--accent)',
     cursor: desativado ? 'default' : 'pointer',
   }
 }

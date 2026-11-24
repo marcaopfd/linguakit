@@ -36,10 +36,10 @@ export function ModulePageView({ mod, lessonBase, backHref, progressKey, student
           ← {t.back}
         </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: '.75rem', marginBottom: '.4rem' }}>
-          <div style={{ width: 40, height: 40, borderRadius: 8, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 18, fontWeight: 700, color: levelTone(mod.id).ink }}>
+          <div style={{ width: 40, height: 40, borderRadius: 8, background: levelTone(mod.id).bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 18, fontWeight: 700, color: levelTone(mod.id).ink }}>
             {mod.label}
           </div>
-          <h2 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 600 }}>{mod.emoji} {mod.name}</h2>
+          <h2 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 600 }}>{mod.emoji} {mod.name}</h2>
         </div>
         <p style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.5 }}>{mod.desc}</p>
         <div style={{ marginTop: '.85rem', height: 4, background: 'var(--border)', borderRadius: 2 }}>

@@ -89,7 +89,7 @@ export default function StudentsPage() {
         </Link>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
           <div>
-            <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 26, fontWeight: 600, marginBottom: '.3rem' }}>👥 Students</h1>
+            <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 26, fontWeight: 600, marginBottom: '.3rem' }}>👥 Students</h1>
             <p style={{ fontSize: 13, color: 'rgba(255,255,255,.5)' }}>
               {students.length} student{students.length !== 1 ? 's' : ''} · placement test results
               {lastUpdated && <span> · updated {lastUpdated.toLocaleTimeString('en-IE', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</span>}
@@ -151,7 +151,7 @@ export default function StudentsPage() {
         {!loading && students.length === 0 && (
           <div style={{ padding: '3rem', textAlign: 'center' }}>
             <div style={{ fontSize: 36, marginBottom: '1rem' }}>📋</div>
-            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 18, fontWeight: 600, marginBottom: '.5rem' }}>No students yet</div>
+            <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 18, fontWeight: 600, marginBottom: '.5rem' }}>No students yet</div>
             <div style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.6 }}>Share the placement test link with your first student.<br />Results will appear here automatically.</div>
           </div>
         )}
@@ -214,7 +214,7 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
     <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, marginBottom: '.75rem', overflow: 'hidden' }}>
       {/* Card header */}
       <div style={{ padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <div style={{ width: 40, height: 40, borderRadius: '50%', background: r ? levelColor : 'var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 14, fontWeight: 700, color: 'var(--on-panel)', flexShrink: 0 }}>
+        <div style={{ width: 40, height: 40, borderRadius: '50%', background: r ? levelColor : 'var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 14, fontWeight: 700, color: 'var(--on-panel)', flexShrink: 0 }}>
           {s.name.charAt(0).toUpperCase()}
         </div>
         <div style={{ flex: 1 }}>
@@ -256,7 +256,7 @@ function StudentCard({ student: s, onDelete }: { student: Student; onDelete: (id
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '.35rem' }}>
           {r && (
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 22, fontWeight: 700, color: levelColor }}>{r.level}</div>
+              <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 700, color: levelColor }}>{r.level}</div>
               <div style={{ fontSize: 12, color: 'var(--ink3)' }}>{r.totalScore}/30 · {r.pct}%</div>
             </div>
           )}

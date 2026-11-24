@@ -53,7 +53,7 @@ export function ReviewView({ studentId, items, lang }: { studentId: string; item
           ← {t.backToCourse}
         </Link>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '1rem' }}>
-          <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 24, fontWeight: 700 }}>🔁 {t.review}</h1>
+          <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 24, fontWeight: 700 }}>🔁 {t.review}</h1>
           {!finished && (
             <span style={{ fontSize: 13, color: 'rgba(255,255,255,.55)' }}>{t.reviewProgress(index + 1, items.length)}</span>
           )}
@@ -67,7 +67,7 @@ export function ReviewView({ studentId, items, lang }: { studentId: string; item
         {finished ? (
           <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '2rem 1.5rem', textAlign: 'center' }}>
             <div style={{ fontSize: 36, marginBottom: '.75rem' }}>✅</div>
-            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 19, fontWeight: 700, marginBottom: '.4rem' }}>{t.reviewDone}</div>
+            <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 19, fontWeight: 700, marginBottom: '.4rem' }}>{t.reviewDone}</div>
             <div style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.55, marginBottom: '1.25rem' }}>{t.reviewDoneHint}</div>
             <Link href={`/learn/${studentId}`} style={{ display: 'inline-block', background: 'var(--panel)', color: 'var(--on-panel)', padding: '.75rem 1.5rem', borderRadius: 10, textDecoration: 'none', fontWeight: 600, fontSize: 14 }}>
               {t.backToCourse}
@@ -92,7 +92,7 @@ export function ReviewView({ studentId, items, lang }: { studentId: string; item
                   <button onClick={() => answer(false)} disabled={saving} style={{ flex: 1, padding: '.85rem', borderRadius: 10, border: '1.5px solid var(--red)', background: 'var(--surface)', color: 'var(--red)', fontSize: 14, fontWeight: 600, fontFamily: 'inherit', cursor: saving ? 'default' : 'pointer' }}>
                     ✗ {t.missedIt}
                   </button>
-                  <button onClick={() => answer(true)} disabled={saving} style={{ flex: 1, padding: '.85rem', borderRadius: 10, border: 'none', background: 'var(--green)', color: 'var(--on-panel)', fontSize: 14, fontWeight: 600, fontFamily: 'inherit', cursor: saving ? 'default' : 'pointer' }}>
+                  <button onClick={() => answer(true)} disabled={saving} style={{ flex: 1, padding: '.85rem', borderRadius: 10, border: 'none', background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 14, fontWeight: 600, fontFamily: 'inherit', cursor: saving ? 'default' : 'pointer' }}>
                     ✓ {t.gotIt}
                   </button>
                 </div>

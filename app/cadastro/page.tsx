@@ -46,7 +46,7 @@ export default function SignupPage() {
     <div style={{ minHeight: '100vh', background: 'var(--cream)', padding: '2rem 1.5rem 4rem' }}>
       <div style={{ maxWidth: 420, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
-          <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 28, fontWeight: 700, marginBottom: '.3rem' }}>
+          <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 28, fontWeight: 700, marginBottom: '.3rem' }}>
             Criar minha conta
           </h1>
           <p style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.5 }}>

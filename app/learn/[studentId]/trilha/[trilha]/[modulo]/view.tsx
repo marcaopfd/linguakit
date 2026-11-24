@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { NavInferior } from '@/components/NavInferior'
-import { levelTone } from '@/lib/levels'
 import type { ModuloTrilha, Trilha } from '@/lib/trilhas'
 import { uiStrings } from '@/lib/ui-strings'
 
@@ -14,7 +13,6 @@ export function LicoesDoModulo({ studentId, trilha, modulo, feitas, lang }: {
   lang: string
 }) {
   const t = uiStrings(lang)
-  const tom = levelTone(trilha.tom)
   const prontas = new Set(feitas)
 
   return (
@@ -24,7 +22,7 @@ export function LicoesDoModulo({ studentId, trilha, modulo, feitas, lang }: {
           ← {trilha.nome}
         </Link>
         <div style={{ fontSize: 28, marginTop: '.2rem' }}>{modulo.emoji}</div>
-        <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 23, fontWeight: 700, marginTop: '.2rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 23, fontWeight: 700, marginTop: '.2rem' }}>
           {modulo.nome}
         </h1>
         <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,.65)', lineHeight: 1.5, marginTop: '.35rem' }}>{modulo.consegue}</p>
@@ -38,8 +36,8 @@ export function LicoesDoModulo({ studentId, trilha, modulo, feitas, lang }: {
                 width: 34, height: 34, borderRadius: '50%', flexShrink: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 14, fontWeight: 700,
-                background: prontas.has(i) ? tom.bar : tom.bg,
-                color: prontas.has(i) ? 'var(--on-panel)' : tom.ink,
+                background: prontas.has(i) ? 'var(--accent)' : 'var(--paper)',
+                color: prontas.has(i) ? 'var(--on-accent)' : 'var(--ink2)',
               }}>
                 {prontas.has(i) ? '✓' : i + 1}
               </div>

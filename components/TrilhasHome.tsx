@@ -49,7 +49,7 @@ export function TrilhasHome({ studentId, niveis, lessons, t }: {
   if (!trilha) {
     return (
       <section style={{ padding: '1.5rem 1.25rem 0', maxWidth: 620, margin: '0 auto' }}>
-        <h2 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 19, fontWeight: 700, marginBottom: '.2rem' }}>
+        <h2 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 19, fontWeight: 700, marginBottom: '.2rem' }}>
           {t.trilhaPergunta}
         </h2>
         <p style={{ fontSize: 13, color: 'var(--ink3)', marginBottom: '.9rem' }}>{t.trilhaPerguntaSub}</p>
@@ -71,7 +71,6 @@ export function TrilhasHome({ studentId, niveis, lessons, t }: {
   const modulos = modulosDa(trilha, niveis)
   const unidadesPorModulo = new Map(niveis.map(n => [n.id, n.units.length]))
   const feitos = concluidosNa(trilha, modulos, lessons, unidadesPorModulo)
-  const tom = levelTone(trilha.tom)
   const geral = trilhaPorId('geral')!
   const outras = TRILHAS.filter(x => x.id !== trilha.id && x.id !== 'geral')
 
@@ -91,20 +90,22 @@ export function TrilhasHome({ studentId, niveis, lessons, t }: {
       </div>
 
       <Link href={`/learn/${studentId}/trilha/${trilha.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-        <div style={{ background: tom.bg, border: `1px solid ${tom.bar}`, borderRadius: 16, padding: '1.1rem 1.15rem' }}>
+        <div style={{ background: 'var(--forest)', color: 'var(--on-panel)', borderRadius: 20, padding: '1.2rem 1.25rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
             <span style={{ fontSize: 26 }}>{trilha.emoji}</span>
-            <span style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 19, fontWeight: 700, color: tom.ink }}>
+            <span style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--accent)' }}>
               {trilha.nome}
             </span>
           </div>
-          <p style={{ fontSize: 13, color: 'var(--ink2)', lineHeight: 1.5, margin: '.45rem 0 .7rem' }}>{trilha.promessa}</p>
-          <div style={{ height: 6, background: 'var(--surface)', borderRadius: 3 }}>
-            <div style={{ height: 6, borderRadius: 3, background: tom.bar, width: `${modulos.length ? Math.round((feitos / modulos.length) * 100) : 0}%`, transition: 'width .5s' }} />
+          <p style={{ fontSize: 13.5, color: 'rgba(242,244,233,.72)', lineHeight: 1.5, margin: '.5rem 0 .85rem' }}>{trilha.promessa}</p>
+          <div style={{ height: 7, background: 'rgba(242,244,233,.16)', borderRadius: 4 }}>
+            <div style={{ height: 7, borderRadius: 4, background: 'var(--accent)', width: `${modulos.length ? Math.round((feitos / modulos.length) * 100) : 0}%`, transition: 'width .5s' }} />
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '.45rem' }}>
-            <span style={{ fontSize: 12, color: 'var(--ink3)' }}>{t.trilhaFeitos(feitos, modulos.length)}</span>
-            <span style={{ fontSize: 13, fontWeight: 700, color: tom.ink }}>{feitos ? t.trilhaContinuar : t.trilhaComecar} →</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '.6rem' }}>
+            <span style={{ fontSize: 12, color: 'rgba(242,244,233,.55)' }}>{t.trilhaFeitos(feitos, modulos.length)}</span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.3rem', background: 'var(--accent)', color: 'var(--on-accent)', borderRadius: 999, padding: '.4rem .85rem', fontSize: 13, fontWeight: 700 }}>
+              {feitos ? t.trilhaContinuar : t.trilhaComecar} →
+            </span>
           </div>
         </div>
       </Link>
@@ -153,12 +154,11 @@ export function TrilhasHome({ studentId, niveis, lessons, t }: {
   )
 }
 
-function estiloEscolha(x: Trilha): React.CSSProperties {
-  const cor = levelTone(x.tom)
+function estiloEscolha(_: Trilha): React.CSSProperties {
   return {
     display: 'flex', alignItems: 'center', gap: '.8rem', textAlign: 'left',
-    width: '100%', minHeight: 72, padding: '.9rem 1rem',
-    background: cor.bg, border: `1px solid ${cor.bar}`, borderRadius: 14,
+    width: '100%', minHeight: 76, padding: '1rem',
+    background: 'var(--surface)', border: '1.5px solid var(--border)', borderRadius: 18,
     fontFamily: 'inherit', cursor: 'pointer',
   }
 }

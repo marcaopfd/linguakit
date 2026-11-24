@@ -197,7 +197,7 @@ function UnitSheet({ unit, index, isDone, lessonHref, practiceHref, liveHref, on
         <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.3rem' }}>
           {t.unit} {index + 1}{isDone ? ` · ✓ ${t.done}` : ''} · {unit.duration}
         </div>
-        <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 20, fontWeight: 700, marginBottom: '.25rem' }}>
+        <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 700, marginBottom: '.25rem' }}>
           {unit.emoji} {unit.title}
         </div>
         <div style={{ fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.5, marginBottom: '1.1rem' }}>{unit.sub}</div>
@@ -205,7 +205,7 @@ function UnitSheet({ unit, index, isDone, lessonHref, practiceHref, liveHref, on
         {practiceHref && (
           <Link
             href={practiceHref}
-            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 50, borderRadius: 12, background: 'var(--green)', color: 'var(--on-panel)', fontSize: 15, fontWeight: 700, textDecoration: 'none', marginBottom: '.55rem' }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 50, borderRadius: 12, background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 15, fontWeight: 700, textDecoration: 'none', marginBottom: '.55rem' }}
           >
             {t.practiceStart} →
           </Link>

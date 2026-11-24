@@ -1,51 +1,67 @@
 @import "tailwindcss";
 
 :root {
-  --cream: #faf8f3;
-  --paper: #f3f0e8;
-  --ink: #1a1814;
-  --ink2: #3d3a34;
-  /* Escolhido pelo contraste: #8a8578 dava 3,68 sobre o creme, abaixo do
-     mínimo de 4,5 para texto pequeno. Este dá 5,1. São 117 usos, então é a
-     linha que mais muda a legibilidade do app inteiro. */
-  --ink3: #6f6a5d;
-  --green: #2d6a4f;
-  --green-light: #d8f3dc;
-  --gold: #c9a84c;
-  --gold-light: #fdf3dc;
-  --border: #e2ddd4;
+  /* ─── A identidade ──────────────────────────────────────────────────────
+     Limão ácido sobre preto-esverdeado, com creme para respirar. O limão é
+     a única cor alta do sistema e aparece pouco de propósito: ele só vale
+     como destaque enquanto for a única coisa gritando na tela.
+
+     REGRA DE OURO: o limão é SUPERFÍCIE, nunca texto sobre claro. Branco em
+     cima de limão dá 1,28 de contraste — some. Todo texto sobre o limão é
+     --on-accent, que dá 14,34. */
+  --accent: #cbf24d;
+  --accent-dim: #b5db3e;
+  --accent-soft: #eefbc6;
+  --on-accent: #12150f;
+
+  /* O creme das referências puxa levemente para o verde; o branco puro fica
+     só nos cartões, para eles subirem do fundo. */
+  --cream: #f4f4ec;
+  --paper: #ebebe0;
+  --surface: #ffffff;
+
+  --ink: #14170f;
+  --ink2: #3a3f33;
+  /* 4,99 sobre o creme e 4,59 sobre o papel. Abaixo disto, 169 usos de texto
+     secundário caem do mínimo de 4,5 de uma vez só. */
+  --ink3: #656b5b;
+  --border: #e0e0d3;
+
+  /* Os dois escuros: o preto das barras e o verde profundo dos cartões de
+     destaque. São painéis, não o oposto do fundo — por isso seguem escuros
+     nos dois temas, com texto claro em cima. */
+  --panel: #12150f;
+  --on-panel: #f2f4e9;
+  --forest: #17341e;
+
+  /* Semânticas. O verde aqui é o do "acertou", separado do limão: um diz
+     "isto está certo", o outro diz "toque aqui". */
+  --green: #2f6b3e;
+  --green-light: #dff3e2;
+  --gold: #a07c1f;
+  --gold-light: #f8efd2;
   --red: #c0392b;
   --red-light: #fdecea;
 
-  /* Card and input backgrounds. Was #fff in a hundred places, which is the
-     one value that cannot survive a dark theme. */
-  --surface: #ffffff;
-
-  /* The dark decorative panels — hero bars, primary buttons — and the text on
-     them. Separate from --ink because --ink is also the text colour, and a
-     theme that inverts text would otherwise turn these light on light. */
-  --panel: #1a1814;
-  --on-panel: #faf8f3;
-
-  /* Right, wrong, and the one note that warns. */
-  --ok-bg: #eaf7ee;
-  --ok-border: #b7e4c7;
-  --ok-ink: #1f6b2e;
+  --ok-bg: #e9f6ea;
+  --ok-border: #b9e0bd;
+  --ok-ink: #22602f;
   --bad-bg: #fdecea;
   --bad-border: #f5c6c2;
   --bad-ink: #9b1c1c;
-  --note-bg: #fdf3dc;
-  --note-border: #e8d48a;
-  --note-ink: #7a5a0a;
+  --note-bg: #f8efd2;
+  --note-border: #e3d08a;
+  --note-ink: #6d530c;
 
-  /* As seis cores de nível. Antes viviam no currículo, ao lado das lições.
-     O conteúdo guarda só qual é o nível; a cor é tema. */
-  --lvl-a1-bg: #e8f4fd;  --lvl-a1-ink: #1a5c9e;  --lvl-a1-bar: #5ba3d4;
-  --lvl-a2-bg: #fef3e2;  --lvl-a2-ink: #8f4909;  --lvl-a2-bar: #e8922a;
-  --lvl-b1-bg: #edf7ed;  --lvl-b1-ink: #1f6b2e;  --lvl-b1-bar: #4caf50;
-  --lvl-b2-bg: #f3ecfd;  --lvl-b2-ink: #6b21a8;  --lvl-b2-bar: #a855f7;
-  --lvl-c1-bg: #fff0f0;  --lvl-c1-ink: #9b1c1c;  --lvl-c1-bar: #ef4444;
-  --lvl-c2-bg: #fdf3dc;  --lvl-c2-ink: #6b4f0d;  --lvl-c2-bar: #c9a84c;
+  /* Os seis níveis, puxados para a mesma temperatura do resto. Continuam
+     distintos entre si, mas agora são uma família — seis cores de bala ao
+     lado do limão era justamente o que fazia o app parecer remendado. */
+  --lvl-a1-bg: #e4eef0;  --lvl-a1-ink: #1d5560;  --lvl-a1-bar: #4e97a6;
+  --lvl-a2-bg: #f2eedd;  --lvl-a2-ink: #6b5410;  --lvl-a2-bar: #bfa03c;
+  --lvl-b1-bg: #e6f0e2;  --lvl-b1-ink: #34601f;  --lvl-b1-bar: #6aa544;
+  --lvl-b2-bg: #e7ecea;  --lvl-b2-ink: #2c5346;  --lvl-b2-bar: #4f8a76;
+  --lvl-c1-bg: #f1eae6;  --lvl-c1-ink: #6e3a22;  --lvl-c1-bar: #b06a44;
+  --lvl-c2-bg: #ecece2;  --lvl-c2-ink: #434a35;  --lvl-c2-bar: #78855f;
 }
 
 /* ─── Tema escuro ─────────────────────────────────────────────────────────
@@ -61,45 +77,48 @@
    página escura, que é feio de propósito até alguém decidir redesenhá-las. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --cream: #14130f;
-    --paper: #1e1c16;
-    --surface: #1c1a15;
-    --ink: #f1eee5;
-    --ink2: #cbc6b8;
-    --ink3: #918b7d;
-    --border: #322f27;
+    /* No escuro o limão não muda: é ele que carrega a identidade, e sobre
+       preto ele dá 14,34. */
+    --accent: #cbf24d;
+    --accent-dim: #a8cc3a;
+    --accent-soft: #273213;
+    --on-accent: #12150f;
 
-    --panel: #26231c;
-    --on-panel: #f1eee5;
+    --cream: #0e100c;
+    --paper: #171b14;
+    --surface: #1a1f17;
+    --ink: #f2f4e9;
+    --ink2: #ccd2c2;
+    --ink3: #a8b09c;
+    --border: #2a3024;
 
-    /* Escolhido pelo contraste, não pelo gosto: com texto claro em cima,
-       #4f9d75 dava 2,82 e o mínimo para este tamanho de texto é 4,5.
-       Este dá 5,1 e continua destacando do fundo da página. */
-    --green: #2f7050;
-    --green-light: #1d3627;
-    --gold: #d6b964;
-    --gold-light: #332b16;
+    --panel: #1a1f17;
+    --on-panel: #f2f4e9;
+    --forest: #16301d;
+
+    --green: #6aa544;
+    --green-light: #1b2c18;
+    --gold: #d6c06a;
+    --gold-light: #2d2715;
     --red: #e07264;
     --red-light: #3a201d;
 
-    --ok-bg: #16301f;
-    --ok-border: #2c5a3c;
-    --ok-ink: #a9e7bf;
+    --ok-bg: #18301c;
+    --ok-border: #2f5a33;
+    --ok-ink: #b2e3a4;
     --bad-bg: #351c1a;
     --bad-border: #6b342d;
     --bad-ink: #f0a79c;
-    --note-bg: #2f2714;
-    --note-border: #5b4a1f;
-    --note-ink: #f0d78d;
+    --note-bg: #2d2715;
+    --note-border: #574a20;
+    --note-ink: #ead79a;
 
-    /* Mesmas matizes, invertidas: fundo profundo, tinta clara. Cada par foi
-       conferido acima de 4,5 de contraste. A barra atravessa os dois temas. */
-    --lvl-a1-bg: #142533;  --lvl-a1-ink: #8ec6f0;  --lvl-a1-bar: #5ba3d4;
-    --lvl-a2-bg: #33240f;  --lvl-a2-ink: #f0b571;  --lvl-a2-bar: #e8922a;
-    --lvl-b1-bg: #15291a;  --lvl-b1-ink: #8ed49a;  --lvl-b1-bar: #4caf50;
-    --lvl-b2-bg: #241733;  --lvl-b2-ink: #c79cf0;  --lvl-b2-bar: #a855f7;
-    --lvl-c1-bg: #331818;  --lvl-c1-ink: #f0a0a0;  --lvl-c1-bar: #ef4444;
-    --lvl-c2-bg: #2e2714;  --lvl-c2-ink: #e4ca7c;  --lvl-c2-bar: #c9a84c;
+    --lvl-a1-bg: #142a2e;  --lvl-a1-ink: #8fc9d4;  --lvl-a1-bar: #4e97a6;
+    --lvl-a2-bg: #2b2613;  --lvl-a2-ink: #ddc67a;  --lvl-a2-bar: #bfa03c;
+    --lvl-b1-bg: #1a2a15;  --lvl-b1-ink: #a9d48c;  --lvl-b1-bar: #6aa544;
+    --lvl-b2-bg: #152420;  --lvl-b2-ink: #8fc3b2;  --lvl-b2-bar: #4f8a76;
+    --lvl-c1-bg: #2b1d16;  --lvl-c1-ink: #d9a184;  --lvl-c1-bar: #b06a44;
+    --lvl-c2-bg: #23261c;  --lvl-c2-ink: #b9c4a3;  --lvl-c2-bar: #78855f;
   }
 
   /* O navegador precisa saber, para desenhar campos e barras de rolagem. */

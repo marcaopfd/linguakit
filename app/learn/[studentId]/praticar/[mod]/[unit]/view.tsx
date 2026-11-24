@@ -164,7 +164,7 @@ export function PracticeView({
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.5rem', color: 'var(--ink)' }}>
               <Caramelo mood={pct >= 60 ? 'happy' : 'idle'} size={92} />
             </div>
-            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 21, fontWeight: 700, marginBottom: '.2rem' }}>
+            <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 21, fontWeight: 700, marginBottom: '.2rem' }}>
               {t.roundDone}
             </div>
             <div style={{ fontSize: 13.5, color: 'var(--ink3)', marginBottom: '.2rem' }}>
@@ -176,7 +176,7 @@ export function PracticeView({
 
             <button
               onClick={nextRound}
-              style={{ width: '100%', padding: '.9rem', background: 'var(--green)', color: 'var(--on-panel)', borderRadius: 12, border: 'none', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer', marginBottom: '.6rem' }}
+              style={{ width: '100%', padding: '.9rem', background: 'var(--accent)', color: 'var(--on-accent)', borderRadius: 12, border: 'none', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer', marginBottom: '.6rem' }}
             >
               {t.keepGoing} →
             </button>
@@ -198,7 +198,7 @@ export function PracticeView({
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '.5rem', color: 'var(--ink)' }}>
               <Caramelo mood={pct >= 60 ? 'happy' : 'idle'} size={110} />
             </div>
-            <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 21, fontWeight: 700, marginBottom: '.25rem' }}>
+            <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 21, fontWeight: 700, marginBottom: '.25rem' }}>
               {t.practiceDone}
             </div>
             <div style={{ fontSize: 14, color: 'var(--ink3)', marginBottom: '1.25rem' }}>
@@ -208,7 +208,7 @@ export function PracticeView({
             {nextUnit !== null ? (
               <Link
                 href={`/learn/${studentId}/praticar/${moduleId}/${nextUnit}`}
-                style={{ display: 'block', padding: '.9rem', background: 'var(--green)', color: 'var(--on-panel)', borderRadius: 12, textDecoration: 'none', fontSize: 15, fontWeight: 700, marginBottom: '.6rem' }}
+                style={{ display: 'block', padding: '.9rem', background: 'var(--accent)', color: 'var(--on-accent)', borderRadius: 12, textDecoration: 'none', fontSize: 15, fontWeight: 700, marginBottom: '.6rem' }}
               >
                 {t.nextUnit} →
               </Link>
@@ -374,7 +374,7 @@ export function PracticeView({
         <button
           onClick={checked ? advance : check}
           disabled={!checked && !canCheck}
-          style={{ width: '100%', marginTop: '1.1rem', padding: '.9rem', borderRadius: 12, border: 'none', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', color: 'var(--on-panel)', background: !checked && !canCheck ? 'var(--border)' : checked ? 'var(--panel)' : 'var(--green)', cursor: !checked && !canCheck ? 'default' : 'pointer' }}
+          style={{ width: '100%', marginTop: '1.1rem', padding: '.9rem', borderRadius: 12, border: 'none', fontSize: 15, fontWeight: 700, fontFamily: 'inherit', color: !checked && !canCheck ? 'var(--ink3)' : checked ? 'var(--on-panel)' : 'var(--on-accent)', background: !checked && !canCheck ? 'var(--border)' : checked ? 'var(--panel)' : 'var(--accent)', cursor: !checked && !canCheck ? 'default' : 'pointer' }}
         >
           {checked ? t.continueOn : t.verify}
         </button>

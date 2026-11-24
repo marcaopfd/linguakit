@@ -35,7 +35,7 @@ export default function StudentLoginPage() {
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--cream)', padding: '2rem 1.5rem' }}>
       <div style={{ width: '100%', maxWidth: 380 }}>
         <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
-          <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 28, fontWeight: 700, marginBottom: '.3rem' }}>
+          <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 28, fontWeight: 700, marginBottom: '.3rem' }}>
             Entrar
           </h1>
           <p style={{ fontSize: 13, color: 'var(--ink3)' }}>Continue de onde você parou.</p>

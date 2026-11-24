@@ -13,7 +13,7 @@ export function CoursePicker() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', flexDirection: 'column' }}>
       <div style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '2.25rem 1.5rem 2rem', textAlign: 'center' }}>
-        <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 27, fontWeight: 700, marginBottom: '.4rem' }}>
+        <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 27, fontWeight: 700, marginBottom: '.4rem' }}>
           LinguaKit
         </div>
         <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.55)', lineHeight: 1.5 }}>
@@ -101,13 +101,13 @@ function Course({ href, flag, title, blurb, cta }: {
       }}
     >
       <div aria-hidden style={{ fontSize: 34, lineHeight: 1, marginBottom: '.6rem' }}>{flag}</div>
-      <div style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 20, fontWeight: 700, marginBottom: '.4rem' }}>
+      <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 700, marginBottom: '.4rem' }}>
         {title}
       </div>
       <div style={{ fontSize: 13.5, color: 'var(--ink3)', lineHeight: 1.6, marginBottom: '.9rem' }}>
         {blurb}
       </div>
-      <div style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '.55rem 1rem', borderRadius: 11, background: 'var(--green)', color: 'var(--on-panel)', fontSize: 14.5, fontWeight: 700 }}>
+      <div style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '.55rem 1rem', borderRadius: 11, background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 14.5, fontWeight: 700 }}>
         {cta}
       </div>
     </Link>

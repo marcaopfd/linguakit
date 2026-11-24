@@ -15,7 +15,7 @@ export default function NotFound() {
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem', color: 'var(--ink)' }}>
           <Caramelo mood="sad" size={104} />
         </div>
-        <h1 style={{ fontFamily: 'var(--font-fraunces), Fraunces, serif', fontSize: 25, fontWeight: 700, marginBottom: '.5rem' }}>
+        <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 25, fontWeight: 700, marginBottom: '.5rem' }}>
           Esta página não existe
         </h1>
         <p style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.6, marginBottom: '.25rem' }}>
@@ -26,7 +26,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          style={{ display: 'inline-flex', alignItems: 'center', minHeight: 48, padding: '.85rem 1.5rem', borderRadius: 12, background: 'var(--green)', color: 'var(--on-panel)', fontSize: 15, fontWeight: 700, textDecoration: 'none' }}
+          style={{ display: 'inline-flex', alignItems: 'center', minHeight: 48, padding: '.85rem 1.5rem', borderRadius: 12, background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 15, fontWeight: 700, textDecoration: 'none' }}
         >
           Voltar ao início · Back home
         </Link>
