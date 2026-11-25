@@ -14,6 +14,12 @@ import { NextRequest, NextResponse } from 'next/server'
 const PUBLIC_EXACT = [
   '/',               // the front door: which course did you come for
   '/ingles-para-morar-fora', // a página de vendas: é para onde o anúncio aponta
+  // As páginas legais: precisam ser lidas ANTES de criar conta ou comprar,
+  // e plataforma de anúncio confere se elas abrem sem login.
+  '/termos',
+  '/privacidade',
+  '/reembolso',
+  '/contato',
   '/robots.txt',     // must be reachable, or crawlers assume nothing is barred
   '/sitemap.xml',
 ]

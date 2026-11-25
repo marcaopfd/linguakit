@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Icon } from '@/components/Icon'
+import { RodapeLegal } from '@/components/PaginaLegal'
 import { Rabisco } from '@/components/Rabisco'
 import { numerosDoProduto } from '@/lib/numeros'
 import { TRILHAS } from '@/lib/trilhas'
@@ -441,14 +442,21 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer style={{ padding: '2.5rem var(--gutter)', textAlign: 'center', fontSize: 13, color: 'var(--ink3)' }}>
-        <Link href="/" style={{ color: 'var(--ink2)', fontWeight: 600, textDecoration: 'none' }}>
-          LinguaKit
-        </Link>
-        {' · '}
-        <Link href="/test?lang=pt" style={{ color: 'var(--ink3)', textDecoration: 'none' }}>
-          Portuguese for English speakers
-        </Link>
+      <footer style={{ padding: '2.5rem var(--gutter)', textAlign: 'center', fontSize: 13, color: 'var(--ink3)', lineHeight: 2 }}>
+        <div>
+          <Link href="/" style={{ color: 'var(--ink2)', fontWeight: 600, textDecoration: 'none' }}>
+            LinguaKit
+          </Link>
+          {' · '}
+          <Link href="/test?lang=pt" style={{ color: 'var(--ink3)', textDecoration: 'none' }}>
+            Portuguese for English speakers
+          </Link>
+        </div>
+        {/* As legais ficam no rodapé de quem está decidindo comprar: é aqui
+            que a pessoa confere quem está do outro lado antes de pagar. */}
+        <div style={{ marginTop: '.4rem' }}>
+          <RodapeLegal />
+        </div>
       </footer>
     </div>
   )

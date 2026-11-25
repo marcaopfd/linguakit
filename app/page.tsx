@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { RodapeLegal } from '@/components/PaginaLegal'
 import { Caramelo } from '@/components/Caramelo'
 import { Rabisco } from '@/components/Rabisco'
 import { CourseCards } from '@/components/CoursePicker'
@@ -179,6 +180,9 @@ export default function HomePage() {
               Sign in
             </Link>
           </div>
+        </div>
+        <div style={{ marginTop: '.75rem' }}>
+          <RodapeLegal />
         </div>
         <Link
           href="/painel"
