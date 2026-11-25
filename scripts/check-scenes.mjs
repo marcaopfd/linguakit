@@ -25,6 +25,22 @@ try {
 
 const espera = ms => new Promise(r => setTimeout(r, ms))
 
+/**
+ * Confere o corte antes de perguntar ao YouTube: um trecho que começa depois
+ * do fim, ou que passa da duração do vídeo, abre o player num lugar que não
+ * existe. Isso não depende de rede, então é erro na hora.
+ */
+function conferirCorte(cena) {
+  const { inicio, fim, duracao } = cena
+  if (typeof inicio !== 'number' || typeof fim !== 'number') return 'falta início ou fim'
+  if (inicio < 0) return 'início negativo'
+  if (fim <= inicio) return `fim (${fim}s) não é depois do início (${inicio}s)`
+  if (typeof duracao === 'number' && duracao > 0 && fim > duracao) {
+    return `fim (${fim}s) passa da duração do vídeo (${duracao}s)`
+  }
+  return null
+}
+
 async function conferir(cena) {
   const url = `https://www.youtube.com/oembed?url=${encodeURIComponent(`https://www.youtube.com/watch?v=${cena.videoId}`)}&format=json`
   try {
@@ -41,7 +57,13 @@ async function conferir(cena) {
 }
 
 let quebradas = 0
+let cortesRuins = 0
 for (const cena of cenas) {
+  const problema = conferirCorte(cena)
+  if (problema) {
+    cortesRuins++
+    console.log(`  CORTE ${cena.videoId}  ${problema}`)
+  }
   const r = await conferir(cena)
   if (r.ok) {
     const canalBate = !cena.canal || r.canal.toLowerCase().includes(cena.canal.toLowerCase())
@@ -54,5 +76,7 @@ for (const cena of cenas) {
   await espera(400)
 }
 
-console.log(`\n${cenas.length} cena(s) conferida(s), ${quebradas} fora do ar.`)
-process.exit(quebradas ? 1 : 0)
+console.log(
+  `\n${cenas.length} cena(s) conferida(s), ${quebradas} fora do ar, ${cortesRuins} com corte inválido.`,
+)
+process.exit(quebradas || cortesRuins ? 1 : 0)
