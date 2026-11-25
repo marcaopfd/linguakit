@@ -5,7 +5,7 @@ import { LEGAL } from '@/lib/legal'
 
 export const metadata: Metadata = {
   title: `Reembolso e cancelamento — ${LEGAL.produto}`,
-  description: 'Sete dias para desistir, como cancelar, como pausar, e o que acontece com o seu progresso.',
+  description: 'Sete dias para desistir, como cancelar, e o que acontece com o seu progresso.',
   alternates: { canonical: '/reembolso' },
 }
 
@@ -20,7 +20,7 @@ export default function ReembolsoPage() {
   return (
     <PaginaLegal
       titulo="Reembolso e cancelamento"
-      resumo="Sete dias para desistir sem explicar nada. E dá para pausar em vez de cancelar."
+      resumo="Sete dias para desistir sem explicar nada. Depois, cancele quando quiser — sem multa e sem perder o seu progresso."
     >
       <h2>Sete dias, sem precisar justificar</h2>
       <p>
@@ -53,18 +53,20 @@ export default function ReembolsoPage() {
         não há fidelidade.
       </p>
 
-      <h2>Pausar, em vez de cancelar</h2>
+      <h2>Quando a viagem acaba</h2>
       <p>
         Metade de quem assina um curso assim assina por causa de uma viagem — e
-        a viagem acaba. Por isso dá para <strong>pausar a assinatura por até
-        três meses</strong> sem perder nada: o progresso fica guardado e o
-        acesso volta de onde parou quando você retomar.
+        a viagem acaba. Nesse dia, cancele sem medo:{' '}
+        <strong>a sua conta não é apagada e o seu progresso não é perdido</strong>.
+        O curso do A1 ao C2 continua aberto de graça, e se um dia você assinar
+        de novo, tudo volta de onde parou — não há taxa para voltar nem
+        recomeço.
       </p>
 
       <h2>O que acontece com o seu progresso</h2>
       <p>
-        Nada. Cancelando ou pausando, a sua conta continua existindo e o que
-        você estudou continua lá. O que fecha são as partes do plano — as
+        Nada. Cancelando, a sua conta continua existindo e o que você estudou
+        continua lá. O que fecha são as partes do plano — as
         trilhas completas, as conversas, o kit de bolso e as músicas. O curso do
         A1 ao C2, o teste, a palavra do dia e a revisão{' '}
         <strong>seguem abertos de graça</strong>, como sempre foram.

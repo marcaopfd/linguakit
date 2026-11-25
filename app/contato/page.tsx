@@ -37,8 +37,9 @@ export default function ContatoPage() {
       </p>
       <p>
         <strong>Quero cancelar.</strong> Está tudo em{' '}
-        <Link href="/reembolso">Reembolso e cancelamento</Link>, inclusive a
-        opção de pausar em vez de cancelar.
+        <Link href="/reembolso">Reembolso e cancelamento</Link>: o prazo de
+        desistência, como cancelar sem multa e o que acontece com o seu
+        progresso.
       </p>
 
       <h2>Achou um erro no curso?</h2>

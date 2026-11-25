@@ -78,7 +78,7 @@ export function Paywall({ studentId, oQue, motivo }: {
         </Link>
 
         <p style={{ fontSize: 12.5, color: 'var(--ink3)', textAlign: 'center', marginTop: '.8rem', lineHeight: 1.5 }}>
-          Dá para pausar a qualquer momento, sem perder nada.
+          Cancele a qualquer momento, sem multa e sem perder o seu progresso.
         </p>
       </main>
     </div>

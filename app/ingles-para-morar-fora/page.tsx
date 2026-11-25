@@ -75,7 +75,7 @@ const PERGUNTAS: { q: string; a: string }[] = [
   },
   {
     q: 'Dá para cancelar?',
-    a: 'Dá, e dá para pausar por até três meses sem perder nada — que é o que acontece quando a viagem acaba e você quer guardar o curso para a próxima. O pagamento é pela Kiwify, com Pix, boleto ou cartão parcelado.',
+    a: 'Dá, a qualquer momento, sem multa e sem fidelidade — e você continua usando até o fim do período que já pagou. Cancelar não apaga a sua conta nem o seu progresso: o curso do A1 ao C2 segue aberto de graça, e se você voltar, volta de onde parou. O pagamento é pela Kiwify, com Pix, boleto ou cartão parcelado.',
   },
   {
     q: 'Tem certificado?',
@@ -391,8 +391,8 @@ export default function LandingPage() {
             </p>
             <p style={{ fontSize: '.95rem', color: 'rgba(242,244,233,.5)', marginTop: '1rem', lineHeight: 1.65 }}>
               Ou {emReais(PRECOS.monthly.centavos)} por mês, para cancelar quando quiser.<br />
-              Dá para pausar por até três meses sem perder nada — porque a
-              viagem acaba e o curso não precisa acabar junto.
+              Sem multa e sem fidelidade — e cancelar não apaga nada: a viagem
+              acaba, o seu progresso fica.
             </p>
             <p style={{ fontSize: '.92rem', color: 'rgba(242,244,233,.55)', marginTop: '1.3rem', lineHeight: 1.65 }}>
               Menos do que uma aula particular de uma hora. E a aula não vai

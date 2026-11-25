@@ -86,7 +86,7 @@ export function TelaDePlanos({ studentId, nome, email, plano, estado, valendo, r
           <Plano
             id="monthly" escolhido={escolhido === 'monthly'} onEscolher={setEscolhido}
             titulo={PRECOS.monthly.titulo} preco={emReais(PRECOS.monthly.centavos)} por={PRECOS.monthly.por}
-            nota="Cancele ou pause quando quiser"
+            nota="Cancele quando quiser, sem multa"
           />
         </div>
 
@@ -116,7 +116,7 @@ export function TelaDePlanos({ studentId, nome, email, plano, estado, valendo, r
             Pagamento pela Kiwify — Pix, boleto ou cartão parcelado.<br />
             O checkout já vem com <strong style={{ color: 'var(--ink2)' }}>{email}</strong>: não troque,
             ou a compra não acha a sua conta.<br />
-            Dá para pausar a assinatura por até três meses sem perder nada.
+            Cancele quando quiser: sem multa, e você usa até o fim do período pago.
           </p>
         )}
       </main>
