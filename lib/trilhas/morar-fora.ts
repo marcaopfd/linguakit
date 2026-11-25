@@ -1,7 +1,13 @@
+import { LICOES_PRIMEIROS_DIAS } from './morar-1-primeiros-dias'
 import { LICOES_ALUGUEL } from './morar-2-aluguel'
+import { LICOES_EMPREGO } from './morar-3-emprego'
 import { LICOES_ENTREVISTA } from './morar-4-entrevista'
 import { LICOES_COZINHA } from './morar-5-cozinha'
 import { LICOES_OBRA } from './morar-6-obra'
+import { LICOES_DELIVERY } from './morar-7-delivery'
+import { LICOES_ESCRITORIO } from './morar-8-escritorio'
+import { LICOES_SAUDE } from './morar-9-saude'
+import { LICOES_SOCIAL } from './morar-10-social'
 import type { ModuloTrilha } from './tipos'
 
 /**
@@ -19,7 +25,7 @@ export const MODULOS_MORAR_FORA: ModuloTrilha[] = [
     id: 'morar-1', numero: 1, emoji: '🧾',
     nome: 'Primeiros dias',
     consegue: 'Você consegue abrir conta no banco, comprar um chip e se registrar nos órgãos.',
-    licoes: [],
+    licoes: LICOES_PRIMEIROS_DIAS,
   },
   {
     id: 'morar-2', numero: 2, emoji: '🔑',
@@ -31,7 +37,7 @@ export const MODULOS_MORAR_FORA: ModuloTrilha[] = [
     id: 'morar-3', numero: 3, emoji: '📄',
     nome: 'Procurando emprego',
     consegue: 'Você consegue ler um anúncio, escrever um CV curto e mandar o e-mail de candidatura.',
-    licoes: [],
+    licoes: LICOES_EMPREGO,
   },
   {
     id: 'morar-4', numero: 4, emoji: '💼',
@@ -55,24 +61,24 @@ export const MODULOS_MORAR_FORA: ModuloTrilha[] = [
     id: 'morar-7', numero: 7, emoji: '🛵',
     nome: 'Delivery e atendimento',
     consegue: 'Você consegue falar com o cliente, resolver um problema de entrega e atender no balcão.',
-    licoes: [],
+    licoes: LICOES_DELIVERY,
   },
   {
     id: 'morar-8', numero: 8, emoji: '🖥️',
     nome: 'Inglês do escritório',
     consegue: 'Você consegue escrever um e-mail, participar de uma reunião e puxar conversa com o colega.',
-    licoes: [],
+    licoes: LICOES_ESCRITORIO,
   },
   {
     id: 'morar-9', numero: 9, emoji: '🩺',
     nome: 'Médico, escola e burocracia',
     consegue: 'Você consegue marcar consulta, explicar o sintoma e falar com a escola do seu filho.',
-    licoes: [],
+    licoes: LICOES_SAUDE,
   },
   {
     id: 'morar-10', numero: 10, emoji: '🍺',
     nome: 'Vida social',
     consegue: 'Você consegue conversar no pub, entender a gíria e sacar a piada local.',
-    licoes: [],
+    licoes: LICOES_SOCIAL,
   },
 ]

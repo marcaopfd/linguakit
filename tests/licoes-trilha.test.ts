@@ -140,6 +140,38 @@ describe('a simulação da barganha', () => {
   })
 })
 
+describe('a Trilha Morar e Trabalhar Fora, inteira', () => {
+  const morar = TRILHAS.find(t => t.id === 'morar-fora')!
+
+  it('tem os dez módulos escritos, nenhum vazio', () => {
+    expect(morar.modulos).toHaveLength(10)
+    for (const m of morar.modulos) {
+      expect(m.licoes.length, `${m.id} sem lição`).toBeGreaterThanOrEqual(2)
+    }
+  })
+
+  it('dá a cada módulo pelo menos vinte minutos de aula', () => {
+    for (const m of morar.modulos) {
+      const minutos = m.licoes.reduce((n, l) => n + l.minutos, 0)
+      expect(minutos, m.id).toBeGreaterThanOrEqual(20)
+    }
+  })
+
+  it('não repete a chave de exercício entre as duas trilhas', () => {
+    // As chaves endereçam a tentativa no banco: repetir uma entre trilhas
+    // misturaria o erro de uma pessoa na lição errada.
+    const todas = TRILHAS.flatMap(t => t.modulos.flatMap(m =>
+      m.licoes.flatMap(l => l.blocos.flatMap(b => (b.tipo === 'pratica' ? b.itens.map(i => i.key) : [])))))
+    expect(new Set(todas).size, `${todas.length} chaves`).toBe(todas.length)
+  })
+
+  it('põe uma conversa onde há alguém do outro lado da mesa', () => {
+    const comSimulacao = morar.modulos.filter(m =>
+      m.licoes.some(l => l.blocos.some(b => b.tipo === 'simulacao')))
+    expect(comSimulacao.map(m => m.id).sort()).toEqual(['morar-2', 'morar-4'])
+  })
+})
+
 describe('a Trilha Viagem, inteira', () => {
   const viagem = TRILHAS.find(t => t.id === 'viagem')!
 

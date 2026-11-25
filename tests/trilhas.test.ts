@@ -57,9 +57,15 @@ describe('as trilhas', () => {
       expect(caminhoDoModulo('abc', viagem, m), m.id).toBe(`/learn/abc/trilha/viagem/${m.id}`)
     }
 
-    // Morar Fora ainda não: o cartão não leva a uma tela vazia.
+    // Morar Fora também está escrita agora.
     const morar = trilhaPorId('morar-fora')!
-    expect(caminhoDoModulo('abc', morar, morar.modulos[0])).toBeNull()
+    for (const m of morar.modulos) {
+      expect(caminhoDoModulo('abc', morar, m), m.id).toBe(`/learn/abc/trilha/morar-fora/${m.id}`)
+    }
+
+    // Trabalhar Online não: o cartão não leva a uma tela vazia.
+    const online = trilhaPorId('online')!
+    expect(online.modulos).toHaveLength(0)
 
     const geral = trilhaPorId('geral')!
     const niveis = toCourseIndex(EN_MODULES)
