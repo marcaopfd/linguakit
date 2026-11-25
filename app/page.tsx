@@ -141,6 +141,14 @@ export default function HomePage() {
         >
           Fazer o teste de inglês →
         </Link>
+        {/* Quem chegou aqui ainda decidindo precisa ver o produto inteiro
+            antes do teste. A página de vendas é onde ele está. */}
+        <div style={{ marginTop: '.8rem', fontSize: 13.5, color: 'var(--ink3)' }}>
+          Vai morar fora ou viajar?{' '}
+          <Link href="/ingles-para-morar-fora" style={{ color: 'var(--ink)', fontWeight: 600, display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>
+            Veja o curso feito para isso
+          </Link>
+        </div>
         {/* Quem já decidiu não precisa do teste para entrar. Antes, a única
             porta para o cadastro era a tela de login, o que fazia criar conta
             parecer coisa de quem já tinha uma. */}

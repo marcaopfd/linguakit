@@ -13,6 +13,7 @@ import { NextRequest, NextResponse } from 'next/server'
  */
 const PUBLIC_EXACT = [
   '/',               // the front door: which course did you come for
+  '/ingles-para-morar-fora', // a página de vendas: é para onde o anúncio aponta
   '/robots.txt',     // must be reachable, or crawlers assume nothing is barred
   '/sitemap.xml',
 ]
