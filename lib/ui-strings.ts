@@ -76,6 +76,9 @@ export type UiStrings = {
   reviewExplain: string
 
   // Lembrete do link de acesso (aluno sem conta)
+  myAccount: string
+  createAccount: string
+  createAccountHint: string
   saveYourLink: string
   saveYourLinkHint: string
   copyLink: string
@@ -260,6 +263,9 @@ const EN: UiStrings = {
   backToCourse: 'Back to my course',
   reviewExplain: 'Get it right and it comes back later. Miss it and it comes back tomorrow.',
 
+  myAccount: 'My account',
+  createAccount: 'Create your account',
+  createAccountHint: 'Right now this link is your only way back in. An account gives you an email and a password — and it is how your plan reaches you if you subscribe.',
   saveYourLink: 'Save this link',
   saveYourLinkHint: 'This page is how you get back into your course. Bookmark it — without it, only your teacher can restore your access.',
   copyLink: 'Copy link',
@@ -433,6 +439,9 @@ const PT: UiStrings = {
   backToCourse: 'Voltar para o curso',
   reviewExplain: 'Acertou, volta mais tarde. Errou, volta amanhã.',
 
+  myAccount: 'Minha conta',
+  createAccount: 'Criar sua conta',
+  createAccountHint: 'Hoje este link é o seu único jeito de voltar. A conta te dá e-mail e senha — e é por ela que o plano chega até você, se um dia assinar.',
   saveYourLink: 'Salve este link',
   saveYourLinkHint: 'Esta página é o seu acesso ao curso. Guarde nos favoritos — sem ela, só o seu professor consegue recuperar o seu acesso.',
   copyLink: 'Copiar link',

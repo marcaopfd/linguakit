@@ -118,6 +118,42 @@ model ExerciseAttempt {
   @@index([studentId, correct])
 }
 
+/// Todo aviso de pagamento que a Kiwify mandou, tenha ele achado um aluno ou
+/// não.
+///
+/// Antes disso, um aviso que não casava com nenhum e-mail virava um 200 e
+/// sumia: quem comprasse o plano anual antes de criar a conta esperava um ano
+/// até a renovação o encontrar, e quem pagasse com outro e-mail não aparecia
+/// em lugar nenhum. Guardar o aviso resolve os dois — o cadastro procura por
+/// um pagamento à espera, e o que sobra sem dono fica visível no painel em vez
+/// de se perder.
+///
+/// Não tem chave estrangeira para Student de propósito: é o registro do que o
+/// provedor disse, e precisa existir mesmo quando ainda não há aluno nenhum
+/// com aquele e-mail. A exclusão de um aluno limpa os avisos dele pelo e-mail.
+model PaymentNotice {
+  id         String    @id @default(cuid())
+  /// O e-mail da compra, normalizado como o do aluno.
+  email      String
+  /// "monthly" ou "annual".
+  plan       String
+  /// "active", "paused" ou "canceled".
+  status     String
+  renewsAt   DateTime?
+  /// O id da assinatura na Kiwify.
+  billingRef String?
+  /// O evento como a Kiwify o nomeia, para quando algo não bater.
+  event      String
+  /// O aluno que este aviso encontrou. Nulo enquanto ninguém o reclamou.
+  studentId  String?
+  /// Quando foi aplicado. Nulo = esperando a conta aparecer.
+  appliedAt  DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([email])
+  @@index([studentId])
+}
+
 model StudentLesson {
   id          String   @id @default(cuid())
   studentId   String

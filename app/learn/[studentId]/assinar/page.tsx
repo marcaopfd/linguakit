@@ -3,7 +3,14 @@ import { prisma, withDb } from '@/lib/db'
 import { assinaturaValendo } from '@/lib/plano'
 import { TelaDePlanos } from './view'
 
-/** Os planos. O pagamento acontece fora: aqui só se escolhe. */
+/**
+ * Os planos. O pagamento acontece fora: aqui só se escolhe.
+ *
+ * O e-mail vai junto para o checkout, e não por conveniência: a Kiwify avisa
+ * a compra pelo e-mail do comprador, e é por ele que o webhook acha o aluno.
+ * E-mail diferente do da conta é uma compra que não libera nada. Por isso
+ * quem ainda não tem conta é mandado para criá-la antes de ver o botão.
+ */
 export default async function AssinarPage({
   params,
 }: {
@@ -13,7 +20,7 @@ export default async function AssinarPage({
 
   const student = await withDb(() => prisma.student.findUnique({
     where: { id: studentId },
-    select: { name: true, plan: true, planStatus: true, renewsAt: true },
+    select: { name: true, email: true, plan: true, planStatus: true, renewsAt: true },
   }))
   if (!student) notFound()
 
@@ -21,6 +28,7 @@ export default async function AssinarPage({
     <TelaDePlanos
       studentId={studentId}
       nome={student.name}
+      email={student.email}
       plano={student.plan}
       estado={student.planStatus}
       valendo={assinaturaValendo(student)}

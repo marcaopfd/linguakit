@@ -7,6 +7,16 @@ import { activityColor, lastActive } from '@/lib/last-active'
 
 type SkillScore = { correct: number; pct: number }
 
+/** Um aviso da Kiwify que não achou aluno nenhum com aquele e-mail. */
+type PagamentoOrfao = {
+  id: string
+  email: string
+  plan: string
+  status: string
+  event: string
+  createdAt: string
+}
+
 type Student = {
   id: string
   name: string
@@ -44,6 +54,7 @@ export default function StudentsPage() {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [refreshing, setRefreshing] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [orfaos, setOrfaos] = useState<PagamentoOrfao[]>([])
 
   const subscribers = students.filter(s => s.newsletter && s.email)
 
@@ -78,6 +89,16 @@ export default function StudentsPage() {
     fetchStudents()
     const interval = setInterval(() => fetchStudents(), 30_000)
     return () => clearInterval(interval)
+  }, [])
+
+  // Pagamentos que chegaram e não acharam ninguém. É o pior caso do produto
+  // — alguém paga com outro e-mail, não recebe nada e não reclama —, e sem
+  // esta lista ele seria invisível.
+  useEffect(() => {
+    fetch('/api/pagamentos')
+      .then(r => (r.ok ? r.json() : { avisos: [] }))
+      .then(d => setOrfaos(d.avisos ?? []))
+      .catch(() => {})
   }, [])
 
   return (
@@ -144,6 +165,33 @@ export default function StudentsPage() {
           {copied ? '✓ Copiado' : '✉️ Copiar e-mails'}
         </button>
       </div>
+
+      {/* Pagamento que não achou dono: quem comprou com um e-mail e tem conta
+          com outro. Fica aqui até alguém ligar as duas pontas à mão. */}
+      {orfaos.length > 0 && (
+        <div style={{ background: 'var(--gold-light)', borderBottom: '1px solid #e8d48a', padding: '.75rem 1.5rem' }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--note-ink)', marginBottom: '.3rem' }}>
+            {orfaos.length} {orfaos.length === 1 ? 'pagamento sem conta' : 'pagamentos sem conta'}
+          </div>
+          <div style={{ fontSize: 12, color: 'var(--note-ink)', lineHeight: 1.5, marginBottom: '.5rem' }}>
+            Alguém pagou com um e-mail que não tem conta aqui. Quando essa pessoa
+            se cadastrar com o mesmo e-mail, o plano entra sozinho. Se ela usou
+            outro e-mail na conta, é preciso acertar à mão.
+          </div>
+          <div style={{ display: 'grid', gap: '.3rem' }}>
+            {orfaos.map(o => (
+              <div key={o.id} style={{ fontSize: 12.5, color: 'var(--ink2)', background: 'var(--surface)', border: '1px solid #e8d48a', borderRadius: 8, padding: '.4rem .6rem', display: 'flex', gap: '.6rem', flexWrap: 'wrap' }}>
+                <strong style={{ color: 'var(--ink)' }}>{o.email}</strong>
+                <span>{o.plan} · {o.status}</span>
+                <span style={{ color: 'var(--ink3)' }}>{o.event}</span>
+                <span style={{ color: 'var(--ink3)', marginLeft: 'auto' }}>
+                  {new Date(o.createdAt).toLocaleDateString('pt-BR')}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '1.5rem' }}>
         {loading && <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--ink3)', fontSize: 14 }}>Loading...</div>}

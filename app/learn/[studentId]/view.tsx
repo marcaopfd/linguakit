@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { levelTone } from '@/lib/levels'
 import { Icon } from '@/components/Icon'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { AccentPicker } from '@/components/AccentPicker'
 import { NavInferior } from '@/components/NavInferior'
@@ -41,7 +41,6 @@ type Attempt = {
 
 export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]; enModules: ModuleSummary[] }) {
   const { studentId } = useParams<{ studentId: string }>()
-  const router = useRouter()
   const [student, setStudent] = useState<StudentData | null>(null)
   const [attempts, setAttempts] = useState<Attempt[]>([])
   const [dueCount, setDueCount] = useState<number | null>(null)
@@ -50,9 +49,6 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
   // only credential is this link, a network hiccup reading as "you do not exist"
   // is alarming and wrong.
   const [loadFailed, setLoadFailed] = useState(false)
-  // Only students who signed up have a session to end. Those reached through a
-  // shared /learn/<id> link have nothing to log out of, so the button is hidden.
-  const [signedIn, setSignedIn] = useState(false)
   // Qual trilha a barra de baixo abre. Lida aqui também porque a barra fica
   // fora do componente das trilhas.
   const [trilhaAtiva, setTrilhaAtiva] = useState('geral')
@@ -60,19 +56,6 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
   useEffect(() => {
     try { setTrilhaAtiva(localStorage.getItem('lk_trilha') || 'geral') } catch { /* janela anônima */ }
   }, [])
-
-  useEffect(() => {
-    fetch('/api/student/me')
-      .then(r => r.json())
-      .then(d => setSignedIn(d.student?.id === studentId))
-      .catch(() => {})
-  }, [studentId])
-
-  async function logout() {
-    await fetch('/api/student/logout', { method: 'POST' })
-    router.push('/entrar')
-    router.refresh()
-  }
 
   useEffect(() => {
     fetch(`/api/students/${studentId}`)
@@ -146,14 +129,16 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
           <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 26, fontWeight: 700, marginBottom: '.5rem' }}>
             {t.hello}, {student.name} 👋
           </h1>
-          {signedIn && (
-            <button
-              onClick={logout}
-              style={{ flexShrink: 0, padding: '.35rem .75rem', borderRadius: 8, border: '1px solid rgba(255,255,255,.25)', background: 'transparent', color: 'rgba(255,255,255,.7)', fontSize: 12.5, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
-            >
-              {t.signOut}
-            </button>
-          )}
+          {/* Um botão só, e não dois: sair mora dentro da Conta, que é onde
+              também se cria a conta, se vê o plano e se recupera um pagamento
+              que não caiu. Quem chegou por link compartilhado vê o mesmo
+              botão — para essa pessoa, ele é o convite para ter uma conta. */}
+          <Link
+            href={`/learn/${studentId}/conta`}
+            style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', minHeight: 36, padding: '.35rem .75rem', borderRadius: 8, border: '1px solid rgba(255,255,255,.25)', color: 'rgba(255,255,255,.7)', fontSize: 12.5, fontWeight: 600, textDecoration: 'none' }}
+          >
+            {t.myAccount}
+          </Link>
         </div>
         {student.testResult && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
@@ -182,7 +167,8 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
         <TrilhasHome studentId={studentId} niveis={modules} lessons={student.lessons} t={t} />
       )}
 
-      {/* Access reminder — only for students who have no account to log in with */}
+      {/* Quem não tem conta ainda: o convite para criar uma, com o link como
+          saída de emergência enquanto ela não existe. */}
       {student && !student.email && <SaveLinkNote studentId={studentId} t={t} />}
 
       {/* Review queue */}
@@ -376,6 +362,15 @@ function MyMistakes({ attempts, modules, t }: {
  * only way back. Students who signed up can log in at /entrar, so they do not
  * see this.
  */
+/**
+ * O convite para ter uma conta, para quem entrou pelo teste de nível.
+ *
+ * Antes isto era só "salve este link". Funcionava enquanto o curso era todo
+ * de graça: perder o link custava o progresso. Com plano pago custa dinheiro,
+ * porque a Kiwify avisa a compra pelo e-mail e um aluno sem e-mail não pode
+ * ser encontrado. Então a conta virou o pedido principal, e copiar o link
+ * ficou como saída de emergência enquanto ela não existe.
+ */
 function SaveLinkNote({ studentId, t }: { studentId: string; t: UiStrings }) {
   const [copied, setCopied] = useState(false)
   const [url, setUrl] = useState('')
@@ -394,19 +389,27 @@ function SaveLinkNote({ studentId, t }: { studentId: string; t: UiStrings }) {
 
   return (
     <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>
-      <div style={{ background: 'var(--gold-light)', border: '1px solid #e8d48a', borderRadius: 12, padding: '.85rem 1rem', display: 'flex', alignItems: 'center', gap: '.85rem', flexWrap: 'wrap' }}>
-        <div style={{ flex: '1 1 260px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13, fontWeight: 700, color: 'var(--note-ink)', marginBottom: '.15rem' }}><Icon name="key" size={14} /> {t.saveYourLink}</div>
-          <div style={{ fontSize: 12, color: 'var(--note-ink)', lineHeight: 1.5 }}>{t.saveYourLinkHint}</div>
+      <div style={{ background: 'var(--gold-light)', border: '1px solid #e8d48a', borderRadius: 12, padding: '.95rem 1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '.4rem', fontSize: 13.5, fontWeight: 700, color: 'var(--note-ink)', marginBottom: '.2rem' }}>
+          <Icon name="key" size={14} /> {t.createAccount}
         </div>
-        <button
-          onClick={copy}
-          style={{ flexShrink: 0, minHeight: 44, padding: '.55rem .9rem', borderRadius: 9, border: '1px solid #e8d48a', background: 'var(--surface)', color: 'var(--ink)', fontSize: 12.5, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer' }}
-        >
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.35rem' }}>
-            {copied ? '✓' : <Icon name="copy" size={14} />} {copied ? t.linkCopied : t.copyLink}
-          </span>
-        </button>
+        <div style={{ fontSize: 12.5, color: 'var(--note-ink)', lineHeight: 1.55 }}>{t.createAccountHint}</div>
+        <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', marginTop: '.75rem' }}>
+          <Link
+            href={`/learn/${studentId}/conta`}
+            style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, padding: '.55rem 1rem', borderRadius: 999, background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 13.5, fontWeight: 700, textDecoration: 'none' }}
+          >
+            {t.createAccount}
+          </Link>
+          <button
+            onClick={copy}
+            style={{ minHeight: 44, padding: '.55rem .9rem', borderRadius: 999, border: '1px solid #e8d48a', background: 'var(--surface)', color: 'var(--ink2)', fontSize: 12.5, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer' }}
+          >
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.35rem' }}>
+              {copied ? '✓' : <Icon name="copy" size={14} />} {copied ? t.linkCopied : t.copyLink}
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   )

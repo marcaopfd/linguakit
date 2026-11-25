@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Prisma } from '@prisma/client'
 import { prisma, withDb } from '@/lib/db'
+import { aplicarPagamentoPendente } from '@/lib/pagamento'
 import { hashPassword, isValidEmail, normaliseEmail, setStudentCookie } from '@/lib/student-auth'
 
 /**
@@ -52,7 +53,15 @@ export async function POST(req: NextRequest) {
       },
     }))
 
-    const res = NextResponse.json({ ok: true, studentId })
+    // O mesmo encontro do cadastro: quem fez o teste, pagou, e só depois pôs
+    // e-mail e senha na conta recebe o plano aqui. E pelo mesmo motivo de lá,
+    // uma falha aqui não pode derrubar a conta que já foi gravada.
+    let pago = null
+    try {
+      pago = await aplicarPagamentoPendente(cleanEmail, studentId)
+    } catch { /* recuperável em "já paguei e não liberou" */ }
+
+    const res = NextResponse.json({ ok: true, studentId, plano: pago?.plan ?? null })
     if (!setStudentCookie(res, studentId)) {
       return NextResponse.json({ error: 'Servidor sem SESSION_SECRET configurado.' }, { status: 500 })
     }

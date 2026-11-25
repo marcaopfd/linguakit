@@ -41,6 +41,19 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
     await withDb(() => prisma.exerciseAttempt.deleteMany({ where: { studentId: id } }))
     await withDb(() => prisma.testResult.deleteMany({ where: { studentId: id } }))
     await withDb(() => prisma.studentLesson.deleteMany({ where: { studentId: id } }))
+
+    // PaymentNotice não tem chave estrangeira — ele é o registro do que a
+    // Kiwify disse, e existe mesmo sem aluno. Mas guarda o e-mail da pessoa,
+    // então sai junto com ela. Apagar pelo id E pelo e-mail: o aviso que
+    // chegou antes de a conta existir só conhece o e-mail.
+    const indo = await withDb(() => prisma.student.findUnique({
+      where: { id },
+      select: { email: true },
+    }))
+    await withDb(() => prisma.paymentNotice.deleteMany({
+      where: indo?.email ? { OR: [{ studentId: id }, { email: indo.email }] } : { studentId: id },
+    }))
+
     await withDb(() => prisma.student.delete({ where: { id } }))
     return NextResponse.json({ ok: true })
   } catch (err) {

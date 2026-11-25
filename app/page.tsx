@@ -141,7 +141,16 @@ export default function HomePage() {
         >
           Fazer o teste de inglês →
         </Link>
-        <div style={{ marginTop: '.8rem' }}>
+        {/* Quem já decidiu não precisa do teste para entrar. Antes, a única
+            porta para o cadastro era a tela de login, o que fazia criar conta
+            parecer coisa de quem já tinha uma. */}
+        <div style={{ marginTop: '.8rem', fontSize: 13.5, color: 'var(--ink3)' }}>
+          Não quer fazer o teste agora?{' '}
+          <Link href="/cadastro" style={{ color: 'var(--ink)', fontWeight: 600, display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>
+            Criar minha conta
+          </Link>
+        </div>
+        <div style={{ marginTop: '.4rem' }}>
           <Link href="/test?lang=pt" style={{ fontSize: 13.5, color: 'var(--ink3)', display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>
             Looking for the Portuguese course?
           </Link>

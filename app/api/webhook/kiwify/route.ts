@@ -14,9 +14,14 @@ export const runtime = 'nodejs'
  * alguém liberando o plano de graça com um curl. Sem segredo configurado, o
  * endpoint recusa tudo, em vez de aceitar tudo.
  *
- * O que ele faz é pequeno de propósito: acha o aluno pelo e-mail da compra e
- * grava plano, estado e validade. Toda a régua de o que isso abre vive em
- * lib/plano.ts, não aqui.
+ * O que ele faz é pequeno de propósito: grava o aviso, acha o aluno pelo
+ * e-mail da compra e escreve plano, estado e validade nele. Toda a régua de o
+ * que isso abre vive em lib/plano.ts, não aqui.
+ *
+ * O aviso é gravado SEMPRE, mesmo quando não acha ninguém. Antes, um aviso
+ * sem dono virava um 200 e sumia — e quem comprasse o plano anual antes de
+ * criar a conta esperaria a renovação, um ano depois, para receber o que já
+ * tinha pagado. Agora o cadastro procura esse aviso guardado.
  */
 
 /** O que cada evento da Kiwify significa para o nosso aluno. */
@@ -84,24 +89,44 @@ export async function POST(req: NextRequest) {
     ? new Date(aviso.Subscription.next_payment)
     : null
 
+  const valeAte = renovaEm && !Number.isNaN(renovaEm.getTime()) ? renovaEm : null
+
   try {
-    const atualizados = await withDb(() => prisma.student.updateMany({
+    // Quem é o dono, se já houver um. A busca vem antes da escrita para que o
+    // aviso gravado já saiba se encontrou alguém.
+    const dono = await withDb(() => prisma.student.findFirst({
       where: { email },
+      select: { id: true },
+    }))
+
+    if (dono) {
+      await withDb(() => prisma.student.update({
+        where: { id: dono.id },
+        data: {
+          plan: plano,
+          planStatus: regra.estado,
+          renewsAt: valeAte,
+          billingRef: aviso.subscription_id ?? undefined,
+        },
+      }))
+    }
+
+    await withDb(() => prisma.paymentNotice.create({
       data: {
+        email,
         plan: plano,
-        planStatus: regra.estado,
-        renewsAt: renovaEm && !Number.isNaN(renovaEm.getTime()) ? renovaEm : null,
-        billingRef: aviso.subscription_id ?? undefined,
+        status: regra.estado,
+        renewsAt: valeAte,
+        billingRef: aviso.subscription_id ?? null,
+        event: evento,
+        studentId: dono?.id ?? null,
+        appliedAt: dono ? new Date() : null,
       },
     }))
 
-    // Comprou antes de criar a conta. Não é erro: quando ela se cadastrar com
-    // o mesmo e-mail, o próximo aviso de renovação a encontra.
-    if (!atualizados.count) {
-      return NextResponse.json({ ok: true, aviso: 'sem conta com este e-mail' })
-    }
-
-    return NextResponse.json({ ok: true })
+    // Sem dono não é erro: é alguém que comprou antes de criar a conta, ou
+    // que pagou com outro e-mail. O aviso fica guardado esperando.
+    return NextResponse.json({ ok: true, aplicado: Boolean(dono) })
   } catch {
     return NextResponse.json({ error: 'Não foi possível gravar' }, { status: 500 })
   }

@@ -81,6 +81,7 @@ describe('teacher-only handlers check for themselves', () => {
     ['app/api/students/[id]/route.ts', 'DELETE'],
     ['app/api/students/[id]/reset-password/route.ts', 'POST'],
     ['app/api/attempts/route.ts', 'GET'],
+    ['app/api/pagamentos/route.ts', 'GET'],
   ]
 
   it.each(teacherOnly)('%s %s calls requireTeacher', (file, method) => {

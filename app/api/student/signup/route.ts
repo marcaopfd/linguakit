@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Prisma } from '@prisma/client'
 import { prisma, withDb } from '@/lib/db'
+import { aplicarPagamentoPendente } from '@/lib/pagamento'
 import { callerKey, noteAccountCreated, tooManyAccounts } from '@/lib/rate-limit'
 import { hashPassword, isValidEmail, normaliseEmail, setStudentCookie } from '@/lib/student-auth'
 
@@ -43,7 +44,19 @@ export async function POST(req: NextRequest) {
 
     noteAccountCreated(key)
 
-    const res = NextResponse.json({ ok: true, studentId: student.id })
+    // Quem pagou antes de se cadastrar recebe o plano agora, e não na
+    // renovação. O aviso da Kiwify estava guardado esperando este e-mail.
+    //
+    // Protegido por um try próprio: a conta já existe neste ponto, e deixar
+    // uma falha daqui cair no catch de baixo devolveria "não foi possível
+    // criar a conta" para alguém cuja conta foi criada. Se isto falhar, o
+    // plano se recupera depois no botão "já paguei e não liberou".
+    let pago = null
+    try {
+      pago = await aplicarPagamentoPendente(cleanEmail, student.id)
+    } catch { /* a conta vale mais que o plano; ele se recupera na Conta */ }
+
+    const res = NextResponse.json({ ok: true, studentId: student.id, plano: pago?.plan ?? null })
     if (!setStudentCookie(res, student.id)) {
       return NextResponse.json({ error: 'Servidor sem SESSION_SECRET configurado.' }, { status: 500 })
     }

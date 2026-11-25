@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { linkDoCheckout } from '@/lib/kiwify'
 import { Icon } from '@/components/Icon'
 import { Rabisco } from '@/components/Rabisco'
 
@@ -16,18 +17,21 @@ import { Rabisco } from '@/components/Rabisco'
  * boleto e parcelado, e o app nunca vê dado de cartão. Enquanto os links não
  * estiverem configurados, a tela diz isso em vez de fingir um botão.
  */
-export function TelaDePlanos({ studentId, nome, plano, estado, valendo, renovaEm, linkMensal, linkAnual }: {
+export function TelaDePlanos({ studentId, nome, email, plano, estado, valendo, renovaEm, linkMensal, linkAnual }: {
   studentId: string
   nome: string
   plano: string
   estado: string
   valendo: boolean
   renovaEm: string | null
+  /** Nulo em quem veio pelo teste e ainda não criou conta. */
+  email: string | null
   linkMensal: string | null
   linkAnual: string | null
 }) {
   const [escolhido, setEscolhido] = useState<'annual' | 'monthly'>('annual')
-  const link = escolhido === 'annual' ? linkAnual : linkMensal
+  const base = escolhido === 'annual' ? linkAnual : linkMensal
+  const link = base && email ? linkDoCheckout(base, email, nome) : base
 
   if (valendo) {
     return (
@@ -82,7 +86,17 @@ export function TelaDePlanos({ studentId, nome, plano, estado, valendo, renovaEm
           />
         </div>
 
-        {link ? (
+        {!email ? (
+          <>
+            <Link href={`/learn/${studentId}/conta`} style={botao('var(--accent)', 'var(--on-accent)')}>
+              Criar minha conta para assinar →
+            </Link>
+            <p style={{ fontSize: 12.5, color: 'var(--ink3)', textAlign: 'center', marginTop: '.9rem', lineHeight: 1.55 }}>
+              A Kiwify avisa a compra pelo seu e-mail, e é por ele que o plano
+              chega até você. Sem conta, o pagamento não teria onde cair.
+            </p>
+          </>
+        ) : link ? (
           <a href={link} target="_blank" rel="noopener noreferrer" style={botao('var(--accent)', 'var(--on-accent)')}>
             Assinar o plano {escolhido === 'annual' ? 'anual' : 'mensal'} →
           </a>
@@ -93,10 +107,14 @@ export function TelaDePlanos({ studentId, nome, plano, estado, valendo, renovaEm
           </div>
         )}
 
-        <p style={{ fontSize: 12.5, color: 'var(--ink3)', textAlign: 'center', marginTop: '.9rem', lineHeight: 1.55 }}>
-          Pagamento pela Kiwify — Pix, boleto ou cartão parcelado.<br />
-          Dá para pausar a assinatura por até três meses sem perder nada.
-        </p>
+        {email && (
+          <p style={{ fontSize: 12.5, color: 'var(--ink3)', textAlign: 'center', marginTop: '.9rem', lineHeight: 1.55 }}>
+            Pagamento pela Kiwify — Pix, boleto ou cartão parcelado.<br />
+            O checkout já vem com <strong style={{ color: 'var(--ink2)' }}>{email}</strong>: não troque,
+            ou a compra não acha a sua conta.<br />
+            Dá para pausar a assinatura por até três meses sem perder nada.
+          </p>
+        )}
       </main>
     </div>
   )
