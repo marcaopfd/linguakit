@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import { accentTag } from '@/lib/accents'
 import { prisma, withDb } from '@/lib/db'
+import { Paywall } from '@/components/Paywall'
+import { motivoDoBloqueio } from '@/lib/plano'
 import { trilhaPorId } from '@/lib/trilhas'
 import { LicoesDoModulo } from './view'
 
@@ -16,6 +18,7 @@ export default async function ModuloDaTrilhaPage({
     where: { id: studentId },
     select: {
       course: true, accent: true,
+      plan: true, planStatus: true, renewsAt: true,
       lessons: { select: { moduleId: true, unitIndex: true } },
       testResult: { select: { course: true } },
     },
@@ -26,6 +29,9 @@ export default async function ModuloDaTrilhaPage({
   const trilha = trilhaPorId(trilhaId)
   const modulo = trilha?.modulos.find(m => m.id === moduloId)
   if (curso !== 'en' || !trilha || !modulo || !modulo.licoes.length) notFound()
+
+  const bloqueio = motivoDoBloqueio(student, { tipo: 'modulo-de-trilha', numero: modulo.numero })
+  if (bloqueio) return <Paywall studentId={studentId} oQue={modulo.nome} motivo={bloqueio} />
 
   return (
     <LicoesDoModulo

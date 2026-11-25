@@ -25,6 +25,7 @@ const PUBLIC_PATHS = [
   '/cadastro',       // student self-signup
   '/entrar',         // student login
   '/api/student',    // student signup / login / logout / me
+  '/api/webhook',    // avisos de pagamento: quem chama é o provedor, não o aluno
   '/api/progress',   // student portal marks units complete
   '/api/attempts',   // POST records an answer; GET is teacher-only
   '/api/pdf',        // student downloads the unit PDF from inside a lesson

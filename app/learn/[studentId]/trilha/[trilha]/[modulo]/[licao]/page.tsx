@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import { accentTag } from '@/lib/accents'
 import { prisma, withDb } from '@/lib/db'
+import { Paywall } from '@/components/Paywall'
+import { motivoDoBloqueio } from '@/lib/plano'
 import { trilhaPorId } from '@/lib/trilhas'
 import { PlayerDaLicao } from './view'
 
@@ -14,7 +16,11 @@ export default async function LicaoPage({
 
   const student = await withDb(() => prisma.student.findUnique({
     where: { id: studentId },
-    select: { course: true, accent: true, testResult: { select: { course: true } } },
+    select: {
+      course: true, accent: true,
+      plan: true, planStatus: true, renewsAt: true,
+      testResult: { select: { course: true } },
+    },
   }))
   if (!student) notFound()
 
@@ -24,6 +30,11 @@ export default async function LicaoPage({
   const posicao = Number(indice)
   const licao = modulo?.licoes[posicao]
   if (curso !== 'en' || !trilha || !modulo || !licao) notFound()
+
+  // Do segundo módulo em diante é plano pago. O primeiro fica aberto para a
+  // pessoa saber o que está comprando antes de comprar.
+  const bloqueio = motivoDoBloqueio(student, { tipo: 'modulo-de-trilha', numero: modulo.numero })
+  if (bloqueio) return <Paywall studentId={studentId} oQue={modulo.nome} motivo={bloqueio} />
 
   return (
     <PlayerDaLicao

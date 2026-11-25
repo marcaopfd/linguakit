@@ -17,11 +17,13 @@ import { uiStrings } from '@/lib/ui-strings'
  * inteiro para saber onde está indo — esconder o que vem depois é o que faz
  * um curso parecer que acabou.
  */
-export function MapaDaTrilha({ studentId, trilha, niveis, lessons }: {
+export function MapaDaTrilha({ studentId, trilha, niveis, lessons, assinante }: {
   studentId: string
   trilha: Trilha
   niveis: ModuleSummary[]
   lessons: { moduleId: string; unitIndex: number }[]
+  /** Quem não assina vê o cadeado do segundo módulo em diante. */
+  assinante: boolean
 }) {
   // No curso de inglês quem lê a interface é brasileiro.
   const t = uiStrings('en-US')
@@ -54,9 +56,9 @@ export function MapaDaTrilha({ studentId, trilha, niveis, lessons }: {
 
       <main style={{ maxWidth: 620, margin: '0 auto', padding: '1.25rem 1rem 0' }}>
         {/* O kit só existe onde há frase escrita para pôr nele. */}
-        {temKit && (
+        {temKit && assinante && (
           <a
-            href={`/api/pdf/trilha/${trilha.id}`}
+            href={`/api/pdf/trilha/${trilha.id}?s=${studentId}`}
             style={{
               display: 'flex', alignItems: 'center', gap: '.75rem',
               background: 'var(--surface)', border: '1px solid var(--border)',
@@ -80,6 +82,9 @@ export function MapaDaTrilha({ studentId, trilha, niveis, lessons }: {
           const feitas = feitasEm(mod.id)
           const pronto = total > 0 && feitas >= total
           const href = caminhoDoModulo(studentId, trilha, mod)
+          // A trilha Geral é de graça inteira; nas outras, o primeiro módulo
+          // é a amostra e o resto é do plano.
+          const fechado = trilha.id !== 'geral' && !assinante && mod.numero > 1
 
           const corpo = (
             <div style={{ display: 'flex', gap: '.85rem', alignItems: 'flex-start' }}>
@@ -112,7 +117,12 @@ export function MapaDaTrilha({ studentId, trilha, niveis, lessons }: {
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem', marginBottom: '.2rem' }}>
                   <span style={{ fontSize: 17 }}>{mod.emoji}</span>
-                  <span style={{ fontSize: 15.5, fontWeight: 700, color: 'var(--ink)' }}>{mod.nome}</span>
+                  <span style={{ flex: 1, minWidth: 0, fontSize: 15.5, fontWeight: 700, color: 'var(--ink)' }}>{mod.nome}</span>
+                  {fechado && (
+                    <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '.25rem', background: 'var(--paper)', border: '1px solid var(--border)', borderRadius: 999, padding: '.15rem .5rem', fontSize: 10.5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.05em', color: 'var(--ink3)' }}>
+                      <Icon name="key" size={11} /> Plano
+                    </span>
+                  )}
                 </div>
                 <p style={{ fontSize: 13, color: 'var(--ink2)', lineHeight: 1.5 }}>{mod.consegue}</p>
 

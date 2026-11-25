@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { EN_MODULES } from '@/lib/curriculum-en'
 import { toCourseIndex } from '@/lib/curriculum-index'
 import { prisma, withDb } from '@/lib/db'
+import { assinaturaValendo } from '@/lib/plano'
 import { trilhaPorId } from '@/lib/trilhas'
 import { MapaDaTrilha } from './view'
 
@@ -20,7 +21,12 @@ export default async function TrilhaPage({
 
   const student = await withDb(() => prisma.student.findUnique({
     where: { id: studentId },
-    select: { course: true, lessons: { select: { moduleId: true, unitIndex: true } }, testResult: { select: { course: true } } },
+    select: {
+      course: true,
+      plan: true, planStatus: true, renewsAt: true,
+      lessons: { select: { moduleId: true, unitIndex: true } },
+      testResult: { select: { course: true } },
+    },
   }))
   if (!student) notFound()
 
@@ -34,6 +40,7 @@ export default async function TrilhaPage({
       trilha={trilha}
       niveis={toCourseIndex(EN_MODULES)}
       lessons={student.lessons}
+      assinante={assinaturaValendo(student)}
     />
   )
 }

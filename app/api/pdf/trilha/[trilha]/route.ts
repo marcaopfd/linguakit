@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { renderToStream, DocumentProps } from '@react-pdf/renderer'
 import { createElement, JSXElementConstructor, ReactElement } from 'react'
 import { mayReadCourse } from '@/lib/auth'
+import { prisma, withDb } from '@/lib/db'
+import { podeAbrir } from '@/lib/plano'
 import { KitDeBolsoPDF } from '@/lib/pdf-kit'
 import { trilhaPorId } from '@/lib/trilhas'
 import { frasesDoKit } from '@/lib/trilhas/kit'
@@ -15,6 +17,19 @@ export async function GET(
 ) {
   if (!(await mayReadCourse(req))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  // Quem pediu. `mayReadCourse` já conferiu que este aluno existe.
+  const studentId = new URL(req.url).searchParams.get('s')
+  const student = studentId
+    ? await withDb(() => prisma.student.findUnique({
+        where: { id: studentId },
+        select: { plan: true, planStatus: true, renewsAt: true },
+      }))
+    : null
+
+  if (!student || !podeAbrir(student, { tipo: 'kit-de-bolso' })) {
+    return NextResponse.json({ error: 'O kit faz parte do plano completo' }, { status: 402 })
   }
 
   const { trilha: trilhaId } = await params

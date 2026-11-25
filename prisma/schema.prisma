@@ -25,6 +25,18 @@ model Student {
   /// Explicit newsletter consent, with the moment it was given.
   newsletter   Boolean   @default(false)
   newsletterAt DateTime?
+
+  /// O plano: "free", "monthly" ou "annual". Quem nunca pagou fica em free,
+  /// que é o padrão — nenhum aluno existente muda de comportamento.
+  plan       String    @default("free")
+  /// "active", "paused" ou "canceled". Pausar existe porque metade de quem
+  /// assina este curso assina por causa de uma viagem que acaba.
+  planStatus String    @default("active")
+  /// Até quando o acesso pago vale. Nulo em quem nunca pagou.
+  renewsAt   DateTime?
+  /// O identificador da assinatura no provedor de pagamento, para o webhook
+  /// achar o aluno quando o aviso chegar sem o e-mail.
+  billingRef String?   @unique
   createdAt DateTime @default(now())
 
   testResult TestResult?
