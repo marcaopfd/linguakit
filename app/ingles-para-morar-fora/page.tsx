@@ -4,6 +4,7 @@ import { Icon } from '@/components/Icon'
 import { RodapeLegal } from '@/components/PaginaLegal'
 import { Rabisco } from '@/components/Rabisco'
 import { numerosDoProduto } from '@/lib/numeros'
+import { PRECOS, emReais, mensalidadeDoAnual } from '@/lib/precos'
 import { TRILHAS } from '@/lib/trilhas'
 import { EstilosDaLanding } from './estilos'
 
@@ -384,12 +385,12 @@ export default function LandingPage() {
             <div style={{ fontSize: 12.5, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 700 }}>
               O plano completo
             </div>
-            <div className="lp-display" style={{ marginTop: '1rem' }}>R$ 149</div>
+            <div className="lp-display" style={{ marginTop: '1rem' }}>{emReais(PRECOS.annual.centavos)}</div>
             <p className="lp-lead" style={{ color: 'rgba(242,244,233,.72)', marginTop: '.6rem' }}>
-              por ano — R$ 12,42 por mês
+              por ano — {mensalidadeDoAnual()} por mês
             </p>
             <p style={{ fontSize: '.95rem', color: 'rgba(242,244,233,.5)', marginTop: '1rem', lineHeight: 1.65 }}>
-              Ou R$ 19,90 por mês, para cancelar quando quiser.<br />
+              Ou {emReais(PRECOS.monthly.centavos)} por mês, para cancelar quando quiser.<br />
               Dá para pausar por até três meses sem perder nada — porque a
               viagem acaba e o curso não precisa acabar junto.
             </p>

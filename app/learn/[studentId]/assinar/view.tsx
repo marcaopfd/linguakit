@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { linkDoCheckout } from '@/lib/kiwify'
+import { PRECOS, descontoDoAnual, emReais, mensalidadeDoAnual } from '@/lib/precos'
 import { Icon } from '@/components/Icon'
 import { Rabisco } from '@/components/Rabisco'
 
@@ -78,11 +79,14 @@ export function TelaDePlanos({ studentId, nome, email, plano, estado, valendo, r
         <div style={{ display: 'flex', flexDirection: 'column', gap: '.65rem' }}>
           <Plano
             id="annual" escolhido={escolhido === 'annual'} onEscolher={setEscolhido}
-            titulo="Anual" preco="R$ 149" por="por ano" nota="R$ 12,42 por mês — 37% mais barato" selo="Recomendado"
+            titulo={PRECOS.annual.titulo} preco={emReais(PRECOS.annual.centavos)} por={PRECOS.annual.por}
+            nota={`${mensalidadeDoAnual()} por mês — ${descontoDoAnual()}% mais barato`}
+            selo="Recomendado"
           />
           <Plano
             id="monthly" escolhido={escolhido === 'monthly'} onEscolher={setEscolhido}
-            titulo="Mensal" preco="R$ 19,90" por="por mês" nota="Cancele ou pause quando quiser"
+            titulo={PRECOS.monthly.titulo} preco={emReais(PRECOS.monthly.centavos)} por={PRECOS.monthly.por}
+            nota="Cancele ou pause quando quiser"
           />
         </div>
 
