@@ -1,0 +1,58 @@
+[
+  {
+    "videoId": "JGwWNGJdvx8",
+    "canal": "Ed Sheeran",
+    "titulo": "Ed Sheeran — Shape of You (Official Music Video)",
+    "tipo": "musica",
+    "trilha": "geral",
+    "modulo": "a2",
+    "nivel": "A2",
+    "foco": "entender inglês cantado em velocidade real",
+    "inicio": 0,
+    "fim": 0,
+    "status": "proposta",
+    "nota": "Inglês simples e muito repetido; bom para a primeira aula de música. Falta você aprovar e me dizer o trecho."
+  },
+  {
+    "videoId": "09R8_2nJtjg",
+    "canal": "Maroon5VEVO",
+    "titulo": "Maroon 5 — Sugar (Official Music Video)",
+    "tipo": "musica",
+    "trilha": "geral",
+    "modulo": "a2",
+    "nivel": "A2",
+    "foco": "contração falada e vocabulário do dia a dia",
+    "inicio": 0,
+    "fim": 0,
+    "status": "proposta",
+    "nota": "O clipe é uma sequência de casamentos: dá uma aula inteira de cumprimento e festa."
+  },
+  {
+    "videoId": "1G4isv_Fylg",
+    "canal": "Coldplay",
+    "titulo": "Coldplay — Paradise (Official Video)",
+    "tipo": "musica",
+    "trilha": "geral",
+    "modulo": "b1",
+    "nivel": "B1",
+    "foco": "interpretar o que a música conta sem traduzir a letra",
+    "inicio": 0,
+    "fim": 0,
+    "status": "proposta",
+    "nota": "O clipe conta uma história sem palavra nenhuma — serve para o passo de interpretação."
+  },
+  {
+    "videoId": "fJ9rUzIMcZQ",
+    "canal": "Queen Official",
+    "titulo": "Queen — Bohemian Rhapsody (Official Video Remastered)",
+    "tipo": "musica",
+    "trilha": "geral",
+    "modulo": "b2",
+    "nivel": "B2",
+    "foco": "inglês cantado difícil, para treinar ouvido",
+    "inicio": 0,
+    "fim": 0,
+    "status": "proposta",
+    "nota": "Difícil de propósito. Só vale se o passo de interpretação vier antes do de compreensão."
+  }
+]

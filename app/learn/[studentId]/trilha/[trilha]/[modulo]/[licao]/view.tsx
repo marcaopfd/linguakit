@@ -5,12 +5,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AutoAudioToggle, useAutoSpeak } from '@/components/AutoAudio'
 import { Caramelo } from '@/components/Caramelo'
+import { SceneClip } from '@/components/SceneClip'
 import { Icon } from '@/components/Icon'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
 import type { DrillItem } from '@/lib/drill'
 import { isCorrect } from '@/lib/drill'
 import { speak } from '@/lib/speak'
-import type { Bloco, Licao, ModuloTrilha, Trilha } from '@/lib/trilhas'
+import type { Bloco, Cena, Licao, ModuloTrilha, Trilha } from '@/lib/trilhas'
 import { Simulador } from './simulador'
 import { uiStrings } from '@/lib/ui-strings'
 
@@ -106,6 +107,10 @@ export function PlayerDaLicao({ studentId, trilha, modulo, licao, posicao, ultim
           <Frases frases={tela.frases} lang={lang} audio={audio} t={t} onSeguir={avancar} />
         )}
 
+        {tela.tipo === 'cena' && (
+          <CenaDaLicao cena={tela.cena} lang={lang} audio={audio} t={t} onResponder={registrar} onSeguir={avancar} />
+        )}
+
         {tela.tipo === 'item' && (
           <Exercicio
             key={tela.item.key}
@@ -139,6 +144,7 @@ export function PlayerDaLicao({ studentId, trilha, modulo, licao, posicao, ultim
 type Tela =
   | { tipo: 'situacao'; texto: string }
   | { tipo: 'frases'; frases: { en: string; pt: string; armadilha?: string }[] }
+  | { tipo: 'cena'; cena: Cena }
   | { tipo: 'item'; item: DrillItem }
   | { tipo: 'simulacao'; simulacaoId: string }
   | { tipo: 'resumo' }
@@ -148,6 +154,7 @@ function achatar(blocos: Bloco[]): Tela[] {
   for (const b of blocos) {
     if (b.tipo === 'situacao') out.push({ tipo: 'situacao', texto: b.texto })
     else if (b.tipo === 'frases') out.push({ tipo: 'frases', frases: b.frases })
+    else if (b.tipo === 'cena') out.push({ tipo: 'cena', cena: b.cena })
     else if (b.tipo === 'pratica') for (const item of b.itens) out.push({ tipo: 'item', item })
     else if (b.tipo === 'simulacao') out.push({ tipo: 'simulacao', simulacaoId: b.simulacaoId })
     else if (b.tipo === 'resumo') out.push({ tipo: 'resumo' })
@@ -205,6 +212,144 @@ function Frases({ frases, lang, audio, t, onSeguir }: {
         ))}
       </div>
       <Seguir onClick={onSeguir} rotulo="Praticar" />
+    </div>
+  )
+}
+
+function CenaDaLicao({ cena, lang, audio, t, onResponder, onSeguir }: {
+  cena: Cena
+  lang: string
+  audio: ReturnType<typeof useVoice>
+  t: ReturnType<typeof uiStrings>
+  onResponder: (item: DrillItem, resposta: string, certo: boolean) => void
+  onSeguir: () => void
+}) {
+  const [etapa, setEtapa] = useState(0)
+  const perguntas = cena.perguntas
+
+  return (
+    <div className="lk-card">
+      <SceneClip
+        videoId={cena.videoId}
+        inicio={cena.inicio}
+        fim={cena.fim}
+        titulo={`${cena.titulo} · ${cena.canal}`}
+        foco={cena.foco}
+        naoCarregou="Este vídeo saiu do ar ou o canal desativou a incorporação. Siga para a prática — a lição não depende dele."
+      />
+
+      {/* As expressões: citação curta, uma de cada vez, com o sentido real.
+          É o que a lei permite e o que o aluno precisa levar. */}
+      {cena.expressoes.length > 0 && (
+        <div style={{ marginTop: '1.1rem' }}>
+          <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--ink3)', marginBottom: '.5rem' }}>
+            As expressões do trecho
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
+            {cena.expressoes.map(e => (
+              <div key={e.en} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '.7rem .85rem' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '.5rem' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 15.5, fontWeight: 600 }}>{e.en}</div>
+                    <div style={{ fontSize: 13, color: 'var(--ink3)', marginTop: 1 }}>{e.pt}</div>
+                  </div>
+                  <SpeakButton text={e.en} lang={lang} voice={audio.voice} ready={audio.ready} listen={t.listen} />
+                </div>
+                {e.nota && (
+                  <div style={{ marginTop: '.45rem', fontSize: 12.5, color: 'var(--note-ink)', background: 'var(--note-bg)', border: '1px solid var(--note-border)', borderRadius: 9, padding: '.5rem .6rem', lineHeight: 1.45 }}>
+                    {e.nota}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {perguntas[etapa] && (
+        <PerguntaDaCena
+          key={etapa}
+          pergunta={perguntas[etapa]}
+          indice={etapa}
+          total={perguntas.length}
+          onResponder={(certo, resposta) => {
+            onResponder(
+              {
+                key: `cena-${cena.videoId}-${etapa}`,
+                type: 'A cena',
+                instruction: perguntas[etapa].pergunta,
+                question: perguntas[etapa].pergunta,
+                expected: perguntas[etapa].opcoes[perguntas[etapa].resposta],
+              },
+              resposta,
+              certo,
+            )
+          }}
+          onSeguir={() => (etapa + 1 < perguntas.length ? setEtapa(etapa + 1) : onSeguir())}
+        />
+      )}
+
+      {!perguntas.length && <Seguir onClick={onSeguir} rotulo="Continuar" />}
+    </div>
+  )
+}
+
+function PerguntaDaCena({ pergunta, indice, total, onResponder, onSeguir }: {
+  pergunta: Cena['perguntas'][number]
+  indice: number
+  total: number
+  onResponder: (certo: boolean, resposta: string) => void
+  onSeguir: () => void
+}) {
+  const [escolha, setEscolha] = useState<number | null>(null)
+  const [conferido, setConferido] = useState(false)
+  const certo = escolha === pergunta.resposta
+
+  return (
+    <div style={{ marginTop: '1.25rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
+      <div style={{ fontSize: 11.5, color: 'var(--ink3)', marginBottom: '.35rem' }}>
+        Pergunta {indice + 1} de {total}
+      </div>
+      <p style={{ fontSize: 16, fontWeight: 500, lineHeight: 1.45, marginBottom: '.75rem' }}>{pergunta.pergunta}</p>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '.45rem' }}>
+        {pergunta.opcoes.map((opcao, i) => {
+          const escolhida = escolha === i
+          const certa = i === pergunta.resposta
+          let borda = 'var(--border)', fundo = 'var(--surface)', cor = 'var(--ink)'
+          if (conferido && certa) { borda = 'var(--green)'; fundo = 'var(--ok-bg)'; cor = 'var(--ok-ink)' }
+          else if (conferido && escolhida) { borda = 'var(--red)'; fundo = 'var(--bad-bg)'; cor = 'var(--red)' }
+          else if (escolhida) { borda = 'var(--ink)'; fundo = 'var(--paper)' }
+          return (
+            <button
+              key={i}
+              onClick={() => !conferido && setEscolha(i)}
+              style={{ textAlign: 'left', minHeight: 50, padding: '.75rem .9rem', borderRadius: 12, border: `1.5px solid ${borda}`, background: fundo, color: cor, fontSize: 14.5, fontFamily: 'inherit', cursor: conferido ? 'default' : 'pointer' }}
+            >
+              {opcao}
+            </button>
+          )
+        })}
+      </div>
+
+      {conferido && pergunta.porque && (
+        <div className="lk-rise" style={{ marginTop: '.7rem', fontSize: 13, color: 'var(--ink2)', lineHeight: 1.5, background: 'var(--paper)', border: '1px solid var(--border)', borderRadius: 10, padding: '.7rem .8rem' }}>
+          {pergunta.porque}
+        </div>
+      )}
+
+      <button
+        onClick={() => {
+          if (conferido) return onSeguir()
+          if (escolha === null) return
+          setConferido(true)
+          onResponder(certo, pergunta.opcoes[escolha])
+        }}
+        disabled={!conferido && escolha === null}
+        style={botaoPrincipal(!conferido && escolha === null)}
+      >
+        {conferido ? 'Continuar' : 'Conferir'}
+      </button>
     </div>
   )
 }

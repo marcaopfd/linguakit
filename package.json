@@ -11,7 +11,8 @@
     "start": "next start",
     "test": "vitest run",
     "test:watch": "vitest",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "check-scenes": "node scripts/check-scenes.mjs"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",
