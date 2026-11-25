@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Caramelo } from '@/components/Caramelo'
 import { SpeakButton, useVoice } from '@/components/SpeakButton'
-import { estrelas, precoApos, simulacaoPorId, type Opcao } from '@/lib/trilhas/simulacoes'
+import { ehMissao, estrelas, estrelasPorEstrategia, precoApos, simulacaoPorId, type Opcao } from '@/lib/trilhas/simulacoes'
 import { botaoPrincipal } from './view'
 
 /**
@@ -46,9 +46,10 @@ export function Simulador({ simulacaoId, lang, audio, onSeguir }: {
   if (acabou) {
     const saiu = escolhidas[escolhidas.length - 1]?.saiEmbora
     const final = saiu ? sim.precoMinimo : preco
-    const nota = estrelas(sim, final)
-    const bateu = final <= sim.meta
     const estrategias = escolhidas.map(o => o.estrategia).filter(Boolean) as string[]
+    const porMissao = ehMissao(sim)
+    const nota = porMissao ? estrelasPorEstrategia(sim, estrategias.length) : estrelas(sim, final)
+    const bateu = porMissao ? nota >= 2 : final <= sim.meta
     const melhores = escolhidas.filter(o => o.melhor)
 
     return (
@@ -60,10 +61,14 @@ export function Simulador({ simulacaoId, lang, audio, onSeguir }: {
           {'★'.repeat(nota)}<span style={{ color: 'var(--border)' }}>{'★'.repeat(3 - nota)}</span>
         </div>
         <h3 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 21, fontWeight: 700, marginTop: '.4rem' }}>
-          Você pagou {final} {sim.moeda}
+          {porMissao
+            ? bateu ? 'Você se saiu bem' : 'Dava para ir melhor'
+            : `Você pagou ${final} ${sim.moeda}`}
         </h3>
         <p style={{ fontSize: 13.5, color: 'var(--ink3)', marginTop: '.2rem' }}>
-          Meta: {sim.meta} {sim.moeda} {bateu ? '✅' : '— ficou acima'}
+          {porMissao
+            ? `${estrategias.length} de ${sim.precisaDe ?? sim.turnos.length} jogadas certas`
+            : `Meta: ${sim.meta} ${sim.moeda} ${bateu ? '✅' : '— ficou acima'}`}
         </p>
 
         {estrategias.length > 0 && (
@@ -103,10 +108,12 @@ export function Simulador({ simulacaoId, lang, audio, onSeguir }: {
             <div style={{ fontSize: 14.5, fontWeight: 700 }}>{sim.personagem}</div>
             <div style={{ fontSize: 12, color: 'var(--ink3)', lineHeight: 1.4 }}>{sim.papel}</div>
           </div>
-          <div style={{ flexShrink: 0, textAlign: 'right' }}>
-            <div style={{ fontSize: 10.5, textTransform: 'uppercase', letterSpacing: '.07em', color: 'var(--ink3)' }}>na mesa</div>
-            <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 700 }}>{preco}</div>
-          </div>
+          {!ehMissao(sim) && (
+            <div style={{ flexShrink: 0, textAlign: 'right' }}>
+              <div style={{ fontSize: 10.5, textTransform: 'uppercase', letterSpacing: '.07em', color: 'var(--ink3)' }}>na mesa</div>
+              <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 700 }}>{preco}</div>
+            </div>
+          )}
         </div>
         <div style={{ marginTop: '.6rem', fontSize: 12.5, color: 'var(--ink2)', background: 'var(--paper)', borderRadius: 10, padding: '.55rem .7rem' }}>
           🎯 {sim.missao}

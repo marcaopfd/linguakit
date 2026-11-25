@@ -42,12 +42,40 @@ export type Simulacao = {
   papel: string
   /** O que o aluno tem de conseguir, em português. */
   missao: string
+  /**
+   * Como esta conversa se mede.
+   *
+   * Barganha, táxi, aluguel e salário têm um número na mesa e o placar é esse
+   * número. Uma entrevista de cozinha não tem: o que se mede ali é quantas
+   * jogadas certas a pessoa fez — falar da experiência, perguntar do horário,
+   * dizer que pode começar já. As duas conversas usam o mesmo motor; só o
+   * placar muda.
+   */
+  placar?: 'preco' | 'missao'
+  /** Quantas jogadas certas a missão pede. Só para placar de missão. */
+  precisaDe?: number
   precoInicial: number
   /** Abaixo disto ele não vende, aconteça o que acontecer. */
   precoMinimo: number
   meta: number
   moeda: string
   turnos: Turno[]
+}
+
+/** Conversa medida em jogadas certas, não em dinheiro. */
+export function ehMissao(sim: Simulacao): boolean {
+  return sim.placar === 'missao'
+}
+
+/**
+ * A nota de uma conversa de missão: quantas estratégias o aluno usou contra
+ * quantas a missão pedia.
+ */
+export function estrelasPorEstrategia(sim: Simulacao, usadas: number): number {
+  const precisa = sim.precisaDe ?? sim.turnos.length
+  if (usadas >= precisa) return 3
+  if (usadas >= Math.ceil(precisa / 2)) return 2
+  return 1
 }
 
 export const SIMULACOES: Simulacao[] = [
@@ -464,6 +492,205 @@ export const SIMULACOES: Simulacao[] = [
             resposta: 'Thank you very much. Have a good evening.',
             respostaPt: 'Muito obrigado. Tenha uma boa noite.',
             melhor: 'Sorry, I think there may be a mistake — the first dish is still on here.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'aluguel-negociar',
+    personagem: 'Fiona',
+    papel: 'proprietária de um apartamento em Dublin, na visita',
+    missao: 'Feche o aluguel por no máximo 780 por mês. Ela pede 850.',
+    placar: 'preco',
+    precoInicial: 850,
+    precoMinimo: 760,
+    meta: 790,
+    moeda: 'euros',
+    turnos: [
+      {
+        fala: "So, what do you think? It's 850 a month, deposit of one month.",
+        falaPt: 'E então, o que achou? São 850 por mês, caução de um mês.',
+        opcoes: [
+          {
+            en: 'Are bills included at that price?',
+            pt: 'As contas estão incluídas nesse valor?',
+            corta: 35, estrategia: 'Perguntar o que está incluído',
+            resposta: "They're not, no. But look — I could do 820 if you cover the bills.",
+            respostaPt: 'Não estão. Mas olha — posso fazer 820 se você cobrir as contas.',
+          },
+          {
+            en: "It's a bit expensive.",
+            pt: 'É um pouco caro.',
+            corta: 0,
+            resposta: "It's the going rate around here, to be honest.",
+            respostaPt: 'É o preço da região, para ser honesta.',
+            melhor: 'Are bills included at that price?',
+          },
+          {
+            en: "I'll take it.",
+            pt: 'Eu fico com ele.',
+            corta: 0, fecha: true,
+            resposta: 'Grand, I will send you the lease tonight.',
+            respostaPt: 'Ótimo, mando o contrato hoje à noite.',
+            melhor: 'Are bills included at that price?',
+          },
+        ],
+      },
+      {
+        fala: 'Is that something you could work with?',
+        falaPt: 'Dá para você trabalhar com isso?',
+        opcoes: [
+          {
+            en: "I'm looking for a twelve-month let — would you consider 780?",
+            pt: 'Estou procurando um contrato de doze meses — você consideraria 780?',
+            corta: 30, estrategia: 'Oferecer contrato longo pelo preço',
+            resposta: "A full year? That does help me. Let's see... 790.",
+            respostaPt: 'Um ano inteiro? Isso me ajuda, sim. Deixa ver... 790.',
+          },
+          {
+            en: 'The place down the road is 790 with bills.',
+            pt: 'O apartamento da outra rua sai 790 com as contas.',
+            corta: 20, estrategia: 'Comparar com outro imóvel',
+            resposta: 'Is it now? Well, I would rather have a good tenant. 800.',
+            respostaPt: 'Ah, é? Bom, prefiro um bom inquilino. 800.',
+          },
+          {
+            en: 'I want a discount.',
+            pt: 'Eu quero desconto.',
+            corta: 0,
+            resposta: 'I have three other viewings today, love.',
+            respostaPt: 'Tenho outras três visitas hoje, querido.',
+            melhor: "I'm looking for a twelve-month let — would you consider 780?",
+          },
+        ],
+      },
+      {
+        fala: 'So where are we?',
+        falaPt: 'Então, como ficamos?',
+        opcoes: [
+          {
+            en: 'If we say 780, I can pay the deposit today.',
+            pt: 'Se ficar 780, pago a caução hoje.',
+            corta: 20, estrategia: 'Pagar a caução na hora', fecha: true,
+            resposta: 'Today? Done. I will get the paperwork sorted.',
+            respostaPt: 'Hoje? Fechado. Vou providenciar a papelada.',
+          },
+          {
+            en: "Thanks for showing me — I'll have a think.",
+            pt: 'Obrigado por mostrar — vou pensar.',
+            corta: 0, estrategia: 'Ir embora com educação', saiEmbora: true,
+            resposta: 'Hold on now — what would make it work for you today?',
+            respostaPt: 'Espera aí — o que faria funcionar para você hoje?',
+          },
+          {
+            en: 'Fine, I will pay what you asked.',
+            pt: 'Tudo bem, pago o que você pediu.',
+            corta: 0, fecha: true,
+            resposta: 'Lovely. Welcome to the building.',
+            respostaPt: 'Maravilha. Bem-vindo ao prédio.',
+            melhor: 'If we say 780, I can pay the deposit today.',
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 'entrevista-cozinha',
+    personagem: 'Chef Marco',
+    papel: 'chef de um restaurante italiano, na entrevista',
+    missao: 'Consiga o emprego: fale da sua experiência, mostre disponibilidade e pergunte o que importa.',
+    placar: 'missao',
+    precisaDe: 3,
+    precoInicial: 0,
+    precoMinimo: 0,
+    meta: 0,
+    moeda: '',
+    turnos: [
+      {
+        fala: "Thanks for coming in. So, tell me about your experience.",
+        falaPt: 'Obrigado por vir. Então, me fala da sua experiência.',
+        opcoes: [
+          {
+            en: "I've been working in kitchens for five years. I started as a kitchen porter and worked my way up.",
+            pt: 'Trabalho em cozinha há cinco anos. Comecei lavando prato e fui subindo.',
+            corta: 0, estrategia: 'Contar a trajetória, não só o cargo',
+            resposta: 'Worked your way up, did you? That tells me more than a CV.',
+            respostaPt: 'Foi subindo, é? Isso me diz mais do que um currículo.',
+          },
+          {
+            en: 'I work in kitchen since five years.',
+            pt: 'Trabalho em cozinha desde cinco anos.',
+            corta: 0,
+            resposta: 'Right... five years. And what did you do there?',
+            respostaPt: 'Certo... cinco anos. E o que você fazia lá?',
+            melhor: "I've been working in kitchens for five years.",
+          },
+          {
+            en: 'I can cook everything.',
+            pt: 'Eu sei cozinhar de tudo.',
+            corta: 0,
+            resposta: 'Everything, eh? Nobody cooks everything. What section were you on?',
+            respostaPt: 'De tudo, é? Ninguém cozinha de tudo. Em que praça você ficava?',
+            melhor: "I started as a kitchen porter and worked my way up.",
+          },
+        ],
+      },
+      {
+        fala: "It's a busy kitchen. Friday night we do two hundred covers. When could you start?",
+        falaPt: 'É uma cozinha movimentada. Sexta à noite fazemos duzentos cobertos. Quando poderia começar?',
+        opcoes: [
+          {
+            en: "I'm available to start straight away, and I have full working rights here.",
+            pt: 'Posso começar imediatamente, e tenho direito a trabalhar aqui.',
+            corta: 0, estrategia: 'Disponibilidade imediata e documentação em ordem',
+            resposta: 'Straight away and sorted for papers? You are ahead of most.',
+            respostaPt: 'Imediatamente e com a documentação em ordem? Você está à frente da maioria.',
+          },
+          {
+            en: 'Maybe next month, I think.',
+            pt: 'Talvez no mês que vem, eu acho.',
+            corta: 0,
+            resposta: 'Hm. I need someone for this Friday, to be honest.',
+            respostaPt: 'Hm. Preciso de alguém para esta sexta, para ser honesto.',
+            melhor: "I'm available to start straight away.",
+          },
+          {
+            en: 'Two hundred covers is a lot.',
+            pt: 'Duzentos cobertos é muita coisa.',
+            corta: 0,
+            resposta: 'It is. That is the job.',
+            respostaPt: 'É mesmo. O trabalho é esse.',
+            melhor: "I'm a fast learner and I don't mind hard work.",
+          },
+        ],
+      },
+      {
+        fala: 'Any questions for me?',
+        falaPt: 'Alguma pergunta para mim?',
+        opcoes: [
+          {
+            en: "What's the hourly rate, and how many hours a week are guaranteed?",
+            pt: 'Quanto é por hora, e quantas horas por semana são garantidas?',
+            corta: 0, estrategia: 'Perguntar valor e horas garantidas', fecha: true,
+            resposta: 'Thirteen fifty, and I can guarantee thirty hours. Trial shift Friday?',
+            respostaPt: 'Treze e cinquenta, e garanto trinta horas. Turno de experiência na sexta?',
+          },
+          {
+            en: 'Is there a trial shift?',
+            pt: 'Tem turno de experiência?',
+            corta: 0, estrategia: 'Perguntar pelo turno de experiência', fecha: true,
+            resposta: 'There is — Friday night. Come at five.',
+            respostaPt: 'Tem — sexta à noite. Venha às cinco.',
+          },
+          {
+            en: 'No, nothing.',
+            pt: 'Não, nada.',
+            corta: 0, fecha: true,
+            resposta: 'Alright. We will be in touch.',
+            respostaPt: 'Certo. Entraremos em contato.',
+            melhor: "What's the hourly rate, and how many hours a week are guaranteed?",
           },
         ],
       },

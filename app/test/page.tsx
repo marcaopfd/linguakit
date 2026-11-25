@@ -612,12 +612,12 @@ function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
   return (
     <div style={{ textAlign: 'left', background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.18)', borderRadius: 12, padding: '1rem' }}>
       <div style={{ fontSize: 13, fontWeight: 700, marginBottom: '.3rem', color: 'var(--on-panel)' }}>
-        {label('🔑 Crie sua senha para estudar sozinha', '🔑 Create a password to study on your own')}
+        {label('🔑 Crie sua conta para estudar quando quiser', '🔑 Create an account to study whenever you like')}
       </div>
       <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,.6)', lineHeight: 1.55, marginBottom: '.85rem' }}>
         {label(
-          'Assim você volta ao curso de qualquer aparelho, sem depender de guardar um link. Seu resultado do teste fica salvo.',
-          'This lets you come back from any device without having to keep a link. Your test result stays with you.',
+          'Você volta ao curso de qualquer aparelho, sem depender de guardar um link. O resultado do teste, o seu progresso e, se um dia assinar, o seu plano ficam todos na conta.',
+          'You can come back from any device without keeping a link. Your test result, your progress and — if you ever subscribe — your plan all live on the account.',
         )}
       </div>
 

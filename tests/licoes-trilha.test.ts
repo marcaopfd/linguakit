@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { TRILHAS } from '@/lib/trilhas'
-import { SIMULACOES, estrelas, precoApos, simulacaoPorId } from '@/lib/trilhas/simulacoes'
+import { SIMULACOES, ehMissao, estrelas, estrelasPorEstrategia, precoApos, simulacaoPorId } from '@/lib/trilhas/simulacoes'
 import { TAMANHO_DO_KIT, frasesDoKit, tamanhoDoKit } from '@/lib/trilhas/kit'
 
 const licoes = TRILHAS.flatMap(t => t.modulos.flatMap(m => m.licoes.map(l => ({ trilha: t.id, modulo: m.id, licao: l }))))
@@ -189,24 +189,42 @@ describe('a Trilha Viagem, inteira', () => {
 })
 
 describe('todas as simulações', () => {
+  const porPreco = SIMULACOES.filter(s => !ehMissao(s))
+  const porMissao = SIMULACOES.filter(ehMissao)
+
+  it('mede cada conversa pelo que ela tem na mesa', () => {
+    // Barganha e aluguel têm um número; entrevista de cozinha não tem, e
+    // forçar um preço ali seria inventar um placar que a conversa não tem.
+    expect(porPreco.length).toBeGreaterThanOrEqual(5)
+    expect(porMissao.map(s => s.id)).toEqual(['entrevista-cozinha'])
+    for (const s of porMissao) expect(s.precisaDe, s.id).toBeGreaterThan(0)
+  })
+
+  it('dá três estrelas na missão só a quem faz as jogadas que ela pede', () => {
+    for (const s of porMissao) {
+      expect(estrelasPorEstrategia(s, s.precisaDe!), s.id).toBe(3)
+      expect(estrelasPorEstrategia(s, 0), s.id).toBe(1)
+    }
+  })
+
   it('nunca dá três estrelas a quem joga mal', () => {
     // A folga da terceira estrela era fixa em 20, maior do que a negociação
     // inteira do restaurante: jogando mal, três estrelas.
-    for (const sim of SIMULACOES) {
+    for (const sim of porPreco) {
       const pior = sim.turnos.map(t => Math.min(...t.opcoes.map(o => o.corta)))
       expect(estrelas(sim, precoApos(sim, pior)), sim.id).toBe(1)
     }
   })
 
   it('dá três estrelas a quem joga tudo certo', () => {
-    for (const sim of SIMULACOES) {
+    for (const sim of porPreco) {
       const melhor = sim.turnos.map(t => Math.max(...t.opcoes.map(o => o.corta)))
       expect(estrelas(sim, precoApos(sim, melhor)), sim.id).toBe(3)
     }
   })
 
   it('deixa a meta alcançável e o mínimo abaixo dela', () => {
-    for (const sim of SIMULACOES) {
+    for (const sim of porPreco) {
       expect(sim.precoMinimo, sim.id).toBeLessThanOrEqual(sim.meta)
       expect(sim.meta, sim.id).toBeLessThan(sim.precoInicial)
       const melhor = sim.turnos.map(t => Math.max(...t.opcoes.map(o => o.corta)))
@@ -253,8 +271,13 @@ describe('o Kit de bolso', () => {
     expect(grupos).toEqual(ordemDosModulos)
   })
 
-  it('não inventa kit para trilha sem conteúdo', () => {
+  it('existe também para o Morar Fora, que já tem frases', () => {
     const morar = TRILHAS.find(t => t.id === 'morar-fora')!
-    expect(tamanhoDoKit(morar)).toBe(0)
+    expect(tamanhoDoKit(morar)).toBeGreaterThan(20)
+  })
+
+  it('não inventa kit para trilha sem conteúdo', () => {
+    const online = TRILHAS.find(t => t.id === 'online')!
+    expect(tamanhoDoKit(online)).toBe(0)
   })
 })

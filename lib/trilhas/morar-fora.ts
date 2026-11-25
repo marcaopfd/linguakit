@@ -1,3 +1,7 @@
+import { LICOES_ALUGUEL } from './morar-2-aluguel'
+import { LICOES_ENTREVISTA } from './morar-4-entrevista'
+import { LICOES_COZINHA } from './morar-5-cozinha'
+import { LICOES_OBRA } from './morar-6-obra'
 import type { ModuloTrilha } from './tipos'
 
 /**
@@ -21,7 +25,7 @@ export const MODULOS_MORAR_FORA: ModuloTrilha[] = [
     id: 'morar-2', numero: 2, emoji: '🔑',
     nome: 'Alugar casa',
     consegue: 'Você consegue ligar para um anúncio, perguntar o que importa na visita e negociar o aluguel.',
-    licoes: [],
+    licoes: LICOES_ALUGUEL,
   },
   {
     id: 'morar-3', numero: 3, emoji: '📄',
@@ -33,19 +37,19 @@ export const MODULOS_MORAR_FORA: ModuloTrilha[] = [
     id: 'morar-4', numero: 4, emoji: '💼',
     nome: 'Entrevista de emprego',
     consegue: 'Você consegue responder às perguntas que sempre caem, falar da sua experiência e negociar salário e horário.',
-    licoes: [],
+    licoes: LICOES_ENTREVISTA,
   },
   {
     id: 'morar-5', numero: 5, emoji: '👨‍🍳',
     nome: 'Inglês da cozinha',
     consegue: 'Você consegue trabalhar numa cozinha profissional: entender a comanda, o chef e o ritmo do serviço.',
-    licoes: [],
+    licoes: LICOES_COZINHA,
   },
   {
     id: 'morar-6', numero: 6, emoji: '🦺',
     nome: 'Inglês da obra',
     consegue: 'Você consegue entender a ordem do encarregado, nomear ferramenta e material e seguir a regra de segurança.',
-    licoes: [],
+    licoes: LICOES_OBRA,
   },
   {
     id: 'morar-7', numero: 7, emoji: '🛵',
