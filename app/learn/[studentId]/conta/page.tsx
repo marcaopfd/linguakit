@@ -21,7 +21,7 @@ export default async function ContaPage({
   const student = await withDb(() => prisma.student.findUnique({
     where: { id: studentId },
     select: {
-      name: true, email: true, course: true,
+      name: true, email: true, course: true, recoveryCodeAt: true,
       plan: true, planStatus: true, renewsAt: true,
       testResult: { select: { course: true } },
     },
@@ -42,6 +42,7 @@ export default async function ContaPage({
          endereço configurado, a tela não inventa um: pede o e-mail usado e
          não promete um canal que não existe. */
       suporte={process.env.LINGUAKIT_SUPORTE ?? null}
+      codigoEm={student.recoveryCodeAt ? student.recoveryCodeAt.toISOString() : null}
     />
   )
 }

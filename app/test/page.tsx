@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, Suspense } from 'react'
+import { CodigoDeRecuperacao } from '@/components/CodigoDeRecuperacao'
 import { Icon, type IconName } from '@/components/Icon'
 import { useSearchParams } from 'next/navigation'
 import { Caramelo } from '@/components/Caramelo'
@@ -549,6 +550,8 @@ function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
   const [claimed, setClaimed] = useState(false)
+  // O código de recuperação, mostrado uma vez só, na própria tela de sucesso.
+  const [codigo, setCodigo] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
   const [url, setUrl] = useState(`/learn/${studentId}`)
 
@@ -570,7 +573,10 @@ function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
     })
     const data = await res.json().catch(() => ({}))
 
-    if (res.ok) setClaimed(true)
+    if (res.ok) {
+      setClaimed(true)
+      if (data.codigo) setCodigo(data.codigo)
+    }
     else setError(data.error ?? (isEN ? 'Não foi possível criar a conta.' : 'Could not create your account.'))
     setSaving(false)
   }
@@ -599,6 +605,11 @@ function CourseLink({ studentId, isEN }: { studentId: string; isEN: boolean }) {
             'You can now sign in from any device with your email and password, and study at your own pace.',
           )}
         </div>
+        {codigo && (
+          <div style={{ marginBottom: '.85rem' }}>
+            <CodigoDeRecuperacao codigo={codigo} emPortugues={isEN} />
+          </div>
+        )}
         <a
           href={`/learn/${studentId}`}
           style={{ display: 'block', textAlign: 'center', padding: '.7rem 1rem', background: 'var(--surface)', borderRadius: 9, color: 'var(--ink)', textDecoration: 'none', fontSize: 14, fontWeight: 700 }}

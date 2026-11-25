@@ -24,6 +24,7 @@ const PUBLIC_PATHS = [
   '/learn',          // student portal, addressed by unguessable student id
   '/cadastro',       // student self-signup
   '/entrar',         // student login
+  '/recuperar',     // esqueci a senha: e-mail + código de recuperação
   '/api/student',    // student signup / login / logout / me
   '/api/webhook',    // avisos de pagamento: quem chama é o provedor, não o aluno
   '/api/progress',   // student portal marks units complete

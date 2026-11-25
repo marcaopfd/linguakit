@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { CodigoDeRecuperacao } from '@/components/CodigoDeRecuperacao'
 import { Icon } from '@/components/Icon'
 
 /**
@@ -17,7 +18,7 @@ import { Icon } from '@/components/Icon'
  * com outro e-mail. Esse botão existe porque a alternativa é a pessoa pagar,
  * não receber nada e não ter a quem recorrer dentro do produto.
  */
-export function TelaDaConta({ studentId, nome, email, curso, plano, estado, valendo, renovaEm, suporte }: {
+export function TelaDaConta({ studentId, nome, email, curso, plano, estado, valendo, renovaEm, suporte, codigoEm }: {
   studentId: string
   nome: string
   email: string | null
@@ -28,6 +29,8 @@ export function TelaDaConta({ studentId, nome, email, curso, plano, estado, vale
   renovaEm: string | null
   /** O e-mail de suporte, quando houver um configurado. */
   suporte: string | null
+  /** Quando o código de recuperação em vigor foi gerado. Nulo se não há um. */
+  codigoEm: string | null
 }) {
   const emPortugues = curso === 'en'
 
@@ -56,6 +59,7 @@ export function TelaDaConta({ studentId, nome, email, curso, plano, estado, vale
               valendo={valendo}
               renovaEm={renovaEm}
               suporte={suporte}
+              codigoEm={codigoEm}
               emPortugues={emPortugues}
             />
           : <CriarConta studentId={studentId} emPortugues={emPortugues} />}
@@ -72,6 +76,7 @@ function CriarConta({ studentId, emPortugues }: { studentId: string; emPortugues
   const [novidades, setNovidades] = useState(false)
   const [erro, setErro] = useState('')
   const [enviando, setEnviando] = useState(false)
+  const [codigo, setCodigo] = useState<string | null>(null)
 
   const pronto = email.trim().length > 3 && senha.length >= 8
 
@@ -89,9 +94,11 @@ function CriarConta({ studentId, emPortugues }: { studentId: string; emPortugues
       })
       const dados = await res.json()
       if (res.ok) {
-        // O servidor pode ter achado um pagamento esperando por este e-mail.
-        // Recarregar é o jeito honesto de mostrar o estado novo.
-        router.refresh()
+        // O código aparece antes de a tela virar: é a única vez que ele
+        // existe em claro. Só depois de "guardei" é que recarregamos, e aí o
+        // servidor já pode ter achado um pagamento esperando este e-mail.
+        if (dados.codigo) setCodigo(dados.codigo)
+        else router.refresh()
       } else {
         setErro(dados.error ?? 'Não foi possível criar a conta.')
         setEnviando(false)
@@ -100,6 +107,27 @@ function CriarConta({ studentId, emPortugues }: { studentId: string; emPortugues
       setErro('Sem conexão agora. Tente de novo.')
       setEnviando(false)
     }
+  }
+
+  if (codigo) {
+    return (
+      <>
+        <div style={{ ...cartao(), marginBottom: '.75rem' }}>
+          <h2 style={{ fontSize: 17, fontWeight: 700, color: 'var(--ink)' }}>
+            {emPortugues ? 'Conta criada' : 'Account created'}
+          </h2>
+          <p style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.55, marginTop: '.25rem' }}>
+            {emPortugues
+              ? 'Falta uma coisa só, e ela leva dez segundos.'
+              : 'One last thing, and it takes ten seconds.'}
+          </p>
+        </div>
+        <CodigoDeRecuperacao codigo={codigo} emPortugues={emPortugues} />
+        <button type="button" onClick={() => router.refresh()} style={botao(true)}>
+          {emPortugues ? 'Guardei. Continuar' : 'Saved it. Continue'}
+        </button>
+      </>
+    )
   }
 
   return (
@@ -163,7 +191,7 @@ function CriarConta({ studentId, emPortugues }: { studentId: string; emPortugues
 }
 
 /** Quem já tem e-mail e senha: o estado do plano e o que fazer com ele. */
-function ContaPronta({ studentId, email, plano, estado, valendo, renovaEm, suporte, emPortugues }: {
+function ContaPronta({ studentId, email, plano, estado, valendo, renovaEm, suporte, codigoEm, emPortugues }: {
   studentId: string
   email: string
   plano: string
@@ -171,6 +199,7 @@ function ContaPronta({ studentId, email, plano, estado, valendo, renovaEm, supor
   valendo: boolean
   renovaEm: string | null
   suporte: string | null
+  codigoEm: string | null
   emPortugues: boolean
 }) {
   const router = useRouter()
@@ -264,6 +293,12 @@ function ContaPronta({ studentId, email, plano, estado, valendo, renovaEm, supor
         )}
       </div>
 
+      <SenhaERecuperacao
+        studentId={studentId}
+        codigoEm={codigoEm}
+        emPortugues={emPortugues}
+      />
+
       <button type="button" onClick={sair} style={{ ...botaoFraco(), marginTop: '1.25rem' }}>
         {emPortugues ? 'Sair desta conta' : 'Sign out'}
       </button>
@@ -318,4 +353,168 @@ function botaoFraco(): React.CSSProperties {
     border: '1px solid var(--border)', color: 'var(--ink2)',
     fontSize: 14, fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer',
   }
+}
+
+/**
+ * Senha e código de recuperação: as duas coisas que decidem se a pessoa ainda
+ * vai conseguir entrar daqui a seis meses.
+ *
+ * As duas pedem a senha atual quando não há sessão neste navegador. Quem
+ * chegou só com o link /learn/<id> não troca senha nem tira código novo — o
+ * link é a chave de ler o curso, e deixá-lo valer aqui faria um link
+ * compartilhado sem pensar virar a conta de outra pessoa.
+ */
+function SenhaERecuperacao({ studentId, codigoEm, emPortugues }: {
+  studentId: string
+  codigoEm: string | null
+  emPortugues: boolean
+}) {
+  const [aberto, setAberto] = useState<'nenhum' | 'senha' | 'codigo'>('nenhum')
+  const [atual, setAtual] = useState('')
+  const [nova, setNova] = useState('')
+  const [recado, setRecado] = useState('')
+  const [erro, setErro] = useState('')
+  const [enviando, setEnviando] = useState(false)
+  const [codigoNovo, setCodigoNovo] = useState<string | null>(null)
+
+  function limpar() {
+    setAtual('')
+    setNova('')
+    setErro('')
+    setRecado('')
+    setCodigoNovo(null)
+  }
+
+  async function trocarSenha(e: React.FormEvent) {
+    e.preventDefault()
+    if (nova.length < 8 || enviando) return
+    setEnviando(true)
+    setErro('')
+    setRecado('')
+    try {
+      const res = await fetch('/api/student/password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId, atual, nova }),
+      })
+      const dados = await res.json()
+      if (res.ok) {
+        setRecado(emPortugues ? 'Senha trocada.' : 'Password changed.')
+        setAtual('')
+        setNova('')
+      } else {
+        setErro(dados.error ?? (emPortugues ? 'Não deu certo.' : 'It did not work.'))
+      }
+    } catch {
+      setErro(emPortugues ? 'Sem conexão agora.' : 'No connection right now.')
+    }
+    setEnviando(false)
+  }
+
+  async function gerarCodigo(e: React.FormEvent) {
+    e.preventDefault()
+    if (enviando) return
+    setEnviando(true)
+    setErro('')
+    try {
+      const res = await fetch('/api/student/recovery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId, senha: atual }),
+      })
+      const dados = await res.json()
+      if (res.ok) {
+        setCodigoNovo(dados.codigo)
+        setAtual('')
+      } else {
+        setErro(dados.error ?? (emPortugues ? 'Não deu certo.' : 'It did not work.'))
+      }
+    } catch {
+      setErro(emPortugues ? 'Sem conexão agora.' : 'No connection right now.')
+    }
+    setEnviando(false)
+  }
+
+  return (
+    <div style={{ ...cartao(), marginTop: '.75rem' }}>
+      <div style={{ fontSize: 11.5, textTransform: 'uppercase', letterSpacing: '.07em', color: 'var(--ink3)', fontWeight: 600 }}>
+        {emPortugues ? 'Senha e recuperação' : 'Password and recovery'}
+      </div>
+      <p style={{ fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.55, marginTop: '.4rem' }}>
+        {codigoEm
+          ? (emPortugues
+            ? `Você tem um código de recuperação, gerado em ${new Date(codigoEm).toLocaleDateString('pt-BR')}. Se não souber mais onde ele está, gere outro — o antigo deixa de valer.`
+            : `You have a recovery code, created on ${new Date(codigoEm).toLocaleDateString('en-IE')}. If you no longer know where it is, create another — the old one stops working.`)
+          : (emPortugues
+            ? 'Você ainda não tem um código de recuperação. Ele é o que devolve a sua conta se você esquecer a senha — e, sem ele, só restaria pedir ajuda ao professor.'
+            : 'You have no recovery code yet. It is what gets your account back if you forget your password — without it, the only way back is asking your teacher.')}
+      </p>
+
+      {codigoNovo && (
+        <div style={{ marginTop: '.75rem' }}>
+          <CodigoDeRecuperacao codigo={codigoNovo} emPortugues={emPortugues} />
+        </div>
+      )}
+
+      {aberto === 'nenhum' && !codigoNovo && (
+        <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', marginTop: '.75rem' }}>
+          <button type="button" onClick={() => { limpar(); setAberto('codigo') }} style={{ ...botaoFraco(), marginTop: 0, flex: '1 1 160px', width: 'auto' }}>
+            {codigoEm
+              ? (emPortugues ? 'Gerar novo código' : 'New recovery code')
+              : (emPortugues ? 'Criar meu código' : 'Create my code')}
+          </button>
+          <button type="button" onClick={() => { limpar(); setAberto('senha') }} style={{ ...botaoFraco(), marginTop: 0, flex: '1 1 160px', width: 'auto' }}>
+            {emPortugues ? 'Trocar a senha' : 'Change password'}
+          </button>
+        </div>
+      )}
+
+      {aberto === 'senha' && (
+        <form onSubmit={trocarSenha} style={{ marginTop: '.5rem' }}>
+          <label style={rotulo()}>
+            {emPortugues ? 'Senha atual' : 'Current password'}
+            <input type="password" value={atual} onChange={e => setAtual(e.target.value)} autoComplete="current-password" style={campo()} />
+          </label>
+          <label style={rotulo()}>
+            {emPortugues ? 'Senha nova (mínimo 8 caracteres)' : 'New password (at least 8 characters)'}
+            <input type="password" value={nova} onChange={e => setNova(e.target.value)} autoComplete="new-password" style={campo()} />
+          </label>
+          <button type="submit" disabled={nova.length < 8 || enviando} style={botao(nova.length >= 8 && !enviando)}>
+            {emPortugues ? 'Trocar a senha' : 'Change password'}
+          </button>
+        </form>
+      )}
+
+      {aberto === 'codigo' && !codigoNovo && (
+        <form onSubmit={gerarCodigo} style={{ marginTop: '.5rem' }}>
+          <label style={rotulo()}>
+            {emPortugues ? 'Sua senha, para confirmar' : 'Your password, to confirm'}
+            <input type="password" value={atual} onChange={e => setAtual(e.target.value)} autoComplete="current-password" style={campo()} />
+          </label>
+          <p style={{ fontSize: 11.5, color: 'var(--ink3)', lineHeight: 1.5, marginTop: '.4rem' }}>
+            {emPortugues
+              ? 'Se você já entrou com senha neste aparelho, pode deixar em branco.'
+              : 'If you already signed in with your password on this device, you can leave it blank.'}
+          </p>
+          <button type="submit" disabled={enviando} style={botao(!enviando)}>
+            {enviando
+              ? (emPortugues ? 'Gerando…' : 'Creating…')
+              : (emPortugues ? 'Gerar o código' : 'Create the code')}
+          </button>
+        </form>
+      )}
+
+      {(erro || recado) && (
+        <p style={{ fontSize: 12.5, color: erro ? 'var(--ink)' : 'var(--ink2)', lineHeight: 1.55, marginTop: '.6rem' }}>
+          {erro || recado}
+        </p>
+      )}
+
+      {aberto !== 'nenhum' && (
+        <button type="button" onClick={() => { limpar(); setAberto('nenhum') }} style={{ ...botaoFraco(), marginTop: '.5rem' }}>
+          {emPortugues ? 'Fechar' : 'Close'}
+        </button>
+      )}
+    </div>
+  )
 }

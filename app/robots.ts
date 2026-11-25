@@ -14,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
-      allow: ['/', '/test', '/cadastro', '/entrar'],
+      allow: ['/', '/test', '/cadastro', '/entrar', '/recuperar'],
       disallow: ['/learn/', '/painel', '/students', '/login', '/api/'],
     },
     sitemap: 'https://linguakit.vercel.app/sitemap.xml',

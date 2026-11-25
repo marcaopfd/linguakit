@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { CodigoDeRecuperacao } from '@/components/CodigoDeRecuperacao'
 import { useRouter } from 'next/navigation'
 
 const COURSES = [
@@ -18,6 +19,12 @@ export default function SignupPage() {
   const [newsletter, setNewsletter] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  // Quando a conta nasce, o código de recuperação aparece uma vez — e a
+  // pessoa só entra no curso depois de ver essa tela. Mandar direto para a
+  // aula faria o código passar despercebido justamente em quem mais vai
+  // precisar dele.
+  const [codigo, setCodigo] = useState<string | null>(null)
+  const [criado, setCriado] = useState<string | null>(null)
 
   const ready = name.trim() && email.trim() && password.length >= 8 && course
 
@@ -35,11 +42,46 @@ export default function SignupPage() {
     const data = await res.json()
 
     if (res.ok) {
-      router.push(`/learn/${data.studentId}`)
+      setCriado(data.studentId)
+      if (data.codigo) setCodigo(data.codigo)
+      else router.push(`/learn/${data.studentId}`)
     } else {
       setError(data.error ?? 'Não foi possível criar a conta.')
       setLoading(false)
     }
+  }
+
+  if (codigo && criado) {
+    return (
+      <div style={{ minHeight: '100vh', background: 'var(--cream)', padding: '2rem 1.5rem 4rem' }}>
+        <div style={{ maxWidth: 420, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
+            <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 26, fontWeight: 700, marginBottom: '.3rem' }}>
+              Conta criada
+            </h1>
+            <p style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.5 }}>
+              Falta uma coisa só, e ela leva dez segundos.
+            </p>
+          </div>
+
+          <CodigoDeRecuperacao codigo={codigo} />
+
+          <button
+            onClick={() => router.push(`/learn/${criado}`)}
+            style={{
+              width: '100%', minHeight: 50, marginTop: '1rem', borderRadius: 999, border: 'none',
+              background: 'var(--accent)', color: 'var(--on-accent)',
+              fontSize: 15, fontWeight: 700, fontFamily: 'inherit', cursor: 'pointer',
+            }}
+          >
+            Guardei. Começar o curso →
+          </button>
+          <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--ink3)', marginTop: '.7rem', lineHeight: 1.5 }}>
+            Você pode gerar outro código quando quiser, em Minha conta.
+          </p>
+        </div>
+      </div>
+    )
   }
 
   return (

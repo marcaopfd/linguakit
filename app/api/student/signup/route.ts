@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client'
 import { prisma, withDb } from '@/lib/db'
 import { aplicarPagamentoPendente } from '@/lib/pagamento'
 import { callerKey, noteAccountCreated, tooManyAccounts } from '@/lib/rate-limit'
+import { gerarCodigo, hashDoCodigo } from '@/lib/recovery'
 import { hashPassword, isValidEmail, normaliseEmail, setStudentCookie } from '@/lib/student-auth'
 
 export async function POST(req: NextRequest) {
@@ -31,6 +32,10 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // O código de recuperação nasce com a conta. É a única vez que ele existe
+    // em claro: a tela mostra, a pessoa guarda, e o banco fica só com o hash.
+    const codigo = gerarCodigo()
+
     const student = await withDb(() => prisma.student.create({
       data: {
         name: name.trim(),
@@ -39,6 +44,8 @@ export async function POST(req: NextRequest) {
         course,
         newsletter: optedIn,
         newsletterAt: optedIn ? new Date() : null,
+        recoveryCode: hashDoCodigo(codigo),
+        recoveryCodeAt: new Date(),
       },
     }))
 
@@ -56,7 +63,7 @@ export async function POST(req: NextRequest) {
       pago = await aplicarPagamentoPendente(cleanEmail, student.id)
     } catch { /* a conta vale mais que o plano; ele se recupera na Conta */ }
 
-    const res = NextResponse.json({ ok: true, studentId: student.id, plano: pago?.plan ?? null })
+    const res = NextResponse.json({ ok: true, studentId: student.id, plano: pago?.plan ?? null, codigo })
     if (!setStudentCookie(res, student.id)) {
       return NextResponse.json({ error: 'Servidor sem SESSION_SECRET configurado.' }, { status: 500 })
     }

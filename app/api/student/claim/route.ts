@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Prisma } from '@prisma/client'
 import { prisma, withDb } from '@/lib/db'
 import { aplicarPagamentoPendente } from '@/lib/pagamento'
+import { gerarCodigo, hashDoCodigo } from '@/lib/recovery'
 import { hashPassword, isValidEmail, normaliseEmail, setStudentCookie } from '@/lib/student-auth'
 
 /**
@@ -43,11 +44,15 @@ export async function POST(req: NextRequest) {
     }
 
     const optedIn = newsletter === true
+    // Mesma regra do cadastro: o código nasce junto com a conta.
+    const codigo = gerarCodigo()
     await withDb(() => prisma.student.update({
       where: { id: studentId },
       data: {
         email: cleanEmail,
         password: hashPassword(password),
+        recoveryCode: hashDoCodigo(codigo),
+        recoveryCodeAt: new Date(),
         newsletter: optedIn,
         newsletterAt: optedIn ? new Date() : null,
       },
@@ -61,7 +66,7 @@ export async function POST(req: NextRequest) {
       pago = await aplicarPagamentoPendente(cleanEmail, studentId)
     } catch { /* recuperável em "já paguei e não liberou" */ }
 
-    const res = NextResponse.json({ ok: true, studentId, plano: pago?.plan ?? null })
+    const res = NextResponse.json({ ok: true, studentId, plano: pago?.plan ?? null, codigo })
     if (!setStudentCookie(res, studentId)) {
       return NextResponse.json({ error: 'Servidor sem SESSION_SECRET configurado.' }, { status: 500 })
     }

@@ -22,6 +22,15 @@ model Student {
   /// Which accent the course is spoken in, as a BCP-47 tag — "en-IE" for
   /// someone moving to Ireland. Null means the course default.
   accent    String?
+  /// O código de recuperação, guardado só como hash scrypt — igual à senha.
+  /// É o que devolve o acesso a quem esqueceu a senha enquanto não existe
+  /// envio de e-mail. Nulo nas contas criadas antes de ele existir, e em
+  /// quem já gastou o seu sem gerar outro.
+  recoveryCode   String?
+  /// Quando o código em vigor foi gerado. Serve para a tela dizer "gerado em
+  /// tal dia" e para saber que o antigo não vale mais.
+  recoveryCodeAt DateTime?
+
   /// Explicit newsletter consent, with the moment it was given.
   newsletter   Boolean   @default(false)
   newsletterAt DateTime?
