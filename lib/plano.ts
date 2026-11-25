@@ -8,7 +8,7 @@
  * O princípio da divisão: o que já estava construído e pago continua de graça
  * — o teste de nível, as 50 unidades do curso Geral, a palavra do dia, a
  * revisão. O que se cobra é o que ninguém mais tem: as trilhas escritas para
- * quem vai viajar ou morar fora, as conversas e o kit de bolso.
+ * quem vai viajar ou morar fora, as conversas, o kit de bolso e as músicas.
  *
  * O primeiro módulo de cada trilha fica aberto de propósito. Vender uma trilha
  * que a pessoa nunca abriu é vender uma promessa; depois do módulo 1 ela já
@@ -32,6 +32,8 @@ export type Recurso =
   | { tipo: 'simulacao' }
   /** O PDF para levar na viagem. */
   | { tipo: 'kit-de-bolso' }
+  /** Uma música da seção de Músicas. A primeira de cada família é aberta. */
+  | { tipo: 'musica'; livre: boolean }
   /** O curso A1–C2, a palavra do dia, a revisão e o teste. */
   | { tipo: 'curso-geral' }
   | { tipo: 'palavra-do-dia' }
@@ -70,6 +72,11 @@ export function podeAbrir(aluno: AlunoComPlano, recurso: Recurso, agora: Date = 
     // O primeiro módulo de cada trilha é a amostra.
     case 'modulo-de-trilha':
       return recurso.numero <= 1 || assinaturaValendo(aluno, agora)
+
+    // Uma música de cada nível de dificuldade abre sem pagar, pela mesma
+    // razão do módulo 1: a pessoa precisa descobrir onde o ouvido dela está.
+    case 'musica':
+      return recurso.livre || assinaturaValendo(aluno, agora)
 
     case 'simulacao':
     case 'kit-de-bolso':

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import type { ModuleSummary } from '@/lib/curriculum-index'
+import { MUSICAS } from '@/lib/musicas'
 import { levelTone } from '@/lib/levels'
 import { TRILHAS, concluidosNa, modulosDa, trilhaPorId, type Trilha } from '@/lib/trilhas'
 import { uiStrings } from '@/lib/ui-strings'
@@ -123,6 +124,20 @@ export function TrilhasHome({ studentId, niveis, lessons, t }: {
           </div>
         </Link>
       )}
+
+      {/* As músicas: a parte que ninguém mais tem */}
+      <Link href={`/learn/${studentId}/musicas`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '.7rem', marginTop: '.7rem', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '.85rem 1rem' }}>
+          <span style={{ fontSize: 20, flexShrink: 0 }}>🎧</span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <span style={{ display: 'block', fontSize: 14, fontWeight: 700 }}>Músicas</span>
+            <span style={{ display: 'block', fontSize: 12.5, color: 'var(--ink3)', marginTop: 1 }}>
+              {MUSICAS.length} músicas para ouvir, entender e interpretar
+            </span>
+          </span>
+          <span style={{ flexShrink: 0, color: 'var(--ink3)', fontSize: 18 }}>›</span>
+        </div>
+      </Link>
 
       {/* O que mais existe aqui dentro */}
       <div style={{ marginTop: '1.1rem' }}>

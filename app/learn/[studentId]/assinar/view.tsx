@@ -65,7 +65,7 @@ export function TelaDePlanos({ studentId, nome, plano, estado, valendo, renovaEm
           <p style={{ fontSize: 14.5, color: 'rgba(242,244,233,.7)', lineHeight: 1.55, marginTop: '.55rem' }}>
             {estado === 'paused'
               ? 'Sua assinatura está pausada. Retome e tudo volta de onde parou.'
-              : 'O curso do A1 ao C2 continua de graça. O plano abre as trilhas de viagem e de mudança, as conversas e o kit de bolso.'}
+              : 'O curso do A1 ao C2 continua de graça. O plano abre as trilhas de viagem e de mudança, as conversas, o kit de bolso e as quarenta músicas.'}
           </p>
         </div>
       </header>

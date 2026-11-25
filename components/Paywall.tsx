@@ -53,6 +53,7 @@ export function Paywall({ studentId, oQue, motivo }: {
             ['As conversas', 'Negocie com o vendedor, o taxista e a recepção — e veja o que daria para dizer melhor.'],
             ['Kit de bolso', 'As 50 frases em PDF, para usar no celular sem internet.'],
             ['Morar e Trabalhar Fora', 'Dez módulos: aluguel, entrevista, cozinha, obra.'],
+            ['Quarenta músicas', 'Do pop ao rap: ouvir, entender e interpretar com o trecho certo.'],
           ].map(([titulo, texto]) => (
             <div key={titulo} style={{ display: 'flex', gap: '.7rem', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '.85rem 1rem' }}>
               <span style={{ flexShrink: 0, color: 'var(--ink)' }}><Icon name="check" size={17} /></span>
