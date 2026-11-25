@@ -25,6 +25,7 @@ const PUBLIC_PATHS = [
   '/cadastro',       // student self-signup
   '/entrar',         // student login
   '/recuperar',     // esqueci a senha: e-mail + código de recuperação
+  '/obrigado',      // a volta da Kiwify depois do pagamento
   '/api/student',    // student signup / login / logout / me
   '/api/webhook',    // avisos de pagamento: quem chama é o provedor, não o aluno
   '/api/progress',   // student portal marks units complete

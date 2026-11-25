@@ -118,3 +118,27 @@ describe('o checkout leva o comprador junto', () => {
     expect(planos).toContain('/conta')
   })
 })
+
+describe('a volta da Kiwify', () => {
+  const pagina = ler('app/obrigado/page.tsx')
+  const proxy = ler('proxy.ts')
+
+  it('deixa a página de obrigado aberta a quem não tem sessão de professor', () => {
+    // É para onde a Kiwify manda o comprador. Atrás de qualquer login, o
+    // dinheiro entraria e a pessoa bateria numa porta fechada.
+    const publicas = proxy.slice(proxy.indexOf('const PUBLIC_PATHS'), proxy.indexOf('function isUnder'))
+    expect(publicas).toContain("'/obrigado'")
+  })
+
+  it('descobre quem voltou pelo cookie, já que a Kiwify não manda parâmetro', () => {
+    expect(pagina).toContain('readStudentIdFromToken')
+    expect(pagina).toContain('STUDENT_COOKIE')
+  })
+
+  it('tenta casar o pagamento guardado antes de dizer que está esperando', () => {
+    const pos = pagina.indexOf('aplicarPagamentoPendente')
+    const esperando = pagina.indexOf("estado=\"esperando\"")
+    expect(pos).toBeGreaterThan(0)
+    expect(esperando).toBeGreaterThan(pos)
+  })
+})

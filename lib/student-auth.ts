@@ -44,10 +44,16 @@ export function createStudentToken(studentId: string): string | null {
 }
 
 export function readStudentId(req: NextRequest): string | null {
+  return readStudentIdFromToken(req.cookies.get(STUDENT_COOKIE)?.value ?? null)
+}
+
+/**
+ * The same check, for a Server Component, which reads the cookie through
+ * `await cookies()` instead of a request object.
+ */
+export function readStudentIdFromToken(token: string | null | undefined): string | null {
   const secret = process.env.SESSION_SECRET
   if (!secret) return null
-
-  const token = req.cookies.get(STUDENT_COOKIE)?.value
   if (!token) return null
 
   const cut = token.lastIndexOf('.')
