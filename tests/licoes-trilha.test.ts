@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { TRILHAS } from '@/lib/trilhas'
 import { SIMULACOES, estrelas, precoApos, simulacaoPorId } from '@/lib/trilhas/simulacoes'
+import { TAMANHO_DO_KIT, frasesDoKit, tamanhoDoKit } from '@/lib/trilhas/kit'
 
 const licoes = TRILHAS.flatMap(t => t.modulos.flatMap(m => m.licoes.map(l => ({ trilha: t.id, modulo: m.id, licao: l }))))
 
@@ -219,5 +220,41 @@ describe('todas as simulações', () => {
       expect(sim.papel.trim(), sim.id).not.toBe('')
       expect(sim.missao.length, sim.id).toBeGreaterThan(30)
     }
+  })
+})
+
+describe('o Kit de bolso', () => {
+  const viagem = TRILHAS.find(t => t.id === 'viagem')!
+
+  it('cabe no bolso: não passa de cinquenta frases', () => {
+    // Uma lista de cento e trinta frases não se consulta na fila da imigração.
+    expect(tamanhoDoKit(viagem)).toBeLessThanOrEqual(TAMANHO_DO_KIT)
+    expect(tamanhoDoKit(viagem)).toBeGreaterThanOrEqual(40)
+  })
+
+  it('leva primeiro as frases que se erram sob pressão', () => {
+    // Toda frase com armadilha entra: é o motivo de o kit existir.
+    const noKit = new Set(frasesDoKit(viagem).flatMap(g => g.frases.map(f => f.en)))
+    const comArmadilha = viagem.modulos.flatMap(m =>
+      m.licoes.flatMap(l => l.blocos.flatMap(b => (b.tipo === 'frases' ? b.frases : []))))
+      .filter(f => f.armadilha)
+
+    for (const f of comArmadilha) expect(noKit.has(f.en), f.en).toBe(true)
+  })
+
+  it('não repete frase', () => {
+    const todas = frasesDoKit(viagem).flatMap(g => g.frases.map(f => f.en.toLowerCase()))
+    expect(new Set(todas).size).toBe(todas.length)
+  })
+
+  it('segue a ordem da viagem, do aeroporto à polícia', () => {
+    const grupos = frasesDoKit(viagem).map(g => g.modulo)
+    const ordemDosModulos = viagem.modulos.map(m => m.nome).filter(n => grupos.includes(n))
+    expect(grupos).toEqual(ordemDosModulos)
+  })
+
+  it('não inventa kit para trilha sem conteúdo', () => {
+    const morar = TRILHAS.find(t => t.id === 'morar-fora')!
+    expect(tamanhoDoKit(morar)).toBe(0)
   })
 })

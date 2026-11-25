@@ -1,10 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import { Icon } from '@/components/Icon'
 import { NavInferior } from '@/components/NavInferior'
 import type { ModuleSummary } from '@/lib/curriculum-index'
 import { levelTone } from '@/lib/levels'
 import { caminhoDoModulo, modulosDa, type Trilha } from '@/lib/trilhas'
+import { tamanhoDoKit } from '@/lib/trilhas/kit'
 import { uiStrings } from '@/lib/ui-strings'
 
 /**
@@ -24,6 +26,8 @@ export function MapaDaTrilha({ studentId, trilha, niveis, lessons }: {
   // No curso de inglês quem lê a interface é brasileiro.
   const t = uiStrings('en-US')
   const modulos = modulosDa(trilha, niveis)
+  const frasesNoKit = tamanhoDoKit(trilha)
+  const temKit = frasesNoKit > 0
   const tom = levelTone(trilha.tom)
 
   const unidadesPorModulo = new Map(niveis.map(n => [n.id, n.units.length]))
@@ -49,6 +53,28 @@ export function MapaDaTrilha({ studentId, trilha, niveis, lessons }: {
       </header>
 
       <main style={{ maxWidth: 620, margin: '0 auto', padding: '1.25rem 1rem 0' }}>
+        {/* O kit só existe onde há frase escrita para pôr nele. */}
+        {temKit && (
+          <a
+            href={`/api/pdf/trilha/${trilha.id}`}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '.75rem',
+              background: 'var(--surface)', border: '1px solid var(--border)',
+              borderRadius: 14, padding: '.85rem 1rem', marginBottom: '1rem',
+              textDecoration: 'none', color: 'inherit', minHeight: 60,
+            }}
+          >
+            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 38, height: 38, borderRadius: 10, background: 'var(--accent)', color: 'var(--on-accent)', flexShrink: 0 }}>
+              <Icon name="book" size={19} />
+            </span>
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span style={{ display: 'block', fontSize: 14.5, fontWeight: 700 }}>{t.kitTitulo}</span>
+              <span style={{ display: 'block', fontSize: 12.5, color: 'var(--ink3)', marginTop: 1 }}>{t.kitSub(frasesNoKit)}</span>
+            </span>
+            <span style={{ flexShrink: 0, color: 'var(--ink3)', fontSize: 16 }}>↓</span>
+          </a>
+        )}
+
         {modulos.map((mod, i) => {
           const total = unidadesPorModulo.get(mod.id) ?? mod.licoes.length
           const feitas = feitasEm(mod.id)

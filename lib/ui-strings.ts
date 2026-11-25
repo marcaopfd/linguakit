@@ -138,6 +138,8 @@ export type UiStrings = {
   navTrilha: string
   navRevisao: string
   navPalavra: string
+  kitTitulo: string
+  kitSub: (n: number) => string
   playAudio: string
   playAgain: string
   hearAnswer: string
@@ -315,6 +317,8 @@ const EN: UiStrings = {
   navTrilha: 'Track',
   navRevisao: 'Review',
   navPalavra: 'Word',
+  kitTitulo: 'Pocket kit (PDF)',
+  kitSub: n => `${n} phrases to keep on your phone, offline.`,
   playAudio: 'Play',
   playAgain: 'Play again',
   hearAnswer: 'Hear it',
@@ -486,6 +490,8 @@ const PT: UiStrings = {
   navTrilha: 'Trilha',
   navRevisao: 'Revisão',
   navPalavra: 'Palavra',
+  kitTitulo: 'Kit de bolso (PDF)',
+  kitSub: n => `${n} frases para levar no celular, sem internet.`,
   playAudio: 'Ouvir',
   playAgain: 'Ouvir de novo',
   hearAnswer: 'Ouvir',
