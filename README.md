@@ -90,14 +90,32 @@ usa o TTS do Google, Windows antigo é pior. Se um dia isso incomodar, o caminho
 
 ### Senha esquecida
 
-Não há fluxo por e-mail. No painel de alunos, cada aluno com conta tem o botão
-**Resetar senha**: ele gera uma senha temporária (`lk-xxxx-xxxx`, sem caracteres
-ambíguos), grava o hash e devolve o texto puro **uma única vez** na resposta —
-nada é armazenado em claro. Você repassa ao aluno pelo canal que quiser.
+Não há envio de e-mail no projeto, então não existe link de "redefinir senha"
+para mandar. O lugar do e-mail é ocupado pelo **código de recuperação**.
 
-Como você conhece seus alunos pessoalmente, a verificação de identidade é sua.
-Alunos sem conta (os que vieram do teste) não têm o botão: eles acessam pelo
-link e não têm senha para resetar.
+Ele nasce com a conta (no cadastro e no "criar conta" do portal), aparece em
+claro **uma única vez** na tela, e vai para o banco só como hash scrypt — nem o
+servidor consegue mostrá-lo de novo. Em `/recuperar`, e-mail + código valem uma
+senha nova. O código é de um uso: gastá-lo já devolve o próximo na mesma tela.
+
+| | |
+| --- | --- |
+| Formato | `abcd-efgh-jkmn-pqrs` — 16 caracteres de um alfabeto de 32, sem `0`, `1`, `l` e `o` |
+| Onde gerar outro | Minha conta (`/learn/<id>/conta`), que invalida o anterior |
+| Quem pode gerar | quem tem sessão **ou** sabe a senha atual — o link `/learn/<id>` **não** basta |
+
+Essa última linha é deliberada: o link abre o curso, e aceitá-lo como prova de
+identidade faria um link compartilhado sem pensar virar a conta de outra
+pessoa. É a mesma regra que `/api/student/claim` já seguia ao recusar pôr senha
+numa conta que já tem uma.
+
+Quem perdeu a senha **e** o código ainda tem duas saídas. A primeira é abrir o
+link do curso, se ainda o tiver, e gerar um código novo em Minha conta. A
+segunda é o professor: no painel de alunos, cada aluno com conta tem o botão
+**Resetar senha**, que gera uma senha temporária (`lk-xxxx-xxxx`), grava o hash
+e devolve o texto puro uma única vez. Como você conhece seus alunos
+pessoalmente, a verificação de identidade é sua. Alunos sem conta (os que
+vieram do teste) não têm o botão: eles acessam pelo link e não têm senha.
 
 > Ressalva conhecida: o reset troca a senha, mas não encerra sessões já abertas
 > em outros aparelhos — o cookie é assinado sobre o id, não sobre a senha. Serve
@@ -126,6 +144,11 @@ TEACHER_PASSWORD=  # senha do painel do professor
 SESSION_SECRET=    # string aleatória longa; é o valor do cookie de sessão
 ANTHROPIC_API_KEY= # só para os scripts de currículo; o app não usa
 ```
+
+As quatro variáveis da Kiwify (`KIWIFY_LINK_MENSAL`, `KIWIFY_LINK_ANUAL`,
+`KIWIFY_WEBHOOK_SECRET`, `LINGUAKIT_SUPORTE`) são opcionais no local: sem elas
+a tela de planos mostra o aviso em vez do botão e o webhook recusa tudo com
+503, que é como deve ser. Veja [Plano e pagamento](#plano-e-pagamento-kiwify).
 
 O `.env` aponta para o branch **`dev`** do Neon — uma cópia isolada de produção.
 As URLs de produção ficam comentadas no mesmo arquivo; só descomente se
@@ -350,6 +373,70 @@ um teste unitário comum não pegaria:
 
 Os três foram verificados reintroduzindo cada defeito e confirmando que a suíte
 falha com uma mensagem que diz o que fazer.
+
+## Plano e pagamento (Kiwify)
+
+O app **nunca vê cartão**. Quem cobra é a Kiwify; aqui só se decide o que o
+plano abre, e isso vive num lugar só: `podeAbrir()`, em `lib/plano.ts`.
+
+### Por que o checkout não acontece dentro do site
+
+Não é escolha de design. `pay.kiwify.com.br` responde
+`x-frame-options: SAMEORIGIN` e `frame-ancestors 'self' *.kiwify.com.br`, então
+o navegador recusa desenhá-lo num iframe nosso. E a API pública da Kiwify
+(`docs.kiwify.com.br`) só lê e administra — vendas, produtos, saldo, saques,
+afiliados —, sem nenhum endpoint que crie pedido. O que dá para encurtar é a
+saída (o link já vai com `email` e `name` preenchidos) e a volta (`/obrigado`).
+
+### Os três caminhos do dinheiro até a conta
+
+A Kiwify identifica o comprador **pelo e-mail**; ela não conhece o id do aluno.
+Daí as três ordens possíveis, e todas terminam no mesmo lugar:
+
+1. **cria a conta, depois paga** — o webhook acha o aluno e grava nele;
+2. **paga, depois cria a conta** — o aviso fica guardado em `PaymentNotice`, e
+   o cadastro o aplica na hora em que a conta nasce;
+3. **paga com outro e-mail** — o aviso fica sem dono e aparece na faixa do
+   painel de alunos, que é o único jeito de alguém ligar as pontas à mão.
+
+Havendo mais de um aviso para o mesmo e-mail, vale o mais recente: quem pagou e
+depois cancelou está cancelado.
+
+### Variáveis de ambiente
+
+| Variável | Para quê | Sem ela |
+| --- | --- | --- |
+| `KIWIFY_LINK_MENSAL` | link do checkout mensal | a tela de planos mostra o aviso no lugar do botão |
+| `KIWIFY_LINK_ANUAL` | link do checkout anual | idem |
+| `KIWIFY_WEBHOOK_SECRET` | assina os avisos de compra | o webhook responde **503 a tudo** — recusar é mais seguro que aceitar |
+| `LINGUAKIT_SUPORTE` | e-mail de suporte | a tela pede o e-mail usado em vez de apontar para um endereço inventado |
+
+### O que configurar na Kiwify
+
+1. **Links de checkout** (Produtos > Ver Links) → `KIWIFY_LINK_MENSAL` e
+   `KIWIFY_LINK_ANUAL` na Vercel. Cole o link cru; o app acrescenta
+   `?email=&name=` sozinho e preserva os parâmetros que já vierem nele.
+2. **Webhook** apontando para `https://<site>/api/webhook/kiwify`, com o
+   segredo igual a `KIWIFY_WEBHOOK_SECRET`. A assinatura é HMAC-SHA1 do corpo
+   cru, lida de `?signature=` ou do cabeçalho `x-kiwify-signature`, e conferida
+   com `timingSafeEqual` **antes** de o corpo ser interpretado.
+3. **Eventos**: `order.paid`, `order.approved`, `subscription.renewed`,
+   `subscription.paused`, `subscription.canceled`, `subscription.late`,
+   `order.refunded`, `chargeback`. Qualquer outro evento recebe 200 e é
+   ignorado de propósito — devolver erro faria a Kiwify reenviar para sempre
+   algo que nunca vamos querer.
+4. **Página de obrigado** (Produtos > Configurações > Páginas de Obrigado) →
+   `https://<site>/obrigado`. Vale para venda aprovada no cartão e no Pix;
+   boleto gerado continua na página da Kiwify, que mostra o código de barras.
+   A Kiwify não manda parâmetro nenhum nessa URL, então `/obrigado` descobre
+   quem voltou pelo cookie de sessão — o mesmo navegador de onde a pessoa saiu.
+
+### O que é grátis e o que é pago
+
+Grátis para sempre: o curso Geral A1–C2, o teste, a palavra do dia, a revisão,
+o primeiro módulo de cada trilha e a primeira música de cada família. Pago: o
+resto das trilhas, as conversas, o kit de bolso em PDF e as outras músicas.
+Mudar a régua é mudar `podeAbrir()`, não caçar `if` pelas telas.
 
 ## Deploy
 
