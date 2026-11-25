@@ -31,21 +31,37 @@ describe('qual aviso de pagamento vale', () => {
     expect(avisoQueVale([marco, janeiro])?.status).toBe('canceled')
   })
 
-  it('traduz o aviso para as colunas do aluno', () => {
+  it('traduz o aviso ativo para as colunas do aluno', () => {
     const vale = new Date('2027-01-01')
     const dados = planoDoAviso(aviso({
       createdAt: new Date('2026-01-01'),
       plan: 'monthly',
-      status: 'paused',
+      status: 'active',
       renewsAt: vale,
       billingRef: 'sub_123',
     }))
     expect(dados).toEqual({
       plan: 'monthly',
-      planStatus: 'paused',
+      planStatus: 'active',
       renewsAt: vale,
       billingRef: 'sub_123',
     })
+  })
+
+  it('não deixa um aviso cancelado carregar data de validade', () => {
+    // A Kiwify manda, no aviso de cancelamento, a data em que a assinatura ia
+    // renovar. Aplicar essa data devolveria acesso a quem cancelou, porque em
+    // lib/plano.ts data futura vale mais que estado cancelado — e um reembolso
+    // seguido do cancelamento automático da assinatura cairia exatamente aqui.
+    for (const status of ['canceled', 'paused']) {
+      const dados = planoDoAviso(aviso({
+        createdAt: new Date('2026-01-01'),
+        plan: 'monthly',
+        status,
+        renewsAt: new Date('2027-01-01'),
+      }))
+      expect(dados.renewsAt, status).toBeNull()
+    }
   })
 
   it('não apaga a referência da assinatura quando o aviso não traz uma', () => {
@@ -62,15 +78,30 @@ describe('o encontro entre o pagamento e a conta', () => {
   const reivindicar = ler('app/api/student/claim/route.ts')
   const exclusao = ler('app/api/students/[id]/route.ts')
 
-  it('grava todo aviso, mesmo o que não acha aluno', () => {
-    // Antes, um aviso sem dono virava 200 e sumia: quem comprasse o anual
-    // antes de criar a conta esperaria um ano pela renovação.
+  it('grava o aviso ANTES de tentar aplicá-lo', () => {
+    // Esta ordem é o que impede um pedido pago de desaparecer. Com a escrita
+    // no aluno primeiro, qualquer erro ali — colisão de chave única em
+    // billingRef, banco dormindo — devolvia 500 sem ter gravado nada, e o
+    // dinheiro sumia enquanto a Kiwify batia no mesmo erro por dez minutos.
     expect(webhook).toContain('prisma.paymentNotice.create')
     const posCreate = webhook.indexOf('prisma.paymentNotice.create')
-    const posDono = webhook.indexOf('if (dono)')
-    expect(posDono).toBeGreaterThan(0)
-    // A gravação acontece fora do `if (dono)`, depois dele.
-    expect(posCreate).toBeGreaterThan(posDono)
+    const posUpdate = webhook.indexOf('prisma.student.update')
+    expect(posCreate).toBeGreaterThan(0)
+    expect(posUpdate).toBeGreaterThan(0)
+    expect(posCreate).toBeLessThan(posUpdate)
+  })
+
+  it('nasce pendente, para o conserto depois conseguir achá-lo', () => {
+    // lib/pagamento.ts procura avisos com appliedAt nulo. Gravar já aplicado
+    // antes de aplicar de fato esconderia o aviso de quem iria consertá-lo.
+    const bloco = webhook.slice(webhook.indexOf('prisma.paymentNotice.create'))
+    expect(bloco.slice(0, 500)).toContain('appliedAt: null')
+  })
+
+  it('devolve 2xx quando o aviso está guardado mas não deu para aplicar', () => {
+    // 500 aqui faria a Kiwify reenviar e criar avisos repetidos de uma coisa
+    // que já está registrada.
+    expect(webhook).toContain('pendente: true')
   })
 
   it('procura o pagamento à espera quando a conta nasce', () => {

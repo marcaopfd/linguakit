@@ -44,12 +44,21 @@ export function avisoQueVale<T extends { createdAt: Date }>(avisos: T[]): T | nu
   return avisos.reduce((a, b) => (b.createdAt.getTime() > a.createdAt.getTime() ? b : a))
 }
 
-/** O aviso traduzido para as colunas do aluno. */
+/**
+ * O aviso traduzido para as colunas do aluno.
+ *
+ * Só aviso ATIVO carrega data de validade. Um aviso de cancelamento guarda a
+ * data em que a assinatura ia renovar, e aplicar essa data aqui devolveria
+ * acesso a quem não deveria ter: em lib/plano.ts, data futura vale mais que
+ * estado cancelado. O caminho normal (o webhook aplicando na hora) preserva o
+ * período já pago mexendo só no estado; este caminho é o do conserto depois de
+ * uma falha, e aí o seguro é não prorrogar nada.
+ */
 export function planoDoAviso(aviso: AvisoGuardado): DadosDoPlano {
   return {
     plan: aviso.plan,
     planStatus: aviso.status,
-    renewsAt: aviso.renewsAt,
+    renewsAt: aviso.status === 'active' ? aviso.renewsAt : null,
     // Só sobrescreve o billingRef quando o aviso traz um: `undefined` em
     // Prisma quer dizer "não mexe", e apagar uma referência que já existia
     // deixaria a renovação seguinte sem como achar o aluno.
