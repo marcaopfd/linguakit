@@ -278,6 +278,36 @@ migrations pendentes são aplicadas em produção no deploy da Vercel. Depois de
 mudar o schema, reinicie o `npm run dev` — o servidor mantém o Prisma Client
 antigo em memória e falha com "Unknown argument" até reiniciar.
 
+### Cópia de segurança
+
+O Neon guarda **seis horas** de histórico neste plano
+(`history_retention_seconds: 21600`). Isso desfaz um erro percebido na hora e
+mais nada: um `deleteMany` errado na sexta, descoberto na segunda, é perda
+definitiva. Com aluno pagante isso deixa de ser susto.
+
+```bash
+npm run backup
+```
+
+Lê as seis tabelas pelo Prisma e grava um JSON em `backups/`, que está no
+`.gitignore` — o arquivo tem e-mail e hash de senha, e o script **se recusa a
+rodar** se a pasta não estiver ignorada. Para copiar a produção, aponte
+`DATABASE_URL` para ela na hora de rodar.
+
+```bash
+npm run restore backups/linguakit-….json          # ensaio: só mostra
+npm run restore backups/linguakit-….json -- --sim  # escreve
+```
+
+A restauração é por `upsert` em cima do id: rodar duas vezes dá o mesmo
+resultado que rodar uma, e repor por cima de um banco vivo devolve o que
+falta sem apagar o que está lá. Ela não apaga nada — se você quer um banco
+idêntico ao arquivo, esvazie antes, à mão e de propósito.
+
+O ciclo foi testado de verdade, e não só escrito: apagar uma linha, restaurar,
+conferir que ela voltou e que nada duplicou. Faça isso de novo sempre que
+mexer no esquema — backup nunca restaurado é esperança, não garantia.
+
 ## Scripts de currículo
 
 Ferramentas de autoria, rodadas à mão. O app em produção não chama nenhuma API

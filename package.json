@@ -12,7 +12,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "postinstall": "prisma generate",
-    "check-scenes": "node scripts/check-scenes.mjs"
+    "check-scenes": "node scripts/check-scenes.mjs",
+    "backup": "node --env-file=.env scripts/backup.mjs",
+    "restore": "node --env-file=.env scripts/restore.mjs"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",
