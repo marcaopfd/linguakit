@@ -188,6 +188,13 @@ item por aluno.
 A gravação só acontece quando há `studentId` — o professor navegando pelo curso
 não gera registro.
 
+As tarefas escritas das músicas — a seção 5 de cada aula, sem gabarito — ficam
+em `MusicNote`, uma linha por tarefa de cada música. Salvam ao parar de
+digitar; se a chamada falhar, o texto vai para `lk_musica_…` no navegador e
+sobe na próxima visita, e a frase embaixo do campo diz qual dos dois aconteceu.
+Quem pode ler e escrever passa por `podeAgirComo`: a sessão para quem tem
+senha, e o link `/learn/<id>` só para quem nunca criou uma.
+
 ## Revisão de erros e atividade
 
 O que o aluno responde serve a duas telas:
@@ -289,7 +296,7 @@ definitiva. Com aluno pagante isso deixa de ser susto.
 npm run backup
 ```
 
-Lê as seis tabelas pelo Prisma e grava um JSON em `backups/`, que está no
+Lê todas as tabelas pelo Prisma e grava um JSON em `backups/`, que está no
 `.gitignore` — o arquivo tem e-mail e hash de senha, e o script **se recusa a
 rodar** se a pasta não estiver ignorada. Para copiar a produção, aponte
 `DATABASE_URL` para ela na hora de rodar.

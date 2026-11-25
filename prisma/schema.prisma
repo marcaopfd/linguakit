@@ -52,6 +52,7 @@ model Student {
   lessons    StudentLesson[]
   attempts   ExerciseAttempt[]
   reviews    ReviewItem[]
+  musicNotes MusicNote[]
 }
 
 model TestResult {
@@ -172,4 +173,35 @@ model StudentLesson {
   completedAt DateTime @default(now())
 
   @@unique([studentId, moduleId, unitIndex])
+}
+
+/// O que o aluno escreveu nas tarefas de uma música.
+///
+/// Isto morava no localStorage, e a tela dizia isso com todas as letras —
+/// prometer "salvo" sem ter onde salvar seria mentira na primeira troca de
+/// aparelho. Agora que todo aluno tem conta, a redação da aula 5 é a única
+/// coisa do curso que o aluno produz do zero, e era justamente a que se
+/// perdia ao abrir o curso no notebook.
+///
+/// Cresce de forma limitada por construção: uma linha por tarefa de cada
+/// música, garantida pela chave única — hoje no máximo duas por música.
+/// `text` vazio não é apagado: a pessoa limpar o campo é um estado dela, não
+/// um pedido de exclusão.
+model MusicNote {
+  id        String  @id @default(cuid())
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  /// O id do vídeo no YouTube, que é como lib/musicas identifica a música.
+  videoId   String
+  /// A posição da tarefa dentro da música, como a tela a numera.
+  taskIndex Int
+  /// A resposta, em texto livre. Limitada no servidor, não aqui.
+  text      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, videoId, taskIndex])
+  @@index([studentId])
 }

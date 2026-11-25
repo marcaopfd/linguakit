@@ -5,6 +5,7 @@ import {
   hashPassword,
   isValidEmail,
   normaliseEmail,
+  podeAgirComo,
   readStudentId,
   setStudentCookie,
   STUDENT_COOKIE,
@@ -134,5 +135,32 @@ describe('email handling', () => {
     for (const bad of ['', 'nope', 'a@b', 'a@b.c', 'no spaces@example.com', '@example.com', 'a@@b.com']) {
       expect(isValidEmail(bad), bad).toBe(false)
     }
+  })
+})
+
+describe('podeAgirComo', () => {
+  const com = (sessao: string | null, temSenha: boolean) =>
+    podeAgirComo({ sessao, studentId: 'aluno-1', temSenha })
+
+  it('deixa passar quem está na sessão daquele aluno', () => {
+    expect(com('aluno-1', true)).toBe(true)
+    expect(com('aluno-1', false)).toBe(true)
+  })
+
+  it('não aceita o link como prova de identidade de quem tem conta', () => {
+    // O /learn/<id> fica em histórico, print e grupo de WhatsApp. Quem tem
+    // senha tem sessão; o link sozinho não basta para escrever no curso dele.
+    expect(com(null, true)).toBe(false)
+  })
+
+  it('recusa a sessão de outro aluno', () => {
+    expect(com('aluno-2', true)).toBe(false)
+    expect(com('aluno-2', false)).toBe(true) // sem senha, o link ainda manda
+  })
+
+  it('mantém de pé quem chegou pelo teste e nunca criou senha', () => {
+    // Exigir sessão aqui tiraria o acesso de quem está estudando hoje pelo
+    // link que recebeu antes de existir cadastro.
+    expect(com(null, false)).toBe(true)
   })
 })

@@ -55,6 +55,13 @@ export default function PrivacidadePage() {
         seu progresso — sem isso, o curso não saberia onde você parou.
       </p>
       <p>
+        <strong>Quando você escreve:</strong> o texto das tarefas das músicas,
+        que são as perguntas sem gabarito. Fica guardado na sua conta para
+        seguir com você de um aparelho para outro — antes ficava só no
+        navegador e se perdia na troca de celular. Ninguém corrige esses
+        textos, e eles não são usados para mais nada.
+      </p>
+      <p>
         <strong>Quando você escolhe:</strong> o curso, o sotaque do áudio e a
         trilha. E, se você marcar a caixa, o seu consentimento para receber
         novidades por e-mail, com a data em que você deu esse consentimento.
@@ -82,10 +89,6 @@ export default function PrivacidadePage() {
           <strong>A sua navegação.</strong> Não há analytics, pixel de anúncio
           ou mapa de calor. Ninguém está contando os seus cliques.
         </li>
-        <li>
-          <strong>O que você escreve nas tarefas das músicas.</strong> Fica no
-          seu navegador, no próprio aparelho, e nunca é enviado.
-        </li>
       </ul>
 
       <h2>Cookies e o que fica no seu navegador</h2>
@@ -102,10 +105,15 @@ export default function PrivacidadePage() {
           <code>lk_session</code> — o mesmo, para o painel do professor.
         </li>
         <li>
-          <code>lk_trilha</code>, <code>lk_progress</code> e{' '}
-          <code>lk_musica_…</code> — guardados no seu próprio navegador para
-          lembrar a trilha escolhida, o progresso local e o que você escreveu
-          nas tarefas. Não chegam ao servidor.
+          <code>lk_trilha</code> e <code>lk_progress</code> — guardados no seu
+          próprio navegador para lembrar a trilha escolhida e o progresso
+          local. Não chegam ao servidor.
+        </li>
+        <li>
+          <code>lk_musica_…</code> — uma cópia de emergência do que você
+          escreveu nas tarefas, criada <em>só</em> quando o salvamento falha,
+          para o texto não se perder. Ela é apagada do navegador na primeira
+          vez que o texto chega ao servidor.
         </li>
       </ul>
 
@@ -147,6 +155,13 @@ export default function PrivacidadePage() {
         cadastro, o seu progresso, as suas respostas e os avisos de pagamento
         ligados ao seu e-mail. Os registros técnicos da Vercel seguem a política
         de retenção deles, que não controlamos.
+      </p>
+      <p>
+        Uma ressalva honesta sobre <strong>cópias de segurança</strong>: o
+        responsável guarda cópias do banco fora do servidor, para o caso de
+        perda ou erro, e uma cópia feita antes do seu pedido pode conter os
+        seus dados por mais algum tempo. Elas não são usadas para nada além de
+        restaurar o serviço, e a exclusão é aplicada na próxima cópia.
       </p>
 
       <h2>Os seus direitos</h2>

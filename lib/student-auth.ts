@@ -72,6 +72,30 @@ export function readStudentIdFromToken(token: string | null | undefined): string
   return studentId
 }
 
+/**
+ * Se quem está pedindo pode agir como este aluno.
+ *
+ * Duas identidades convivem no curso, e por boas razões:
+ *
+ *   - a sessão, um cookie assinado, de quem criou conta;
+ *   - o próprio link /learn/<id>, que é a única credencial de quem chegou
+ *     pelo teste de nível antes de existir cadastro.
+ *
+ * Para quem TEM senha, o link não basta. Ele circula em histórico de
+ * navegador, print e grupo de WhatsApp, e o que a pessoa escreve nas aulas é
+ * dela. Para quem NÃO tem senha, o link é tudo o que existe: exigir sessão
+ * tiraria o acesso de quem está estudando hoje.
+ *
+ * Pura de propósito: quem chama busca `temSenha` no banco e passa aqui, para
+ * esta regra poder ser testada sem subir servidor.
+ */
+export function podeAgirComo(
+  { sessao, studentId, temSenha }: { sessao: string | null; studentId: string; temSenha: boolean },
+): boolean {
+  if (sessao && sessao === studentId) return true
+  return !temSenha
+}
+
 export function setStudentCookie(res: NextResponse, studentId: string): boolean {
   const token = createStudentToken(studentId)
   if (!token) return false

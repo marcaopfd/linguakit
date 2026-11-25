@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/Icon'
 import { SceneClip } from '@/components/SceneClip'
@@ -27,6 +27,30 @@ export function AulaDeMusica({ studentId, musica }: {
   const { voice, ready } = useVoice('en-US')
   const indice = MUSICAS.findIndex(m => m.videoId === musica.videoId)
   const proxima = MUSICAS[indice + 1] ?? null
+
+  // As respostas escritas vêm do banco, numa consulta por música — e não uma
+  // por tarefa. Enquanto não chegam, os campos não se semeiam: aparecer vazio
+  // e encher depois faria a pessoa achar que perdeu o que escreveu.
+  const [escritas, setEscritas] = useState<{
+    estado: 'carregando' | 'pronto' | 'offline'
+    respostas: Record<number, string>
+  }>({ estado: 'carregando', respostas: {} })
+
+  useEffect(() => {
+    let cancelado = false
+    const busca = `?studentId=${encodeURIComponent(studentId)}&videoId=${encodeURIComponent(musica.videoId)}`
+    fetch(`/api/student/musicas/tarefas${busca}`)
+      .then(r => (r.ok ? r.json() : Promise.reject(new Error('sem resposta'))))
+      .then(d => {
+        if (!cancelado) setEscritas({ estado: 'pronto', respostas: d.respostas ?? {} })
+      })
+      .catch(() => {
+        // Servidor fora ou sem acesso: a aula continua, e o que a pessoa
+        // escrever fica neste aparelho — com a tela dizendo isso.
+        if (!cancelado) setEscritas({ estado: 'offline', respostas: {} })
+      })
+    return () => { cancelado = true }
+  }, [studentId, musica.videoId])
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--cream)', paddingBottom: '3rem' }}>
@@ -129,7 +153,15 @@ export function AulaDeMusica({ studentId, musica }: {
         <Secao numero={5} titulo="Agora escreva" sub="Sem gabarito: o que você escrever aqui é a prova de que ouviu.">
           <div style={{ display: 'grid', gap: '.75rem' }}>
             {musica.tarefas.map((tarefa, i) => (
-              <Tarefa key={i} chave={`lk_musica_${musica.videoId}_${i}`} enunciado={tarefa} />
+              <Tarefa
+                key={i}
+                studentId={studentId}
+                videoId={musica.videoId}
+                indice={i}
+                enunciado={tarefa}
+                inicial={escritas.respostas[i] ?? ''}
+                estado={escritas.estado}
+              />
             ))}
           </div>
         </Secao>
@@ -254,25 +286,106 @@ function Pergunta({ pergunta }: { pergunta: Musica['perguntas'][number] }) {
 }
 
 /**
- * O que o aluno escreve fica neste navegador, e a tela diz isso.
+ * O que o aluno escreve, agora na conta dele.
  *
- * Mandar para o banco exige conta, e conta é o passo seguinte do produto.
- * Até lá, prometer que "ficou salvo" seria mentira na primeira troca de
- * aparelho.
+ * Isto morava só no localStorage, e a tela dizia "fica guardado neste
+ * aparelho" — honesto enquanto não havia conta, e a única coisa do curso que
+ * sumia ao abrir a aula no notebook. Como é também a única coisa que o aluno
+ * produz do zero, era a pior candidata a se perder.
+ *
+ * Três decisões que não são óbvias:
+ *
+ *   - salva ao parar de digitar, não a cada tecla: um textarea manda uma
+ *     requisição por caractere se ninguém segurar;
+ *   - se o salvamento falhar, o texto vai para o navegador em vez de sumir, e
+ *     a tela diz que ficou só ali — a frase muda com o que de fato aconteceu;
+ *   - o que já estava no navegador sobe uma vez e some de lá. Deixar os dois
+ *     é guardar dado pessoal em dois lugares e cedo ou tarde mostrar o
+ *     errado.
  */
-function Tarefa({ chave, enunciado }: { chave: string; enunciado: string }) {
+function Tarefa({ studentId, videoId, indice, enunciado, inicial, estado }: {
+  studentId: string
+  videoId: string
+  indice: number
+  enunciado: string
+  inicial: string
+  estado: 'carregando' | 'pronto' | 'offline'
+}) {
+  const chave = `lk_musica_${videoId}_${indice}`
   const [texto, setTexto] = useState('')
-  const [carregado, setCarregado] = useState(false)
+  const [situacao, setSituacao] = useState<'quieto' | 'salvando' | 'salvo' | 'local'>('quieto')
+  const relogio = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const semeado = useRef(false)
 
-  useEffect(() => {
-    try { setTexto(localStorage.getItem(chave) ?? '') } catch { /* janela anônima */ }
-    setCarregado(true)
+  const guardarAqui = useCallback((valor: string) => {
+    try {
+      if (valor) localStorage.setItem(chave, valor)
+      else localStorage.removeItem(chave)
+    } catch { /* janela anônima: não há onde guardar, e está tudo bem */ }
   }, [chave])
+
+  const salvar = useCallback(async (valor: string) => {
+    if (estado === 'offline') {
+      guardarAqui(valor)
+      setSituacao('local')
+      return
+    }
+    setSituacao('salvando')
+    try {
+      const res = await fetch('/api/student/musicas/tarefas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studentId, videoId, indice, texto: valor }),
+      })
+      if (!res.ok) throw new Error('recusado')
+      // Salvo no servidor: a cópia local sai, para não existir duas verdades.
+      guardarAqui('')
+      setSituacao('salvo')
+    } catch {
+      guardarAqui(valor)
+      setSituacao('local')
+    }
+  }, [estado, guardarAqui, studentId, videoId, indice])
+
+  // Semeia o campo uma vez, quando se sabe o que o servidor tem. Se ele não
+  // tem nada e o navegador tem, o texto antigo sobe agora — ninguém perde o
+  // que escreveu antes desta mudança.
+  useEffect(() => {
+    if (estado === 'carregando' || semeado.current) return
+    semeado.current = true
+
+    let local = ''
+    try { local = localStorage.getItem(chave) ?? '' } catch { /* sem acesso */ }
+
+    if (estado === 'offline') {
+      setTexto(local)
+      if (local) setSituacao('local')
+      return
+    }
+
+    // Quando os dois existem, o do navegador ganha. A cópia local é apagada a
+    // cada salvamento que dá certo, então ela só existe quando um salvamento
+    // falhou — ou seja, é sempre mais nova do que a que está no servidor.
+    // Preferir o servidor aqui faria a tela mostrar o texto antigo e deixar o
+    // novo encalhado no navegador para sempre.
+    if (local) {
+      setTexto(local)
+      void salvar(local)
+      return
+    }
+    setTexto(inicial)
+  }, [estado, inicial, chave, salvar])
+
+  useEffect(() => () => { if (relogio.current) clearTimeout(relogio.current) }, [])
 
   function mudar(valor: string) {
     setTexto(valor)
-    try { localStorage.setItem(chave, valor) } catch { /* nada a guardar */ }
+    setSituacao('quieto')
+    if (relogio.current) clearTimeout(relogio.current)
+    relogio.current = setTimeout(() => { void salvar(valor) }, 700)
   }
+
+  const carregado = estado !== 'carregando'
 
   return (
     <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '.9rem' }}>
@@ -281,8 +394,14 @@ function Tarefa({ chave, enunciado }: { chave: string; enunciado: string }) {
         <textarea
           value={texto}
           onChange={e => mudar(e.target.value)}
+          onBlur={() => {
+            // Sair do campo salva na hora: fechar a aba não espera os 700ms.
+            if (relogio.current) { clearTimeout(relogio.current); relogio.current = null; void salvar(texto) }
+          }}
           rows={3}
           spellCheck={false}
+          maxLength={4000}
+          disabled={!carregado}
           placeholder={carregado ? 'Escreva aqui…' : ''}
           style={{
             display: 'block', width: '100%', marginTop: '.5rem',
@@ -294,8 +413,27 @@ function Tarefa({ chave, enunciado }: { chave: string; enunciado: string }) {
         />
       </label>
       <p style={{ fontSize: 11, color: 'var(--ink3)', marginTop: '.4rem' }}>
-        Fica guardado neste aparelho.
+        {recado(estado, situacao)}
       </p>
     </div>
   )
+}
+
+/** A frase embaixo do campo diz o que aconteceu, não o que seria bonito. */
+function recado(
+  estado: 'carregando' | 'pronto' | 'offline',
+  situacao: 'quieto' | 'salvando' | 'salvo' | 'local',
+): string {
+  if (estado === 'carregando') return 'Buscando o que você já escreveu…'
+  if (situacao === 'salvando') return 'Salvando…'
+  if (situacao === 'salvo') return 'Salvo. Aparece em qualquer aparelho em que você entrar.'
+  if (situacao === 'local') {
+    return 'Não deu para salvar: ficou guardado neste aparelho e sobe na próxima vez.'
+  }
+  if (estado === 'offline') {
+    // Antes de escrever nada, dizer "não deu para salvar" seria contar um
+    // problema que ainda não houve.
+    return 'Sem conexão com o curso agora: o que você escrever fica só neste aparelho.'
+  }
+  return 'Salva sozinho e segue com você em qualquer aparelho.'
 }

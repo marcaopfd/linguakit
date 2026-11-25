@@ -46,6 +46,7 @@ const ORDEM = [
   ['exerciseAttempt', (p, r) => p.exerciseAttempt.upsert({ where: { id: r.id }, update: r, create: r })],
   ['reviewItem', (p, r) => p.reviewItem.upsert({ where: { id: r.id }, update: r, create: r })],
   ['paymentNotice', (p, r) => p.paymentNotice.upsert({ where: { id: r.id }, update: r, create: r })],
+  ['musicNote', (p, r) => p.musicNote.upsert({ where: { id: r.id }, update: r, create: r })],
 ]
 
 let escritas = 0
