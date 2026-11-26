@@ -8,6 +8,10 @@ então eles batem com o que o site mostra. Se mudar o preço, mude em
 Conferido em 26 de novembro de 2026: 18 módulos, 39 lições, 273 frases,
 195 exercícios, 6 conversas, 40 músicas.
 
+O endereço do site é **lingua-kit.com.br** (sem www — o www redireciona para
+ele). O antigo `linguakit.vercel.app` continua funcionando, mas é o novo que
+vai em todo lugar daqui para a frente.
+
 ---
 
 ## 1. Três coisas que quebram tudo se forem feitas errado
@@ -116,12 +120,13 @@ Plano mensal
 
 | Campo na Kiwify | O que colar |
 |---|---|
-| Página de vendas | `https://linguakit.vercel.app/ingles-para-morar-fora` |
-| Página de obrigado / redirecionamento após a compra | `https://linguakit.vercel.app/obrigado` |
-| Termos de uso | `https://linguakit.vercel.app/termos` |
-| Política de privacidade | `https://linguakit.vercel.app/privacidade` |
-| Reembolso e cancelamento | `https://linguakit.vercel.app/reembolso` |
-| Contato / suporte | `https://linguakit.vercel.app/contato` |
+| Página de vendas | `https://lingua-kit.com.br/ingles-para-morar-fora` |
+| Página de obrigado / redirecionamento após a compra | `https://lingua-kit.com.br/obrigado` |
+| Termos de uso | `https://lingua-kit.com.br/termos` |
+| Política de privacidade | `https://lingua-kit.com.br/privacidade` |
+| Reembolso e cancelamento | `https://lingua-kit.com.br/reembolso` |
+| Contato / suporte | `https://lingua-kit.com.br/contato` |
+| Dúvidas respondidas | `https://lingua-kit.com.br/duvidas` |
 
 Essas quatro últimas existem porque a Kiwify, o Google Ads e o Meta conferem
 se há política publicada antes de aprovar anúncio e saque.
@@ -131,7 +136,7 @@ se há política publicada antes de aprovar anúncio e saque.
 ## 5b. Imagem de capa
 
 ```text
-https://linguakit.vercel.app/ingles-para-morar-fora/opengraph-image
+https://lingua-kit.com.br/ingles-para-morar-fora/opengraph-image
 ```
 
 Abra esse link e salve a imagem: 1200×630, no mesmo preto e limão do produto,
@@ -148,7 +153,7 @@ para o checkout de um produto pago.
 
 | Campo | Valor |
 |---|---|
-| URL | `https://linguakit.vercel.app/api/webhook/kiwify` |
+| URL | `https://lingua-kit.com.br/api/webhook/kiwify` |
 | Token | gere com `openssl rand -hex 24` e cole o MESMO valor aqui e na Vercel |
 
 Gatilhos para **marcar**:
