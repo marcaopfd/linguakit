@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import type { CSSProperties } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/Icon'
 import { RodapeLegal } from '@/components/PaginaLegal'
@@ -11,20 +12,53 @@ import { EstilosDaLanding } from './estilos'
 /**
  * A página de vendas.
  *
- * Uma regra guiou tudo aqui: **nada nesta página pode ser inventado.** Os
- * números vêm de `numerosDoProduto()`, que conta o conteúdo de verdade; as
- * dezoito situações são lidas do registro das trilhas, com o nome e a
- * promessa que o aluno vai ver lá dentro; as frases de exemplo são frases
- * que existem na lição 1.
+ * ─── Regra um: nada aqui pode ser inventado ─────────────────────────────
+ *
+ * Os números vêm de `numerosDoProduto()`, que conta o conteúdo de verdade;
+ * as dezoito situações são lidas do registro das trilhas, com o nome e a
+ * promessa que o aluno vai ver lá dentro; as frases de exemplo existem na
+ * lição 1.
  *
  * O que NÃO está aqui, de propósito: depoimento de aluno. O produto ainda
  * não tem aluno pagante, e escrever "a Ana conseguiu o emprego" seria
- * fabricar prova social. No dia em que houver gente de verdade com história
- * de verdade, elas entram — e aí é a parte mais forte da página.
+ * fabricar prova social. Também não há contador regressivo, "últimas vagas"
+ * nem preço riscado que nunca existiu. Vendendo para quem está prestes a
+ * mudar de país, a confiança é o ativo; queimá-la num truque de urgência é
+ * caro e burro.
  *
- * Também não há contador regressivo, "últimas vagas" nem preço riscado que
- * nunca existiu. Vendendo para quem está prestes a mudar de país, a confiança
- * é o ativo; queimá-la num truque de urgência é caro e burro.
+ * ─── Regra dois: a composição é o argumento ─────────────────────────────
+ *
+ * A primeira versão desta página era honesta e completa, e parecia genérica.
+ * O defeito não era o texto: era a forma. Dez seções do mesmo tamanho, uma
+ * embaixo da outra, tudo na mesma largura, e uma classe de animação só
+ * aplicada a todos os elementos — título, cartão, número e parágrafo subindo
+ * 26px ao mesmo tempo, na mesma curva. Dezoito cartões fazendo isso juntos
+ * é um metrônomo, não uma onda.
+ *
+ * O que mudou:
+ *
+ *   - A página tem DOIS ATOS. O primeiro é escuro e é o problema: o herói e
+ *     "você aprendeu a dizer I would like a coffee" moram na mesma
+ *     superfície, então a abertura é um bloco só em vez de duas faixas. A
+ *     quebra para o claro é a entrada do produto, e é a única virada brusca
+ *     de propósito.
+ *   - As dezoito situações saíram da parede de cartões e entraram num
+ *     trilho horizontal. Isso não é efeito: uma grade de dezoito retângulos
+ *     é percorrida com o olho e esquecida; um trilho é percorrido com o
+ *     dedo. O argumento da página é que o curso é organizado por situação —
+ *     o trilho é essa frase em movimento.
+ *   - A negociação do mercado avança conforme a pessoa rola. Três balões
+ *     parados não mostram que negociar tem turnos; vê-los chegar na ordem,
+ *     sim. É a animação mais justificada daqui, porque explica o produto em
+ *     vez de enfeitá-lo.
+ *   - O movimento passou a vir do PAPEL de cada elemento (`lp-lead`,
+ *     `lp-apoio`, `lp-enfeite-rola`), e a maior parte da página não se move.
+ *
+ * Decisões de corte, que contam tanto quanto as de adicionar: não há palavra
+ * girando no título (é o clichê de landing page, e repetiria o que o
+ * parágrafo já diz), não há parallax de fundo, e os dezoito cartões não
+ * entram em cascata — o trilho carrega todos de uma vez, porque um contêiner
+ * tem uma entrada só.
  */
 
 const TITULO = 'Inglês para morar fora e viajar — LinguaKit'
@@ -55,6 +89,9 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', title: TITULO, description: DESCRICAO },
 }
+
+/** O título em linhas, para cada uma subir da sua própria fenda. */
+const TITULO_LINHAS = ['Inglês para quem', 'vai morar fora.']
 
 const PERGUNTAS: { q: string; a: string }[] = [
   {
@@ -91,6 +128,19 @@ const PERGUNTAS: { q: string; a: string }[] = [
   },
 ]
 
+/** A conversa do mercado, que é a da lição de pechinchar. */
+const NEGOCIACAO = [
+  { quem: 'vendedor' as const, texto: 'This one? Eight hundred baht. Very good quality, handmade.' },
+  { quem: 'voce' as const, texto: "That's a bit more than I wanted to spend." },
+  { quem: 'vendedor' as const, texto: 'For you, seven hundred. Final price.' },
+]
+
+const ESCOLHAS = [
+  { texto: "I'll think about it. Thank you.", nota: 'sair é uma jogada' },
+  { texto: 'Would you do four hundred?', nota: 'âncora baixa', destaque: true },
+  { texto: 'Okay, seven hundred is fine.', nota: 'aceitar cedo demais' },
+]
+
 export default function LandingPage() {
   const n = numerosDoProduto()
   const viagem = TRILHAS.find(t => t.id === 'viagem')!
@@ -124,6 +174,10 @@ export default function LandingPage() {
     ],
   }
 
+  /** Texto claro sobre o painel. Alfa 0,5 ou mais em texto pequeno: 4,91 de
+      contraste no tema claro e 4,76 no escuro, calculados, não estimados. */
+  const claro = (alfa: number) => `color-mix(in srgb, var(--on-panel) ${Math.round(alfa * 100)}%, transparent)`
+
   return (
     <div className="lp" style={{ background: 'var(--cream)', color: 'var(--ink)' }}>
       <EstilosDaLanding />
@@ -132,92 +186,124 @@ export default function LandingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* ───────────────────────── 1. O gancho ───────────────────────── */}
-      <section
-        className="lp-secao"
-        style={{ background: 'var(--panel)', color: 'var(--on-panel)', position: 'relative', overflow: 'hidden' }}
-      >
-        <div className="lp-rabisco" aria-hidden>
-          <Rabisco largura={420} />
-        </div>
+      {/* A barra flutuante chega quando o herói sai. Enquanto o botão do
+          herói está na tela, uma segunda cópia dele ali em cima é ruído;
+          depois, é o que mantém a ação ao alcance do polegar. */}
+      <header className="lp-topo">
+        <Link href="/ingles-para-morar-fora" className="lp-topo-marca">LinguaKit</Link>
+        <Link href="/test?lang=en" className="lp-cta-pequeno">
+          Teste de nível — grátis
+        </Link>
+        <div className="lp-progresso" aria-hidden />
+      </header>
 
-        <div className="lp-centro" style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ fontSize: 12.5, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 700 }}>
-            Para quem vai
+      {/* ═════════════════ ATO I — O PROBLEMA (escuro) ═════════════════ */}
+      <div className="lp-grao" style={{ background: 'var(--panel)', color: 'var(--on-panel)' }}>
+
+        {/* ─────────── 1. O gancho ─────────── */}
+        {/* `overflow: clip`, nunca `hidden`. As duas cortam o rabisco que
+            escapa, mas `hidden` transforma a seção num CONTÊINER DE ROLAGEM —
+            e aí a linha de tempo do herói passa a medir a rolagem DESTA
+            seção, que nunca rola. A barra do topo ficava presa em 51% e não
+            aparecia nunca. `clip` corta sem criar scroller. */}
+        <section className="lp-secao" style={{ position: 'relative', overflow: 'clip', paddingTop: 'clamp(3.5rem, 9vw, 7rem)' }}>
+          <div className="lp-rabisco" aria-hidden>
+            <Rabisco largura={460} />
           </div>
 
-          <h1 className="lp-display" style={{ marginTop: '1.1rem' }}>
-            Inglês para quem<br />vai morar fora.
-          </h1>
+          <div className="lp-centro lp-heroi lp-entra" style={{ position: 'relative', zIndex: 1 }}>
+            <div className="lp-olho lp-enfeite" style={{ color: 'var(--accent)', ['--atraso' as string]: '0ms' } as CSSProperties}>
+              Para quem vai
+            </div>
 
-          <p
-            className="lp-display-2"
-            style={{ color: 'rgba(242,244,233,.42)', marginTop: '.6rem', maxWidth: '22ch' }}
-          >
-            E para quem vai só passear, mas não quer passar aperto.
-          </p>
+            <h1 className="lp-display" style={{ marginTop: '1.15rem', ['--atraso' as string]: '0ms' } as CSSProperties}>
+              {TITULO_LINHAS.map((linha, i) => (
+                <span key={linha} className="lp-fenda" style={{ ['--atraso' as string]: `${i * 95}ms` } as CSSProperties}>
+                  <span>{linha}</span>
+                </span>
+              ))}
+            </h1>
 
-          <p className="lp-lead" style={{ color: 'rgba(242,244,233,.72)', marginTop: '2rem', maxWidth: '38ch' }}>
-            Um curso organizado pelo <strong style={{ color: 'var(--on-panel)' }}>motivo</strong> de
-            quem estuda — imigração, aluguel, entrevista, obra, cozinha, mercado —
-            e não pelo capítulo de gramática.
-          </p>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1rem', marginTop: '2.5rem' }}>
-            <Link href="/test?lang=en" className="lp-cta">
-              Descobrir meu nível — grátis
-            </Link>
-            <Link
-              href="/cadastro"
-              style={{ color: 'rgba(242,244,233,.7)', fontSize: 14.5, fontWeight: 600, textDecoration: 'none', padding: '1rem .5rem' }}
+            <p
+              className="lp-display-2"
+              style={{ color: claro(.45), marginTop: '.7rem', maxWidth: '24ch', ['--atraso' as string]: '190ms' } as CSSProperties}
             >
-              Ou criar minha conta
-            </Link>
+              E para quem vai só passear, mas não quer passar aperto.
+            </p>
+
+            <p className="lp-lead" style={{ color: claro(.72), marginTop: '2.2rem', maxWidth: '40ch', ['--atraso' as string]: '250ms' } as CSSProperties}>
+              Um curso organizado pelo <strong style={{ color: 'var(--on-panel)' }}>motivo</strong> de
+              quem estuda — imigração, aluguel, entrevista, obra, cozinha, mercado —
+              e não pelo capítulo de gramática.
+            </p>
+
+            <div
+              style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '.75rem', marginTop: '2.5rem', ['--atraso' as string]: '310ms' } as CSSProperties}
+            >
+              <Link href="/test?lang=en" className="lp-cta">
+                Descobrir meu nível — grátis
+              </Link>
+              <Link href="/cadastro" className="lp-link-fantasma">
+                Ou criar minha conta
+              </Link>
+            </div>
+
+            <p style={{ fontSize: 13.5, color: claro(.55), marginTop: '1.2rem', lineHeight: 1.6, ['--atraso' as string]: '360ms' } as CSSProperties}>
+              O curso do A1 ao C2 é de graça, sem prazo e sem cartão.<br />
+              Dez minutos de teste e você já sabe por onde começar.
+            </p>
+          </div>
+        </section>
+
+        {/* ─────────── 2. O problema ───────────
+            O parágrafo que carrega o argumento acende palavra por palavra
+            conforme a pessoa rola. Não é enfeite: ritma a leitura da única
+            frase da página que precisa ser lida inteira. */}
+        <section className="lp-secao" style={{ paddingTop: 'clamp(2rem, 6vw, 4rem)' }}>
+          <div className="lp-estreito">
+            <h2 className="lp-display-2 lp-lead">
+              Você aprendeu a dizer<br />
+              <span style={{ color: claro(.42) }}>&ldquo;I would like a coffee.&rdquo;</span>
+            </h2>
+
+            <p className="lp-display-3 lp-apoio" style={{ color: 'var(--accent)', marginTop: '1.9rem' }}>
+              O oficial da imigração não vai perguntar sobre café.
+            </p>
+
+            <p className="lp-corpo" style={{ color: claro(.72), marginTop: '1.7rem' }}>
+              <Acende
+                texto="Ele vai fazer cinco perguntas, sempre as mesmas, e esperar respostas de três palavras. Depois vem o corretor com um contrato, o encarregado gritando numa cozinha, o vendedor dobrando o preço porque percebeu o seu sotaque."
+                de={6}
+                ate={52}
+              />
+            </p>
+
+            <p className="lp-corpo lp-apoio" style={{ color: claro(.55), marginTop: '1.4rem' }}>
+              Nenhum desses momentos está no capítulo de <em>present perfect</em>.
+              É por isso que este curso não começa pelo nível. Começa pelo que
+              você vai fazer.
+            </p>
+          </div>
+        </section>
+      </div>
+
+      {/* ═════════════════ ATO II — O PRODUTO (claro) ═════════════════ */}
+
+      {/* ─────────── 3. A prova, em números ─────────── */}
+      <section className="lp-secao">
+        <div className="lp-centro">
+          <div className="lp-medida">
+            <div className="lp-olho lp-enfeite-rola" style={{ color: 'var(--ink3)' }}>Escrito à mão</div>
+            <h2 className="lp-display-2 lp-lead" style={{ marginTop: '1rem' }}>
+              Frase por frase,<br />por uma pessoa.
+            </h2>
+            <p className="lp-lead lp-apoio" style={{ color: 'var(--ink2)', marginTop: '1.1rem' }}>
+              Nada aqui foi gerado na hora por um robô. Cada frase foi escolhida
+              porque alguém precisa dela num balcão.
+            </p>
           </div>
 
-          <p style={{ fontSize: 13.5, color: 'rgba(242,244,233,.55)', marginTop: '1.1rem', lineHeight: 1.6 }}>
-            O curso do A1 ao C2 é de graça, sem prazo e sem cartão.<br />
-            Dez minutos de teste e você já sabe por onde começar.
-          </p>
-        </div>
-      </section>
-
-      {/* ───────────────────────── 2. O problema ───────────────────────── */}
-      <section className="lp-secao">
-        <div className="lp-estreito lp-surge">
-          <h2 className="lp-display-2">
-            Você aprendeu a dizer<br />
-            <span style={{ color: 'var(--ink3)' }}>&ldquo;I would like a coffee.&rdquo;</span>
-          </h2>
-          <p className="lp-lead" style={{ color: 'var(--ink2)', marginTop: '1.5rem' }}>
-            O oficial da imigração não vai perguntar sobre café.
-          </p>
-          <p style={{ fontSize: '1.02rem', lineHeight: 1.7, color: 'var(--ink2)', marginTop: '1.2rem' }}>
-            Ele vai fazer cinco perguntas, sempre as mesmas, e esperar respostas
-            de três palavras. Depois vem o corretor com um contrato, o
-            encarregado gritando numa cozinha, o vendedor dobrando o preço
-            porque percebeu o seu sotaque. Nenhum desses momentos está no
-            capítulo de <em>present perfect</em>.
-          </p>
-          <p style={{ fontSize: '1.02rem', lineHeight: 1.7, color: 'var(--ink2)', marginTop: '1rem' }}>
-            É por isso que este curso não começa pelo nível. Começa pelo que
-            você vai fazer.
-          </p>
-        </div>
-      </section>
-
-      {/* ───────────────────────── 3. A prova ───────────────────────── */}
-      <section className="lp-secao" style={{ background: 'var(--paper)' }}>
-        <div className="lp-centro lp-surge">
-          <h2 className="lp-display-2" style={{ maxWidth: '18ch' }}>
-            Escrito frase por frase, à mão.
-          </h2>
-          <p className="lp-lead" style={{ color: 'var(--ink2)', marginTop: '1rem', maxWidth: '46ch' }}>
-            Nada aqui foi gerado na hora por um robô. Cada frase foi escolhida
-            porque alguém precisa dela num balcão.
-          </p>
-
-          <div className="lp-grade" style={{ marginTop: '2.5rem' }}>
+          <div className="lp-numeros" style={{ marginTop: 'clamp(2.5rem, 6vw, 4rem)' }}>
             <Numero valor={n.modulos} rotulo="módulos de trilha" nota={`${n.trilhas} trilhas: viagem e mudança`} />
             <Numero valor={n.frases} rotulo="frases en/pt" nota="com a armadilha de cada uma" />
             <Numero valor={n.exercicios} rotulo="exercícios" nota="ouvir, escrever e gramática" />
@@ -228,144 +314,146 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ───────────────────────── 4. As situações ───────────────────────── */}
-      <section className="lp-secao">
-        <div className="lp-centro">
-          <div className="lp-surge" style={{ maxWidth: '42rem' }}>
-            <h2 className="lp-display-2">
-              As {situacoes.length} situações<br />que realmente acontecem.
-            </h2>
-            <p className="lp-lead" style={{ color: 'var(--ink2)', marginTop: '1rem' }}>
-              Cada módulo termina numa frase que começa com &ldquo;Você
-              consegue&rdquo;. Se no fim você não conseguir, o módulo falhou —
-              e é assim que a gente mede.
-            </p>
-          </div>
-
-          <div className="lp-grade" style={{ marginTop: '2.75rem' }}>
-            {situacoes.map((m, i) => (
-              <div key={m.id} className="lp-cartao lp-surge">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '.55rem' }}>
-                  <span style={{ fontSize: 20 }} aria-hidden>{m.emoji}</span>
-                  <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.09em', textTransform: 'uppercase', color: 'var(--ink3)' }}>
-                    {i < viagem.modulos.length ? 'Viagem' : 'Morar fora'}
-                  </span>
+      {/* ─────────── 4. O trilho das situações ───────────
+          A seção prende no desktop e o trilho anda com a rolagem; no celular
+          é rolagem de dedo com encaixe. O deslocamento é calculado a partir
+          do número de situações, que vem dos dados — se uma trilha crescer,
+          o trilho cresce com ela sem ninguém mexer aqui. */}
+      <section
+        className="lp-trilho-wrap"
+        style={{ ['--n' as string]: situacoes.length, background: 'var(--paper)' } as CSSProperties}
+      >
+        <div className="lp-trilho-sticky">
+          <div style={{ width: '100%' }}>
+            <div className="lp-secao-apertada" style={{ paddingBottom: 0 }}>
+              <div className="lp-centro">
+                <div className="lp-medida">
+                  <div className="lp-olho lp-enfeite-rola" style={{ color: 'var(--ink3)' }}>
+                    O índice do curso
+                  </div>
+                  <h2 className="lp-display-2 lp-lead" style={{ marginTop: '1rem' }}>
+                    As {situacoes.length} situações que<br />realmente acontecem.
+                  </h2>
+                  <p className="lp-apoio" style={{ fontSize: '1rem', lineHeight: 1.65, color: 'var(--ink2)', marginTop: '.9rem' }}>
+                    Cada módulo termina numa frase que começa com &ldquo;Você
+                    consegue&rdquo;. Se no fim você não conseguir, o módulo
+                    falhou — e é assim que a gente mede.
+                  </p>
                 </div>
-                <h3 style={{ fontSize: '1.08rem', fontWeight: 700, marginTop: '.5rem', letterSpacing: '-0.01em' }}>
-                  {m.nome}
-                </h3>
-                <p style={{ fontSize: '.9rem', lineHeight: 1.6, color: 'var(--ink2)', marginTop: '.35rem' }}>
-                  {m.consegue}
-                </p>
               </div>
-            ))}
+            </div>
+
+            <div className="lp-trilho" style={{ marginTop: 'clamp(1.75rem, 4vw, 2.75rem)' }}>
+              {situacoes.map((m, i) => (
+                <article key={m.id} className="lp-situacao">
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '.5rem' }}>
+                    <span style={{ fontSize: 22 }} aria-hidden>{m.emoji}</span>
+                    <span className="lp-olho" style={{ color: 'var(--ink3)', fontSize: 10.5 }}>
+                      {i < viagem.modulos.length ? 'Viagem' : 'Morar fora'}
+                    </span>
+                  </div>
+                  <h3 className="lp-display-3" style={{ fontSize: '1.15rem', marginTop: '.9rem' }}>
+                    {m.nome}
+                  </h3>
+                  <p style={{ fontSize: '.92rem', lineHeight: 1.6, color: 'var(--ink2)', marginTop: '.45rem' }}>
+                    {m.consegue}
+                  </p>
+                </article>
+              ))}
+            </div>
+
+            <div className="lp-trilho-regua" aria-hidden />
           </div>
         </div>
       </section>
 
-      {/* ───────────────────────── 5. A conversa ───────────────────────── */}
-      <section className="lp-secao" style={{ background: 'var(--panel)', color: 'var(--on-panel)' }}>
+      {/* ─────────── 5. A conversa ─────────── */}
+      <section className="lp-secao lp-grao" style={{ background: 'var(--panel)', color: 'var(--on-panel)' }}>
         <div
           className="lp-centro"
-          style={{ display: 'grid', gap: 'clamp(2.5rem, 6vw, 4.5rem)', gridTemplateColumns: 'repeat(auto-fit, minmax(19rem, 1fr))', alignItems: 'center' }}
+          style={{ display: 'grid', gap: 'clamp(2.5rem, 6vw, 5rem)', gridTemplateColumns: 'repeat(auto-fit, minmax(19rem, 1fr))', alignItems: 'center' }}
         >
-          <div className="lp-surge">
-            <div style={{ fontSize: 12.5, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 700 }}>
+          <div>
+            <div className="lp-olho lp-enfeite-rola" style={{ color: 'var(--accent)' }}>
               A parte que ninguém ensina
             </div>
-            <h2 className="lp-display-2" style={{ marginTop: '1rem' }}>
+            <h2 className="lp-display-2 lp-lead" style={{ marginTop: '1.1rem' }}>
               O vendedor pede 800.<br />Você tem três cortes.
             </h2>
-            <p className="lp-lead" style={{ color: 'rgba(242,244,233,.72)', marginTop: '1.3rem' }}>
+            <p className="lp-lead lp-apoio" style={{ color: claro(.72), marginTop: '1.4rem' }}>
               Saber dizer &ldquo;how much is it?&rdquo; é fácil. Difícil é o que
               vem depois: achar caro sem ofender, começar baixo, aguentar o
               silêncio e fechar.
             </p>
-            <p style={{ fontSize: '1rem', lineHeight: 1.7, color: 'rgba(242,244,233,.6)', marginTop: '1.1rem' }}>
+            <p className="lp-apoio" style={{ fontSize: '1rem', lineHeight: 1.7, color: claro(.6), marginTop: '1.2rem' }}>
               São {n.conversas} conversas com personagem — o vendedor do
               mercado, o taxista sem taxímetro, a recepção do hotel, o
               corretor, o chef na entrevista. Cada escolha muda o preço, e no
               fim você vê quanto economizou e o que daria para ter dito melhor.
             </p>
-            <p style={{ fontSize: '.88rem', lineHeight: 1.6, color: 'rgba(242,244,233,.55)', marginTop: '1.2rem' }}>
+            <p className="lp-apoio" style={{ fontSize: '.9rem', lineHeight: 1.6, color: claro(.55), marginTop: '1.3rem' }}>
               Sem inteligência artificial. Cada resposta do personagem foi
               escrita à mão, o que significa que ela é sempre a mesma, sempre
               correta, e funciona com o celular no modo avião.
             </p>
           </div>
 
-          <div className="lp-surge" style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="lp-conversa" style={{ display: 'flex', justifyContent: 'center' }}>
             <div className="lp-fone">
-              <div className="lp-fone-tela" style={{ padding: '1.1rem' }}>
-                <div style={{ fontSize: 10.5, letterSpacing: '.09em', textTransform: 'uppercase', color: 'var(--ink3)', fontWeight: 700 }}>
+              <div className="lp-fone-tela" style={{ padding: '1.15rem' }}>
+                <div className="lp-olho" style={{ color: 'var(--ink3)', fontSize: 10.5 }}>
                   Mercado · pechinchar
                 </div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem', marginTop: '.45rem' }}>
-                  <span style={{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.03em' }}>฿800</span>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '.5rem', marginTop: '.5rem' }}>
+                  <span style={{ fontSize: 27, fontWeight: 800, letterSpacing: '-0.035em' }}>฿800</span>
                   <span style={{ fontSize: 12, color: 'var(--ink3)' }}>→ meta ฿520</span>
                 </div>
 
-                <Balao quem="vendedor" texto="This one? Eight hundred baht. Very good quality, handmade." />
-                <Balao quem="voce" texto="That's a bit more than I wanted to spend." />
-                <Balao quem="vendedor" texto="For you, seven hundred. Final price." />
+                {NEGOCIACAO.map((fala, i) => (
+                  <Balao key={fala.texto} quem={fala.quem} texto={fala.texto} de={14 + i * 7} />
+                ))}
 
-                <div style={{ marginTop: '.9rem', fontSize: 10.5, letterSpacing: '.09em', textTransform: 'uppercase', color: 'var(--ink3)', fontWeight: 700 }}>
+                <div
+                  className="lp-turno lp-olho"
+                  style={{ marginTop: '1rem', color: 'var(--ink3)', fontSize: 10.5, ['--de' as string]: '35%', ['--ate' as string]: '43%' } as CSSProperties}
+                >
                   Sua vez
                 </div>
-                <Opcao texto="I'll think about it. Thank you." nota="sair é uma jogada" />
-                <Opcao texto="Would you do four hundred?" nota="âncora baixa" destaque />
-                <Opcao texto="Okay, seven hundred is fine." nota="aceitar cedo demais" />
+                {ESCOLHAS.map((e, i) => (
+                  <Opcao key={e.texto} texto={e.texto} nota={e.nota} destaque={e.destaque} de={38 + i * 4} />
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ───────────────────────── 6. Kit + músicas ───────────────────────── */}
+      {/* ─────────── 6. Kit + músicas ─────────── */}
       <section className="lp-secao">
-        <div className="lp-centro" style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(19rem, 1fr))' }}>
-          <div className="lp-cartao lp-surge" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44, borderRadius: 12, background: 'var(--accent)', color: 'var(--on-accent)' }}>
-              <Icon name="book" size={22} />
-            </span>
-            <h3 className="lp-display-2" style={{ fontSize: 'clamp(1.4rem, 3vw, 1.9rem)', marginTop: '1.1rem' }}>
-              O kit de bolso
-            </h3>
-            <p style={{ fontSize: '1rem', lineHeight: 1.65, color: 'var(--ink2)', marginTop: '.6rem' }}>
-              As 50 frases que mais importam da sua trilha, num PDF de duas
-              páginas. Para a hora em que você está no balcão, sem dados e com
-              fila atrás — que é exatamente a hora em que o aplicativo não
-              abre.
-            </p>
-          </div>
-
-          <div className="lp-cartao lp-surge" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44, borderRadius: 12, background: 'var(--accent)', color: 'var(--on-accent)' }}>
-              <Icon name="headphones" size={22} />
-            </span>
-            <h3 className="lp-display-2" style={{ fontSize: 'clamp(1.4rem, 3vw, 1.9rem)', marginTop: '1.1rem' }}>
-              {n.musicas} músicas
-            </h3>
-            <p style={{ fontSize: '1rem', lineHeight: 1.65, color: 'var(--ink2)', marginTop: '.6rem' }}>
-              Do pop ao rap, agrupadas por dificuldade de ouvido. Você recebe o
-              vocabulário do tema antes de dar play, ouve um trecho quantas
-              vezes quiser — em 0,75× quando a fala for rápida — e no fim
-              escreve o que conseguiu pegar.
-            </p>
-          </div>
+        <div className="lp-centro" style={{ display: 'grid', gap: '1.1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(19rem, 1fr))' }}>
+          <Destaque
+            icone="book"
+            titulo="O kit de bolso"
+            texto="As 50 frases que mais importam da sua trilha, num PDF de duas páginas. Para a hora em que você está no balcão, sem dados e com fila atrás — que é exatamente a hora em que o aplicativo não abre."
+          />
+          <Destaque
+            icone="headphones"
+            titulo={`${n.musicas} músicas`}
+            texto="Do pop ao rap, agrupadas por dificuldade de ouvido. Você recebe o vocabulário do tema antes de dar play, ouve um trecho quantas vezes quiser — em 0,75× quando a fala for rápida — e no fim escreve o que conseguiu pegar."
+          />
         </div>
       </section>
 
-      {/* ───────────────────────── 7. O que é grátis ───────────────────────── */}
+      {/* ─────────── 7. O que é grátis ─────────── */}
       <section className="lp-secao" style={{ background: 'var(--paper)' }}>
-        <div className="lp-estreito lp-surge">
-          <h2 className="lp-display-2">Grátis de verdade,<br />e o que custa.</h2>
-          <p className="lp-lead" style={{ color: 'var(--ink2)', marginTop: '1rem' }}>
+        <div className="lp-estreito">
+          <h2 className="lp-display-2 lp-lead">Grátis de verdade,<br />e o que custa.</h2>
+          <p className="lp-lead lp-apoio" style={{ color: 'var(--ink2)', marginTop: '1rem' }}>
             Não é teste de sete dias que vira cobrança. O que é grátis continua
             grátis, sem cartão e sem prazo.
           </p>
 
-          <div style={{ display: 'grid', gap: '.6rem', marginTop: '2rem' }}>
+          <div style={{ marginTop: 'clamp(1.75rem, 4vw, 2.5rem)' }}>
             <Linha titulo="Curso completo, A1 ao C2" detalhe="6 módulos, 50 unidades" tipo="gratis" />
             <Linha titulo="Teste de nível" detalhe="30 questões, dez minutos" tipo="gratis" />
             <Linha titulo="Palavra do dia e revisão dos seus erros" detalhe="todo dia, para sempre" tipo="gratis" />
@@ -378,34 +466,32 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ───────────────────────── 8. Preço ───────────────────────── */}
-      <section className="lp-secao" style={{ background: 'var(--panel)', color: 'var(--on-panel)' }}>
-        <div className="lp-estreito" style={{ textAlign: 'center' }}>
-          <div className="lp-surge">
-            <div style={{ fontSize: 12.5, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 700 }}>
-              O plano completo
-            </div>
-            <div className="lp-display" style={{ marginTop: '1rem' }}>{emReais(PRECOS.annual.centavos)}</div>
-            <p className="lp-lead" style={{ color: 'rgba(242,244,233,.72)', marginTop: '.6rem' }}>
-              por ano — {mensalidadeDoAnual()} por mês
-            </p>
-            <p style={{ fontSize: '.95rem', color: 'rgba(242,244,233,.5)', marginTop: '1rem', lineHeight: 1.65 }}>
-              Ou {emReais(PRECOS.monthly.centavos)} por mês, para cancelar quando quiser.<br />
-              Sem multa e sem fidelidade — e cancelar não apaga nada: a viagem
-              acaba, o seu progresso fica.
-            </p>
-            <p style={{ fontSize: '.92rem', color: 'rgba(242,244,233,.55)', marginTop: '1.3rem', lineHeight: 1.65 }}>
-              Menos do que uma aula particular de uma hora. E a aula não vai
-              com você para o balcão do aeroporto.
-            </p>
+      {/* ─────────── 8. O preço ─────────── */}
+      <section className="lp-secao lp-grao" style={{ background: 'var(--panel)', color: 'var(--on-panel)' }}>
+        <div className="lp-estreito lp-preco" style={{ textAlign: 'center' }}>
+          <div className="lp-olho" style={{ color: 'var(--accent)' }}>O plano completo</div>
+          <div className="lp-display" style={{ marginTop: '1.1rem', fontSize: 'clamp(3.5rem, 13vw, 7rem)' }}>
+            {emReais(PRECOS.annual.centavos)}
           </div>
+          <p className="lp-lead" style={{ color: claro(.72), marginTop: '.5rem' }}>
+            por ano — {mensalidadeDoAnual()} por mês
+          </p>
+          <p style={{ fontSize: '.95rem', color: claro(.55), marginTop: '1.2rem', lineHeight: 1.65 }}>
+            Ou {emReais(PRECOS.monthly.centavos)} por mês, para cancelar quando quiser.<br />
+            Sem multa e sem fidelidade — e cancelar não apaga nada: a viagem
+            acaba, o seu progresso fica.
+          </p>
+          <p style={{ fontSize: '.92rem', color: claro(.5), marginTop: '1.4rem', lineHeight: 1.65 }}>
+            Menos do que uma aula particular de uma hora. E a aula não vai
+            com você para o balcão do aeroporto.
+          </p>
         </div>
       </section>
 
-      {/* ───────────────────────── 9. Objeções ───────────────────────── */}
+      {/* ─────────── 9. Objeções ─────────── */}
       <section className="lp-secao">
         <div className="lp-estreito">
-          <h2 className="lp-display-2 lp-surge" style={{ marginBottom: '1.8rem' }}>
+          <h2 className="lp-display-2 lp-lead" style={{ marginBottom: '1.8rem' }}>
             O que você ainda<br />está se perguntando.
           </h2>
           {PERGUNTAS.map(p => (
@@ -417,17 +503,17 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ───────────────────────── 10. O pedido ───────────────────────── */}
+      {/* ─────────── 10. O pedido ─────────── */}
       <section className="lp-secao" style={{ background: 'var(--accent)', color: 'var(--on-accent)', textAlign: 'center' }}>
-        <div className="lp-estreito lp-surge">
-          <h2 className="lp-display" style={{ fontSize: 'clamp(2.1rem, 6.5vw, 4rem)' }}>
+        <div className="lp-estreito">
+          <h2 className="lp-display lp-lead" style={{ fontSize: 'clamp(2.2rem, 7vw, 4.25rem)' }}>
             Você vai mesmo,<br />ou ainda está pensando?
           </h2>
-          <p className="lp-lead" style={{ marginTop: '1.3rem', opacity: .78, maxWidth: '36ch', marginInline: 'auto' }}>
+          <p className="lp-lead lp-apoio" style={{ marginTop: '1.4rem', opacity: .78, maxWidth: '36ch', marginInline: 'auto' }}>
             Se vai, comece hoje: dez minutos de teste e a primeira lição da sua
             trilha já está aberta, sem pagar nada.
           </p>
-          <div style={{ marginTop: '2.2rem' }}>
+          <div className="lp-apoio" style={{ marginTop: '2.3rem' }}>
             <Link
               href="/test?lang=en"
               className="lp-cta"
@@ -436,14 +522,14 @@ export default function LandingPage() {
               Começar agora — é grátis
             </Link>
           </div>
-          <p style={{ fontSize: 13.5, marginTop: '1.2rem', opacity: .62 }}>
+          <p className="lp-apoio" style={{ fontSize: 13.5, marginTop: '1.3rem', opacity: .66 }}>
             Já tem conta?{' '}
             <Link href="/entrar" style={{ color: 'var(--on-accent)', fontWeight: 700 }}>Entrar</Link>
           </p>
         </div>
       </section>
 
-      <footer style={{ padding: '2.5rem var(--gutter)', textAlign: 'center', fontSize: 13, color: 'var(--ink3)', lineHeight: 2 }}>
+      <footer style={{ padding: '2.75rem var(--gutter)', textAlign: 'center', fontSize: 13, color: 'var(--ink3)', lineHeight: 2 }}>
         <div>
           <Link href="/" style={{ color: 'var(--ink2)', fontWeight: 600, textDecoration: 'none' }}>
             LinguaKit
@@ -463,25 +549,78 @@ export default function LandingPage() {
   )
 }
 
+/**
+ * O texto que acende palavra por palavra conforme a página rola.
+ *
+ * Cada palavra recebe o seu próprio trecho da rolagem num custom property,
+ * porque animação com linha de tempo de rolagem ignora `animation-delay` —
+ * quem manda é o `animation-range`. As palavras saem de `split(' ')` e
+ * voltam com o espaço, então o texto continua selecionável, copiável e lido
+ * por leitor de tela como uma frase só.
+ */
+function Acende({ texto, de, ate }: { texto: string; de: number; ate: number }) {
+  const palavras = texto.split(' ')
+  const passo = (ate - de) / Math.max(palavras.length - 1, 1)
+  return (
+    <span className="lp-acende">
+      {palavras.map((palavra, i) => (
+        <span
+          key={i}
+          style={{
+            ['--de' as string]: `${(de + i * passo).toFixed(2)}%`,
+            ['--ate' as string]: `${(de + i * passo + 9).toFixed(2)}%`,
+          } as CSSProperties}
+        >
+          {palavra}
+          {i < palavras.length - 1 ? ' ' : ''}
+        </span>
+      ))}
+    </span>
+  )
+}
+
 function Numero({ valor, rotulo, nota }: { valor: number; rotulo: string; nota: string }) {
   return (
-    <div className="lp-cartao lp-surge">
+    <div className="lp-ficha lp-apoio">
       <div className="lp-numero">{valor}</div>
-      <div style={{ fontSize: '.98rem', fontWeight: 700, marginTop: '.3rem' }}>{rotulo}</div>
-      <div style={{ fontSize: '.85rem', color: 'var(--ink3)', marginTop: '.15rem', lineHeight: 1.5 }}>{nota}</div>
+      <div style={{ fontSize: '1rem', fontWeight: 700, marginTop: '.45rem', letterSpacing: '-0.012em' }}>{rotulo}</div>
+      <div style={{ fontSize: '.86rem', color: 'var(--ink3)', marginTop: '.2rem', lineHeight: 1.5 }}>{nota}</div>
     </div>
   )
 }
 
-function Balao({ quem, texto }: { quem: 'vendedor' | 'voce'; texto: string }) {
+function Destaque({ icone, titulo, texto }: { icone: 'book' | 'headphones'; titulo: string; texto: string }) {
+  return (
+    <div className="lp-cartao lp-apoio" style={{ padding: 'clamp(1.6rem, 4vw, 2.6rem)' }}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 46, height: 46, borderRadius: 14, background: 'var(--accent)', color: 'var(--on-accent)' }}>
+        <Icon name={icone} size={22} />
+      </span>
+      <h3 className="lp-display-2" style={{ fontSize: 'clamp(1.45rem, 3vw, 2rem)', marginTop: '1.2rem' }}>
+        {titulo}
+      </h3>
+      <p className="lp-corpo" style={{ color: 'var(--ink2)', marginTop: '.65rem', fontSize: '1rem' }}>
+        {texto}
+      </p>
+    </div>
+  )
+}
+
+function Balao({ quem, texto, de }: { quem: 'vendedor' | 'voce'; texto: string; de: number }) {
   const meu = quem === 'voce'
   return (
-    <div style={{ display: 'flex', justifyContent: meu ? 'flex-end' : 'flex-start', marginTop: '.5rem' }}>
+    <div
+      className="lp-turno"
+      style={{
+        display: 'flex', justifyContent: meu ? 'flex-end' : 'flex-start', marginTop: '.55rem',
+        ['--de' as string]: `${de}%`,
+        ['--ate' as string]: `${de + 8}%`,
+      } as CSSProperties}
+    >
       <div
         lang="en"
         style={{
           maxWidth: '86%', fontSize: 12.5, lineHeight: 1.45,
-          padding: '.5rem .65rem', borderRadius: 12,
+          padding: '.55rem .7rem', borderRadius: 13,
           background: meu ? 'var(--accent)' : 'var(--surface)',
           color: meu ? 'var(--on-accent)' : 'var(--ink)',
           border: meu ? 'none' : '1px solid var(--border)',
@@ -493,14 +632,17 @@ function Balao({ quem, texto }: { quem: 'vendedor' | 'voce'; texto: string }) {
   )
 }
 
-function Opcao({ texto, nota, destaque }: { texto: string; nota: string; destaque?: boolean }) {
+function Opcao({ texto, nota, destaque, de }: { texto: string; nota: string; destaque?: boolean; de: number }) {
   return (
     <div
+      className="lp-turno"
       style={{
-        marginTop: '.35rem', padding: '.5rem .6rem', borderRadius: 10,
+        marginTop: '.4rem', padding: '.55rem .65rem', borderRadius: 11,
         background: 'var(--surface)',
         border: `1.5px solid ${destaque ? 'var(--accent-dim)' : 'var(--border)'}`,
-      }}
+        ['--de' as string]: `${de}%`,
+        ['--ate' as string]: `${de + 6}%`,
+      } as CSSProperties}
     >
       <div lang="en" style={{ fontSize: 12.5, color: 'var(--ink)' }}>{texto}</div>
       <div style={{ fontSize: 10.5, color: 'var(--ink3)', marginTop: 1 }}>{nota}</div>
@@ -512,27 +654,25 @@ function Linha({ titulo, detalhe, tipo }: { titulo: string; detalhe: string; tip
   const gratis = tipo === 'gratis'
   return (
     <div
-      style={{
-        display: 'flex', alignItems: 'center', gap: '.8rem',
-        background: 'var(--surface)', border: '1px solid var(--border)',
-        borderRadius: 12, padding: '.85rem 1rem',
-      }}
+      className="lp-ficha"
+      style={{ display: 'flex', alignItems: 'center', gap: '.9rem', paddingBlock: '.95rem' }}
     >
       <span
         style={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           width: 26, height: 26, borderRadius: 999, flexShrink: 0,
-          background: gratis ? 'var(--accent)' : 'var(--paper)',
+          background: gratis ? 'var(--accent)' : 'transparent',
+          border: gratis ? 'none' : '1px solid var(--border)',
           color: gratis ? 'var(--on-accent)' : 'var(--ink3)',
         }}
       >
         {gratis ? <Icon name="check" size={14} /> : <Icon name="key" size={13} />}
       </span>
       <span style={{ flex: 1, minWidth: 0 }}>
-        <span style={{ display: 'block', fontSize: '.97rem', fontWeight: 600 }}>{titulo}</span>
-        <span style={{ display: 'block', fontSize: '.84rem', color: 'var(--ink3)', marginTop: 1 }}>{detalhe}</span>
+        <span style={{ display: 'block', fontSize: '.99rem', fontWeight: 600, letterSpacing: '-0.012em' }}>{titulo}</span>
+        <span style={{ display: 'block', fontSize: '.85rem', color: 'var(--ink3)', marginTop: 1 }}>{detalhe}</span>
       </span>
-      <span style={{ flexShrink: 0, fontSize: 11, fontWeight: 700, letterSpacing: '.07em', textTransform: 'uppercase', color: gratis ? 'var(--ink2)' : 'var(--ink3)' }}>
+      <span className="lp-olho" style={{ flexShrink: 0, fontSize: 10.5, color: gratis ? 'var(--ink2)' : 'var(--ink3)', letterSpacing: '.1em' }}>
         {gratis ? 'grátis' : 'plano'}
       </span>
     </div>
