@@ -6,6 +6,7 @@ import { linkDoCheckout } from '@/lib/kiwify'
 import { PRECOS, descontoDoAnual, emReais, mensalidadeDoAnual } from '@/lib/precos'
 import { Icon } from '@/components/Icon'
 import { Rabisco } from '@/components/Rabisco'
+import { LEGAL } from '@/lib/legal'
 
 /**
  * A tela de planos.
@@ -51,6 +52,8 @@ export function TelaDePlanos({ studentId, nome, email, plano, estado, valendo, r
           <Link href={`/learn/${studentId}`} style={botao('var(--panel)', 'var(--on-panel)')}>
             Voltar para o curso
           </Link>
+
+          <ComoCancelar />
         </div>
       </div>
     )
@@ -180,4 +183,96 @@ function botao(fundo: string, cor: string): React.CSSProperties {
     background: fundo, color: cor,
     fontSize: 15.5, fontWeight: 700, textDecoration: 'none',
   }
+}
+
+/**
+ * Como cancelar, dito por extenso e sem precisar pedir.
+ *
+ * Isto não é cortesia: esconder o cancelamento é prática que o CDC trata como
+ * abusiva, e é a primeira coisa que alguém procura antes de confiar o cartão.
+ * Uma assinatura fácil de cancelar vende MAIS, não menos.
+ *
+ * Os caminhos vêm da central de ajuda da Kiwify, porque a assinatura vive lá:
+ * é ela quem cobra, e nós só recebemos o aviso. Por isso não existe um botão
+ * "cancelar" aqui — ele seria mentira, já que este site não tem como
+ * interromper a cobrança. O que existe é o endereço exato de onde o botão
+ * mora, mais o nosso e-mail para quem não quiser se virar sozinho.
+ */
+function ComoCancelar() {
+  return (
+    <details
+      style={{
+        marginTop: '2rem', textAlign: 'left',
+        background: 'var(--surface)', border: '1px solid var(--border)',
+        borderRadius: 14, padding: '0 1rem',
+      }}
+    >
+      <summary
+        style={{
+          cursor: 'pointer', listStyle: 'none', minHeight: 52,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          fontSize: 14, fontWeight: 600, color: 'var(--ink)',
+        }}
+      >
+        Como cancelar a assinatura
+        <span style={{ color: 'var(--ink3)', fontSize: 18 }}>+</span>
+      </summary>
+
+      <div style={{ paddingBottom: '1rem' }}>
+        <p style={{ fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.65 }}>
+          A cobrança é feita pela {LEGAL.pagamento.nome}, então o cancelamento
+          acontece lá. São dois caminhos, os dois seus, sem precisar falar com
+          ninguém:
+        </p>
+
+        <ol style={{ fontSize: 13.5, color: 'var(--ink2)', lineHeight: 1.65, paddingLeft: '1.1rem', marginTop: '.6rem' }}>
+          <li style={{ marginBottom: '.5rem' }}>
+            No e-mail <strong>&ldquo;Pagamento de assinatura aprovado&rdquo;</strong>, que
+            você recebe na compra e a cada renovação, tem um botão para
+            gerenciar a assinatura. Por ele dá para cancelar ou trocar o
+            cartão.
+          </li>
+          <li>
+            Ou entre em{' '}
+            <a
+              href="https://dashboard.kiwify.com.br/minhas-compras"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'var(--ink)', fontWeight: 600 }}
+            >
+              dashboard.kiwify.com.br/minhas-compras
+            </a>
+            , encontre a assinatura e cancele.
+          </li>
+        </ol>
+
+        <p style={{ fontSize: 13, color: 'var(--ink2)', lineHeight: 1.6, marginTop: '.8rem' }}>
+          <strong>O que o cancelamento faz:</strong> impede as próximas
+          cobranças. Ele não devolve o que já foi pago — e você{' '}
+          <strong>continua com o acesso até o fim do período que já pagou</strong>.
+          Para pedir dinheiro de volta dentro dos sete dias, veja{' '}
+          <Link href="/reembolso" style={{ color: 'var(--ink)', fontWeight: 600 }}>
+            Reembolso e cancelamento
+          </Link>.
+        </p>
+
+        <p style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.6, marginTop: '.7rem' }}>
+          Se pagou com Pix automático, dá para cancelar a autorização direto no
+          aplicativo do seu banco.
+        </p>
+
+        <p style={{ fontSize: 13, color: 'var(--ink2)', lineHeight: 1.6, marginTop: '.7rem' }}>
+          {/* Link para /contato em vez do endereço aqui: esta tela é um
+              componente de cliente, e o e-mail vem de uma variável de
+              servidor — no navegador ela seria undefined e a frase viraria
+              "o canal de contato está sendo montado". */}
+          Não achou, ou prefere que eu resolva?{' '}
+          <Link href="/contato" style={{ color: 'var(--ink)', fontWeight: 600 }}>
+            Fale comigo
+          </Link>{' '}
+          que eu cancelo para você.
+        </p>
+      </div>
+    </details>
+  )
 }
