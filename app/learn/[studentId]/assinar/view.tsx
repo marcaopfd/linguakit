@@ -233,16 +233,8 @@ function ComoCancelar() {
             cartão.
           </li>
           <li>
-            Ou entre em{' '}
-            <a
-              href="https://dashboard.kiwify.com.br/minhas-compras"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: 'var(--ink)', fontWeight: 600 }}
-            >
-              dashboard.kiwify.com.br/minhas-compras
-            </a>
-            , encontre a assinatura e cancele.
+            Não achou o e-mail? <Link href="/contato" style={{ color: 'var(--ink)', fontWeight: 600 }}>Me escreva</Link>{' '}
+            e eu cancelo para você no mesmo dia. Não precisa justificar nada.
           </li>
         </ol>
 
@@ -261,17 +253,13 @@ function ComoCancelar() {
           aplicativo do seu banco.
         </p>
 
-        <p style={{ fontSize: 13, color: 'var(--ink2)', lineHeight: 1.6, marginTop: '.7rem' }}>
-          {/* Link para /contato em vez do endereço aqui: esta tela é um
-              componente de cliente, e o e-mail vem de uma variável de
-              servidor — no navegador ela seria undefined e a frase viraria
-              "o canal de contato está sendo montado". */}
-          Não achou, ou prefere que eu resolva?{' '}
-          <Link href="/contato" style={{ color: 'var(--ink)', fontWeight: 600 }}>
-            Fale comigo
-          </Link>{' '}
-          que eu cancelo para você.
-        </p>
+        {/* Aqui havia um link direto para uma página de compras da Kiwify.
+            Ela dava 404 — eu publiquei um endereço que peguei de um artigo de
+            terceiro e não conferi. Link quebrado na hora de cancelar é pior
+            do que link nenhum: parece empresa escondendo a saída.
+
+            O que ficou são os dois caminhos que não dependem de eu adivinhar
+            URL: o botão do e-mail que a própria Kiwify documenta, e eu. */}
       </div>
     </details>
   )

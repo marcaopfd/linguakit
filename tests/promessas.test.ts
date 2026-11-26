@@ -57,3 +57,23 @@ describe('as promessas das telas de venda', () => {
     expect(ler('lib/plano.ts')).toContain("'paused'")
   })
 })
+
+describe('as instruções de cancelamento', () => {
+  const assinar = ler('app/learn/[studentId]/assinar/view.tsx')
+  const copy = semComentarios(assinar)
+
+  it('não manda o aluno para um endereço da Kiwify que eu não conferi', () => {
+    // Eu publiquei dashboard.kiwify.com.br/minhas-compras, tirado de um
+    // artigo de terceiro, sem abrir. Dava 404 — e o aluno encontrou isso
+    // justamente na hora de cancelar. Link quebrado ali é pior do que link
+    // nenhum: parece empresa escondendo a saída.
+    expect(copy).not.toContain('minhas-compras')
+    expect(copy).not.toMatch(/dashboard\.kiwify/)
+  })
+
+  it('mantém os dois caminhos que não dependem de adivinhar URL', () => {
+    // O botão do e-mail, que a própria Kiwify documenta, e falar comigo.
+    expect(copy).toContain('Pagamento de assinatura aprovado')
+    expect(copy).toContain('/contato')
+  })
+})
