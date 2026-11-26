@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { describe, expect, it } from 'vitest'
-import { numerosDoProduto } from '@/lib/numeros'
+import { numerosDoCursoGeral, numerosDoProduto } from '@/lib/numeros'
 import { TRILHAS } from '@/lib/trilhas'
 
 const ler = (p: string) => readFileSync(join(__dirname, '..', p), 'utf8')
@@ -45,6 +45,39 @@ describe('os números do produto', () => {
     const escritas = TRILHAS.filter(t => t.disponivel && t.id !== 'geral' && t.modulos.length > 0)
     const modulos = escritas.reduce((s, t) => s + t.modulos.length, 0)
     expect(numerosDoProduto().modulos).toBe(modulos)
+  })
+})
+
+describe('os números do curso geral', () => {
+  it('conta exercício como exercício, e não como tudo que existe na unidade', () => {
+    // A home anunciava "+1.700 exercícios". Exercício de verdade são 882; os
+    // 1.700 só aparecem somando vocabulário, falas de diálogo e erros
+    // comuns. Quem conta 1.700 e entrega 882 não ganha um aluno a mais —
+    // perde o direito de ser levado a sério no resto da página.
+    const n = numerosDoCursoGeral()
+    expect(n.exercicios).toBeGreaterThan(0)
+    expect(n.exercicios).toBeLessThan(n.exercicios + n.palavras + n.falas)
+    expect(n.niveis).toBeGreaterThan(0)
+    expect(n.unidades).toBeGreaterThan(0)
+  })
+
+  it('a home não traz número do curso cravado à mão', () => {
+    // Sem comentários: o cabeçalho do arquivo EXPLICA o número errado que
+    // existia ali ("a página anunciava +1.700 exercícios"), então procurar no
+    // arquivo inteiro acusa a explicação em vez da copy. Foi exatamente o que
+    // aconteceu na primeira versão deste teste.
+    const home = ler('app/page.tsx')
+    const copyDaHome = home
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .replace(/^\s*\/\/.*$/gm, '')
+      .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+
+    // O defeito que isto guarda é o que de fato aconteceu: um número escrito
+    // na copy, o conteúdo muda (ou nunca bateu), e a página mente.
+    expect(copyDaHome).not.toMatch(/1\.?700/)
+    // A contagem é lida do currículo. A chamada mora no topo do módulo, fora
+    // do componente, então a procura é no arquivo todo.
+    expect(home).toContain('numerosDoCursoGeral()')
   })
 })
 

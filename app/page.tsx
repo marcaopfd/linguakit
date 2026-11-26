@@ -5,179 +5,320 @@ import { Rabisco } from '@/components/Rabisco'
 import { CourseCards } from '@/components/CoursePicker'
 import { Icon } from '@/components/Icon'
 import { ProductPreview } from '@/components/ProductPreview'
+import { numerosDoCursoGeral, numerosDoProduto } from '@/lib/numeros'
+import { PRECOS, emReais } from '@/lib/precos'
+import { TRILHAS } from '@/lib/trilhas'
+import { EstilosDaHome } from './estilos-home'
+
+/**
+ * A porta de entrada.
+ *
+ * Ela não vende: encaminha. Quem chega aqui está decidindo QUAL curso é o
+ * dele, e a página inteira existe para responder isso rápido e mandar a
+ * pessoa para o lugar certo — o teste, a trilha, ou a página de vendas.
+ *
+ * ─── O que mudou, e por quê ─────────────────────────────────────────────
+ *
+ * 1. OS NÚMEROS ERAM FALSOS. A página anunciava "+1.700 exercícios" e o
+ *    curso tem 882. Os 1.700 só fechavam somando vocabulário, falas de
+ *    diálogo e erros comuns — que são conteúdo, mas não são exercício. Agora
+ *    tudo vem de numerosDoCursoGeral(), contado do currículo, e um teste
+ *    proíbe número cravado aqui. Exagerar não ganha aluno: custa o direito
+ *    de ser levado a sério no resto da página, onde tudo é verdade.
+ *
+ * 2. AS TRILHAS NÃO EXISTIAM AQUI. O maior diferencial do produto — ser
+ *    organizado pelo motivo de quem estuda — não era nem citado na porta de
+ *    entrada. Agora elas são o bloco central, lidas de TRILHAS, com o número
+ *    real de módulos de cada uma.
+ *
+ * 3. O PLANO ERA INVISÍVEL. Não havia uma linha sobre o que é pago. Quem
+ *    quisesse assinar não tinha como descobrir que dava. Agora existe uma
+ *    seção que separa o que é grátis para sempre do que o plano abre, com
+ *    preço, lendo de lib/precos.ts.
+ *
+ * 4. A FORMA. Tipo pequeno, tudo com a mesma largura e sem movimento nenhum.
+ *    Agora segue o mesmo sistema da página de vendas: curvas fortes, tracking
+ *    por tamanho, movimento vindo do papel do elemento e estado de toque em
+ *    tudo que se aperta.
+ *
+ * O que continua igual de propósito: nenhum depoimento e nenhuma contagem de
+ * alunos. Inventar qualquer um dos dois é a coisa mais barata que existe
+ * numa página dessas, e o jeito mais rápido de não merecer a confiança de
+ * ninguém. O que faz as vezes de prova é ser específico sobre o que tem
+ * dentro.
+ */
+
+const geral = numerosDoCursoGeral()
 
 export const metadata = {
   title: 'LinguaKit — aprenda inglês ou português sozinho, de graça',
   description:
-    'Teste de nível em 10 minutos, 50 unidades do A1 ao C2 e mais de 1.700 exercícios falados — no sotaque do lugar para onde você vai. Gratuito.',
+    `Teste de nível em 10 minutos, ${geral.unidades} unidades do A1 ao C2 e ${geral.exercicios} `
+    + 'exercícios falados — no sotaque do lugar para onde você vai. Gratuito.',
 }
 
-/**
- * The page people are sent to.
- *
- * It follows the order a stranger needs: what this is, which door is yours,
- * what a question actually looks like, why it is built this way, the doubts
- * that stop someone, and then the ask. The product picture sits high on
- * purpose — before it, the page talked about the course without ever showing
- * it, which is the one thing a visitor is really trying to find out.
- *
- * Written in Portuguese, since that is who it will be shared with, while the
- * two cards stay bilingual so an English speaker still finds theirs.
- *
- * Every number here is counted from the curriculum. There are no testimonials
- * and no user count: inventing either is the cheapest thing on a landing page
- * and the fastest way to deserve nobody's trust. What stands in for proof is
- * being specific about what is actually inside.
- */
+const PERGUNTAS = [
+  { q: 'Quanto custa?', a: `Nada para começar. O curso do A1 ao C2 é gratuito e continua gratuito: as ${geral.unidades} unidades, os exercícios, o áudio e a revisão. O plano pago abre as trilhas de viagem e de mudança, as conversas e o kit de bolso.` },
+  { q: 'Preciso de professor?', a: 'Não. Ele foi feito para ser feito sozinho, do teste até o C2. E quando travar, você manda a dúvida de dentro do curso e eu respondo na mão.' },
+  { q: 'Quanto tempo por dia?', a: 'Uma rodada tem cerca de doze perguntas e dá para fazer na fila do mercado. Quantas rodadas por dia é com você.' },
+  { q: 'Funciona no celular?', a: 'Foi desenhado para o celular primeiro. Dá para salvar na tela de início do iPhone ou do Android e usar como se fosse um aplicativo.' },
+  { q: 'E se eu já souber alguma coisa?', a: 'Melhor ainda. O teste de dez minutos mostra o que você já domina e o que falta, e te coloca na unidade certa em vez de no começo.' },
+  { q: 'Como eu sei que estou melhorando?', a: 'O portal mostra cada unidade concluída, sua porcentagem de acerto e a lista do que você errou — com a resposta certa ao lado.' },
+]
+
 export default function HomePage() {
+  const n = numerosDoProduto()
+  const trilhas = TRILHAS.filter(t => t.disponivel)
+
   return (
-    <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
-      {/* 1 — What this is */}
-      <header style={{ background: 'var(--panel)', color: 'var(--on-panel)', padding: '2.75rem 1.5rem 2.5rem', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ maxWidth: 580, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-          {/* O traço passa por trás do mascote, como nas referências. */}
-          <div style={{ position: 'absolute', top: -52, left: '50%', transform: 'translateX(-50%)' }}>
-            <Rabisco largura={250} />
+    <div className="hm" style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+      <EstilosDaHome />
+
+      {/* ───────────── 1. O que é isto ───────────── */}
+      <header
+        className="hm-secao hm-grao"
+        style={{ background: 'var(--panel)', color: 'var(--on-panel)', position: 'relative', overflow: 'clip', paddingBottom: 'clamp(2rem, 5vw, 3rem)' }}
+      >
+        <div className="hm-centro hm-entra" style={{ textAlign: 'center', position: 'relative' }}>
+          <div aria-hidden style={{ position: 'absolute', top: -64, left: '50%', transform: 'translateX(-50%)', opacity: .5 }}>
+            <Rabisco largura={260} />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem', color: 'var(--on-panel)', position: 'relative' }}>
-            <Caramelo mood="happy" size={84} />
+          <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
+            <Caramelo mood="happy" size={88} />
           </div>
 
-          <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '.35rem', padding: '.35rem .8rem', borderRadius: 999, background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 11.5, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', marginBottom: '.9rem' }}>
-            Gratuito
+          <div
+            className="hm-olho"
+            style={{ color: 'var(--accent)', marginTop: '1.1rem', ['--atraso' as string]: '60ms' }}
+          >
+            Grátis, sem prazo e sem cartão
           </div>
 
-          {/* Scales with the screen instead of breaking where a <br /> happened
-              to be: forced at 375px it fell into three ragged lines. */}
-          <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 'clamp(28px, 8.2vw, 38px)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '.75rem', textWrap: 'balance', position: 'relative' }}>
-            Aprenda inglês sozinho, do zero ao avançado
+          <h1 className="hm-display" style={{ marginTop: '.9rem', ['--atraso' as string]: '60ms' }}>
+            {/* Sem <br />: a quebra forçada caía depois de "sozinho," e a
+                primeira linha ainda quebrava sozinha, dando três linhas
+                desiguais no celular. text-wrap: balance distribui melhor do
+                que qualquer quebra que eu escolha para uma largura só. */}
+            Aprenda inglês sozinho, do zero ao avançado.
           </h1>
-          <p style={{ position: 'relative', fontSize: 15.5, color: 'rgba(242,244,233,.72)', lineHeight: 1.6, maxWidth: 450, margin: '0 auto' }}>
-            Um teste de dez minutos diz exatamente onde você começa. Depois são
-            50 unidades no seu ritmo, com tudo falado em voz alta — no sotaque
-            do lugar para onde você vai.
+
+          <p
+            className="hm-lead"
+            style={{ color: 'color-mix(in srgb, var(--on-panel) 72%, transparent)', maxWidth: '36rem', margin: '1.2rem auto 0', ['--atraso' as string]: '170ms' }}
+          >
+            Um teste de dez minutos diz exatamente onde você começa. Depois são{' '}
+            {geral.unidades} unidades no seu ritmo, com tudo falado em voz alta
+            — no sotaque do lugar para onde você vai.
           </p>
-          <p style={{ position: 'relative', fontSize: 13.5, color: 'rgba(242,244,233,.58)', lineHeight: 1.5, marginTop: '.7rem' }}>
+
+          <p
+            style={{ fontSize: 13.5, color: 'color-mix(in srgb, var(--on-panel) 55%, transparent)', marginTop: '.8rem', ['--atraso' as string]: '230ms' }}
+          >
             Também ensinamos português para quem fala inglês.
           </p>
         </div>
       </header>
 
-      {/* 2 — Which door is yours */}
-      <main style={{ maxWidth: 560, margin: '0 auto', padding: '1.75rem 1.5rem 0' }}>
-        <CourseCards />
-      </main>
-
-      {/* 3 — What it actually looks like */}
-      <section style={{ maxWidth: 560, margin: '0 auto', padding: '2.5rem 1.5rem 0' }}>
-        <h2 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 21, fontWeight: 700, textAlign: 'center', marginBottom: '.4rem' }}>
-          Uma pergunta por vez
-        </h2>
-        <p style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.6, textAlign: 'center', maxWidth: 420, margin: '0 auto 1.5rem' }}>
-          Sem parede de exercícios. Você ouve, responde, e sabe na hora se
-          acertou. É isto que te espera do outro lado:
-        </p>
-        <ProductPreview />
-      </section>
-
-      {/* The numbers, counted from the curriculum */}
-      <section style={{ maxWidth: 560, margin: '0 auto', padding: '2rem 1.5rem 0' }}>
-        <div style={{ display: 'flex', gap: '.5rem', textAlign: 'center' }}>
-          <Figure number="6" label="níveis, do A1 ao C2" />
-          <Figure number="50" label="unidades" />
-          <Figure number="+1.700" label="exercícios" />
+      {/* ───────────── 2. Qual porta é a sua ───────────── */}
+      <section className="hm-secao" style={{ paddingTop: 'clamp(1.5rem, 4vw, 2.25rem)' }}>
+        <div className="hm-estreito">
+          <CourseCards />
         </div>
       </section>
 
-      {/* 4 — Why it is built this way */}
-      <section style={{ maxWidth: 560, margin: '0 auto', padding: '2.25rem 1.5rem 0' }}>
-        <Point
-          icon="speaker"
-          title="Você ouve antes de ler"
-          body="Toda palavra, frase e diálogo é falada em voz alta. Cinco tipos de atividade nascem do som: ouvir e escolher, ditado, montar a frase, achar a resposta do diálogo e dizer na outra língua."
-        />
-        <Point
-          icon="headphones"
-          title="No sotaque de onde você vai"
-          body="Irlanda, Austrália, Reino Unido ou Estados Unidos. Quem vai para Dublin passa o curso ouvindo o inglês que vai encontrar lá, não outro."
-        />
-        <Point
-          icon="repeat"
-          title="O que você erra volta"
-          body="Errou hoje, aparece de novo amanhã. Acertou, volta daqui a três dias, depois uma semana, depois um mês — até parar de ser um erro."
-        />
-        <Point
-          icon="target"
-          title="Começa no seu nível, não no começo"
-          body="O teste aponta a unidade exata por onde partir. Quem já sabe alguma coisa não perde tempo repetindo o que já sabe."
-        />
-      </section>
+      {/* ───────────── 3. As trilhas ─────────────
+          O diferencial do produto é ser organizado pelo MOTIVO de quem
+          estuda, e isso não aparecia na porta de entrada. Os números de
+          módulos vêm do registro das trilhas. */}
+      <section className="hm-secao" style={{ background: 'var(--paper)' }}>
+        <div className="hm-centro">
+          <div className="hm-lidera" style={{ maxWidth: '34rem' }}>
+            <div className="hm-olho" style={{ color: 'var(--ink3)' }}>Por onde começar</div>
+            <h2 className="hm-titulo" style={{ marginTop: '.9rem' }}>
+              O curso é organizado pelo seu motivo.
+            </h2>
+            <p className="hm-lead" style={{ color: 'var(--ink2)', marginTop: '.8rem' }}>
+              Ninguém aprende inglês &ldquo;em geral&rdquo;. Aprende porque vai
+              viajar, porque vai se mudar, ou porque quer subir de nível. Cada
+              caminho tem o seu.
+            </p>
+          </div>
 
-      {/* 5 — The doubts that stop someone */}
-      <section style={{ maxWidth: 560, margin: '0 auto', padding: '2.25rem 1.5rem 0' }}>
-        <h2 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 21, fontWeight: 700, marginBottom: '1rem' }}>
-          Perguntas honestas
-        </h2>
-        <Faq q="Quanto custa?" a="Nada. O curso inteiro é gratuito: as 50 unidades, os exercícios, o áudio e a revisão." />
-        <Faq q="Preciso de professor?" a="Não. Ele foi feito para ser feito sozinho, do teste até o C2. Se um dia você quiser aula, dá para combinar — mas o curso não depende disso." />
-        <Faq q="Quanto tempo por dia?" a="Uma rodada tem cerca de doze perguntas e dá para fazer na fila do mercado. Quantas rodadas por dia é com você." />
-        <Faq q="Funciona no celular?" a="Foi desenhado para o celular primeiro. Dá para salvar na tela de início do iPhone ou do Android e usar como se fosse um aplicativo." />
-        <Faq q="E se eu já souber alguma coisa?" a="Melhor ainda. O teste de dez minutos mostra o que você já domina e o que falta, e te coloca na unidade certa em vez de no começo." />
-        <Faq q="Como eu sei que estou melhorando?" a="O portal mostra cada unidade concluída, sua porcentagem de acerto e a lista do que você errou — com a resposta certa ao lado." />
-      </section>
-
-      {/* 6 — The ask */}
-      <section style={{ maxWidth: 560, margin: '0 auto', padding: '2.5rem 1.5rem 0', textAlign: 'center' }}>
-        <h2 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 700, marginBottom: '.5rem' }}>
-          Comece pelo teste
-        </h2>
-        <p style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.6, marginBottom: '1.1rem', maxWidth: 400, margin: '0 auto 1.1rem' }}>
-          São 30 questões e dez minutos. No fim você recebe seu nível, o que já
-          domina, o que falta, e a unidade exata por onde começar.
-        </p>
-        <Link
-          href="/test?lang=en"
-          style={{ display: 'inline-flex', alignItems: 'center', minHeight: 50, padding: '.9rem 1.6rem', borderRadius: 12, background: 'var(--accent)', color: 'var(--on-accent)', fontSize: 15.5, fontWeight: 700, textDecoration: 'none' }}
-        >
-          Fazer o teste de inglês →
-        </Link>
-        {/* Quem chegou aqui ainda decidindo precisa ver o produto inteiro
-            antes do teste. A página de vendas é onde ele está. */}
-        <div style={{ marginTop: '.8rem', fontSize: 13.5, color: 'var(--ink3)' }}>
-          Vai morar fora ou viajar?{' '}
-          <Link href="/ingles-para-morar-fora" style={{ color: 'var(--ink)', fontWeight: 600, display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>
-            Veja o curso feito para isso
-          </Link>
-        </div>
-        {/* Quem já decidiu não precisa do teste para entrar. Antes, a única
-            porta para o cadastro era a tela de login, o que fazia criar conta
-            parecer coisa de quem já tinha uma. */}
-        <div style={{ marginTop: '.8rem', fontSize: 13.5, color: 'var(--ink3)' }}>
-          Não quer fazer o teste agora?{' '}
-          <Link href="/cadastro" style={{ color: 'var(--ink)', fontWeight: 600, display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>
-            Criar minha conta
-          </Link>
-        </div>
-        <div style={{ marginTop: '.4rem' }}>
-          <Link href="/test?lang=pt" style={{ fontSize: 13.5, color: 'var(--ink3)', display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>
-            Looking for the Portuguese course?
-          </Link>
+          <div className="hm-trilhas" style={{ marginTop: 'clamp(1.75rem, 4vw, 2.5rem)' }}>
+            {trilhas.map(t => (
+              <Link
+                key={t.id}
+                href={t.id === 'geral' ? '/test?lang=en' : '/ingles-para-morar-fora'}
+                className="hm-trilha hm-apoia"
+              >
+                <span style={{ fontSize: 30 }} aria-hidden>{t.emoji}</span>
+                <h3 className="hm-sub" style={{ marginTop: '.85rem' }}>{t.nome}</h3>
+                <p style={{ fontSize: '.92rem', lineHeight: 1.6, color: 'var(--ink2)', marginTop: '.4rem' }}>
+                  {t.promessa}
+                </p>
+                <div className="hm-trilha-pe hm-olho" style={{ color: 'var(--ink3)' }}>
+                  {t.id === 'geral'
+                    ? `${geral.niveis} níveis · ${geral.unidades} unidades`
+                    : `${t.modulos.length} módulos`}
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      <footer style={{ maxWidth: 560, margin: '2.5rem auto 0', padding: '2.5rem 1.5rem 2rem', textAlign: 'center', borderTop: '1px solid var(--border)' }}>
-        <div style={{ fontSize: 13, color: 'var(--ink3)', lineHeight: 1.9 }}>
-          <div>
-            Já tem conta?{' '}
-            <Link href="/entrar" style={{ color: 'var(--ink)', fontWeight: 600, display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>
-              Entrar
+      {/* ───────────── 4. O que é, por dentro ───────────── */}
+      <section className="hm-secao">
+        <div className="hm-estreito">
+          <div className="hm-lidera" style={{ textAlign: 'center' }}>
+            <h2 className="hm-titulo">Uma pergunta por vez</h2>
+            <p className="hm-lead" style={{ color: 'var(--ink2)', marginTop: '.7rem' }}>
+              Sem parede de exercícios. Você ouve, responde, e sabe na hora se
+              acertou. É isto que te espera do outro lado:
+            </p>
+          </div>
+          <div className="hm-apoia" style={{ marginTop: '1.75rem' }}>
+            <ProductPreview />
+          </div>
+        </div>
+      </section>
+
+      {/* ───────────── 5. Os números, contados do conteúdo ───────────── */}
+      <section className="hm-secao" style={{ paddingTop: 0 }}>
+        <div className="hm-centro">
+          <div className="hm-numeros">
+            <Numero valor={geral.niveis} rotulo="níveis, do A1 ao C2" />
+            <Numero valor={geral.unidades} rotulo="unidades" />
+            <Numero valor={geral.exercicios} rotulo="exercícios falados" />
+            <Numero valor={geral.palavras} rotulo="palavras com áudio" />
+          </div>
+        </div>
+      </section>
+
+      {/* ───────────── 6. Por que é assim ───────────── */}
+      <section className="hm-secao" style={{ background: 'var(--paper)' }}>
+        <div className="hm-estreito">
+          <Ponto
+            icon="speaker"
+            title="Você ouve antes de ler"
+            body="Toda palavra, frase e diálogo é falada em voz alta. Cinco tipos de atividade nascem do som: ouvir e escolher, ditado, montar a frase, achar a resposta do diálogo e dizer na outra língua."
+          />
+          <Ponto
+            icon="headphones"
+            title="No sotaque de onde você vai"
+            body="Irlanda, Austrália, Reino Unido ou Estados Unidos. Quem vai para Dublin passa o curso ouvindo o inglês que vai encontrar lá, não outro."
+          />
+          <Ponto
+            icon="repeat"
+            title="O que você erra volta"
+            body="Errou hoje, aparece de novo amanhã. Acertou, volta daqui a três dias, depois uma semana, depois um mês — até parar de ser um erro."
+          />
+          <Ponto
+            icon="target"
+            title="Começa no seu nível, não no começo"
+            body="O teste aponta a unidade exata por onde partir. Quem já sabe alguma coisa não perde tempo repetindo o que já sabe."
+          />
+        </div>
+      </section>
+
+      {/* ───────────── 7. O que é grátis, e o que custa ─────────────
+          Não havia uma linha sobre o plano nesta página. Quem quisesse
+          assinar não tinha como descobrir que dava. */}
+      <section className="hm-secao hm-grao" style={{ background: 'var(--panel)', color: 'var(--on-panel)' }}>
+        <div className="hm-centro">
+          <div className="hm-lidera" style={{ maxWidth: '34rem' }}>
+            <div className="hm-olho" style={{ color: 'var(--accent)' }}>Grátis de verdade</div>
+            <h2 className="hm-titulo" style={{ marginTop: '.9rem' }}>
+              O curso inteiro não custa nada.<br />O plano abre o resto.
+            </h2>
+          </div>
+
+          <div
+            style={{
+              display: 'grid', gap: '1rem', marginTop: 'clamp(1.75rem, 4vw, 2.5rem)',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(17rem, 1fr))',
+            }}
+          >
+            <div className="hm-apoia" style={{ borderTop: '1px solid color-mix(in srgb, var(--on-panel) 18%, transparent)', paddingTop: '1rem' }}>
+              <div className="hm-olho" style={{ color: 'var(--accent)' }}>Sempre grátis</div>
+              <p style={{ fontSize: '.98rem', lineHeight: 1.7, color: 'color-mix(in srgb, var(--on-panel) 76%, transparent)', marginTop: '.7rem' }}>
+                As {geral.unidades} unidades do A1 ao C2, o teste de nível, a
+                palavra do dia, a revisão dos seus erros, o primeiro módulo de
+                cada trilha e a primeira música de cada tipo. Sem prazo e sem
+                cartão.
+              </p>
+            </div>
+
+            <div className="hm-apoia" style={{ borderTop: '1px solid color-mix(in srgb, var(--on-panel) 18%, transparent)', paddingTop: '1rem' }}>
+              <div className="hm-olho" style={{ color: 'color-mix(in srgb, var(--on-panel) 55%, transparent)' }}>
+                No plano
+              </div>
+              <p style={{ fontSize: '.98rem', lineHeight: 1.7, color: 'color-mix(in srgb, var(--on-panel) 76%, transparent)', marginTop: '.7rem' }}>
+                As trilhas inteiras ({n.modulos} módulos), as {n.conversas} conversas
+                com personagem, as {n.musicas} músicas e o kit de bolso em PDF.
+                A partir de {emReais(PRECOS.monthly.centavos)} por mês.
+              </p>
+              <Link href="/ingles-para-morar-fora" className="hm-link" style={{ color: 'var(--accent)', marginTop: '.8rem' }}>
+                Ver o que tem dentro →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ───────────── 8. Perguntas ───────────── */}
+      <section className="hm-secao">
+        <div className="hm-estreito">
+          <h2 className="hm-titulo hm-lidera" style={{ marginBottom: '1.25rem' }}>
+            Perguntas honestas
+          </h2>
+          {PERGUNTAS.map(p => (
+            <details key={p.q} className="hm-faq">
+              <summary>{p.q}</summary>
+              <p>{p.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      {/* ───────────── 9. O pedido ───────────── */}
+      <section className="hm-secao" style={{ background: 'var(--accent)', color: 'var(--on-accent)', textAlign: 'center' }}>
+        <div className="hm-estreito">
+          <h2 className="hm-display hm-lidera" style={{ fontSize: 'clamp(1.9rem, 6vw, 3rem)' }}>
+            Comece pelo teste.
+          </h2>
+          <p className="hm-lead hm-apoia" style={{ opacity: .8, marginTop: '1rem', maxWidth: '30rem', marginInline: 'auto' }}>
+            São 30 questões e dez minutos. No fim você recebe seu nível, o que
+            já domina, o que falta, e a unidade exata por onde começar.
+          </p>
+          <div className="hm-apoia" style={{ marginTop: '1.9rem' }}>
+            <Link href="/test?lang=en" className="hm-cta" style={{ background: 'var(--panel)', color: 'var(--on-panel)' }}>
+              Fazer o teste de inglês →
             </Link>
           </div>
+          <p className="hm-apoia" style={{ fontSize: 13.5, marginTop: '1.2rem', opacity: .75, lineHeight: 2 }}>
+            Não quer fazer o teste agora?{' '}
+            <Link href="/cadastro" className="hm-link" style={{ color: 'var(--on-accent)' }}>Criar minha conta</Link>
+            <br />
+            <Link href="/test?lang=pt" className="hm-link" style={{ color: 'var(--on-accent)', fontWeight: 500 }}>
+              Looking for the Portuguese course?
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      <footer className="hm-secao" style={{ textAlign: 'center', paddingTop: 'clamp(2rem, 5vw, 3rem)' }}>
+        <div style={{ fontSize: 13.5, color: 'var(--ink3)', lineHeight: 2 }}>
           <div>
-            Already have an account?{' '}
-            <Link href="/entrar" style={{ color: 'var(--ink)', fontWeight: 600, display: 'inline-block', padding: '.85rem .35rem', margin: '-.85rem -.35rem' }}>
-              Sign in
+            Já tem conta? <Link href="/entrar" className="hm-link">Entrar</Link>
+          </div>
+          <div>
+            Already have an account? <Link href="/entrar" className="hm-link">Sign in</Link>
+          </div>
+          <div>
+            <Link href="/duvidas" className="hm-link" style={{ color: 'var(--ink3)', fontWeight: 500 }}>
+              Dúvidas respondidas
             </Link>
           </div>
         </div>
@@ -195,44 +336,33 @@ export default function HomePage() {
   )
 }
 
-function Figure({ number, label }: { number: string; label: string }) {
+function Numero({ valor, rotulo }: { valor: number; rotulo: string }) {
   return (
-    <div style={{ flex: 1, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '.9rem .4rem' }}>
-      <div style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 22, fontWeight: 700, lineHeight: 1.1 }}>
-        {number}
+    <div className="hm-numero-bloco hm-apoia">
+      <div className="hm-numero">{valor}</div>
+      <div style={{ fontSize: '.88rem', color: 'var(--ink3)', marginTop: '.35rem', lineHeight: 1.45 }}>
+        {rotulo}
       </div>
-      <div style={{ fontSize: 11, color: 'var(--ink3)', marginTop: '.25rem', lineHeight: 1.35 }}>{label}</div>
     </div>
   )
 }
 
-function Point({ icon, title, body }: { icon: 'speaker' | 'headphones' | 'repeat' | 'target'; title: string; body: string }) {
+function Ponto({ icon, title, body }: { icon: 'speaker' | 'headphones' | 'repeat' | 'target'; title: string; body: string }) {
   return (
-    <div style={{ display: 'flex', gap: '.85rem', marginBottom: '1.5rem' }}>
-      <div style={{ flexShrink: 0, marginTop: 3, color: 'var(--ink3)' }}>
+    <div className="hm-apoia" style={{ display: 'flex', gap: '1rem', marginBottom: '1.75rem' }}>
+      <span
+        style={{
+          flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          width: 40, height: 40, borderRadius: 11,
+          background: 'var(--accent)', color: 'var(--on-accent)',
+        }}
+      >
         <Icon name={icon} size={19} />
-      </div>
+      </span>
       <div>
-        <h3 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 17, fontWeight: 700, marginBottom: '.3rem' }}>
-          {title}
-        </h3>
-        <p style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.65 }}>{body}</p>
+        <h3 className="hm-sub">{title}</h3>
+        <p style={{ fontSize: '.95rem', color: 'var(--ink2)', lineHeight: 1.7, marginTop: '.35rem' }}>{body}</p>
       </div>
     </div>
-  )
-}
-
-function Faq({ q, a }: { q: string; a: string }) {
-  return (
-    <details style={{ borderBottom: '1px solid var(--border)' }}>
-      <summary style={{ cursor: 'pointer', listStyle: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', minHeight: 52, fontSize: 14.5, fontWeight: 600 }}>
-        {q}
-        <span aria-hidden style={{ color: 'var(--ink3)', fontSize: 18, lineHeight: 1 }}>
-          <span className="lk-faq-closed">+</span>
-          <span className="lk-faq-open">−</span>
-        </span>
-      </summary>
-      <p style={{ fontSize: 14, color: 'var(--ink3)', lineHeight: 1.65, padding: '0 0 .9rem' }}>{a}</p>
-    </details>
   )
 }

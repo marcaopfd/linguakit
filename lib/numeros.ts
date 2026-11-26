@@ -1,6 +1,7 @@
 import { MUSICAS } from './musicas'
 import { SIMULACOES } from './trilhas/simulacoes'
 import { TRILHAS, type Trilha } from './trilhas'
+import { MODULES } from './curriculum'
 
 /**
  * Os números do produto, contados do próprio conteúdo.
@@ -75,3 +76,48 @@ export function numerosDoProduto(): NumerosDoProduto {
 export function arredondaParaBaixo(n: number, passo = 10): number {
   return Math.floor(n / passo) * passo
 }
+
+/** O que existe no curso A1–C2, o que é grátis para sempre. */
+export type NumerosDoCursoGeral = {
+  niveis: number
+  unidades: number
+  /** Itens de prática de verdade: o que a pessoa responde. */
+  exercicios: number
+  /** Palavras e expressões com áudio. */
+  palavras: number
+  /** Falas de diálogo gravadas. */
+  falas: number
+}
+
+/**
+ * Conta o curso geral a partir do currículo.
+ *
+ * Existe por causa de um número errado: a home anunciava "+1.700 exercícios",
+ * e exercício de verdade são 882. Os 1.700 só aparecem somando vocabulário,
+ * falas de diálogo e erros comuns — que são conteúdo, mas não são exercício.
+ *
+ * Exagerar aqui é pior do que parece. Quem conta 1.700 e entrega 882 não
+ * ganhou um aluno a mais: perdeu o direito de ser levado a sério no resto da
+ * página, onde tudo é verdade. E 882 já é muita coisa — número específico
+ * convence mais do que número redondo inflado.
+ */
+export function numerosDoCursoGeral(): NumerosDoCursoGeral {
+  let unidades = 0
+  let exercicios = 0
+  let palavras = 0
+  let falas = 0
+
+  for (const modulo of MODULES) {
+    for (const unidade of modulo.units) {
+      unidades++
+      for (const bloco of [...(unidade.exercises ?? []), ...(unidade.extraExercises ?? [])]) {
+        exercicios += bloco.items?.length ?? 0
+      }
+      palavras += (unidade.vocabulary?.length ?? 0) + (unidade.extraVocab?.length ?? 0)
+      falas += unidade.dialogue?.lines?.length ?? 0
+    }
+  }
+
+  return { niveis: MODULES.length, unidades, exercicios, palavras, falas }
+}
+
