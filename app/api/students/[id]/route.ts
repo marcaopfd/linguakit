@@ -16,6 +16,12 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
         course: true,
         accent: true,
         createdAt: true,
+        // O plano, para o portal saber se mostra o convite para assinar ou o
+        // selo de quem já assinou. Sem isto a tela não tinha como perguntar,
+        // e o único caminho para /assinar era esbarrar num cadeado.
+        plan: true,
+        planStatus: true,
+        renewsAt: true,
         testResult: true,
         lessons: { orderBy: { completedAt: 'asc' } },
       },

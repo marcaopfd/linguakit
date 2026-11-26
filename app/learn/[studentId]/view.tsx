@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { levelTone } from '@/lib/levels'
 import { Icon } from '@/components/Icon'
+import { ConviteAssinatura } from '@/components/ConviteAssinatura'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { AccentPicker } from '@/components/AccentPicker'
@@ -17,6 +18,9 @@ type StudentData = {
   email?: string | null
   course?: string | null
   accent?: string | null
+  plan?: string | null
+  planStatus?: string | null
+  renewsAt?: string | null
   testResult?: {
     level: string
     levelName: string
@@ -175,6 +179,20 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
       {/* As trilhas, só no curso de inglês: é lá que elas existem. */}
       {isEN && (
         <TrilhasHome studentId={studentId} niveis={modules} lessons={student.lessons} t={t} />
+      )}
+
+      {/* O convite para assinar vem LOGO DEPOIS das trilhas, e não no rodapé:
+          é olhando as trilhas que a pessoa entende o que está fechado. Antes
+          daqui, /assinar só existia dentro de "Minha conta" e atrás de um
+          cadeado — ou seja, quem estava gostando do curso nunca via a porta.
+          Quem já assinou recebe uma linha discreta no lugar do anúncio. */}
+      {isEN && student && (
+        <div style={{ padding: '1.5rem 1.5rem 0', maxWidth: 620, margin: '0 auto' }}>
+          <ConviteAssinatura
+            studentId={studentId}
+            aluno={{ plan: student.plan, planStatus: student.planStatus, renewsAt: student.renewsAt }}
+          />
+        </div>
       )}
 
       {/* Quem não tem conta ainda: o convite para criar uma, com o link como
