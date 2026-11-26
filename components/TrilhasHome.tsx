@@ -73,13 +73,42 @@ export function TrilhasHome({ studentId, niveis, lessons, t }: {
   const unidadesPorModulo = new Map(niveis.map(n => [n.id, n.units.length]))
   const feitos = concluidosNa(trilha, modulos, lessons, unidadesPorModulo)
   const geral = trilhaPorId('geral')!
-  const outras = TRILHAS.filter(x => x.id !== trilha.id && x.id !== 'geral')
+  const pct = modulos.length ? Math.round((feitos / modulos.length) * 100) : 0
+
+  // Separadas de propósito: o que dá para abrir hoje vira cartão, o que ainda
+  // não existe vira uma linha. Antes as duas "em breve" eram dois cartões do
+  // mesmo tamanho das trilhas de verdade — metade da seção anunciava o que
+  // não dá para fazer.
+  const outrasAbertas = TRILHAS.filter(x => x.disponivel && x.id !== trilha.id && x.id !== 'geral')
+  const emBreve = TRILHAS.filter(x => !x.disponivel)
 
   return (
-    <section style={{ padding: '1.5rem 1.25rem 0', maxWidth: 620, margin: '0 auto' }}>
-      {/* A trilha ativa, em destaque */}
-      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '.5rem' }}>
-        <span style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)' }}>
+    <section className="tr" style={{ padding: '1.5rem 1.25rem 0', maxWidth: 620, margin: '0 auto' }}>
+      <style>{`
+        .tr { --saida: cubic-bezier(.23, 1, .32, 1); }
+        .tr a, .tr button { -webkit-tap-highlight-color: transparent; }
+        .tr-cartao {
+          display: block; text-decoration: none; color: inherit;
+          transition: transform 170ms var(--saida), box-shadow 220ms var(--saida), border-color 170ms ease;
+        }
+        .tr-cartao:active { transform: scale(.985); }
+        @media (hover: hover) and (pointer: fine) {
+          .tr-cartao:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.10); }
+        }
+        .tr-dupla { display: grid; gap: .65rem; grid-template-columns: 1fr; }
+        @media (min-width: 420px) { .tr-dupla { grid-template-columns: 1fr 1fr; } }
+        /* Grão no cartão da trilha ativa: é a única superfície escura desta
+           tela, e lisa ela parece uma div. */
+        .tr-ativa { position: relative; isolation: isolate; overflow: clip; }
+        .tr-ativa::before {
+          content: ''; position: absolute; inset: 0; z-index: -1; opacity: .45;
+          pointer-events: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
+        }
+      `}</style>
+
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '.55rem' }}>
+        <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.14em', color: 'var(--ink3)' }}>
           {t.trilhaSua}
         </span>
         <button
@@ -90,83 +119,133 @@ export function TrilhasHome({ studentId, niveis, lessons, t }: {
         </button>
       </div>
 
-      <Link href={`/learn/${studentId}/trilha/${trilha.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-        <div style={{ background: 'var(--forest)', color: 'var(--on-panel)', borderRadius: 20, padding: '1.2rem 1.25rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '.6rem' }}>
-            <span style={{ fontSize: 26 }}>{trilha.emoji}</span>
-            <span style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 20, fontWeight: 700, color: 'var(--accent)' }}>
+      {/* A trilha ativa: a maior coisa da tela, porque é o que a pessoa veio
+          fazer. O número grande é o progresso — ele responde "quanto falta"
+          antes de qualquer texto. */}
+      <Link href={`/learn/${studentId}/trilha/${trilha.id}`} className="tr-cartao tr-ativa" style={{ background: 'var(--forest)', color: 'var(--on-panel)', borderRadius: 22, padding: '1.35rem 1.4rem' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+          <div style={{ minWidth: 0 }}>
+            <span style={{ fontSize: 28 }}>{trilha.emoji}</span>
+            <h2
+              style={{
+                fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif',
+                fontSize: 'clamp(1.35rem, 6vw, 1.7rem)', fontWeight: 800,
+                letterSpacing: '-0.03em', lineHeight: 1.1, color: 'var(--accent)',
+                marginTop: '.5rem',
+              }}
+            >
               {trilha.nome}
-            </span>
+            </h2>
+            <p style={{ fontSize: 13.5, color: 'color-mix(in srgb, var(--on-panel) 72%, transparent)', lineHeight: 1.55, marginTop: '.4rem' }}>
+              {trilha.promessa}
+            </p>
           </div>
-          <p style={{ fontSize: 13.5, color: 'rgba(242,244,233,.72)', lineHeight: 1.5, margin: '.5rem 0 .85rem' }}>{trilha.promessa}</p>
-          <div style={{ height: 7, background: 'rgba(242,244,233,.16)', borderRadius: 4 }}>
-            <div style={{ height: 7, borderRadius: 4, background: 'var(--accent)', width: `${modulos.length ? Math.round((feitos / modulos.length) * 100) : 0}%`, transition: 'width .5s' }} />
+          <div style={{ flexShrink: 0, textAlign: 'right' }}>
+            <div
+              style={{
+                fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif',
+                fontSize: 34, fontWeight: 800, letterSpacing: '-0.04em',
+                lineHeight: 1, fontVariantNumeric: 'tabular-nums',
+              }}
+            >
+              {pct}<span style={{ fontSize: 17 }}>%</span>
+            </div>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '.6rem' }}>
-            <span style={{ fontSize: 12, color: 'rgba(242,244,233,.55)' }}>{t.trilhaFeitos(feitos, modulos.length)}</span>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.3rem', background: 'var(--accent)', color: 'var(--on-accent)', borderRadius: 999, padding: '.4rem .85rem', fontSize: 13, fontWeight: 700 }}>
-              {feitos ? t.trilhaContinuar : t.trilhaComecar} →
-            </span>
-          </div>
+        </div>
+
+        <div style={{ height: 8, background: 'color-mix(in srgb, var(--on-panel) 16%, transparent)', borderRadius: 4, marginTop: '1rem' }}>
+          <div style={{ height: 8, borderRadius: 4, background: 'var(--accent)', width: `${pct}%`, transition: 'width .5s var(--saida)' }} />
+        </div>
+
+        {/* A contagem mora embaixo da barra, não ao lado do número: no
+            celular ela roubava largura do título, que quebrava em três
+            linhas. Aqui ela fica junto do que explica. */}
+        <div style={{ fontSize: 12, color: 'color-mix(in srgb, var(--on-panel) 58%, transparent)', marginTop: '.45rem' }}>
+          {t.trilhaFeitos(feitos, modulos.length)}
+        </div>
+
+        <div style={{ marginTop: '.9rem' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '.3rem', background: 'var(--accent)', color: 'var(--on-accent)', borderRadius: 999, padding: '.55rem 1.1rem', fontSize: 14, fontWeight: 700 }}>
+            {feitos ? t.trilhaContinuar : t.trilhaComecar} →
+          </span>
         </div>
       </Link>
 
-      {/* O Inglês Geral, que nunca sai da tela */}
-      {trilha.id !== 'geral' && (
-        <Link href={`/learn/${studentId}/trilha/geral`} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '.7rem', marginTop: '.7rem', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '.85rem 1rem' }}>
-            <span style={{ fontSize: 20, flexShrink: 0 }}>{geral.emoji}</span>
-            <span style={{ flex: 1, minWidth: 0 }}>
-              <span style={{ display: 'block', fontSize: 14, fontWeight: 700 }}>{t.trilhaGeralCartao}</span>
-              <span style={{ display: 'block', fontSize: 12.5, color: 'var(--ink3)', marginTop: 1 }}>{geral.ritmo}</span>
-            </span>
-            <span style={{ flexShrink: 0, color: 'var(--ink3)', fontSize: 18 }}>›</span>
+      {/* Inglês Geral e Músicas deixaram de ser linha fina: são o que a pessoa
+          abre quando a trilha dela acaba, e mereciam o mesmo peso. */}
+      <div className="tr-dupla" style={{ marginTop: '.65rem' }}>
+        {trilha.id !== 'geral' && (
+          <Link href={`/learn/${studentId}/trilha/geral`} className="tr-cartao" style={cartao()}>
+            <span style={{ fontSize: 24 }}>{geral.emoji}</span>
+            <div style={{ fontSize: 14.5, fontWeight: 700, marginTop: '.5rem', letterSpacing: '-0.012em' }}>
+              {t.trilhaGeralCartao}
+            </div>
+            <div style={{ fontSize: 12, color: 'var(--ink3)', lineHeight: 1.45, marginTop: '.2rem' }}>
+              {geral.ritmo}
+            </div>
+          </Link>
+        )}
+
+        <Link href={`/learn/${studentId}/musicas`} className="tr-cartao" style={cartao()}>
+          <span style={{ fontSize: 24 }}>🎧</span>
+          <div style={{ fontSize: 14.5, fontWeight: 700, marginTop: '.5rem', letterSpacing: '-0.012em' }}>
+            Músicas
+          </div>
+          <div style={{ fontSize: 12, color: 'var(--ink3)', lineHeight: 1.45, marginTop: '.2rem' }}>
+            {MUSICAS.length} para ouvir, entender e interpretar
           </div>
         </Link>
+      </div>
+
+      {/* As outras trilhas que ABREM hoje. */}
+      {outrasAbertas.length > 0 && (
+        <div style={{ marginTop: '1.25rem' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.14em', color: 'var(--ink3)', marginBottom: '.5rem' }}>
+            {t.trilhaExplorar}
+          </div>
+          <div style={{ display: 'grid', gap: '.65rem' }}>
+            {outrasAbertas.map(x => {
+              const cor = levelTone(x.tom)
+              return (
+                <Link key={x.id} href={`/learn/${studentId}/trilha/${x.id}`} className="tr-cartao" style={{ ...cartao(), display: 'flex', alignItems: 'center', gap: '.85rem' }}>
+                  <span style={{ fontSize: 26, flexShrink: 0 }}>{x.emoji}</span>
+                  <span style={{ flex: 1, minWidth: 0 }}>
+                    <span style={{ display: 'block', fontSize: 14.5, fontWeight: 700, color: cor.ink, letterSpacing: '-0.012em' }}>{x.nome}</span>
+                    <span style={{ display: 'block', fontSize: 12.5, color: 'var(--ink3)', lineHeight: 1.45, marginTop: 1 }}>{x.promessa}</span>
+                  </span>
+                  <span style={{ flexShrink: 0, color: 'var(--ink3)', fontSize: 18 }}>›</span>
+                </Link>
+              )
+            })}
+          </div>
+        </div>
       )}
 
-      {/* As músicas: a parte que ninguém mais tem */}
-      <Link href={`/learn/${studentId}/musicas`} style={{ textDecoration: 'none', color: 'inherit' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '.7rem', marginTop: '.7rem', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '.85rem 1rem' }}>
-          <span style={{ fontSize: 20, flexShrink: 0 }}>🎧</span>
-          <span style={{ flex: 1, minWidth: 0 }}>
-            <span style={{ display: 'block', fontSize: 14, fontWeight: 700 }}>Músicas</span>
-            <span style={{ display: 'block', fontSize: 12.5, color: 'var(--ink3)', marginTop: 1 }}>
-              {MUSICAS.length} músicas para ouvir, entender e interpretar
-            </span>
-          </span>
-          <span style={{ flexShrink: 0, color: 'var(--ink3)', fontSize: 18 }}>›</span>
-        </div>
-      </Link>
-
-      {/* O que mais existe aqui dentro */}
-      <div style={{ marginTop: '1.1rem' }}>
-        <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--ink3)', marginBottom: '.5rem' }}>
-          {t.trilhaExplorar}
-        </div>
-        <div className="lk-trilhas-fileira">
-          {outras.map(x => {
-            const cor = levelTone(x.tom)
-            const corpo = (
-              <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '.85rem .9rem', height: '100%', opacity: x.disponivel ? 1 : .6 }}>
-                <div style={{ fontSize: 20 }}>{x.emoji}</div>
-                <div style={{ fontSize: 13.5, fontWeight: 700, marginTop: '.3rem', color: x.disponivel ? cor.ink : 'var(--ink3)' }}>{x.nome}</div>
-                <div style={{ fontSize: 12, color: 'var(--ink3)', lineHeight: 1.45, marginTop: '.2rem' }}>{x.promessa}</div>
-                {!x.disponivel && (
-                  <div style={{ fontSize: 10.5, textTransform: 'uppercase', letterSpacing: '.07em', color: 'var(--ink3)', marginTop: '.4rem' }}>
-                    {t.trilhaEmBreve}
-                  </div>
-                )}
-              </div>
-            )
-            return x.disponivel
-              ? <Link key={x.id} href={`/learn/${studentId}/trilha/${x.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>{corpo}</Link>
-              : <div key={x.id}>{corpo}</div>
-          })}
-        </div>
-      </div>
+      {/* O que ainda não existe vira UMA LINHA, não dois cartões. Continua
+          dito — esconder o que vem depois faz a pessoa achar que acabou — mas
+          deixa de disputar atenção com o que dá para fazer hoje. */}
+      {emBreve.length > 0 && (
+        <p style={{ fontSize: 12, color: 'var(--ink3)', lineHeight: 1.55, marginTop: '.9rem' }}>
+          {/* Separador em ponto, não " e ": uma das trilhas se chama "Vender e
+              Prospectar", e juntar com "e" daria "Trabalhar Online e Vender e
+              Prospectar", que lê como três coisas. */}
+          <span style={{ textTransform: 'capitalize' }}>{t.trilhaEmBreve}</span>
+          {': '}
+          {emBreve.map(x => x.nome).join(' · ')}
+        </p>
+      )}
     </section>
   )
+}
+
+/** O cartão comum desta tela, para os três lugares que usam o mesmo. */
+function cartao(): React.CSSProperties {
+  return {
+    background: 'var(--surface)',
+    border: '1px solid var(--border)',
+    borderRadius: 16,
+    padding: '1rem 1.05rem',
+  }
 }
 
 function estiloEscolha(_: Trilha): React.CSSProperties {

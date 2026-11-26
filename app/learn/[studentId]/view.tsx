@@ -129,7 +129,10 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
         <div style={{ fontSize: 12, color: 'rgba(255,255,255,.4)', marginBottom: '.35rem', textTransform: 'uppercase', letterSpacing: '.07em' }}>
           {isEN ? '🇺🇸' : '🇧🇷'} {t.courseLabel} · LinguaKit
         </div>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+        {/* Os botões desceram para uma linha só deles. Com "Dúvidas" ao lado
+            de "Minha conta", os dois espremiam a saudação e "Olá, Marcos"
+            quebrava em duas linhas no celular. */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '.6rem' }}>
           <h1 style={{ fontFamily: 'var(--font-display), Bricolage Grotesque, sans-serif', fontSize: 26, fontWeight: 700, marginBottom: '.5rem' }}>
             {t.hello}, {student.name} 👋
           </h1>
@@ -137,7 +140,7 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
               também se cria a conta, se vê o plano e se recupera um pagamento
               que não caiu. Quem chegou por link compartilhado vê o mesmo
               botão — para essa pessoa, ele é o convite para ter uma conta. */}
-          <div style={{ flexShrink: 0, display: 'flex', gap: '.4rem' }}>
+          <div style={{ display: 'flex', gap: '.4rem', flexWrap: 'wrap' }}>
             {/* Perguntar tem que estar à mão no momento em que a dúvida
                 aparece, que é estudando — não escondido num menu. */}
             <Link
