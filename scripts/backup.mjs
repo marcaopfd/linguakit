@@ -63,6 +63,7 @@ const TABELAS = [
   ['reviewItem', p => p.reviewItem.findMany()],
   ['paymentNotice', p => p.paymentNotice.findMany()],
   ['musicNote', p => p.musicNote.findMany()],
+  ['question', p => p.question.findMany()],
 ]
 
 const dados = {}

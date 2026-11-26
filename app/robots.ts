@@ -16,7 +16,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: ['/', '/test', '/cadastro', '/entrar', '/recuperar', '/ingles-para-morar-fora',
-        '/termos', '/privacidade', '/reembolso', '/contato'],
+        '/termos', '/privacidade', '/reembolso', '/contato', '/duvidas'],
       disallow: ['/learn/', '/painel', '/students', '/login', '/api/'],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,

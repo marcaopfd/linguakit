@@ -133,12 +133,22 @@ export function LearnView({ ptModules, enModules }: { ptModules: ModuleSummary[]
               também se cria a conta, se vê o plano e se recupera um pagamento
               que não caiu. Quem chegou por link compartilhado vê o mesmo
               botão — para essa pessoa, ele é o convite para ter uma conta. */}
-          <Link
-            href={`/learn/${studentId}/conta`}
-            style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', minHeight: 36, padding: '.35rem .75rem', borderRadius: 8, border: '1px solid rgba(255,255,255,.25)', color: 'rgba(255,255,255,.7)', fontSize: 12.5, fontWeight: 600, textDecoration: 'none' }}
-          >
-            {t.myAccount}
-          </Link>
+          <div style={{ flexShrink: 0, display: 'flex', gap: '.4rem' }}>
+            {/* Perguntar tem que estar à mão no momento em que a dúvida
+                aparece, que é estudando — não escondido num menu. */}
+            <Link
+              href={`/learn/${studentId}/duvidas`}
+              style={{ display: 'inline-flex', alignItems: 'center', minHeight: 36, padding: '.35rem .75rem', borderRadius: 8, border: '1px solid rgba(255,255,255,.25)', color: 'rgba(255,255,255,.7)', fontSize: 12.5, fontWeight: 600, textDecoration: 'none' }}
+            >
+              Dúvidas
+            </Link>
+            <Link
+              href={`/learn/${studentId}/conta`}
+              style={{ display: 'inline-flex', alignItems: 'center', minHeight: 36, padding: '.35rem .75rem', borderRadius: 8, border: '1px solid rgba(255,255,255,.25)', color: 'rgba(255,255,255,.7)', fontSize: 12.5, fontWeight: 600, textDecoration: 'none' }}
+            >
+              {t.myAccount}
+            </Link>
+          </div>
         </div>
         {student.testResult && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>

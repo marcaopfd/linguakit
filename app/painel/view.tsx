@@ -95,6 +95,9 @@ export function DashboardView({ ptModules, enModules }: { ptModules: ModuleSumma
           <Link href="/students" style={{ display: 'inline-block', background: 'var(--panel)', color: 'var(--on-panel)', padding: '.9rem 1.75rem', borderRadius: 10, textDecoration: 'none', fontWeight: 600, fontSize: 15 }}>
             Abrir painel de alunos →
           </Link>
+          <Link href="/painel/duvidas" style={{ display: 'inline-block', background: 'var(--accent)', color: 'var(--on-accent)', padding: '.9rem 1.75rem', borderRadius: 10, textDecoration: 'none', fontWeight: 600, fontSize: 15 }}>
+            Responder dúvidas →
+          </Link>
           <Link href="/test" style={{ display: 'inline-block', color: 'var(--ink3)', padding: '.5rem', textDecoration: 'none', fontSize: 13 }}>
             🔗 Compartilhar teste de nivelamento com aluno
           </Link>

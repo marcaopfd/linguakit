@@ -20,6 +20,9 @@ const PUBLIC_EXACT = [
   '/privacidade',
   '/reembolso',
   '/contato',
+  // As dúvidas respondidas: é conteúdo para ser achado na busca, e é a
+  // resposta mais honesta à objeção "funciona mesmo sem professor?".
+  '/duvidas',
   '/robots.txt',     // must be reachable, or crawlers assume nothing is barred
   '/sitemap.xml',
 ]

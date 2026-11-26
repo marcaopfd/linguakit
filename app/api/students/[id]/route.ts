@@ -37,6 +37,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
   try {
     // Every table that references Student must be cleared first: the foreign
     // keys are RESTRICT, so a leftover row blocks the delete.
+    await withDb(() => prisma.question.deleteMany({ where: { studentId: id } }))
     await withDb(() => prisma.musicNote.deleteMany({ where: { studentId: id } }))
     await withDb(() => prisma.reviewItem.deleteMany({ where: { studentId: id } }))
     await withDb(() => prisma.exerciseAttempt.deleteMany({ where: { studentId: id } }))

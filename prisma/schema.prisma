@@ -53,6 +53,7 @@ model Student {
   attempts   ExerciseAttempt[]
   reviews    ReviewItem[]
   musicNotes MusicNote[]
+  questions  Question[]
 }
 
 model TestResult {
@@ -204,4 +205,51 @@ model MusicNote {
 
   @@unique([studentId, videoId, taskIndex])
   @@index([studentId])
+}
+
+/// Uma dúvida de aluno, e a resposta escrita à mão.
+///
+/// A ideia é que a resposta sirva duas vezes: para quem perguntou e para quem
+/// tiver a mesma dúvida depois. Por isso a pergunta respondida vira página
+/// pública — e é também a melhor prova que este produto pode dar de que
+/// existe gente do outro lado, numa página de vendas que não tem depoimento
+/// nenhum, de propósito.
+///
+/// Três decisões que moram neste modelo:
+///
+///   - `published` começa FALSO e só o professor liga. Conteúdo escrito por
+///     terceiro que vai ao ar sozinho é spam no site que vende o produto, e
+///     não existe como desfazer uma vez indexado.
+///   - O NOME de quem perguntou nunca é publicado. Guardamos o studentId para
+///     ele ver a resposta dele e para o professor saber com quem fala; a
+///     página pública mostra só a pergunta e a resposta.
+///   - A pergunta é guardada como a pessoa escreveu, e o professor pode
+///     EDITAR o texto ao publicar (em `publishedText`): dúvida real costuma
+///     vir com nome de rua, nome de empresa e coisa que a pessoa não queria
+///     ver num site. Publicar o original sem revisão seria publicar dado
+///     pessoal de alguém que só queria tirar uma dúvida.
+model Question {
+  id        String  @id @default(cuid())
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  /// O que a pessoa escreveu, como ela escreveu.
+  text      String
+  /// Onde ela estava quando perguntou — "trilha viagem, módulo 3", por
+  /// exemplo. Ajuda o professor a responder no contexto certo.
+  context   String?
+
+  /// A versão limpa que vai ao ar. Nula = publicar o texto original.
+  publishedText String?
+  /// A resposta. Nula enquanto não foi respondida.
+  answer    String?
+  answeredAt DateTime?
+  /// Só o professor liga. Enquanto for falso, a dúvida existe só para quem
+  /// perguntou e para o painel.
+  published Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([studentId])
+  @@index([published, answeredAt])
 }

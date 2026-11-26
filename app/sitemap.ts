@@ -15,6 +15,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/ingles-para-morar-fora`, lastModified: now, changeFrequency: 'weekly', priority: 1 },
     { url: `${base}/test?lang=en`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/test?lang=pt`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    // As dúvidas crescem com o tempo e são o conteúdo que a busca quer:
+    // pergunta de gente de verdade com resposta escrita à mão.
+    { url: `${base}/duvidas`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${base}/cadastro`, lastModified: now, changeFrequency: 'yearly', priority: 0.5 },
     { url: `${base}/termos`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
     { url: `${base}/privacidade`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },

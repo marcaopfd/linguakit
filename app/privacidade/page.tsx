@@ -55,6 +55,14 @@ export default function PrivacidadePage() {
         seu progresso — sem isso, o curso não saberia onde você parou.
       </p>
       <p>
+        <strong>Quando você manda uma dúvida:</strong> o texto da pergunta, para
+        poder ser respondida. Se a resposta servir para mais gente, a pergunta
+        pode ir para a página pública <a href="/duvidas">Dúvidas respondidas</a>
+        {' '}— <strong>nunca com o seu nome</strong>, e com a pergunta revisada
+        quando ela trouxer algum dado seu. Isso nunca é automático: depende de
+        uma decisão de {LEGAL.responsavel}, e basta pedir para sair.
+      </p>
+      <p>
         <strong>Quando você escreve:</strong> o texto das tarefas das músicas,
         que são as perguntas sem gabarito. Fica guardado na sua conta para
         seguir com você de um aparelho para outro — antes ficava só no

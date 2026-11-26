@@ -96,7 +96,7 @@ const TITULO_LINHAS = ['Inglês para quem', 'vai morar fora.']
 const PERGUNTAS: { q: string; a: string }[] = [
   {
     q: 'Funciona mesmo sem professor?',
-    a: 'Funciona para o que ele se propõe: te dar as frases certas, o áudio para ouvir, e exercício suficiente para elas saírem na hora. O que um curso sozinho não faz é te corrigir falando — para isso existe gente, e a gente não finge o contrário. O que dá para fazer aqui é chegar do outro lado sabendo o que dizer, em vez de travar.',
+    a: 'Funciona para o que ele se propõe: te dar as frases certas, o áudio para ouvir, e exercício suficiente para elas saírem na hora. E quando travar, você manda a dúvida de dentro do curso e eu respondo na mão — as que servem para mais gente ficam abertas em /duvidas, para você ver antes mesmo de se cadastrar. O que um curso sozinho não faz é te corrigir falando; para isso existe gente, e a gente não finge o contrário.',
   },
   {
     q: 'Quanto tempo por dia?',
@@ -533,6 +533,10 @@ export default function LandingPage() {
         <div>
           <Link href="/" style={{ color: 'var(--ink2)', fontWeight: 600, textDecoration: 'none' }}>
             LinguaKit
+          </Link>
+          {' · '}
+          <Link href="/duvidas" style={{ color: 'var(--ink3)', textDecoration: 'none' }}>
+            Dúvidas respondidas
           </Link>
           {' · '}
           <Link href="/test?lang=pt" style={{ color: 'var(--ink3)', textDecoration: 'none' }}>
