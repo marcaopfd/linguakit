@@ -2,6 +2,7 @@ import {
   Document, Page, Text, View, StyleSheet, Font,
 } from '@react-pdf/renderer'
 import { Module, Unit } from './curriculum'
+import { SITE_HOST } from './site'
 
 // ── Styles ──────────────────────────────────────────────────────────────────
 
@@ -151,7 +152,7 @@ export function UnitPDF({ mod, unit, unitIndex }: Props) {
 
         <View style={S.footer} fixed>
           <Text style={S.footerText}>LinguaKit — {mod.label} · {unit.title} (p. 1)</Text>
-          <Text style={S.footerText}>by Marcos · linguakit.vercel.app</Text>
+          <Text style={S.footerText}>by Marcos · {SITE_HOST}</Text>
         </View>
       </Page>
 
@@ -222,7 +223,7 @@ export function UnitPDF({ mod, unit, unitIndex }: Props) {
 
         <View style={S.footer} fixed>
           <Text style={S.footerText}>LinguaKit — {mod.label} · {unit.title} (p. 2)</Text>
-          <Text style={S.footerText}>by Marcos · linguakit.vercel.app</Text>
+          <Text style={S.footerText}>by Marcos · {SITE_HOST}</Text>
         </View>
       </Page>
 

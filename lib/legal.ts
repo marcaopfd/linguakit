@@ -10,9 +10,11 @@
  * vez de mostrar um "[preencher]" para o visitante.
  */
 
+import { SITE_URL } from './site'
+
 export const LEGAL = {
   produto: 'LinguaKit',
-  site: 'https://linguakit.vercel.app',
+  site: SITE_URL,
 
   /**
    * O responsável pelo site, como pessoa física.

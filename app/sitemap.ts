@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/site'
 
 /**
  * Só as páginas feitas para serem achadas.
@@ -7,7 +8,7 @@ import type { MetadataRoute } from 'next'
  * de quem procura "inglês para morar fora", e é para onde o anúncio aponta.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = 'https://linguakit.vercel.app'
+  const base = SITE_URL
   const now = new Date()
   return [
     { url: base, lastModified: now, changeFrequency: 'monthly', priority: 1 },

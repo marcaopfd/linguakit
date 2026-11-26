@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Bricolage_Grotesque, Inter } from 'next/font/google'
 import './globals.css'
+import { SITE_URL } from '@/lib/site'
 
 /*
  * Duas fontes, cada uma com um trabalho.
@@ -25,6 +26,17 @@ const ui = Inter({
 })
 
 export const metadata: Metadata = {
+  /**
+   * Sem isto, `alternates.canonical: '/pagina'` e `openGraph.url` saíam
+   * RELATIVOS no HTML — e og:url relativo não é URL para o WhatsApp nem para
+   * o Facebook, que esperam endereço absoluto. A página de vendas estava
+   * servindo <link rel="canonical" href="/ingles-para-morar-fora"> justo na
+   * semana de comprar tráfego.
+   *
+   * Vindo de lib/site.ts, trocar de domínio resolve canonical, og:url e
+   * og:image de uma vez.
+   */
+  metadataBase: new URL(SITE_URL),
   title: 'LinguaKit — Brazilian Portuguese',
   description: 'Professional Brazilian Portuguese teaching platform by Marcos',
   icons: {

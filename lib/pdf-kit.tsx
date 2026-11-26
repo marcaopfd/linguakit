@@ -1,5 +1,6 @@
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 import type { GrupoDoKit } from './trilhas/kit'
+import { SITE_HOST } from './site'
 
 /**
  * O Kit de bolso em PDF.
@@ -76,7 +77,7 @@ export function KitDeBolsoPDF({ trilha, promessa, grupos }: {
         ))}
 
         <View style={S.rodape} fixed>
-          <Text style={S.rodapeTexto}>LinguaKit · linguakit.vercel.app</Text>
+          <Text style={S.rodapeTexto}>LinguaKit · {SITE_HOST}</Text>
           <Text
             style={S.rodapeTexto}
             render={({ pageNumber, totalPages }) => `${pageNumber}/${totalPages}`}

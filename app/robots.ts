@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/site'
 
 /**
  * Keeps the private half of the site out of search results.
@@ -18,6 +19,6 @@ export default function robots(): MetadataRoute.Robots {
         '/termos', '/privacidade', '/reembolso', '/contato'],
       disallow: ['/learn/', '/painel', '/students', '/login', '/api/'],
     },
-    sitemap: 'https://linguakit.vercel.app/sitemap.xml',
+    sitemap: `${SITE_URL}/sitemap.xml`,
   }
 }
